@@ -1,0 +1,11 @@
+matplotlib>=3.4.2
+numpy>=1.19.3
+tqdm==4.31.1
+antlr4-python3-runtime~=4.13.1
+py_trees~=2.2.3
+shortuuid~=1.0.11
+autopep8~=2.0.4
+openai~=1.34.0
+sympy~=1.12
+gymnasium~=0.29.1
+minigrid~=2.3.1

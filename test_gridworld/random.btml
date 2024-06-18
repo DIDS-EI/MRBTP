@@ -1,0 +1,3 @@
+sequence
+    cond IsTest()
+    act RandomAction()
