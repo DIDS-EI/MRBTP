@@ -1,0 +1,2 @@
+Instruction,Goal,Feedback Details
+"Instruction: Please bring a serving of chips to Table 6 by the window, and along with it, either a glass of milk or some yogurt.",On_Chips_WindowTable6 & (On_Milk_WindowTable6 | On_Yogurt_WindowTable6 ),

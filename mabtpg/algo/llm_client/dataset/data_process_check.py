@@ -183,8 +183,8 @@ def get_feedback_prompt(prompt,result,error_list):
 # answer="On_Fries_Table6 & (On_Juice_Table6 | ~Exist_Juice => On_Coffee_Table6) & (OpenCurtain | ~Low_AC)"
 # answer="On_Fries_Table6 & (On_Juice_Table6 | On_Coffee_Table6) & (Open_Curtain | ~Low_ACTemperature)"
 #
-answer="(On_Juice_Table6 | ~Exist_Juice=>On_Coffee_Table6 ) & ( ~Low_AC | Open_Curtain )"
-format_correct,error_list = format_check(answer)
-print(format_correct)
-print(error_list)
-print(get_feedback_prompt("",answer,error_list))
+# answer="(On_Juice_Table6 | ~Exist_Juice=>On_Coffee_Table6 ) & ( ~Low_AC | Open_Curtain )"
+# format_correct,error_list = format_check(answer)
+# print(format_correct)
+# print(error_list)
+# print(get_feedback_prompt("",answer,error_list))

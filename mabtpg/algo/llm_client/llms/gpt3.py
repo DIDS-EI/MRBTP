@@ -53,14 +53,14 @@ if __name__ == '__main__':
     #     print(model.id)
 
     # answer = llm.request(question="who are you,gpt?")
-    answer = llm.embedding(question="who are you,gpt?")
-    print(answer)
-
-    llm = LLMGPT3()
-    messages = [{"role": "system", "content": "你现在是很有用的助手！"}]
-    while True:
-        prompt = input("请输入你的问题:")
-        messages.append({"role": "user", "content": prompt})
-        res_msg = llm.request(messages)
-        messages.append({"role": "assistant", "content": res_msg})
-        print(res_msg)
+    # answer = llm.embedding(question="who are you,gpt?")
+    # print(answer)
+    #
+    # llm = LLMGPT3()
+    # messages = [{"role": "system", "content": "你现在是很有用的助手！"}]
+    # while True:
+    #     prompt = input("请输入你的问题:")
+    #     messages.append({"role": "user", "content": prompt})
+    #     res_msg = llm.request(messages)
+    #     messages.append({"role": "assistant", "content": res_msg})
+    #     print(res_msg)
