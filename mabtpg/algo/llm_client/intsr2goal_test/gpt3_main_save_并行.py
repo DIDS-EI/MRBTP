@@ -1,6 +1,6 @@
 import time
 import csv
-
+from itertools import chain
 import numpy as np
 
 from mabtpg.algo.llm_client.llms.ERNIE_Bot_4 import LLMERNIE
@@ -155,29 +155,50 @@ def evaluate_answer(correct_answer, user_answer):
     This means that whenever the user_answer is true, the correct_answer must also be true.
     """
 
-    if correct_answer==user_answer:
+
+    # print("correct_answer_set:",correct_answer)
+    # print("user_answer_set   :",user_answer)
+    # print(correct_answer==user_answer)
+
+    correct_answer_set=set(list(chain.from_iterable(goal_transfer_ls_set(correct_answer))))
+    user_answer_set = set(list(chain.from_iterable(goal_transfer_ls_set(user_answer))))
+    # print("correct_answer_set:",correct_answer_set)
+    # print("user_answer_set   :",user_answer_set)
+    # print(correct_answer_set<=user_answer_set)
+
+    # print("correct_answer_set:",correct_answer)
+    # print("user_answer_set   :",user_answer)
+    # print(correct_answer==user_answer)
+
+    # if correct_answer==user_answer:
+    #     return True
+
+
+    if correct_answer_set<=user_answer_set:
         return True
-
-    # 将字符串表达式转换为 Sympy 可处理的逻辑表达式
-    try:
-        # 将字符串表达式转换为 Sympy 可处理的逻辑表达式
-        correct_expr = sympify(correct_answer)
-        user_expr = sympify(user_answer)
-        # Simplify both expressions to their logical forms
-        correct_dnf = simplify_logic(correct_expr, form='dnf')
-        user_dnf = simplify_logic(user_expr, form='dnf')
-
-        # Check if user answer implies correct answer
-        is_contained = Implies(user_dnf, correct_dnf).simplify()  # Should be user implies correct
-
-        # Check if the implication is always true
-        return is_contained
-
-    except Exception as e:
-        print(f"Error parsing expressions: {e}")
+    else:
         return False
-    # 你可以根据需要调整这个函数来评估答案的正确性
-    # return correct_answer == user_answer
+
+    # # # 将字符串表达式转换为 Sympy 可处理的逻辑表达式
+    # try:
+    #     correct_expr = sympify(correct_answer)
+    #     user_expr = sympify(user_answer)
+    #
+    #     # Simplify both expressions to their logical forms
+    #     correct_dnf = simplify_logic(correct_expr, form='dnf')
+    #     user_dnf = simplify_logic(user_expr, form='dnf')
+    #
+    #     # Check if user answer implies correct answer (assuming user answer should cover correct answer)
+    #     is_contained = Implies(user_dnf, correct_dnf).simplify()  # user_expr should imply correct_expr
+    #
+    #     # Return whether the implication is always true
+    #     return is_contained
+    #
+    # except Exception as e:
+    #     print(f"Error parsing expressions: {e}")
+    #     return False
+    # # 你可以根据需要调整这个函数来评估答案的正确性
+    # # return correct_answer == user_answer
 
 
 def evaluate_section(prompt, section, csv_filename,id):
@@ -276,7 +297,7 @@ for difficulty in difficulties:
     elif difficulty == "hard":
         data_set = hard_data_set
 
-    sections = re.split(r'\n\s*\n', data_set)[:2]
+    sections = re.split(r'\n\s*\n', data_set)[:]
     csv_filename = f"evaluation_results_{difficulty}.csv"
 
     results_table = []
