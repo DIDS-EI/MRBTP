@@ -102,7 +102,7 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
             "Instruction: If the curtains are already closed or the AC is running, could you please grab me a hot milk?\n( Closed_Curtain | Active_AC ) & Holding_Milk",
             "Instruction: Please turn up the air conditioning and come to the bar counter.\nRobotNear_Bar & ~Low_ACTemperature",
             "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
-            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the reading nook?\nIsClean_Chairs & ( On_Apple_ReadingNook | On_Banana_ReadingNook )"
+            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
         ]
 
     # Add the desired number of examples
@@ -188,7 +188,7 @@ def evaluate_section(prompt, section, csv_filename,id):
     x, y = section.strip().splitlines()
     question = x.strip()
     correct_answer = y.strip().replace("Goal: ", "")
-    print_orange(f"id:{id}  correct_answer: {correct_answer}")
+    print_orange(f"id:{id}  correct_answer: {correct_answer} Q:{question}")
     error_black_set = [set(), set(), set()]
     feedback_time = 0
 
@@ -262,8 +262,8 @@ import concurrent.futures
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
 
-difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
-num_examples = [5]
+difficulties = ["easy", "medium", "hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+num_examples = [0,1,5]
 # num_examples = [0]
 for difficulty in difficulties:
     print_blue(f"-----------------------{difficulty}-------------------------")
@@ -276,7 +276,7 @@ for difficulty in difficulties:
     elif difficulty == "hard":
         data_set = hard_data_set
 
-    sections = re.split(r'\n\s*\n', data_set)[:]
+    sections = re.split(r'\n\s*\n', data_set)[:2]
     csv_filename = f"evaluation_results_{difficulty}.csv"
 
     results_table = []
@@ -301,8 +301,21 @@ for difficulty in difficulties:
         row = {key: f'{key}: {np.mean(results[key]):.2%}' for key in filtered_keys if key in results}
         results_table.append(row)
 
+
+
     # 打印每个难度结束后的结果
+    # for index, row in enumerate(results_table):
+    #     feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
+    #     print(f'{feedback_type}:', ', '.join(row.values()))
+    #     print("\n")
+    # 打印每个难度结束后的结果
+    # 打印每个难度结束后的结果
+    print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
     for index, row in enumerate(results_table):
         feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
-        print(f'{feedback_type}:', ', '.join(row.values()))
-        print("\n")
+        # 格式化行数据为制表符分隔
+        row_data = "\t".join(
+            f'{float(value):.2%}' if isinstance(value, (float, int)) else value for key, value in row.items() if
+            key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
+        print(f"{feedback_type}\t{row_data}")
+

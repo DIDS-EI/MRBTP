@@ -94,7 +94,7 @@ Goal: On_Dessert_CoffeeStation & (~Active_AC | Active_TubeLight)
 Instruction: Would you mind giving the floor a thorough sweep? It looks like it could use a good cleaning. Oh, and by the way, I won't be needing that insulated cup or the fresh juice anymore, so no need to bring them over.
 Goal: IsClean_Floor & ~Holding_VacuumCup & ~Holding_NFCJuice
 
-Instruction: Deliver milk drink to Table3 and either keep the curtains open or do not stand near bat.
+Instruction: Could you swing by with a milk drink to Table 3? And hey, either leave the drapes drawn back or make sure you don’t hover near the bar. Appreciate it!
 Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~RobotNear_Bar)
 
 Instruction: Can you make sure we have either some desserts or coffee available for serving? Also, I'd like some almond milk brought to the bar counter.
@@ -103,16 +103,16 @@ Goal: (Exists_Dessert | Exists_Coffee) & On_ADMilk_Bar
 Instruction: Please deliver coffee to Bar2 and ensure that dessert is available but not on the Bar.
 Goal: On_Coffee_Bar2 & Exists_Dessert & ~On_Dessert_Bar
 
-Instruction: Can you bring some milk to Table 2 and the dessert to Bar 2? Also, double-check that there’s no juice on Table 2, please.
+Instruction: Could you kindly transport some milk to Table 2 and the dessert to Bar 2? Also, please ensure there's no juice remaining on Table 2 to keep it tidy.
 Goal: On_Milk_Table2 & On_Dessert_Bar2 & ~On_NFCJuice_Table2
 
-Instruction: Please make sure there aren’t any chips on either bar, and could you bring ADMilk to the bar for me?
+Instruction: Please check that there are no crisps at any of the bar areas, and while you're at it, could you deliver some ADMilk to the bar? It’s for a guest’s special order.
 Goal: ~On_Chips_Bar & ~On_Chips_Bar2 & On_ADMilk_Bar
 
-Instruction: Could you possibly bring either milk or a soft drink to Bar 2, but steer clear of the bar area while doing so?
+Instruction: When you have a moment, could you bring over either milk or a soft drink to the second bar? And please make sure not to hang around the main bar area to keep the traffic moving smoothly.
 Goal: (On_Milk_Bar2 | On_Softdrink_Bar2) & ~RobotNear_Bar
 
-Instruction: Could you deliver yogurt to Table 3 and bernachon to Table 2? Oh, and please place the vacuum cup on the coffee station.
+Instruction: Would you mind bringing some yogurt to Table 3 and a slice of bernachon to Table 2? Additionally, could you set the vacuum cup near the coffee machine? We'd appreciate it if these are arranged promptly.
 Goal: On_Yogurt_Table3 & On_Bernachon_Table2 & On_VacuumCup_CoffeeStation
 
 Instruction: Please serve milk and dessert at the bar, and make sure there’s no juice sitting on Table 2.
