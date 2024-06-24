@@ -7,7 +7,7 @@ from mabtpg import MiniGridToMAGridEnv
 num_agent = 3
 
 #其他场景参数
-env_id = "BabyAI-GoToLocalS8N7-v0"
+env_id = "MiniGrid-Dynamic-Obstacles-16x16-v0" #"BabyAI-GoToLocalS8N7-v0"
 tile_size = 32
 agent_view_size =7
 screen_size = 640
