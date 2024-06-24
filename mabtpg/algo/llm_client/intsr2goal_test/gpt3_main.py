@@ -17,6 +17,44 @@ def print_green(text):
     reset_color_code = '\033[0m'   # ANSI escape sequence to reset color to default
     print(f"{green_color_code}{text}{reset_color_code}")
 
+
+def generate_prompt1(num_examples):
+    # Basic prompt structure
+    prompt1 = """
+[Condition Predicates]
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Dirty_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+
+[Objects]
+<items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup', 'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange', 'Kettle', 'PaperCup', 'Bread', 'LunchBox', 'Teacup', 'Chocolate', 'Sandwiches', 'Mugs', 'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk', 'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup', 'Tissue', 'YogurtDrink', 'Newspaper', 'Box', 'PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake', 'Tray', 'Bread', 'Glass', 'Door', 'Mug', 'Machine', 'PackagedCoffee', 'CubeSugar', 'Apple', 'Spoon', 'Drinks', 'Drink', 'Ice', 'Saucer', 'TrashBin', 'Knife', 'Cube']
+<place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6', 'WindowTable4', 'WindowTable5', 'QuietTable7', 'QuietTable8', 'QuietTable9', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats', 'VIPLounge', 'MerchZone']
+<items_place>=<items>+<place>
+<furniture>=['Table1', 'Floor', 'Chairs']
+<appliance>=['AC', 'TubeLight', 'HallLight']
+<furnishing>=['Curtain']
+<control>=['ACTemperature']
+
+[Few-shot Demonstrations]
+"""
+    # Define the examples
+    examples = [
+        "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
+        "Instruction: If the curtains are already closed or the AC is running, could you please grab me a hot milk?\n( Closed_Curtain | Active_AC ) & Holding_Milk",
+        "Instruction: Please turn up the air conditioning and come to the bar counter.\nRobotNear_Bar & ~Low_ACTemperature",
+        "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
+        "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the reading nook?\n~Dirty_Chairs & ( On_Apple_ReadingNook | On_Banana_ReadingNook )"
+    ]
+
+    # Add the desired number of examples
+    if num_examples > 0:
+        prompt1 += "\n".join(examples[:num_examples])
+
+    prompt1 += "\n[System]\n[Condition Predicates] Lists all predicates representing conditions and their optional parameter sets.\n[Objects] Lists all parameter sets.\n[Few-shot Demonstrations] Provide several examples of Instruction to Goal mapping."
+    return prompt1
+
+
+# Example of using the function
+print(generate_prompt1(1))  # Generate a prompt with 1 example
+
 def get_feedback_prompt_last(id,prompt,result,error_list,error_black_set):
     # wrong_format_set,wrong_predicate_set,wrong_object_set = error_list
 
@@ -186,65 +224,64 @@ count = 0
 
 # llm = LLMERNIE()
 llm = LLMGPT3()
-question_list = []
-correct_answer_list = []
-correct_answer_ls_set = []
-outputs_list = [[] for _ in range(len(sections))]
-
-total_num = len(question_list)
-
-error_black_ls = [[set(),set(),set()] for _ in range(total_num)]
 
 
+def evaluate_responses(sections, feedback_cycles):
+    results = {f'GA-{f}F': [] for f in feedback_cycles}
+    results.update({f'IA-{f}F': [] for f in feedback_cycles})
 
-max_attempts = 2
-# total_GR_ls = np.zeros(5)
-total_GR_ls=[]
-total_SR_ls = []
-total_GCR_ls = []
+    for i, s in enumerate(sections):
+        x, y = s.strip().splitlines()
+        question = x.strip()
+        correct_answer = y.strip().replace("Goal: ", "")
 
-# for time in range(try_times):
-finish_num = 0
-SR = 0
-GR = 0
-GCR = 0
-# 统计语法正确的数量
-GR_ls=np.zeros(6)
+        # 在你的主循环中维护错误黑名单的状态：
+        error_black_set = [set(), set(), set()]
 
+        # Initialize tracking for this section
+        feedback_results = {}
+        for f in feedback_cycles:
+            feedback_results[f] = {'grammar_correct': False, 'intent_correct': False}
 
+        for feedback_count in range(max(feedback_cycles) + 1):
+            # Generate prompt with appropriate number of examples
+            num_examples = min(feedback_count, 5)  # Assuming you provide max 5 examples
+            prompt = generate_prompt1(num_examples)
 
-for i, s in enumerate(sections[:1]):
-    x, y = s.strip().splitlines()
-    question = x.strip()
-    correct_answer = y.strip().replace("Goal: ", "")
+            messages = [{"role": "user", "content": prompt + "\n" + question}]
+            answer = llm.request(message=messages)
+            print_green(f"answer: {answer}")
 
+            grammar_correct, error_list = format_check(answer)
+            if grammar_correct:
+                content_correct = evaluate_answer(correct_answer, answer)
+                # Record results at each specific feedback level
+                for f in feedback_cycles:
+                    if feedback_count <= f:
+                        feedback_results[f]['grammar_correct'] = True
+                        feedback_results[f]['intent_correct'] = content_correct
 
-    attempts = 0
-    grammar_attempts = 0
-    content_correct = False
-    grammar_correct = False
-    error_black_set = [set(), set(), set()]
-
-    while attempts < max_attempts:
-        messages = []
-        messages.append({"role": "user", "content": prompt + "\n" +question})
-        answer = llm.request(message=messages)
-        print_green(f"answer: {answer}")
-
-        grammar_correct, error_list = format_check(answer)
-
-        if not grammar_correct:
-            prompt = get_feedback_prompt(prompt, error_list, error_black_set)
-            attempts += 1
-            grammar_attempts = attempts
-        else:
-            content_correct = evaluate_answer(correct_answer, answer)
-            if content_correct:
-                break
             else:
-                prompt = get_feedback_prompt(prompt, error_list, error_black_set)
-                attempts += 1
-                grammar_attempts = attempts
+                if feedback_count < max(feedback_cycles):
+                    # 只有当需要反馈时才调用此函数，并且传递累积的错误黑名单
+                    prompt = get_feedback_prompt(prompt, "", question, "", error_list, error_black_set)
 
-    print(f"Grammar Correct on Attempt: {grammar_attempts}")
-    print(f"Content Correct: {content_correct}")
+        # After all attempts for this section, save results
+        for f in feedback_cycles:
+            results[f'GA-{f}F'].append(1 if feedback_results[f]['grammar_correct'] else 0)
+            results[f'IA-{f}F'].append(1 if feedback_results[f]['intent_correct'] else 0)
+
+    return results
+
+# Define feedback cycles
+feedback_cycles = [0, 1, 5]
+
+# Calculate the results
+sections = re.split(r'\n\s*\n', data_set)[:1]  # Assuming data_set is defined and loaded
+evaluation_results = evaluate_responses(sections, feedback_cycles)
+
+# Calculate percentage results
+total_sections = len(sections)
+for key in evaluation_results:
+    accuracy = np.mean(evaluation_results[key]) * 100
+    print(f"{key}: {accuracy:.2f}%")
