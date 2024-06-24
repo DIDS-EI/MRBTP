@@ -10,10 +10,10 @@ Goal: On_Water_Table1
 Instruction: "Would it be possible to send some yoghurt over to the second table?"
 Goal: On_Yogurt_Table2
 
-Instruction: "Could you activate the cooling system, please?"
+Instruction: "Would you mind turning on the air conditioning?"
 Goal: Active_AC
 
-Instruction: "I'd appreciate it if you could deliver a pre-packaged beverage to the third table."
+Instruction: "I'd appreciate it if you could deliver a bottled drink to the third table."
 Goal: On_BottledDrink_Table3
 
 Instruction: "I would like a dessert at the bar, please."

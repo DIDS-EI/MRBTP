@@ -180,68 +180,7 @@ def evaluate_answer(correct_answer, user_answer):
     # return correct_answer == user_answer
 
 
-
-
-# def evaluate_responses_and_save_to_csv(prompt, sections, csv_filename):
-#     results = {f'GA-{f}F': [] for f in range(6)}
-#     results.update({f'IA-{f}F': [] for f in range(6)})
-#
-#     with open(csv_filename, 'w', newline='', encoding='utf-8') as file:
-#         writer = csv.writer(file)
-#
-#         # 初始化CSV文件，写入标题行。因为列数是动态的，可以省略列标题或仅写入固定的标题
-#         writer.writerow(['Instruction', 'Goal', 'Feedback Details'])
-#
-#         for i, s in enumerate(sections):
-#             x, y = s.strip().splitlines()
-#             question = x.strip()
-#             correct_answer = y.strip().replace("Goal: ", "")
-#             print_orange(f"correct_answer: {correct_answer}")
-#
-#             error_black_set = [set(), set(), set()]
-#             feedback_details = []
-#
-#             for feedback_time in range(6):
-#                 messages = [{"role": "user", "content": prompt + "\n" + question}]
-#                 answer = llm.request(message=messages)
-#                 messages.append({"role": "assistant", "content": answer})
-#                 print_yellow(f"{feedback_time}th Answer: {answer}")
-#
-#                 grammar_correct, error_list = format_check(answer)
-#                 content_correct = False
-#                 error_message = ""
-#
-#                 if grammar_correct:
-#                     content_correct = evaluate_answer(correct_answer, answer)
-#                     # 一旦语法正确，标记所有后续反馈级别为正确
-#                     for f in range(feedback_time, 6):
-#                         results[f'GA-{f}F'].append(1)  # 标记语法正确
-#                         results[f'IA-{f}F'].append(1 if content_correct else 0)
-#                     break  # 退出循环，因为语法正确
-#                 else:
-#                     error_message = get_feedback_prompt(error_list, error_black_set)
-#                     feedback_prompt = error_message
-#                     messages.append({"role": "user", "content": feedback_prompt})
-#
-#                 # 累积每次反馈的结果到一个列表
-#                 feedback_details.append(f"{feedback_time}F: {answer} (Error: {error_message})")
-#
-#                 # 更新结果
-#                 content_correct = evaluate_answer(correct_answer, answer)
-#                 results[f'GA-{feedback_time}F'].append(1 if grammar_correct else 0)
-#                 results[f'IA-{feedback_time}F'].append(1 if content_correct else 0)
-#
-#                 if grammar_correct and content_correct:
-#                     break  # 如果答案正确，不需要更多反馈
-#
-#             # 一次性将问题、答案及所有反馈写入一行
-#             writer.writerow([question, correct_answer, '; '.join(feedback_details)])
-#             print_status(grammar_correct, content_correct)
-#
-#     return results
-
-
-def evaluate_section(prompt, section, csv_filename):
+def evaluate_section(prompt, section, csv_filename,id):
     """ Process a single section of the dataset and return detailed results for further processing. """
     results = {f'GA-{f}F': [] for f in range(6)}
     results.update({f'IA-{f}F': [] for f in range(6)})
@@ -249,7 +188,7 @@ def evaluate_section(prompt, section, csv_filename):
     x, y = section.strip().splitlines()
     question = x.strip()
     correct_answer = y.strip().replace("Goal: ", "")
-    print_orange(f"correct_answer: {correct_answer}")
+    print_orange(f"id:{id}  correct_answer: {correct_answer}")
     error_black_set = [set(), set(), set()]
     feedback_time = 0
 
@@ -262,7 +201,7 @@ def evaluate_section(prompt, section, csv_filename):
         messages = [{"role": "user", "content": prompt + "\n" + question}]
         answer = llm.request(message=messages)
         messages.append({"role": "assistant", "content": answer})
-        print_yellow(f"{feedback_time}th Answer: {answer}")
+        print_yellow(f"id:{id}  {feedback_time}th Answer: {answer}")
 
         grammar_correct, error_list = format_check(answer)
         content_correct = False
@@ -323,8 +262,8 @@ import concurrent.futures
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
 
-difficulties = ["easy", "medium", "hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
-num_examples = [0, 1, 5]
+difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+num_examples = [5]
 # num_examples = [0]
 for difficulty in difficulties:
     print_blue(f"-----------------------{difficulty}-------------------------")
@@ -349,7 +288,7 @@ for difficulty in difficulties:
         prompt = generate_prompt1(num, difficulty) + prompt2
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {executor.submit(evaluate_section, prompt, section, csv_filename): section for section in sections}
+            futures = {executor.submit(evaluate_section, prompt, section, csv_filename,id): section for id,section in enumerate(sections)}
             results = {f'GA-{f}F': [] for f in range(6)}
             results.update({f'IA-{f}F': [] for f in range(6)})
 
