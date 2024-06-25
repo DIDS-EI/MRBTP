@@ -82,7 +82,7 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
         examples = [
             "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
             "Instruction: Please close the curtains.\nClosed_Curtain",
-            "Instruction: Please lower the air conditioning temperature.\nLow_ACTemperature",
+            "Instruction: Could you turn on the air conditioning, please?\nActive_AC",
             "Instruction: Please ensure the water is ready for service.\nExists_Water",
             "Instruction: It's a bit messy here, could you rearrange the chairs?\nIsClean_Chairs"
         ]
