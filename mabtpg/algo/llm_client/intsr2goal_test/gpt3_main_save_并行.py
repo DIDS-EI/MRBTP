@@ -283,8 +283,8 @@ import concurrent.futures
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
 
-difficulties = ["easy", "medium", "hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
-num_examples = [0,1,5]
+difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+num_examples = [5]
 # num_examples = [0]
 for difficulty in difficulties:
     print_blue(f"-----------------------{difficulty}-------------------------")

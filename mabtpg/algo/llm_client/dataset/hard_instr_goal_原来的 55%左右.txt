@@ -7,7 +7,7 @@ Goal: (Active_AC | ~Active_TubeLight) & ~On_VacuumCup_Table1
 Instruction: Please bring a serving of chips to Table 6 by the window, and along with it, either a glass of milk or some yogurt.
 Goal: On_Chips_WindowTable6 & (On_Milk_WindowTable6 | On_Yogurt_WindowTable6 )
 
-Instruction:  Please turn on the AC but don't set the temperature too low, or open the curtains.
+Instruction: Would you mind letting in some light by drawing the curtains, or perhaps turn on the AC? Just a heads up, I prefer it not too chilly.
 Goal: ~Closed_Curtain | Active_AC & ~Low_ACTemperature
 
 Instruction: Can you bring the yogurt to the first table, please? Afterwards, could you then go check the water station or coffee table.
@@ -100,7 +100,7 @@ Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~RobotNear_Bar)
 Instruction: Can you make sure we have either some desserts or coffee available for serving? Also, I'd like some almond milk brought to the bar counter.
 Goal: (Exists_Dessert | Exists_Coffee) & On_ADMilk_Bar
 
-Instruction: Please place a coffee on Bar 2, ensure there is a dessert available, and make sure the dessert is not placed on Bar.
+Instruction: Please deliver coffee to Bar2 and ensure that dessert is available but not on the Bar.
 Goal: On_Coffee_Bar2 & Exists_Dessert & ~On_Dessert_Bar
 
 Instruction: Make sure to deliver Milk to Table2 and Dessert to Bar2, and check that Juice is not at the table 2.
