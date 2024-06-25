@@ -222,7 +222,7 @@ def evaluate_section(prompt, section, csv_filename,id):
         messages = [{"role": "user", "content": prompt + "\n" + question}]
         answer = llm.request(message=messages)
         messages.append({"role": "assistant", "content": answer})
-        print_yellow(f"id:{id}  {feedback_time}th Answer: {answer}")
+        print_yellow(f"id:{id}  {feedback_time}th Answer: {answer}  Q:{question}")
 
         grammar_correct, error_list = format_check(answer)
         content_correct = False
@@ -284,7 +284,7 @@ import concurrent.futures
 llm = LLMGPT3()  # 使用GPT-3模型
 
 
-difficulties = ["medium"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
 num_examples = [0,1,5]
 
 # num_examples = [0]

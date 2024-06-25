@@ -22,19 +22,19 @@ Goal: Exists_Water & Exists_Dessert & Exists_Coffee
 Instruction: Please take the bernachon to Table 1. Also, check that the tube lights are off, or at least that the air conditioner isn't set on a very low setting.
 Goal: On_Bernachon_Table1 & (~Active_TubeLight | ~Low_ACTemperature)
 
-Instruction: Could you bring a glass of water and some chips to table 6, and also check if the AC is on?
+Instruction: Could you bring water and some chips to the sixth table by the window, and also check if the air conditioning is on?
 Goal: On_Water_WindowTable6 & On_Chips_WindowTable6 & Active_AC
 
-Instruction: Come to Table 3. I'd appreciate it if you could deliver a coffee to Table 3, and also check that the curtains are open, will you?
+Instruction: Please come near the third table. I would appreciate it if you could deliver a coffee to the third table and also ensure that the curtains are open. Thank you.
 Goal: RobotNear_Table3 & On_Coffee_Table3 & ~Closed_Curtain
 
-Instruction: Please deliver this coffee to the bar or bar2, but once you've done that, make sure you move away from the bar area.
+Instruction: Please place a coffee either at Bar or Bar2, and make sure the robot is not near the Bar.
 Goal: (On_Coffee_Bar | On_Coffee_Bar2) & ~RobotNear_Bar
 
 Instruction: Please increase the air conditioning temperature, and then join me at bar No. 2 or bar.
 Goal: ( RobotNear_Bar2 | RobotNear_Bar ) & ~Low_ACTemperature
 
-Instruction: Please put down the NFC Juice you're carrying. After that, could you either sweep the floor or tidy up the chairs?
+Instruction: Please make sure you are not holding NFC juice, and verify that either the ground or the chairs are clean.
 Goal: ~Holding_NFCJuice & (IsClean_Floor | IsClean_Chairs)
 
 Instruction: Try not to hang around Bar and Bar2 all the time, and oh, do remember to pick up and hold a bottle of spring water.
