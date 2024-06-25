@@ -100,13 +100,13 @@ Goal: On_MilkDrink_Table3 & (~Closed_Curtain | ~RobotNear_Bar)
 Instruction: Can you make sure we have either some desserts or coffee available for serving? Also, I'd like some almond milk brought to the bar counter.
 Goal: (Exists_Dessert | Exists_Coffee) & On_ADMilk_Bar
 
-Instruction: Please deliver coffee to Bar2 and ensure that dessert is available but not on the Bar.
+Instruction: Please place a coffee on Bar 2, ensure there is a dessert available, and make sure the dessert is not placed on Bar.
 Goal: On_Coffee_Bar2 & Exists_Dessert & ~On_Dessert_Bar
 
-Instruction: Could you kindly transport some milk to Table 2 and the dessert to Bar 2? Also, please ensure there's no juice remaining on Table 2 to keep it tidy.
+Instruction: Please place the milk on Table 2 and the dessert on Bar 2. Also, make sure there is no NFC juice on Table 2.
 Goal: On_Milk_Table2 & On_Dessert_Bar2 & ~On_NFCJuice_Table2
 
-Instruction: Please check that there are no crisps at any of the bar areas, and while you're at it, could you deliver some ADMilk to the bar? It’s for a guest’s special order.
+Instruction: Ensure that chips are not on bar and bar2 and please deliver the ADMilk to bar.
 Goal: ~On_Chips_Bar & ~On_Chips_Bar2 & On_ADMilk_Bar
 
 Instruction: Please place either milk or a soft drink on Bar 2, and make sure no robots are near the bar.
