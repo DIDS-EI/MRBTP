@@ -82,7 +82,7 @@ Goal: (~Closed_Curtain | ~Low_ACTemperature) & On_Dessert_WindowTable6
 Instruction: Could you dim the overhead fluorescent light or hall light and also deliver a bag of crisps to Bar?
 Goal: On_Chips_Bar & ~(Active_TubeLight | Active_HallLight)
 
-Instruction: Can you take a moment to either tidy up the table or switch off the hall light? And, please pick up the water.
+Instruction: Please ensure that either the first table is clean or the main light is off, and make sure you are holding water.
 Goal: (IsClean_Table1 | ~Active_HallLight) & Holding_Water
 
 Instruction: Please bring chips to Table1 and either coffee to Table2 or yogurt to Table3.
@@ -91,7 +91,7 @@ Goal: On_Chips_Table1 & (On_Coffee_Table2 | On_Yogurt_Table3)
 Instruction: Deliver dessert to CoffeeStation and ensure either the AC is off or the tube light is on.
 Goal: On_Dessert_CoffeeStation & (~Active_AC | Active_TubeLight)
 
-Instruction: Would you mind giving the floor a thorough sweep? It looks like it could use a good cleaning. Oh, and by the way, I won't be needing that insulated cup or the NFCJuice anymore, so no need to bring them over.
+Instruction: Please ensure the ground is spotless. Additionally, confirm that you are not carrying a vacuum cup or NFC juice.
 Goal: IsClean_Floor & ~Holding_VacuumCup & ~Holding_NFCJuice
 
 Instruction: Deliver milk drink to Table3 and either keep the curtains open or do not stand near bat.
@@ -103,7 +103,7 @@ Goal: (Exists_Dessert | Exists_Coffee) & On_ADMilk_Bar
 Instruction: Please place a coffee on Bar 2, ensure there is a dessert available, and make sure the dessert is not placed on Bar.
 Goal: On_Coffee_Bar2 & Exists_Dessert & ~On_Dessert_Bar
 
-Instruction: Please deliver Milk to Table2 and Dessert to Bar2, and check that Juice is not at the table 2.
+Instruction: Please place the milk on Table 2 and the dessert on Bar 2. Also, make sure there is no NFC juice on Table 2.
 Goal: On_Milk_Table2 & On_Dessert_Bar2 & ~On_NFCJuice_Table2
 
 Instruction: Ensure that chips are not on bar and bar2 and please deliver the ADMilk to bar.
