@@ -205,7 +205,7 @@ def evaluate_responses_and_save_to_csv(prompt, sections, csv_filename):
                 messages = [{"role": "user", "content": prompt + "\n" + question}]
                 answer = llm.request(message=messages)
                 messages.append({"role": "assistant", "content": answer})
-                print_yellow(f"{feedback_time}th Answer: {answer}")
+                print_yellow(f"{feedback_time}th Answer: {answer} question:{question}")
 
                 grammar_correct, error_list = format_check(answer)
                 content_correct = False
