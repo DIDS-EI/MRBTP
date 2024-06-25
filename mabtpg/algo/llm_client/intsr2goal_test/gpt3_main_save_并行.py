@@ -283,8 +283,10 @@ import concurrent.futures
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
 
-difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
-num_examples = [5]
+
+difficulties = ["medium"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+num_examples = [0,1,5]
+
 # num_examples = [0]
 for difficulty in difficulties:
     print_blue(f"-----------------------{difficulty}-------------------------")
@@ -331,12 +333,21 @@ for difficulty in difficulties:
     #     print("\n")
     # 打印每个难度结束后的结果
     # 打印每个难度结束后的结果
+    # print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
+    # for index, row in enumerate(results_table):
+    #     feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
+    #     # 格式化行数据为制表符分隔
+    #     row_data = "\t".join(
+    #         f'{float(value):.2%}' if isinstance(value, (float, int)) else value for key, value in row.items() if
+    #         key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
+    #     print(f"{feedback_type}\t{row_data}")
+    # 打印每个难度结束后的结果
     print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
     for index, row in enumerate(results_table):
         feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
         # 格式化行数据为制表符分隔
         row_data = "\t".join(
-            f'{float(value):.2%}' if isinstance(value, (float, int)) else value for key, value in row.items() if
+            value.split(': ')[1] if ':' in value else value  # 直接取冒号后的百分比值
+            for key, value in row.items() if
             key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
         print(f"{feedback_type}\t{row_data}")
-
