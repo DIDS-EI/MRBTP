@@ -102,7 +102,7 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
             "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
             "Instruction: Please turn up the air conditioning and come to the bar counter.\nRobotNear_Bar & ~Low_ACTemperature",
             "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
-            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
+            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
         ]
 
     # Add the desired number of examples
