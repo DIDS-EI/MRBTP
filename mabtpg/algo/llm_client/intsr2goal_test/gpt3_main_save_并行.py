@@ -320,7 +320,7 @@ llm = LLMGPT3()  # 使用GPT-3模型
 max_try_time = 5
 try_time = 1
 
-difficulties = ["easy","medium","hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+difficulties = ["easy","medium"]  # 这里可以扩展为 ["easy", "medium", "hard"]
 num_examples = [0,1,5]
 
 # 初始化存储结构
@@ -331,9 +331,9 @@ for try_time in range(max_try_time):
     for difficulty in difficulties:
         print_blue(f"-----------------------{difficulty}-------------------------")
 
-        for difficulty in difficulties:
-            if difficulty not in all_results:
-                all_results[difficulty] = {num: [] for num in num_examples}
+        for diff in difficulties:
+            if diff not in all_results:
+                all_results[diff] = {num: [] for num in num_examples}
 
         # 选择数据集
         data_set = easy_data_set
@@ -392,11 +392,11 @@ for try_time in range(max_try_time):
                 key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
             print(f"{feedback_type}\t{row_data}")
 
-print("\n--------------------------------------------")
+print("\n--------------------------------------------\n")
 # 计算平均值并打印
 for difficulty in difficulties:
+    print(f"--------- {difficulty} Average Results ---------")
     for num in num_examples:
-        print(f"--------- {difficulty} Feedback Level {num} Average Results ---------")
         average_results = {}
         for key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']:
             # 计算每个键的平均值
@@ -406,4 +406,7 @@ for difficulty in difficulties:
 
         # 格式化输出平均结果
         row_data = "\t".join(value for value in average_results.values())
-        print(f"Zero-shot\t{row_data}")
+        if num==0:
+            print(f"Zero-shot\t{row_data}")
+        else:
+            print(f"Few-shot-{num}\t{row_data}")

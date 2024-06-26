@@ -1,7 +1,7 @@
 from __future__ import annotations
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
-
+from mabtpg.env_gridworld.empty_env import EmptyEnv
 
 #主要场景参数
 num_agent = 3
@@ -21,6 +21,8 @@ mingrid_env = gym.make(
 )
 
 env = MiniGridToMAGridEnv(mingrid_env, num_agent=num_agent)
+# env = EmptyEnv(mingrid_env)
+
 
 # BT规划算法，这里就直接加载随机行为树
 from mabtpg import BehaviorTree, BehaviorLibrary
