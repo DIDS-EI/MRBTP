@@ -1,9 +1,10 @@
 [Condition Predicates]
-RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Dirty_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<makable>, Dirty_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
 
 [Objects]
 <items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup','Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange','Kettle', 'PaperCup', 'Bread', 'LunchBox','Teacup', 'Chocolate', 'Sandwiches', 'Mugs','Watermelon', 'Tomato', 'CleansingFoam','CocountMilk','SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup','Tissue', 'YogurtDrink', 'Newspaper', 'Box','PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake','Tray', 'Bread','Glass', 'Door','Mug', 'Machine','PackagedCoffee', 'CubeSugar','Apple', 'Spoon','Drinks', 'Drink','Ice', 'Saucer','TrashBin', 'Knife','Cube']
 <place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6', 'WindowTable4', 'WindowTable5', 'QuietTable7', 'QuietTable8', 'QuietTable9', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats', 'VIPLounge', 'MerchZone']
+<makable>=['Coffee', 'Water', 'Dessert']
 <items_place>=<items>+<place>
 <furniture>=['Table1','Floor','Chairs']
 <appliance>=['AC','TubeLight','HallLight']

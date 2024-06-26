@@ -1,0 +1,32 @@
+ID,Instruction,Correct Goal,Model Output 1,Feedback Given 1,Model Output 2,Feedback Given 2,Model Output 3,Feedback Given 3,Model Output 4,Feedback Given 4,Model Output 5,Feedback Given 5,Model Output 6,Feedback Count,Grammar Correct,Content Correct
+1,"Instruction: Please check that there are no crisps at any of the bar areas, and while you're at it, could you deliver some ADMilk to the bar? It’s for a guest’s special order.",~On_Chips_Bar & ~On_Chips_Bar2 & On_ADMilk_Bar,(~Exists_Chips_Bar) & Holding_ADMilk_Bar,,,,,,,,,,,0,True,False
+0,"Instruction: Could you kindly transport some milk to Table 2 and the dessert to Bar 2? Also, please ensure there's no juice remaining on Table 2 to keep it tidy.",On_Milk_Table2 & On_Dessert_Bar2 & ~On_NFCJuice_Table2,Holding_Milk & On_Dessert_Bar2 & ~On_NFCJuice_Table2,,,,,,,,,,,0,True,False
+3,"Instruction: Would you mind bringing some yogurt to Table 3 and a slice of bernachon to Table 2? Additionally, could you set the vacuum cup near the coffee machine? We'd appreciate it if these are arranged promptly.",On_Yogurt_Table3 & On_Bernachon_Table2 & On_VacuumCup_CoffeeStation,Exists_Yogurt_Table3 & Exists_Bernachon_Table2 & RobotNear_VacuumCup_CoffeeMachine,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] CoffeeMachine
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Holding_Yogurt(Table3) & Holding_Bernachon(Table2) & RobotNear_VacuumCup(CoffeeMachine),It contains syntax errors or illegal characters.,Exists_Yogurt(Table3) & Exists_Bernachon(Table2) & RobotNear_VacuumCup(CoffeeMachine),It contains syntax errors or illegal characters.,Exists_Yogurt(Table3) & Exists_Bernachon(Table2) & RobotNear_VacuumCup(CoffeeMachine),It contains syntax errors or illegal characters.,Exists_Yogurt(Table3) & Exists_Bernachon(Table2) & RobotNear_VacuumCup(CoffeeMachine),It contains syntax errors or illegal characters.,Exists_Yogurt(On_Yogurt_Table3) & Exists_Bernachon(On_Bernachon_Table2) & Exists_VacuumCup(RobotNear_CoffeeMachine),6,False,False
+2,"Instruction: When you have a moment, could you bring over either milk or a soft drink to the second bar? And please make sure not to hang around the main bar area to keep the traffic moving smoothly.",(On_Milk_Bar2 | On_Softdrink_Bar2) & ~RobotNear_Bar,"Exists_items_place(items='Milk', place='Bar2') | Exists_items_place(items='Softdrink', place='Bar2') & ~Exists_items_place(items='Bar', place='Main')",It contains syntax errors or illegal characters.,Exists_x (On_Milk_SecondBar(x) | On_Softdrink_SecondBar(x)) & ~RobotNear_Bar(MainBar),It contains syntax errors or illegal characters.,Exists_makable & (On_Milk_Bar2 | On_Softdrink_Bar2) & ~RobotNear_Bar & ~RobotNear_Bar2,"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] makable
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_items_place((Holding_ADMilk | Holding_Softdrink) & RobotNear_Bar2 & ~(RobotNear_Bar)),"
+[Syntax Blacklist] 
+[]Condition Predicate Blacklist] 
+[Object Blacklist] makable, items, place
+
+[Additional Promot]
+1. Outputs including texts in the three blacklists are forbidden.
+2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.
+3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.
+4. Please generate directly interpretable predicate formulas without any additional explanations.",Exists_x (On_Milk_SecondBar(x) | On_Softdrink_SecondBar(x)) & ~RobotNear_Bar(x),It contains syntax errors or illegal characters.,Exists_Bar2(On_Milk_Bar2 | On_Softdrink_Bar2) & ~RobotNear_Bar & ~RobotNear_Bar2,6,False,False

@@ -11,14 +11,38 @@ from sympy import symbols, simplify_logic
 import re
 from sympy.logic.boolalg import Implies
 from sympy import sympify
-from mabtpg.algo.llm_client.dataset.data_process_check import format_check,word_correct,goal_transfer_ls_set
+from mabtpg.algo.llm_client.dataset.data_process_check import format_check, word_correct, goal_transfer_ls_set
+
+
+def init_csv(filename, max_feedbacks=5):
+    """初始化 CSV 文件并写入标题行，包含多次输出和反馈。"""
+    headers = ['ID', 'Instruction', 'Correct Goal']
+    for i in range(max_feedbacks + 1):
+        headers.append(f'Model Output {i + 1}')
+        if i < max_feedbacks:
+            headers.append(f'Feedback Given {i + 1}')
+    headers.extend(['Feedback Count', 'Grammar Correct', 'Content Correct'])  # 添加检查结果的列
+    print("headers:", headers)
+    with open(filename, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(headers)
+
+
+def append_to_csv(filename, data):
+    """向 CSV 文件添加一行数据。"""
+    with open(filename, 'a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(data)
+
+
 def print_green(text):
     """
     Prints the provided text in green color in the terminal.
     """
     green_color_code = '\033[92m'  # ANSI escape sequence for green color
-    reset_color_code = '\033[0m'   # ANSI escape sequence to reset color to default
+    reset_color_code = '\033[0m'  # ANSI escape sequence to reset color to default
     print(f"{green_color_code}{text}{reset_color_code}")
+
 
 def print_blue(text):
     """
@@ -34,8 +58,9 @@ def print_yellow(text):
     Prints the provided text in yellow color in the terminal.
     """
     yellow_color_code = '\033[93m'  # ANSI escape sequence for yellow color
-    reset_color_code = '\033[0m'   # ANSI escape sequence to reset color to default
+    reset_color_code = '\033[0m'  # ANSI escape sequence to reset color to default
     print(f"{yellow_color_code}{text}{reset_color_code}")
+
 
 def print_status(grammar_correct, content_correct):
     """
@@ -53,6 +78,7 @@ def print_status(grammar_correct, content_correct):
     print(f"{grammar_color}Grammar_correct: {grammar_correct}{reset_color} "
           f"{content_color}Content_correct: {content_correct}{reset_color}")
 
+
 def print_orange(text):
     """
     Prints the provided text in orange color in the terminal.
@@ -62,22 +88,23 @@ def print_orange(text):
     print(f"{orange_color_code}{text}{reset_color_code}")
 
 
-def generate_prompt1(num_examples,diffculty):
+def generate_prompt1(num_examples, diffculty):
     # Basic prompt structure
     prompt1 = """
 [Condition Predicates]
-RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
+RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<makable>, IsClean_<furniture>, Active_<appliance>, Closed_<furnishing>, Low_<control>
 
 [Objects]
 <items>=['Coffee', 'Water', 'Dessert', 'Softdrink', 'BottledDrink', 'Yogurt', 'ADMilk', 'MilkDrink', 'Milk', 'VacuumCup', 'Chips', 'NFCJuice', 'Bernachon', 'ADMilk', 'SpringWater', 'Apple', 'Banana', 'Mangosteen', 'Orange', 'Kettle', 'PaperCup', 'Bread', 'LunchBox', 'Teacup', 'Chocolate', 'Sandwiches', 'Mugs', 'Watermelon', 'Tomato', 'CleansingFoam', 'CocountMilk', 'SugarlessGum', 'MedicalAdhensiveTape', 'SourMilkDrink', 'PaperCup', 'Tissue', 'YogurtDrink', 'Newspaper', 'Box', 'PaperCupStarbucks', 'CoffeeMachine', 'Straw', 'Cake', 'Tray', 'Bread', 'Glass', 'Door', 'Mug', 'Machine', 'PackagedCoffee', 'CubeSugar', 'Apple', 'Spoon', 'Drinks', 'Drink', 'Ice', 'Saucer', 'TrashBin', 'Knife', 'Cube']
 <place>=['Bar', 'Bar2', 'WaterStation', 'CoffeeStation', 'Table1', 'Table2', 'Table3', 'WindowTable6', 'WindowTable4', 'WindowTable5', 'QuietTable7', 'QuietTable8', 'QuietTable9', 'ReadingNook', 'Entrance', 'Exit', 'LoungeArea', 'HighSeats', 'VIPLounge', 'MerchZone']
+<makable>=['Coffee', 'Water', 'Dessert']
 <items_place>=<items>+<place>
 <furniture>=['Table1', 'Floor', 'Chairs']
 <appliance>=['AC', 'TubeLight', 'HallLight']
 <furnishing>=['Curtain']
 <control>=['ACTemperature']
 """
-    if diffculty=="easy":
+    if diffculty == "easy":
         # Define the examples
         examples = [
             "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
@@ -86,10 +113,10 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
             "Instruction: Please ensure the water is ready for service.\nExists_Water",
             "Instruction: It's a bit messy here, could you rearrange the chairs?\nIsClean_Chairs"
         ]
-    elif diffculty=="medium":
+    elif diffculty == "medium":
         # Define the examples
         examples = [
-            "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
+            "Instruction: Would you be able to provide some chips at either the third table or the second table?\nOn_Chips_Table3 | On_Chips_Table2",
             "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
             "Instruction: Please lower the air conditioning temperature and come to the bar counter.\nRobotNear_Bar & Low_ACTemperature",
             "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
@@ -98,13 +125,11 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
     else:
         # Define the examples
         examples = [
-            "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
-            "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
-            "Instruction: Please turn up the air conditioning and come to the bar counter.\nRobotNear_Bar & ~Low_ACTemperature",
-            "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
+            "Instruction: Could you please bring some chips to either the third table or the second table? And also, don't forget to turn off the air conditioner, it's too cold.\n(On_Chips_Table3 | On_Chips_Table2)& ~Active_AC",
+            "Instruction: If the curtains are already closed or the AC is running, can you also make sure the floor is clean?\n(Closed_Curtain | Active_AC) & IsClean_Floor",
+            "Instruction: Please turn up the air conditioning, come to the bar counter, and check if there is any yogurt available.\nRobotNear_Bar & ~Low_ACTemperature & Exists_Yogurt",
+            "Instruction: Please ensure the water is ready for service, deliver the yogurt to table number one, and turn on the tube light.\nExists_Water & On_Yogurt_Table1 & Active_TubeLight",
             "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
-
-            # "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
         ]
 
     # Add the desired number of examples
@@ -116,23 +141,20 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<items>, Is
     return prompt1
 
 
+def get_feedback_prompt(error_list, error_black_set):
+    error_message = ""
 
-def get_feedback_prompt(error_list,error_black_set):
-
-    error_message=""
-
-
-    if error_list[0]!=None:
+    if error_list[0] != None:
         error_message += "It contains syntax errors or illegal characters."
     else:
 
-        if error_list[1]!=set():
+        if error_list[1] != set():
             error_black_set[0] |= set(error_list[1])
 
-        if error_list[2]!=set():
+        if error_list[2] != set():
             error_black_set[1] |= set(error_list[2])
 
-        if error_list[3]!=set():
+        if error_list[3] != set():
             error_black_set[2] |= set(error_list[3])
 
         er_word0 = ", ".join(list(error_black_set[0]))
@@ -141,12 +163,12 @@ def get_feedback_prompt(error_list,error_black_set):
 
         error_message += f"\n[Syntax Blacklist] {er_word0}\n[]Condition Predicate Blacklist] {er_word1}\n[Object Blacklist] {er_word2}\n"
 
-        error_message += "\n[Additional Promot]\n"+\
-    "1. Outputs including texts in the three blacklists are forbidden.\n"+\
-    "2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.\n"+\
-    "3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.\n"+\
-    "4. Please generate directly interpretable predicate formulas without any additional explanations."
-    print("error_message:",error_message)
+        error_message += "\n[Additional Promot]\n" + \
+                         "1. Outputs including texts in the three blacklists are forbidden.\n" + \
+                         "2. If a word from [Object Blacklist] is encountered, choose the closest parameter from the [Objects] table to formulate the outputs.\n" + \
+                         "3. If a word from [Condition Predicate Blacklist] is encountered, choose the closest parameter from the [Condition Predicates] table to formulate the outputs.\n" + \
+                         "4. Please generate directly interpretable predicate formulas without any additional explanations."
+    print("error_message:", error_message)
 
     return error_message
 
@@ -157,12 +179,11 @@ def evaluate_answer(correct_answer, user_answer):
     This means that whenever the user_answer is true, the correct_answer must also be true.
     """
 
-
     # print("correct_answer_set:",correct_answer)
     # print("user_answer_set   :",user_answer)
     # print(correct_answer==user_answer)
 
-    correct_answer_set=set(list(chain.from_iterable(goal_transfer_ls_set(correct_answer))))
+    correct_answer_set = set(list(chain.from_iterable(goal_transfer_ls_set(correct_answer))))
     user_answer_set = set(list(chain.from_iterable(goal_transfer_ls_set(user_answer))))
     # print("correct_answer_set:",correct_answer_set)
     # print("user_answer_set   :",user_answer_set)
@@ -175,8 +196,7 @@ def evaluate_answer(correct_answer, user_answer):
     # if correct_answer==user_answer:
     #     return True
 
-
-    if correct_answer_set<=user_answer_set:
+    if correct_answer_set <= user_answer_set:
         return True
     else:
         return False
@@ -203,7 +223,7 @@ def evaluate_answer(correct_answer, user_answer):
     # # return correct_answer == user_answer
 
 
-def evaluate_section(prompt, section, csv_filename,id):
+def evaluate_section(prompt, section, csv_filename, id):
     """ Process a single section of the dataset and return detailed results for further processing. """
     results = {f'GA-{f}F': [] for f in range(6)}
     results.update({f'IA-{f}F': [] for f in range(6)})
@@ -215,6 +235,9 @@ def evaluate_section(prompt, section, csv_filename,id):
     error_black_set = [set(), set(), set()]
     feedback_time = 0
 
+    # record
+    data_record = [id, question, correct_answer]
+
     grammar_correct = False
     content_correct = False
 
@@ -225,6 +248,9 @@ def evaluate_section(prompt, section, csv_filename,id):
         answer = llm.request(message=messages)
         messages.append({"role": "assistant", "content": answer})
         print_yellow(f"id:{id}  {feedback_time}th Answer: {answer}  Q:{question}")
+
+        # record
+        data_record += [answer]
 
         grammar_correct, error_list = format_check(answer)
         content_correct = False
@@ -244,12 +270,21 @@ def evaluate_section(prompt, section, csv_filename,id):
             feedback_prompt = error_message
             messages.append({"role": "user", "content": feedback_prompt})
 
+            # record
+            if feedback_time!=5:
+                data_record += [feedback_prompt]
+
             feedback_time += 1
+
+    # record
+
+    data_record.extend(["", ""] * (5 - feedback_time))
+    data_record.extend([feedback_time, grammar_correct, content_correct])
+    append_to_csv(csv_filename, data_record)
 
     print_status(grammar_correct, content_correct)
 
     return results
-
 
 
 easy_data_set_file = "../dataset/easy_instr_goal.txt"
@@ -277,79 +312,92 @@ with open(prompt_file1, 'r', encoding="utf-8") as f:
 with open(prompt_file2, 'r', encoding="utf-8") as f:
     prompt2 = f.read().strip()
 
-
-
 import concurrent.futures
 
 # LLM 模型选择
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
+max_try_time = 5
+try_time = 1
 
-
-difficulties = ["hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+difficulties = ["easy","medium","hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
 num_examples = [0,1,5]
 
-# num_examples = [0]
-for difficulty in difficulties:
-    print_blue(f"-----------------------{difficulty}-------------------------")
+# 初始化存储结构
+all_results = {}
+for try_time in range(max_try_time):
+    print_blue(f'=============== Time {try_time} ===============')
+    # num_examples = [0]
+    for difficulty in difficulties:
+        print_blue(f"-----------------------{difficulty}-------------------------")
 
-    # 选择数据集
-    if difficulty == "easy":
+        for difficulty in difficulties:
+            if difficulty not in all_results:
+                all_results[difficulty] = {num: [] for num in num_examples}
+
+        # 选择数据集
         data_set = easy_data_set
-    elif difficulty == "medium":
-        data_set = medium_data_set
-    elif difficulty == "hard":
-        data_set = hard_data_set
+        if difficulty == "medium":
+            data_set = medium_data_set
+        elif difficulty == "hard":
+            data_set = hard_data_set
 
-    sections = re.split(r'\n\s*\n', data_set)[:]
-    csv_filename = f"evaluation_results_{difficulty}.csv"
+        sections = re.split(r'\n\s*\n', data_set)[:]
+        results_table = []
 
-    results_table = []
+        for num in num_examples:
+        # for num in [0]:
+            feedback_type = "Zero-shot" if num == 0 else f"Few-shot {num}"
+            print_blue(f'=============== Feedback Level {feedback_type} ===============')
 
+            # record
+            csv_filename = f"details_{difficulty}_shot={num}_t={try_time}.csv"
+            init_csv(csv_filename)
+
+            prompt = generate_prompt1(num, difficulty) + prompt2
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=15) as executor:
+                futures = {executor.submit(evaluate_section, prompt, section, csv_filename, id): section for id, section in
+                           enumerate(sections)}
+                results = {f'GA-{f}F': [] for f in range(6)}
+                results.update({f'IA-{f}F': [] for f in range(6)})
+
+                for future in concurrent.futures.as_completed(futures):
+                    evaluation_results = future.result()
+                    for key in results:
+                        results[key].extend(evaluation_results[key])
+
+            filtered_keys = ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']
+            row = {key: f'{key}: {np.mean(results[key]):.2%}' for key in filtered_keys if key in results}
+            results_table.append(row)
+
+            # 存储每次试验的结果
+            all_results[difficulty][num].append(results)
+
+        # 打印每个难度结束后的结果
+        print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
+        # results_table 中每一排分别是 examples 中的0，1，5
+        for index, row in enumerate(results_table):
+            feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
+            # 格式化行数据为制表符分隔
+            row_data = "\t".join(
+                value.split(': ')[1] if ':' in value else value  # 直接取冒号后的百分比值
+                for key, value in row.items() if
+                key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
+            print(f"{feedback_type}\t{row_data}")
+
+print("\n--------------------------------------------")
+# 计算平均值并打印
+for difficulty in difficulties:
     for num in num_examples:
-        feedback_type = "Zero-shot" if num == 0 else f"Few-shot {num}"
-        print_blue(f'=============== Feedback Level {feedback_type} ===============')
+        print(f"--------- {difficulty} Feedback Level {num} Average Results ---------")
+        average_results = {}
+        for key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']:
+            # 计算每个键的平均值
+            all_scores = [results[key] for results in all_results[difficulty][num]]
+            average_score = np.mean([np.mean(scores) for scores in all_scores])
+            average_results[key] = f'{average_score:.2%}'
 
-        prompt = generate_prompt1(num, difficulty) + prompt2
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            futures = {executor.submit(evaluate_section, prompt, section, csv_filename,id): section for id,section in enumerate(sections)}
-            results = {f'GA-{f}F': [] for f in range(6)}
-            results.update({f'IA-{f}F': [] for f in range(6)})
-
-            for future in concurrent.futures.as_completed(futures):
-                evaluation_results = future.result()
-                for key in results:
-                    results[key].extend(evaluation_results[key])
-
-        filtered_keys = ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']
-        row = {key: f'{key}: {np.mean(results[key]):.2%}' for key in filtered_keys if key in results}
-        results_table.append(row)
-
-
-
-    # 打印每个难度结束后的结果
-    # for index, row in enumerate(results_table):
-    #     feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
-    #     print(f'{feedback_type}:', ', '.join(row.values()))
-    #     print("\n")
-    # 打印每个难度结束后的结果
-    # 打印每个难度结束后的结果
-    # print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
-    # for index, row in enumerate(results_table):
-    #     feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
-    #     # 格式化行数据为制表符分隔
-    #     row_data = "\t".join(
-    #         f'{float(value):.2%}' if isinstance(value, (float, int)) else value for key, value in row.items() if
-    #         key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
-    #     print(f"{feedback_type}\t{row_data}")
-    # 打印每个难度结束后的结果
-    print("Feedback Level\t" + "\t".join(['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']))  # 打印标题行，使用制表符分隔
-    for index, row in enumerate(results_table):
-        feedback_type = "Zero-shot" if num_examples[index] == 0 else f"Few-shot {num_examples[index]}"
-        # 格式化行数据为制表符分隔
-        row_data = "\t".join(
-            value.split(': ')[1] if ':' in value else value  # 直接取冒号后的百分比值
-            for key, value in row.items() if
-            key in ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F'])
-        print(f"{feedback_type}\t{row_data}")
+        # 格式化输出平均结果
+        row_data = "\t".join(value for value in average_results.values())
+        print(f"Zero-shot\t{row_data}")
