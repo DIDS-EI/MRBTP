@@ -280,11 +280,11 @@ def evaluate_section(prompt, section, csv_filename, id):
 
     data_record.extend(["", ""] * (5 - feedback_time))
     data_record.extend([feedback_time, grammar_correct, content_correct])
-    append_to_csv(csv_filename, data_record)
+    # append_to_csv(csv_filename, data_record)
 
     print_status(grammar_correct, content_correct)
 
-    return results
+    return results,data_record
 
 
 easy_data_set_file = "../dataset/easy_instr_goal.txt"
@@ -356,6 +356,7 @@ for try_time in range(max_try_time):
 
             prompt = generate_prompt1(num, difficulty) + prompt2
 
+            all_data_records = []
             with concurrent.futures.ThreadPoolExecutor(max_workers=15) as executor:
                 futures = {executor.submit(evaluate_section, prompt, section, csv_filename, id): section for id, section in
                            enumerate(sections)}
@@ -363,9 +364,14 @@ for try_time in range(max_try_time):
                 results.update({f'IA-{f}F': [] for f in range(6)})
 
                 for future in concurrent.futures.as_completed(futures):
-                    evaluation_results = future.result()
+                    evaluation_results,data_record = future.result()
                     for key in results:
                         results[key].extend(evaluation_results[key])
+                    all_data_records.append(data_record)
+
+            # 统一写入
+            for data_record in all_data_records:
+                append_to_csv(csv_filename,data_record)
 
             filtered_keys = ['GA-0F', 'GA-1F', 'GA-5F', 'IA-0F', 'IA-1F', 'IA-5F']
             row = {key: f'{key}: {np.mean(results[key]):.2%}' for key in filtered_keys if key in results}
