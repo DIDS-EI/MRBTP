@@ -117,9 +117,10 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<makable>, 
         # Define the examples
         examples = [
             "Instruction: Could you bring some chips to table three, please? Also, it's quite warm here, so could you turn on the air conditioner? \nOn_Chips_Table3 & Active_AC",
+            # "Instruction: Could you please bring some chips to either the third table or the second table?.\nOn_Chips_Table3 | On_Chips_Table2",
             "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
             "Instruction: Please lower the air conditioning temperature and come to the bar counter.\nRobotNear_Bar & Low_ACTemperature",
-            "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
+            "Instruction: Please prepare some waters, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
             "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple to the reading nook?\nIsClean_Chairs & On_Apple_ReadingNook"
         ]
     else:
@@ -325,7 +326,8 @@ import concurrent.futures
 # LLM 模型选择
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
-max_try_time = 1
+max_try_time = 5
+
 try_time = 1
 
 difficulties = ["medium"]  # 这里可以扩展为 ["easy", "medium", "hard"]
