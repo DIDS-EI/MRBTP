@@ -104,41 +104,41 @@ RobotNear_<items_place>, On_<items>_<place>, Holding_<items>, Exists_<makable>, 
 <furnishing>=['Curtain']
 <control>=['ACTemperature']
 """
-    if diffculty == "easy":
-        # Define the examples
-        examples = [
-            "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
-            "Instruction: Please close the curtains.\nClosed_Curtain",
-            "Instruction: Could you turn on the air conditioning, please?\nActive_AC",
-            "Instruction: Please ensure the water is ready for service.\nExists_Water",
-            "Instruction: It's a bit messy here, could you rearrange the chairs?\nIsClean_Chairs"
-        ]
-    elif diffculty == "medium":
-        # Define the examples
-        examples = [
-            "Instruction: Could you bring some chips to table three, please? Also, it's quite warm here, so could you turn on the air conditioner? \nOn_Chips_Table3 & Active_AC",
-            "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
-            "Instruction: Please lower the air conditioning temperature and come to the bar counter.\nRobotNear_Bar & Low_ACTemperature",
-            "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
-            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple to the reading nook?\nIsClean_Chairs & On_Apple_ReadingNook"
-        ]
-    else:
-        # Define the examples
-        examples = [
-            "Instruction: Could you please bring some chips to either the third table or the second table? And also, don't forget to turn off the air conditioner, it's too cold.\n(On_Chips_Table3 | On_Chips_Table2)& ~Active_AC",
-            "Instruction: If the curtains are already closed or the AC is running, can you also make sure the floor is clean?\n(Closed_Curtain | Active_AC) & IsClean_Floor",
-            "Instruction: Please turn up the air conditioning, come to the bar counter, and check if there is any yogurt available.\nRobotNear_Bar & ~Low_ACTemperature & Exists_Yogurt",
-            "Instruction: Please ensure the water is ready for service, deliver the yogurt to table number one, and turn on the tube light.\nExists_Water & On_Yogurt_Table1 & Active_TubeLight",
-            "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
-        ]
+    # if diffculty == "easy":
+    #     # Define the examples
+    #     examples = [
+    #         "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
+    #         "Instruction: Please close the curtains.\nClosed_Curtain",
+    #         "Instruction: Could you turn on the air conditioning, please?\nActive_AC",
+    #         "Instruction: Please ensure the water is ready for service.\nExists_Water",
+    #         "Instruction: It's a bit messy here, could you rearrange the chairs?\nIsClean_Chairs"
+    #     ]
+    # elif diffculty == "medium":
+    #     # Define the examples
+    #     examples = [
+    #         "Instruction: Could you bring some chips to table three, please? Also, it's quite warm here, so could you turn on the air conditioner? \nOn_Chips_Table3 & Active_AC",
+    #         "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
+    #         "Instruction: Please lower the air conditioning temperature and come to the bar counter.\nRobotNear_Bar & Low_ACTemperature",
+    #         "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
+    #         "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you bring me an apple to the reading nook?\nIsClean_Chairs & On_Apple_ReadingNook"
+    #     ]
+    # else:
+    #     # Define the examples
+    #     examples = [
+    #         "Instruction: Could you please bring some chips to either the third table or the second table? And also, don't forget to turn off the air conditioner, it's too cold.\n(On_Chips_Table3 | On_Chips_Table2)& ~Active_AC",
+    #         "Instruction: If the curtains are already closed or the AC is running, can you also make sure the floor is clean?\n(Closed_Curtain | Active_AC) & IsClean_Floor",
+    #         "Instruction: Please turn up the air conditioning, come to the bar counter, and check if there is any yogurt available.\nRobotNear_Bar & ~Low_ACTemperature & Exists_Yogurt",
+    #         "Instruction: Please ensure the water is ready for service, deliver the yogurt to table number one, and turn on the tube light.\nExists_Water & On_Yogurt_Table1 & Active_TubeLight",
+    #         "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
+    #     ]
 
-    # examples = [
-    #     "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
-    #     "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
-    #     "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
-    #     "Instruction: Please turn up the air conditioning, come to the bar counter, and check if there is any yogurt available.\nRobotNear_Bar & ~Low_ACTemperature & Exists_Yogurt",
-    #     "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
-    # ]
+    examples = [
+        "Instruction: Would you be able to provide some chips at the third table?\nOn_Chips_Table3",
+        "Instruction: If the curtains are already closed or the AC is running?\nClosed_Curtain | Active_AC",
+        "Instruction: Please ensure the water is ready for service, and deliver the yogurt to table number one.\nExists_Water & On_Yogurt_Table1",
+        "Instruction: Please turn up the air conditioning, come to the bar counter, and check if there is any yogurt available.\nRobotNear_Bar & ~Low_ACTemperature & Exists_Yogurt",
+        "Instruction: It's a bit messy here, could you rearrange the chairs? And, if possible, could you deliver an apple or a banana to the bar?\nIsClean_Chairs & ( On_Apple_Bar | On_Banana_Bar )"
+    ]
 
     # Add the desired number of examples
     if num_examples > 0:
@@ -325,10 +325,10 @@ import concurrent.futures
 # LLM 模型选择
 # llm = LLMERNIE()  # 如果你想切换到其他模型
 llm = LLMGPT3()  # 使用GPT-3模型
-max_try_time = 1
+max_try_time = 5
 try_time = 1
 
-difficulties = ["medium"]  # 这里可以扩展为 ["easy", "medium", "hard"]
+difficulties = ["easy", "medium", "hard"]  # 这里可以扩展为 ["easy", "medium", "hard"]
 num_examples = [0,1,5]
 
 # 初始化存储结构
