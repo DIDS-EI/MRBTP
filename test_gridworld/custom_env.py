@@ -1,6 +1,7 @@
 from __future__ import annotations
 import gymnasium as gym
-from mabtpg.env_gridworld._ma_grid_env import MAGridEnv, MAGrid
+from mabtpg.envs.gridenv.base.magrid_env import MAGridEnv
+from mabtpg.envs.gridenv.base.magrid import MAGrid
 
 from minigrid.core.world_object import Goal,Lava,Ball,Key,Door
 from gymnasium.envs.registration import register
@@ -8,7 +9,6 @@ from gymnasium.envs.registration import register
 from minigrid.core.mission import MissionSpace
 
 
-#定义一个自定义房间环境用来测试
 class EmptyEnv(MAGridEnv):
     def __init__(
         self,
@@ -22,7 +22,6 @@ class EmptyEnv(MAGridEnv):
         self.agents_start_dir = agents_start_dir
 
         super().__init__(
-            mission_space=MissionSpace(mission_func=self._gen_mission),
             num_agent=num_agent,
             grid_size=size,
             **kwargs,
@@ -34,7 +33,6 @@ class EmptyEnv(MAGridEnv):
 
 
     def _gen_grid(self, width, height):
-        # 创建多智能体网格
         self.grid = MAGrid(width, height)
 
         # 创建墙壁
@@ -95,9 +93,9 @@ env = gym.make(
 # BT规划算法，这里就直接加载随机行为树
 from mabtpg import BehaviorTree, BehaviorLibrary
 
-behavior_lib_path = f"../mabtpg/env_gridworld/behavior_lib"
+behavior_lib_path = f"../mabtpg/envs/gridenv/minigrid/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
-
+print(behavior_lib)
 
 # 绑定行为树
 for agent in env.agents:

@@ -4,7 +4,7 @@ from minigrid.core.actions import Actions
 import random
 
 class RandomAction(Action):
-    can_be_expanded = True
+    can_be_expanded = False
     num_args = 1
 
     def __init__(self, *args):

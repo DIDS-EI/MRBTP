@@ -3,7 +3,7 @@ import shortuuid
 # from mabtpg.behavior_tree.base_nodes import Inverter,Selector,Sequence
 # from mabtpg.behavior_tree.base_nodes.AbsAct import AbsAct
 # from mabtpg.behavior_tree.base_nodes.AbsCond import AbsCond
-from mabtpg.utils.tree.tree_node import TreeNode
+from mabtpg.utils.any_tree_node import AnyTreeNode
 
 
 if "." in __name__:
@@ -41,7 +41,7 @@ class btmlTranslator(btmlListener):
     # Enter a parse tree produced by btmlParser#tree.
     def enterTree(self, ctx: btmlParser.TreeContext):
         node_type = str(ctx.internal_node().children[0])
-        node = TreeNode(node_type)
+        node = AnyTreeNode(node_type)
         # if type == "sequence":
         #     node = Sequence(name="Sequence", memory=False)
         # elif type == "selector":
@@ -95,7 +95,7 @@ class btmlTranslator(btmlListener):
                     args.append(f"{i}")
         # ins_name = "".join(args)
 
-        node = TreeNode(node_type,cls_name,args)
+        node = AnyTreeNode(node_type, cls_name, args)
         # exec(f"from {name} import {name}")
         # tag = "cond_" + short_uuid() if node_type == "Condition" else "task_" + short_uuid()
 
@@ -109,7 +109,7 @@ class btmlTranslator(btmlListener):
 
         # if have 'not' decorator
         if str(ctx.children[1]) == 'Not':
-            upper_node = TreeNode(node_type="Inverter", children=[node])
+            upper_node = AnyTreeNode(node_type="Inverter", children=[node])
             # connect
             self.stack[-1].add_child(upper_node)
         else:

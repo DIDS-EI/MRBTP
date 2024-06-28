@@ -1,37 +1,38 @@
 # from mabtpg.behavior_tree.scene.scene import Scene
 # from mabtpg.behavior_tree.behavior_tree.btml.btmlCompiler import load
 
-import os
 import py_trees as ptree
 from mabtpg.behavior_tree.utils.visitor import StatusVisitor
-from mabtpg.utils.path import get_root_path
-from mabtpg.utils.tree.tree_node import new_tree_like,traverse_and_modify_tree
+from mabtpg.utils.any_tree_node import traverse_and_modify_tree
 
 from mabtpg.behavior_tree.utils.draw import render_dot_tree
 from mabtpg.behavior_tree.utils.load import load_btml, print_tree_from_root
-from mabtpg.behavior_tree.base_nodes import base_node_map, composite_node_map
 
 import os
 from mabtpg.utils.path import get_root_path
-from mabtpg.utils.tree.tree_node import new_tree_like
+from mabtpg.utils.any_tree_node import new_tree_like
 
 from mabtpg.behavior_tree.base_nodes import base_node_map, composite_node_map,base_node_type_map
 
 
 
 class BehaviorTree(ptree.trees.BehaviourTree):
-    def __init__(self,btml_path,behavior_lib=None):
-        tree_root = load_btml(btml_path)
+    def __init__(self,anytree=None, behavior_lib=None):
+        if isinstance(anytree,str):
+            anytree = load_btml(anytree)
+
         self.behavior_lib = behavior_lib
         if behavior_lib:
-            bt_root = new_tree_like(tree_root,self.new_node_with_lib)
+            bt_root = new_tree_like(anytree,self.new_node_with_lib)
         else:
-            bt_root = new_tree_like(tree_root,self.new_node)
+            bt_root = new_tree_like(anytree,self.new_node)
 
         super().__init__(bt_root)
 
         self.visitor = StatusVisitor()
         self.visitors.append(self.visitor)
+
+
 
     def new_node(self, node):
         if node.node_type in composite_node_map.keys():

@@ -1,6 +1,6 @@
 
 
-class TreeNode:
+class AnyTreeNode:
     def __init__(self, node_type, cls_name="",args=(),children=()):
         self.node_type = node_type
         self.cls_name = cls_name
@@ -54,15 +54,15 @@ def print_tree(root):
 if __name__ == '__main__':
     #test_gridworld
     def new_func(node):
-        return TreeNode(node.node_type, node.cls_name, node.args)
+        return AnyTreeNode(node.node_type, node.cls_name, node.args)
 
-    root = TreeNode("Type", "ClassA", "InstanceA")
-    child1 = TreeNode("Type", "ClassB", "InstanceB")
-    child2 = TreeNode("Type", "ClassC", "InstanceC")
+    root = AnyTreeNode("Type", "ClassA", "InstanceA")
+    child1 = AnyTreeNode("Type", "ClassB", "InstanceB")
+    child2 = AnyTreeNode("Type", "ClassC", "InstanceC")
     root.children.extend([child1, child2])
-    child1.children.append(TreeNode("Type", "ClassD", "InstanceD"))
-    child1.children.append(TreeNode("Type", "ClassE", "InstanceE"))
-    child2.children.append(TreeNode("Type", "ClassF", "InstanceF"))
+    child1.children.append(AnyTreeNode("Type", "ClassD", "InstanceD"))
+    child1.children.append(AnyTreeNode("Type", "ClassE", "InstanceE"))
+    child2.children.append(AnyTreeNode("Type", "ClassF", "InstanceF"))
 
     print('old')
     print_tree(root)

@@ -21,5 +21,4 @@ if __name__ == '__main__':
     render_dot_tree(robot.bt.root,name="llm_test")
     # build and tick
     # scene.BT = ptree.trees.BehaviourTree(scene.BT)
-    # todo: tick this behavior_tree
     print(robot.bt)

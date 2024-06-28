@@ -7,7 +7,7 @@ from py_trees.common import Status
 # base_nodes Behavior
 class BahaviorNode(ptree.behaviour.Behaviour):
     is_composite = False
-    can_be_expanded = False
+    can_be_expanded = True
     num_params = 0
     valid_params='''
         None

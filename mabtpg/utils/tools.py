@@ -2,7 +2,7 @@
 from mabtpg.algos.bt_autogen.Action import Action
 from mabtpg.utils.read_dataset import read_dataset
 from mabtpg.utils import ROOT_PATH
-# from mabtpg.env_gridworld.RobotHow.exec_lib._base.RHAction import RHAction
+# from mabtpg.gridenv.RobotHow.exec_lib._base.RHAction import RHAction
 import pickle
 
 
