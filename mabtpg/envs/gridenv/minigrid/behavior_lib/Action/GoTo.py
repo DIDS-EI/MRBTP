@@ -31,8 +31,8 @@ class GoTo(Action):
         for obj_planning_name in can_goto:
             action_model = {}
             action_model["pre"]= set()
-            action_model["add"]={f"IsNear(agent_{agent.id},{obj_planning_name})"}
-            action_model["del_set"] = {f'IsNear(agent_{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
+            action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
+            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"GoTo(agent_{agent.id},{obj_planning_name})",**action_model))
 

@@ -24,7 +24,7 @@ class IsNear(Condition):
 
     def update(self) -> Status:
         if self.target_agent is None:
-            agent_id = int(self.args[0].split("_")[-1])
+            agent_id = int(self.args[0].split("-")[-1])
             self.target_agent = self.env.agents[agent_id]
             pos_str = self.args[1].split("-")[-1]
             self.target_pos = list(map(int, pos_str.split("_")))

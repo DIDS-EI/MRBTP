@@ -1,7 +1,7 @@
 
 
-from mabtpg.envs.gridenv.minigrid.base.magrid_env import MAGridEnv
-from mabtpg.envs.gridenv.minigrid.base.magrid import MAGrid
+from mabtpg.envs.gridenv.minigrid.magrid_env import MAGridEnv
+from mabtpg.envs.gridenv.minigrid.magrid import MAGrid
 
 
 from minigrid.core.mission import MissionSpace
@@ -67,7 +67,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         if isinstance(self.instrs, GoToInstr):
             name = f"{self.instrs.desc.color}_{self.instrs.desc.type}"
             x, y = self.instrs.desc.obj_set[0].cur_pos
-            return {f"IsNear(agent_0,{name}-{x}_{y})", }
+            return {f"IsNear(agent-0,{name}-{x}_{y})", }
         if isinstance(self.instrs, PickupInstr):
             return {"Pickup()"}
 
