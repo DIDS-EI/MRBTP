@@ -1,6 +1,6 @@
 matplotlib>=3.4.2
 numpy>=1.19.3
-tqdm==4.31.1
+tqdm
 antlr4-python3-runtime~=4.13.1
 py_trees~=2.2.3
 shortuuid~=1.0.11
