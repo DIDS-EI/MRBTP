@@ -15,8 +15,12 @@ class GoTo(Action):
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.goal = self.args[1].split("-")[-1].split("_")
-        self.goal = list(map(int, self.goal))
+        self.obj_id = self.args[1]
+
+        # self.arg_cur_pos = self.env.id2obj[self.args[1]].cur_pos
+        # self.goal = list(self.arg_cur_pos)
+        # self.goal = self.args[1].split("-")[-1].split("_")
+        # self.goal = list(map(int, self.goal))
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
@@ -25,22 +29,31 @@ class GoTo(Action):
             env.cache["can_goto"] = []
             for obj in env.obj_list:
                 if obj.type in cls.valid_args[0]:
-                    env.cache["can_goto"].append(obj_to_planning_name(obj))
+                    env.cache["can_goto"].append(obj.id)
+                    # env.cache["can_goto"].append(obj_to_planning_name(obj))
 
         can_goto = env.cache["can_goto"]
-        for obj_planning_name in can_goto:
+        for obj_id in can_goto:
             action_model = {}
             action_model["pre"]= set()
-            action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
-            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
+            action_model["add"]={f"IsNear(agent-{agent.id},{obj_id})"}
+            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_id})' for obj in can_goto if obj != obj_id}
+
+            # action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
+            # action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
+
             action_model["cost"] = 1
-            planning_action_list.append(PlanningAction(f"GoTo(agent_{agent.id},{obj_planning_name})",**action_model))
+            planning_action_list.append(PlanningAction(f"GoTo(agent-{agent.id},{obj_id})", **action_model))
+            # planning_action_list.append(PlanningAction(f"GoTo(agent_{agent.id},{obj_planning_name})",**action_model))
 
         return planning_action_list
 
 
     def update(self) -> Status:
         if self.path is None:
+            # Find the specific location of an object on the map based on its ID
+            self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
+            self.goal = list(self.arg_cur_pos)
 
             self.path = astar(self.env.grid, start=self.agent.pos, goal=self.goal)
 

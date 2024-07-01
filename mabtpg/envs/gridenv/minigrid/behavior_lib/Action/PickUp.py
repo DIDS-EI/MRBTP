@@ -8,15 +8,13 @@ import numpy as np
 
 
 
-class PichUp(Action):
+class PickUp(Action):
     num_args = 2
     valid_args = [CAN_PICKUP]
 
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.goal = self.args[1].split("-")[-1].split("_")
-        self.goal = list(map(int, self.goal))
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
@@ -25,16 +23,17 @@ class PichUp(Action):
             env.cache["can_pickup"] = []
             for obj in env.obj_list:
                 if obj.type in cls.valid_args[0]:
-                    env.cache["can_pickup"].append(obj_to_planning_name(obj))
+                    env.cache["can_pickup"].append(obj.id)
+                    # env.cache["can_pickup"].append(obj_to_planning_name(obj))
 
         can_pickup = env.cache["can_pickup"]
-        for obj_planning_name in can_pickup:
+        for obj_id in can_pickup:
             action_model = {}
-            action_model["pre"]= {f"IsNear(agent_{agent.id},{obj_planning_name})"}
-            action_model["add"]={f"IsHolding(agent_{agent.id},{obj_planning_name})"}
+            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})"}
+            action_model["add"]={f"IsHolding(agent-{agent.id},{obj_id})"}
             action_model["del_set"] = set()
             action_model["cost"] = 1
-            planning_action_list.append(PlanningAction(f"PickUp(agent_{agent.id},{obj_planning_name})",**action_model))
+            planning_action_list.append(PlanningAction(f"PickUp(agent-{agent.id},{obj_id})",**action_model))
 
         return planning_action_list
 

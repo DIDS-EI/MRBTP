@@ -7,7 +7,7 @@ num_agent = 2
 
 # other cfgs
 env_id = "BabyAI-GoToObj-v0"  # goto
-# env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions
+# env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions-
 # env_id = "BabyAI-BossLevel-v0"  # 4 conditions
 
 tile_size = 32

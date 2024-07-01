@@ -9,8 +9,8 @@ num_agent = 2
 # env_id = "BabyAI-GoToObj-v0"  # goto
 # env_id = "BabyAI-Open-v0"  # goto pichup
 
-# env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions
-env_id = "BabyAI-BossLevel-v0"  # 4 conditions
+env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions
+# env_id = "BabyAI-BossLevel-v0"  # 4 conditions
 
 tile_size = 32
 agent_view_size =7
