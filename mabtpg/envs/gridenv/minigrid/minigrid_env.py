@@ -69,7 +69,10 @@ class MiniGridToMAGridEnv(MAGridEnv):
             x, y = self.instrs.desc.obj_set[0].cur_pos
             return {f"IsNear(agent-0,{name}-{x}_{y})", }
         if isinstance(self.instrs, PickupInstr):
-            return {"Pickup()"}
+            # return {"Pickup()"}
+            name = f"{self.instrs.desc.color}_{self.instrs.desc.type}"
+            x, y = self.instrs.desc.obj_set[0].cur_pos
+            return {f"IsHolding(agent_0,{name}-{x}_{y})", }
 
     def create_behavior_libs(self):
         from mabtpg.utils import get_root_path
