@@ -14,8 +14,6 @@ class FruitEnv(VHGridEnv):
         super().__init__(**kwargs)
 
     def _gen_grid(self, width, height):
-        #TODO: 现在一个格子只能放一个物体，改成可以放很多个物体
-        #TODO：创建一个容器类，容器显示其中的物体
         #TODO: 智能体也是容器类
         #TODO: 物体的属性用集合来表示
         #TODO: 智能体的动作用类来表示
@@ -30,6 +28,9 @@ class FruitEnv(VHGridEnv):
         floor = Objects.Floor()
         floor.container.add_obj(Objects.Banana())
         floor.container.add_obj(Objects.Cherry())
+        floor.container.add_obj(Objects.Cherry())
+        floor.container.add_obj(Objects.Apple())
+
         self.add_obj(floor, 6, 5)
 
 

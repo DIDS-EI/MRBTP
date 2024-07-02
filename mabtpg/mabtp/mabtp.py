@@ -80,7 +80,7 @@ class PlanningAgent:
             if current_condition.children == []:
                 condition_parent = sequence_node
             else:
-                condition_parent = AnyTreeNode(NODE_TYPE.condition)
+                condition_parent = AnyTreeNode(NODE_TYPE.selector)
                 sequence_node.add_child(condition_parent)
                 # add children into stack
                 for children in current_condition.children:
@@ -90,10 +90,14 @@ class PlanningAgent:
             self.add_conditions(current_condition,condition_parent)
             # add action
             cls_name, args = parse_predicate_logic(current_condition.action)
-            sequence_node.add_child(AnyTreeNode(NODE_TYPE.action,cls_name,args))
+            action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
 
             # add the sequence node into its parent
-            current_condition.parent.add_child(sequence_node)
+            if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                current_condition.parent.add_child(action_node)
+            else:
+                sequence_node.add_child(action_node)
+                current_condition.parent.add_child(sequence_node)
 
         bt = BehaviorTree(anytree=anytree_root,behavior_lib=behavior_lib)
 

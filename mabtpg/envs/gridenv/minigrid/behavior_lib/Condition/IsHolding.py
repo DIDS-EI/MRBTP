@@ -21,9 +21,6 @@ class IsHolding(Condition):
 
         self.obj_id = self.args[1]
 
-
-
-
     def update(self) -> Status:
         if self.target_agent is None:
             agent_id = int(self.args[0].split("-")[-1])
@@ -35,8 +32,13 @@ class IsHolding(Condition):
             # pos_str = self.args[1].split("-")[-1]
             # self.target_pos = list(map(int, pos_str.split("_")))
 
-        agent_facing_pos = self.target_agent.pos + DIR_TO_VEC[self.target_agent.dir]
-        if np.array_equal(self.target_pos, agent_facing_pos):
+        if self.target_agent.carrying is not None:
             return Status.SUCCESS
         else:
             return Status.FAILURE
+
+        # agent_facing_pos = self.target_agent.pos + DIR_TO_VEC[self.target_agent.dir]
+        # if np.array_equal(self.target_pos, agent_facing_pos):
+        #     return Status.SUCCESS
+        # else:
+        #     return Status.FAILURE

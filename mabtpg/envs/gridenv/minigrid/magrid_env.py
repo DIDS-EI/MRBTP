@@ -136,7 +136,7 @@ class MAGridEnv(MiniGridEnv):
             self.set_focus_agent(self.agents[i])
             self.agent_step(action)
             self.get_focus_agent(self.agents[i])
-            print(f"agent {i}, {action}")
+            print(f"agent {i}, {action.name}")
 
             if not self.agents[i].bt_success:
                 done = False

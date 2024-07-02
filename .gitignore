@@ -17,8 +17,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-MO-VLN/
-GLIP/
 pytorch_model.bin
 *.dot
 *.svg

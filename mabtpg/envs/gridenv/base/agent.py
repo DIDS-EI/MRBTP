@@ -23,7 +23,7 @@ class Agent(object):
 
         self.pos = (-1, -1)
         self.dir = -1
-        self.carrying = False
+        self.carrying = None
 
         self.container = Container()
 
