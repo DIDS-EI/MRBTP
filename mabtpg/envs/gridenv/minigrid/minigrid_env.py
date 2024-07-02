@@ -9,6 +9,8 @@ from minigrid.envs.babyai.core.verifier import *
 
 from mabtpg import BehaviorLibrary
 
+from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name
+
 
 # Quick start. Run this in console: python -m minigrid.manual_control --env BabyAI-BossLevelNoUnlock-v0
 
@@ -47,6 +49,30 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.render_mode = "human"
         self.create_behavior_libs()
 
+    def initialize_objects(self):
+        # Initialize dictionaries for counting object types and mapping names to IDs
+        self.obj_type_num = {}
+        self.id2obj = {}
+        self.obj_name2id = {}
+        self.obj_id2name={}
+
+        # Assign IDs and count object types
+        for obj in self.obj_list:
+            # Add a private 'id' attribute to each object in the list if it doesn't already have one
+            if not hasattr(obj, 'id') or obj.id is None:
+                if obj.type not in self.obj_type_num:
+                    self.obj_type_num[obj.type] = 0
+                obj.id = f"{obj.type}{self.obj_type_num[obj.type]}"
+                self.obj_type_num[obj.type] += 1
+
+                self.id2obj[obj.id] = obj
+
+            obj.name = obj_to_planning_name(obj)
+            self.obj_name2id[obj.name] = obj.id
+
+        self.obj_id2name = {id_: name for name, id_ in self.obj_name2id.items()}
+
+
     def _gen_grid(self, width, height):
         # self.minigrid_env._gen_grid(self.width, self.height)
 
@@ -64,12 +90,21 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
 
     def get_goal(self):
+        name = f"{self.instrs.desc.color}_{self.instrs.desc.type}"
+        x, y = self.instrs.desc.obj_set[0].cur_pos
+        planning_name = f"{name}-{x}_{y}"
+
+        # Check if the planning name exists in the name-to-ID mapping
+        if planning_name in self.obj_name2id:
+            obj_id = self.obj_name2id[planning_name]
+        else:
+            # If not found, assign a default ID using the type from instruction's descriptor with suffix '0'
+            obj_id = str(self.instrs.desc.type) + "0"
+
         if isinstance(self.instrs, GoToInstr):
-            name = f"{self.instrs.desc.color}_{self.instrs.desc.type}"
-            x, y = self.instrs.desc.obj_set[0].cur_pos
-            return {f"IsNear(agent-0,{name}-{x}_{y})", }
+            return {f"IsNear(agent-0,{obj_id})", }
         if isinstance(self.instrs, PickupInstr):
-            return {"Pickup()"}
+            return {f"IsHolding(agent-0,{obj_id})"}
 
     def create_behavior_libs(self):
         from mabtpg.utils import get_root_path
@@ -99,6 +134,9 @@ class MiniGridToMAGridEnv(MAGridEnv):
             print(obj.type,obj.cur_pos[0],obj.cur_pos[1])
 
         self.obj_list = obj_list
+
+        # Initialize dictionaries for counting object types and mapping names to IDs
+        self.initialize_objects()
 
 
         # generate action list for all Agents

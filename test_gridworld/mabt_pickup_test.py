@@ -6,8 +6,10 @@ from mabtpg import MiniGridToMAGridEnv
 num_agent = 2
 
 # other cfgs
-env_id = "BabyAI-GoToObj-v0"  # goto
-# env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions-
+# env_id = "BabyAI-GoToObj-v0"  # goto
+# env_id = "BabyAI-Open-v0"  # goto pichup
+
+env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions
 # env_id = "BabyAI-BossLevel-v0"  # 4 conditions
 
 tile_size = 32
@@ -55,6 +57,9 @@ for mission_str in mission_list1:
 action_lists = env.get_action_lists()
 
 goal = env.get_goal()
+# 获取球的颜色和位置
+
+
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
@@ -70,7 +75,7 @@ for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].print()
 
-# bind the behavior tree to Agents
+# bind the behavior tree to agents
 for i,agent in enumerate(env.agents):
     agent.bind_bt(bt_list[i])
 

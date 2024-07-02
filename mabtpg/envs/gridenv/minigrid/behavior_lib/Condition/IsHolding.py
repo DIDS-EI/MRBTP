@@ -5,7 +5,7 @@ import numpy as np
 from minigrid.core.constants import DIR_TO_VEC
 
 # 在Minigrid环境中判断智能体是否与物体相邻且面对物体
-class IsNear(Condition):
+class IsHolding(Condition):
     num_args = 2
 
     def __init__(self,*args):
@@ -25,11 +25,9 @@ class IsNear(Condition):
 
 
     def update(self) -> Status:
-
         if self.target_agent is None:
             agent_id = int(self.args[0].split("-")[-1])
             self.target_agent = self.env.agents[agent_id]
-
             # Find the specific location of an object on the map based on its ID
             pos_str = self.env.id2obj[self.obj_id].cur_pos
             self.target_pos = list(pos_str)
