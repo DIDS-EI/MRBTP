@@ -20,7 +20,6 @@ MANIFEST
 MO-VLN/
 GLIP/
 pytorch_model.bin
-*.png
 *.dot
 *.svg
 test_gridworld/Output/
