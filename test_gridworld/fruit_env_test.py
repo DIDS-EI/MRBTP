@@ -1,5 +1,8 @@
-from __future__ import annotations
+from mabtpg import Random
+Random.set_seed(0)
+
 import gymnasium as gym
+
 
 from mabtpg.envs.gridenv.vhgrid.fruit_env import FruitEnv
 
@@ -24,7 +27,7 @@ env = gym.make(
 # BT规划算法，这里就直接加载随机行为树
 from mabtpg import BehaviorTree, BehaviorLibrary
 
-behavior_lib_path = f"../mabtpg/envs/gridenv/minigrid/behavior_lib"
+behavior_lib_path = f"../mabtpg/envs/gridenv/vhgrid/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
 print(behavior_lib)
 
@@ -36,7 +39,7 @@ for agent in env.agents:
 
 
 # 运行环境
-env.reset(seed=0)
+env.reset()
 env.render()
 while True:
     env.step(None)

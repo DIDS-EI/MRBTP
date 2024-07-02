@@ -19,6 +19,8 @@ from minigrid.core.mission import MissionSpace
 from minigrid.core.world_object import Point, WorldObj
 from mabtpg.envs.gridenv.base.agent import Agent
 
+from mabtpg.envs.gridenv.base.magrid import MAGrid
+
 
 class MAGridEnv(gym.Env):
     """
@@ -29,6 +31,8 @@ class MAGridEnv(gym.Env):
         "render_modes": ["human", "rgb_array"],
         "render_fps": 10,
     }
+
+    agent_list = []
 
     def __init__(
         self,
@@ -46,6 +50,7 @@ class MAGridEnv(gym.Env):
     ):
         # Initialize mission
         self.mission = "test"
+        self.obj_dict = {}
 
         # Can't set both grid_size and width/height
         if grid_size:
@@ -104,7 +109,7 @@ class MAGridEnv(gym.Env):
         self.agent_dir: int = None
 
         # Current grid and mission and carrying
-        self.grid = Grid(width, height)
+        self.grid = MAGrid(width, height)
         self.carrying = None
 
         # Rendering attributes
@@ -113,20 +118,22 @@ class MAGridEnv(gym.Env):
         self.tile_size = tile_size
         self.agent_pov = agent_pov
 
-        self.generate_agents()
+        self.create_agents()
 
-    def generate_agents(self):
-        raise NotImplementedError
+    def create_agents(self):
+        agents = []
+        for i, agent_cls in enumerate(self.agent_list):
+            agents.append(agent_cls(self,i))
+        self.agents = agents
+        self.num_agent = len(self.agents)
+
 
     def reset(
-        self,
-        *,
-        seed: int | None = None,
-        options: dict[str, Any] | None = None,
+        self
     ) -> tuple[ObsType, dict[str, Any]]:
-        gym.Env.reset(self,seed=seed)
+        # gym.Env.reset(self,seed=seed)
 
-        # reset agents
+        # reset Agents
 
         # Generate a new random grid at the start of each episode
         self._gen_grid(self.width, self.height)
@@ -210,31 +217,18 @@ class MAGridEnv(gym.Env):
 
         return 1 - 0.9 * (self.step_count / self.max_steps)
 
-    def place_obj(
-        self,
-        obj: WorldObj | None,
-        pos: Point = None,
-    ):
-        """
-        Place an object at an empty position in the grid
 
-        :param top: top-left position of the rectangle where to place
-        :param size: size of the rectangle where to place
-        :param reject_fn: function to filter out potential positions
-        """
-
-        self.grid.set(pos[0], pos[1], obj)
-
-        if obj is not None:
-            obj.init_pos = pos
-            obj.cur_pos = pos
-
-        return pos
-
-    def put_obj(self, obj: WorldObj, i: int, j: int):
+    def add_obj(self, obj, i: int, j: int):
         """
         Put an object at a specific position in the grid
         """
+        obj_class = obj.__class__
+        if obj_class not in self.obj_dict:
+            self.obj_dict[obj_class] = []
+
+        new_obj_id = len(self.obj_dict[obj_class])
+        obj.id = new_obj_id
+        self.obj_dict[obj_class].append(new_obj_id)
 
         self.grid.set(i, j, obj)
         obj.init_pos = (i, j)
@@ -373,7 +367,7 @@ class MAGridEnv(gym.Env):
 
         obs = self.gen_obs()
 
-        obs_grid, _ = Grid.decode(obs["image"])
+        obs_grid, _ = MAGrid.decode(obs["image"])
         obs_cell = obs_grid.get(vx, vy)
         world_cell = self.grid.get(x, y)
 

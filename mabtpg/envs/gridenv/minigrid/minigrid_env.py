@@ -84,7 +84,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
     def get_action_lists(self):
         obj_list = []
         self.cache = {}
-        # list all objects in env
+        # list all Objects in env
         for i in range(self.grid.width):
             for j in range(self.grid.height):
                 cell = self.grid.get(i, j)
@@ -101,7 +101,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.obj_list = obj_list
 
 
-        # generate action list for all agents
+        # generate action list for all Agents
         action_list = []
         for i in range(self.num_agent):
             print("\n" + "-"*10 + f" getting action list for agent_{i} " + "-"*10)

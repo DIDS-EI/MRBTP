@@ -70,7 +70,7 @@ for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].print()
 
-# bind the behavior tree to agents
+# bind the behavior tree to Agents
 for i,agent in enumerate(env.agents):
     agent.bind_bt(bt_list[i])
 

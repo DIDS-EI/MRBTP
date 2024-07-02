@@ -25,15 +25,23 @@ def get_classes_from_folder(folder_path):
 
 
 class BehaviorLibrary(dict):
-    def __init__(self,lib_path):
+    def __init__(self,lib_path=None):
         super().__init__()
-        self.load(lib_path)
+        if lib_path:
+            self.load_from_btml(lib_path)
 
-    def load(self,lib_path):
+    def load_from_btml(self, lib_path):
         type_list = ["Action", "Condition"]
         for type in type_list:
             path = os.path.join(lib_path, type)
             self[type] = get_classes_from_folder(path)
+
+    def load_from_dict(self, lib_dict):
+        for node_type, node_list in lib_dict.items():
+            node_dict = {}
+            for node in node_list:
+                node_dict[node.__name__] = node
+            self[node_type] = node_dict
 
     def __getattr__(self, name):
         if name in self:

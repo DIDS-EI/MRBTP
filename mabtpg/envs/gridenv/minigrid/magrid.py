@@ -1,4 +1,6 @@
 
+
+
 import numpy as np
 
 from minigrid.utils.rendering import (
@@ -111,9 +113,9 @@ class MAGrid(Grid):
             for i in range(0, self.width):
                 cell = self.get(i, j)
                 # agents_dir = []
-                # for agent in agents:
-                #     if np.array_equal(agents[i].pos, (i, j)):
-                #         agents_dir.append(agents[i].dir)
+                # for agent in Agents:
+                #     if np.array_equal(Agents[i].pos, (i, j)):
+                #         agents_dir.append(Agents[i].dir)
                 if (i,j) in agent_dir_dict:
                     agents_dir = tuple(agent_dir_dict[(i,j)])
                 else:

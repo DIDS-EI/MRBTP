@@ -41,11 +41,11 @@ class EmptyEnv(MAGridEnv):
         self.grid.vert_wall(5, 3, 10)
 
         # 生成物体
-        self.put_obj(Goal(), width - 2, height - 2)
-        self.put_obj(Lava(), 2, 8)
-        self.put_obj(Ball("purple"), 6, 8)
-        self.put_obj(Key("yellow"), 10, 8)
-        self.put_obj(Door("yellow"), 14, 8)
+        self.add_obj(Goal(), width - 2, height - 2)
+        self.add_obj(Lava(), 2, 8)
+        self.add_obj(Ball("purple"), 6, 8)
+        self.add_obj(Key("yellow"), 10, 8)
+        self.add_obj(Door("yellow"), 14, 8)
 
 
         # 生成智能体
