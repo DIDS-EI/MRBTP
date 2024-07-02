@@ -49,7 +49,6 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.render_mode = "human"
         self.create_behavior_libs()
 
-
     def initialize_objects(self):
         # Initialize dictionaries for counting object types and mapping names to IDs
         self.obj_type_num = {}
