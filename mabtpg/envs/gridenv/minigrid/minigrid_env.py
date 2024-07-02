@@ -62,7 +62,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
             if not hasattr(obj, 'id') or obj.id is None:
                 if obj.type not in self.obj_type_num:
                     self.obj_type_num[obj.type] = 0
-                obj.id = f"{obj.type}{self.obj_type_num[obj.type]}"
+                obj.id = f"{obj.type}-{self.obj_type_num[obj.type]}"
                 self.obj_type_num[obj.type] += 1
 
                 self.id2obj[obj.id] = obj
