@@ -56,6 +56,8 @@ action_lists = env.get_action_lists()
 
 goal = env.get_goal()
 
+
+
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
 print("BT goal: " + str(goal))

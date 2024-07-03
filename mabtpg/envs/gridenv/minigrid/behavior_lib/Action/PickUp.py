@@ -29,8 +29,15 @@ class PickUp(Action):
         can_pickup = env.cache["can_pickup"]
         for obj_id in can_pickup:
             action_model = {}
-            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})"}
+            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})"}  #,f"IsHandEmpty(agent-{agent.id})"
             action_model["add"]={f"IsHolding(agent-{agent.id},{obj_id})"}
+
+            # get key that open one door
+            if "key" in obj_id and obj_id in env.key_door_map:
+                door_id = env.key_door_map[obj_id]
+                action_model["add"] |= {f"CanOpen(agent-{agent.id},{door_id})"} # |
+
+            # action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})"}
             action_model["del_set"] = set()
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"PickUp(agent-{agent.id},{obj_id})",**action_model))

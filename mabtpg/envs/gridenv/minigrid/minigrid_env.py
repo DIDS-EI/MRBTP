@@ -32,7 +32,10 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         minigrid_env.reset()
         self.minigrid_env = minigrid_env
-        self.instrs = minigrid_env.instrs
+
+        # self.instrs = minigrid_env.instrs
+        self.instrs = getattr(minigrid_env, 'instrs', None)
+
 
         mission_space = MissionSpace(mission_func=gen_mission_func(minigrid_env))
 
@@ -56,6 +59,13 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.obj_name2id = {}
         self.obj_id2name={}
 
+        # Initialize a dictionary to map doors to their corresponding keys
+        self.door_key_map = {}
+        self.key_door_map = {}
+        # Temporary storage for locked doors and keys
+        locked_doors = {}
+        keys = {}
+
         # Assign IDs and count object types
         for obj in self.obj_list:
             # Add a private 'id' attribute to each object in the list if it doesn't already have one
@@ -70,7 +80,21 @@ class MiniGridToMAGridEnv(MAGridEnv):
             obj.name = obj_to_planning_name(obj)
             self.obj_name2id[obj.name] = obj.id
 
+            # Record locked doors and keys
+            if obj.type == 'door' and obj.is_locked:
+                locked_doors[obj.id] = obj.color
+            elif obj.type == 'key':
+                keys[obj.color] = obj.id
+
+        # Bind locked doors to their corresponding keys
+        for door_id, door_color in locked_doors.items():
+            if door_color in keys:
+                self.door_key_map[door_id] = keys[door_color]
+        self.key_door_map = {key_id: door_id for door_id, key_id in self.door_key_map.items()}
+
+
         self.obj_id2name = {id_: name for name, id_ in self.obj_name2id.items()}
+
 
 
     def _gen_grid(self, width, height):
@@ -90,6 +114,10 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
 
     def get_goal(self):
+
+        if self.instrs==None:
+            return None
+
         name = f"{self.instrs.desc.color}_{self.instrs.desc.type}"
         x, y = self.instrs.desc.obj_set[0].cur_pos
         planning_name = f"{name}-{x}_{y}"
@@ -99,7 +127,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
             obj_id = self.obj_name2id[planning_name]
         else:
             # If not found, assign a default ID using the type from instruction's descriptor with suffix '0'
-            obj_id = str(self.instrs.desc.type) + "0"
+            obj_id = str(self.instrs.desc.type) + "-0"
 
         if isinstance(self.instrs, GoToInstr):
             return {f"IsNear(agent-0,{obj_id})", }
@@ -152,6 +180,6 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
             print(f"full action list ({len(action_list[i])} in total):")
             for a in action_list[i]:
-                print(a.name)
+                print(a.name,"pre:",a.pre)
 
         return action_list

@@ -4,9 +4,9 @@ from mabtpg.behavior_tree import Status
 import numpy as np
 from minigrid.core.constants import DIR_TO_VEC
 
-# 在Minigrid环境中判断智能体是否与物体相邻且面对物体
-class IsHolding(Condition):
-    num_args = 2
+
+class IsHandEmpty(Condition):
+    num_args = 1
 
     def __init__(self,*args):
         ins_name = self.__class__.get_ins_name(*args)
@@ -17,21 +17,15 @@ class IsHolding(Condition):
         super().__init__(*args)
 
         self.target_agent = None
-        self.obj_id = self.args[1]
+
 
     def update(self) -> Status:
         if self.target_agent is None:
             agent_id = int(self.args[0].split("-")[-1])
             self.target_agent = self.env.agents[agent_id]
 
-
-        if self.target_agent.carrying is not None:
+        if self.target_agent.carrying is None:
             return Status.SUCCESS
         else:
             return Status.FAILURE
 
-        # agent_facing_pos = self.target_agent.pos + DIR_TO_VEC[self.target_agent.dir]
-        # if np.array_equal(self.target_pos, agent_facing_pos):
-        #     return Status.SUCCESS
-        # else:
-        #     return Status.FAILURE

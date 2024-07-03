@@ -89,7 +89,7 @@ class MAGridEnv(MiniGridEnv):
 
         # Move forward
         elif action == self.actions.forward:
-            if fwd_cell is None or fwd_cell.can_overlap():
+            if fwd_cell is None or fwd_cell.type == "ball" or fwd_cell.type == "key" or fwd_cell.can_overlap():
                 self.agent_pos = tuple(fwd_pos)
             # if fwd_cell is not None and fwd_cell.type == "goal":
             #     terminated = True

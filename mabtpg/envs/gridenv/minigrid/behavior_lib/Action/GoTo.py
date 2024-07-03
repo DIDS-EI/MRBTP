@@ -37,7 +37,7 @@ class GoTo(Action):
             action_model = {}
             action_model["pre"]= set()
             action_model["add"]={f"IsNear(agent-{agent.id},{obj_id})"}
-            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_id})' for obj in can_goto if obj != obj_id}
+            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
 
             # action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
             # action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
