@@ -27,7 +27,7 @@ env = gym.make(
 # BT规划算法，这里就直接加载随机行为树
 from mabtpg import BehaviorTree, BehaviorLibrary
 
-behavior_lib_path = f"../mabtpg/envs/gridenv/vhgrid/behavior_lib"
+behavior_lib_path = f"../../mabtpg/envs/gridenv/vhgrid/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
 print(behavior_lib)
 

@@ -26,12 +26,16 @@ def class_from_template(template_class, name):
 #     def greet(self):
 #         print(f"Hello from {self.name}")
 
+class PickableObject(VHGridObject):
+    def set_components(self):
+        self.add_component(Components.Pickable)
 
 
-class Apple(VHGridObject): pass
-class Banana(VHGridObject): pass
-class Carrot(VHGridObject): pass
-class Cherry(VHGridObject): pass
+
+class Apple(PickableObject): pass
+class Banana(PickableObject): pass
+class Carrot(PickableObject): pass
+class Cherry(PickableObject): pass
 
 
 

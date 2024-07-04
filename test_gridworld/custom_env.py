@@ -41,18 +41,18 @@ class EmptyEnv(MAGridEnv):
         self.grid.vert_wall(5, 3, 10)
 
         # 生成物体
-        self.add_obj(Goal(), width - 2, height - 2)
-        self.add_obj(Lava(), 2, 8)
-        self.add_obj(Ball("purple"), 6, 8)
-        self.add_obj(Key("yellow"), 10, 8)
-        self.add_obj(Door("yellow"), 14, 8)
+        self.add_object(Goal(), width - 2, height - 2)
+        self.add_object(Lava(), 2, 8)
+        self.add_object(Ball("purple"), 6, 8)
+        self.add_object(Key("yellow"), 10, 8)
+        self.add_object(Door("yellow"), 14, 8)
 
 
         # 生成智能体
         if self.agents_start_pos is not None:
             for i in range(self.num_agent):
-                self.agents[i].pos = self.agents_start_pos[i]
-                self.agents[i].dir = self.agents_start_dir[i]
+                self.agents[i].position = self.agents_start_pos[i]
+                self.agents[i].direction = self.agents_start_dir[i]
         else:
             self.place_agent()
 

@@ -9,8 +9,9 @@ from typing import Any, Callable
 import numpy as np
 
 from minigrid.core.constants import OBJECT_TO_IDX, TILE_PIXELS
-from minigrid.core.world_object import Wall, WorldObj
-
+# from minigrid.core.world_object import Wall, Object
+from mabtpg.envs.gridenv.base import Components
+from mabtpg.envs.gridenv.base.object import Object
 
 from minigrid.utils.rendering import (
     downsample,
@@ -20,6 +21,7 @@ from minigrid.utils.rendering import (
     point_in_triangle,
     rotate_fn,
 )
+
 
 
 class MAGrid:
@@ -33,10 +35,10 @@ class MAGrid:
         self.width: int = width
         self.height: int = height
 
-        self.grid: list[WorldObj | None] = [None] * (width * height)
+        self.grid: list[Object | None] = [None] * (width * height)
 
     def __contains__(self, key: Any) -> bool:
-        if isinstance(key, WorldObj):
+        if isinstance(key, Object):
             for e in self.grid:
                 if e is key:
                     return True
@@ -73,7 +75,7 @@ class MAGrid:
 
         self.grid[row * self.width + column] = obj
 
-    def get(self, i: int, j: int) -> WorldObj | None:
+    def get(self, i: int, j: int) -> Object | None:
         assert 0 <= i < self.width
         assert 0 <= j < self.height
         assert self.grid is not None
@@ -100,17 +102,17 @@ class MAGrid:
 
         grid = MAGrid(width, height)
 
-        for j in range(0, height):
-            for i in range(0, width):
-                x = topX + i
-                y = topY + j
-
-                if 0 <= x < self.width and 0 <= y < self.height:
-                    v = self.get(x, y)
-                else:
-                    v = Wall()
-
-                grid.set(i, j, v)
+        # for j in range(0, height):
+        #     for i in range(0, width):
+        #         x = topX + i
+        #         y = topY + j
+        #
+        #         if 0 <= x < self.width and 0 <= y < self.height:
+        #             v = self.get(x, y)
+        #         else:
+        #             v = Wall()
+        #
+        #         grid.set(i, j, v)
 
         return grid
 
@@ -120,7 +122,7 @@ class MAGrid:
     def render_tile(
         cls,
         obj,
-        agents_dir: tuple[int] | None = None,
+        agents: tuple[int] | None = None,
         highlight: bool = False,
         tile_size: int = TILE_PIXELS,
         subdivs: int = 3,
@@ -130,7 +132,12 @@ class MAGrid:
         """
 
         # Hash map lookup key for the cache
-        key: str =  f"_{agents_dir}_{int(highlight)}_{tile_size})"
+        if agents is None:
+            agent_encode = None
+        else:
+            agent_encode = [agent.encode() for agent in agents]
+
+        key: str =  f"_{agent_encode}_{int(highlight)}_{tile_size})"
         key = obj.encode() + key if obj else key
 
         if key in cls.tile_cache:
@@ -148,17 +155,9 @@ class MAGrid:
             obj.render(img)
 
         # Overlay the agent on top
-        if agents_dir is not None:
-            for dir in agents_dir:
-                tri_fn = point_in_triangle(
-                    (0.12, 0.19),
-                    (0.87, 0.50),
-                    (0.12, 0.81),
-                )
-
-                # Rotate the agent based on its direction
-                tri_fn = rotate_fn(tri_fn, cx=0.5, cy=0.5, theta=0.5 * math.pi * dir)
-                fill_coords(img, tri_fn, (255, 0, 0))
+        if agents is not None:
+            for agent in agents:
+                agent.render(img)
 
         # Highlight the cell if needed
         if highlight:
@@ -189,12 +188,13 @@ class MAGrid:
         if highlight_mask is None:
             highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
 
-        agent_dir_dict = {}
+        agent_pos_dict = {}
         for agent in agents:
-            if agent.pos not in agent_dir_dict:
-                agent_dir_dict[agent.pos] = [agent.dir]
+            agent_position = tuple(agent.position)
+            if agent_position not in agent_pos_dict:
+                agent_pos_dict[agent_position] = [agent]
             else:
-                agent_dir_dict[agent.pos] += [agent.dir]
+                agent_pos_dict[agent_position] += [agent]
 
 
         # Compute the total grid size
@@ -211,15 +211,15 @@ class MAGrid:
                 # for agent in Agents:
                 #     if np.array_equal(Agents[i].pos, (i, j)):
                 #         agents_dir.append(Agents[i].dir)
-                if (i,j) in agent_dir_dict:
-                    agents_dir = tuple(agent_dir_dict[(i,j)])
+                if (i,j) in agent_pos_dict:
+                    agents = tuple(agent_pos_dict[(i,j)])
                 else:
-                    agents_dir = None
+                    agents = None
 
                 assert highlight_mask is not None
                 tile_img = self.render_tile(
                     cell,
-                    agents_dir= agents_dir,
+                    agents= agents,
                     highlight=highlight_mask[i, j],
                     tile_size=tile_size,
                 )
@@ -263,26 +263,26 @@ class MAGrid:
 
 
 
-    @staticmethod
-    def decode(array: np.ndarray) -> tuple[Grid, np.ndarray]:
-        """
-        Decode an array grid encoding back into a grid
-        """
-
-        width, height, channels = array.shape
-        assert channels == 3
-
-        vis_mask = np.ones(shape=(width, height), dtype=bool)
-
-        grid = Grid(width, height)
-        for i in range(width):
-            for j in range(height):
-                type_idx, color_idx, state = array[i, j]
-                v = WorldObj.decode(type_idx, color_idx, state)
-                grid.set(i, j, v)
-                vis_mask[i, j] = type_idx != OBJECT_TO_IDX["unseen"]
-
-        return grid, vis_mask
+    # @staticmethod
+    # def decode(array: np.ndarray) -> tuple[MAGrid, np.ndarray]:
+    #     """
+    #     Decode an array grid encoding back into a grid
+    #     """
+    #
+    #     width, height, channels = array.shape
+    #     assert channels == 3
+    #
+    #     vis_mask = np.ones(shape=(width, height), dtype=bool)
+    #
+    #     grid = MAGrid(width, height)
+    #     for i in range(width):
+    #         for j in range(height):
+    #             type_idx, color_idx, state = array[i, j]
+    #             v = v.decode(type_idx, color_idx, state)
+    #             grid.set(i, j, v)
+    #             vis_mask[i, j] = type_idx != OBJECT_TO_IDX["unseen"]
+    #
+    #     return grid, vis_mask
 
     def process_vis(self, agent_pos: tuple[int, int]) -> np.ndarray:
         mask = np.zeros(shape=(self.width, self.height), dtype=bool)
@@ -295,7 +295,7 @@ class MAGrid:
                     continue
 
                 cell = self.get(i, j)
-                if cell and not cell.see_behind():
+                if cell and not cell.has_component(Components.BlockView):
                     continue
 
                 mask[i + 1, j] = True
@@ -308,7 +308,7 @@ class MAGrid:
                     continue
 
                 cell = self.get(i, j)
-                if cell and not cell.see_behind():
+                if cell and not cell.cell.has_component(Components.BlockView):
                     continue
 
                 mask[i - 1, j] = True

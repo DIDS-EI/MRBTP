@@ -16,7 +16,7 @@ class VHGridEnv(MAGridEnv):
         if length is None:
             length = self.width - x
         for i in range(0, length):
-            self.add_obj(obj, x + i, y)
+            self.add_object(obj, x + i, y)
 
     def add_vert_objs(
         self,
@@ -28,7 +28,7 @@ class VHGridEnv(MAGridEnv):
         if length is None:
             length = self.height - y
         for j in range(0, length):
-            self.add_obj(obj, x, y + j)
+            self.add_object(obj, x, y + j)
 
     def add_rect_objs(self, obj, x: int, y: int, w: int, h: int):
         self.add_horz_objs(obj, x, y, w)

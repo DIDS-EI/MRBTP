@@ -4,7 +4,6 @@ from mabtpg.behavior_tree import Status
 import numpy as np
 from minigrid.core.constants import DIR_TO_VEC
 
-# 在Minigrid环境中判断智能体是否与物体相邻且面对物体
 class IsHolding(Condition):
     num_args = 2
 

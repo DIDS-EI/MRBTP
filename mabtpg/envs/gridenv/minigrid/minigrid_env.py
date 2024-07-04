@@ -77,8 +77,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         # self.minigrid_env._gen_grid(self.width, self.height)
 
         for i in range(self.num_agent):
-            self.agents[i].pos = self.minigrid_env.agent_pos
-            self.agents[i].dir = self.minigrid_env.agent_dir
+            self.agents[i].position = self.minigrid_env.agent_pos
+            self.agents[i].direction = self.minigrid_env.agent_dir
 
         self.agent_pos = self.minigrid_env.agent_pos
         self.agent_dir = self.minigrid_env.agent_dir
@@ -120,8 +120,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         obj_list = []
         self.cache = {}
         # list all Objects in env
-        for i in range(self.grid.width):
-            for j in range(self.grid.height):
+        for i in range(self.grid.window_width):
+            for j in range(self.grid.window_height):
                 cell = self.grid.get(i, j)
                 if cell is None:
                     continue

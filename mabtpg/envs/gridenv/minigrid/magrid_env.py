@@ -56,13 +56,13 @@ class MAGridEnv(MiniGridEnv):
 
 
     def set_focus_agent(self, agent):
-        self.agent_pos = agent.pos
-        self.agent_dir = agent.dir
+        self.agent_pos = agent.position
+        self.agent_dir = agent.direction
         self.carrying = agent.carrying
 
     def get_focus_agent(self, agent):
-        agent.pos = self.agent_pos
-        agent.dir = self.agent_dir
+        agent.position = self.agent_pos
+        agent.direction = self.agent_dir
         agent.carrying = self.carrying
 
     def agent_step(self,action: ActType
@@ -161,7 +161,7 @@ class MAGridEnv(MiniGridEnv):
         to_encode = [self.grid.encode().tolist()]
         for agent in self.agents:
             carrying_type = agent.carrying.type if agent.carrying else None
-            to_encode += [agent.pos, agent.dir,carrying_type]
+            to_encode += [agent.position, agent.direction, carrying_type]
 
         for item in to_encode:
             sample_hash.update(str(item).encode("utf8"))
@@ -176,8 +176,8 @@ class MAGridEnv(MiniGridEnv):
         highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
 
         for i in range(self.num_agent):
-            self.agent_pos = self.agents[i].pos
-            self.agent_dir = self.agents[i].dir
+            self.agent_pos = self.agents[i].position
+            self.agent_dir = self.agents[i].direction
 
             # Compute which cells are visible to the agent
             _, vis_mask = self.gen_obs_grid()
@@ -226,9 +226,9 @@ class MAGridEnv(MiniGridEnv):
 
         pos = self.place_obj(None, top, size, max_tries=max_tries)
         for i in range(self.num_agent):
-            self.agents[i].pos = pos
+            self.agents[i].position = pos
             if rand_dir:
-                self.agents[i].dir = self._rand_int(0, 4)
+                self.agents[i].direction = self._rand_int(0, 4)
 
         return pos
 

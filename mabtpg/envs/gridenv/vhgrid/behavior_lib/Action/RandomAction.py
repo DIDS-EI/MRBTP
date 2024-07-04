@@ -29,6 +29,6 @@ class RandomAction(Action):
         super().__init__(*args)
 
     def update(self) -> Status:
-        self.agent.action = random.choice(list(Actions))
-        print(f"randomly do action: {self.agent.action.name}")
+        self.agent.actions = random.choice(list(Actions))
+        print(f"randomly do action: {self.agent.actions.name}")
         return Status.RUNNING

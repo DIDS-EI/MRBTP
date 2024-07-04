@@ -96,10 +96,10 @@ class MAGrid(Grid):
 
         agent_dir_dict = {}
         for agent in agents:
-            if agent.pos not in agent_dir_dict:
-                agent_dir_dict[agent.pos] = [agent.dir]
+            if agent.position not in agent_dir_dict:
+                agent_dir_dict[agent.position] = [agent.direction]
             else:
-                agent_dir_dict[agent.pos] += [agent.dir]
+                agent_dir_dict[agent.position] += [agent.direction]
 
 
         # Compute the total grid size

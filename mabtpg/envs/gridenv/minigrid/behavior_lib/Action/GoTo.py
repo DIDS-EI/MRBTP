@@ -55,22 +55,22 @@ class GoTo(Action):
             self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
             self.goal = list(self.arg_cur_pos)
 
-            self.path = astar(self.env.grid, start=self.agent.pos, goal=self.goal)
+            self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
             print(self.path)
             assert self.path
 
         if self.path == []:
-            goal_direction = self.goal - np.array(self.agent.pos)
-            self.agent.action = self.turn_to(goal_direction)
+            goal_direction = self.goal - np.array(self.agent.position)
+            self.agent.actions = self.turn_to(goal_direction)
         else:
             next_direction = self.path[0]
             turn_to_action = self.turn_to(next_direction)
             if turn_to_action == Actions.done:
-                self.agent.action = Actions.forward
+                self.agent.actions = Actions.forward
                 self.path.pop(0)
             else:
-                self.agent.action = turn_to_action
+                self.agent.actions = turn_to_action
             print(self.path)
 
         # self.agent.action = random.choice(list(Actions))
@@ -81,7 +81,7 @@ class GoTo(Action):
         direction_int = get_direction_index(direction)
 
         # Calculate the difference in direction
-        diff = (direction_int - self.agent.dir) % 4
+        diff = (direction_int - self.agent.direction) % 4
 
         # Determine the most natural turn action
         if diff == 1:
@@ -101,7 +101,7 @@ def heuristic(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 def astar(grid, start, goal):
-    rows, cols = grid.width, grid.height
+    rows, cols = grid.window_width, grid.window_height
     pq = []
     heapq.heappush(pq, (0 + heuristic(start, goal), 0, start, []))
     visited = set()

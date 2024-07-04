@@ -29,7 +29,7 @@ class IsNear(Condition):
             pos_str = self.args[1].split("-")[-1]
             self.target_pos = list(map(int, pos_str.split("_")))
 
-        agent_facing_pos = self.target_agent.pos + DIR_TO_VEC[self.target_agent.dir]
+        agent_facing_pos = self.target_agent.position + DIR_TO_VEC[self.target_agent.direction]
         if np.array_equal(self.target_pos, agent_facing_pos):
             return Status.SUCCESS
         else:

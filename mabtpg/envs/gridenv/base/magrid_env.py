@@ -20,7 +20,7 @@ from minigrid.core.world_object import Point, WorldObj
 from mabtpg.envs.gridenv.base.agent import Agent
 
 from mabtpg.envs.gridenv.base.magrid import MAGrid
-
+from mabtpg.envs.gridenv.base.window import Window
 
 class MAGridEnv(gym.Env):
     """
@@ -121,10 +121,13 @@ class MAGridEnv(gym.Env):
         self.create_agents()
 
     def create_agents(self):
-        agents = []
+        self.agents = []
         for i, agent_cls in enumerate(self.agent_list):
-            agents.append(agent_cls(self,i))
-        self.agents = agents
+            agent = agent_cls()
+            agent.env = self
+            agent.id = i
+            self.agents.append(agent)
+
         self.num_agent = len(self.agents)
 
 
@@ -155,56 +158,8 @@ class MAGridEnv(gym.Env):
         return self.max_steps - self.step_count
 
     def __str__(self):
-        """
-        Produce a pretty string of the environment's grid along with the agent.
-        A grid cell is represented by 2-character string, the first one for
-        the object and the second one for the color.
-        """
+        return self.__class__.__name__
 
-        # Map of object types to short string
-        OBJECT_TO_STR = {
-            "wall": "W",
-            "floor": "F",
-            "door": "D",
-            "key": "K",
-            "ball": "A",
-            "box": "B",
-            "goal": "G",
-            "lava": "V",
-        }
-
-        # Map agent's direction to short string
-        AGENT_DIR_TO_STR = {0: ">", 1: "V", 2: "<", 3: "^"}
-
-        output = ""
-
-        for j in range(self.grid.height):
-            for i in range(self.grid.width):
-                if i == self.agent_pos[0] and j == self.agent_pos[1]:
-                    output += 2 * AGENT_DIR_TO_STR[self.agent_dir]
-                    continue
-
-                tile = self.grid.get(i, j)
-
-                if tile is None:
-                    output += "  "
-                    continue
-
-                if tile.type == "door":
-                    if tile.is_open:
-                        output += "__"
-                    elif tile.is_locked:
-                        output += "L" + tile.color[0].upper()
-                    else:
-                        output += "D" + tile.color[0].upper()
-                    continue
-
-                output += OBJECT_TO_STR[tile.type] + tile.color[0].upper()
-
-            if j < self.grid.height - 1:
-                output += "\n"
-
-        return output
 
     @abstractmethod
     def _gen_grid(self, width, height):
@@ -218,7 +173,7 @@ class MAGridEnv(gym.Env):
         return 1 - 0.9 * (self.step_count / self.max_steps)
 
 
-    def add_obj(self, obj, i: int, j: int):
+    def add_object(self, obj, i: int, j: int):
         """
         Put an object at a specific position in the grid
         """
@@ -241,9 +196,9 @@ class MAGridEnv(gym.Env):
 
         pos = self.place_obj(None, top, size, max_tries=max_tries)
         for i in range(self.num_agent):
-            self.agents[i].pos = pos
+            self.agents[i].position = pos
             if rand_dir:
-                self.agents[i].dir = self._rand_int(0, 4)
+                self.agents[i].direction = self._rand_int(0, 4)
 
         return pos
 
@@ -269,7 +224,7 @@ class MAGridEnv(gym.Env):
         return np.array((-dy, dx))
 
     @property
-    def front_pos(self):
+    def front_position(self):
         """
         Get the position of the cell that is right in front of the agent
         """
@@ -378,13 +333,13 @@ class MAGridEnv(gym.Env):
 
 
     def set_focus_agent(self, agent):
-        self.agent_pos = agent.pos
-        self.agent_dir = agent.dir
+        self.agent_pos = agent.position
+        self.agent_dir = agent.direction
         self.carrying = agent.carrying
 
     def get_focus_agent(self, agent):
-        agent.pos = self.agent_pos
-        agent.dir = self.agent_dir
+        agent.position = self.agent_pos
+        agent.direction = self.agent_dir
         agent.carrying = self.carrying
 
     def agent_step(self,action: ActType
@@ -394,7 +349,7 @@ class MAGridEnv(gym.Env):
         # truncated = False
 
         # Get the position in front of the agent
-        fwd_pos = self.front_pos
+        fwd_pos = self.front_position
 
         # Get the contents of the cell in front of the agent
         fwd_cell = self.grid.get(*fwd_pos)
@@ -446,19 +401,31 @@ class MAGridEnv(gym.Env):
         else:
             raise ValueError(f"Unknown action: {action}")
 
-    def step(self,action=None):
+    def step(self,actions=()):
         self.step_count += 1
         done = True
         # truncated = False
 
+        init_action_list = [None] * self.num_agent
+        if actions is not None:
+            if isinstance(actions,list) or isinstance(actions,tuple):
+                for i,action in enumerate(actions):
+                    init_action_list[i] = action
+            else:
+                init_action_list[0] = actions
+
         print("---------")
         for i in range(self.num_agent):
-            action = self.agents[i].step()
-            # 执行单智能体与环境交互
-            self.set_focus_agent(self.agents[i])
-            self.agent_step(action)
-            self.get_focus_agent(self.agents[i])
-            print(f"agent {i}, {action}")
+
+            current_agent = self.agents[i]
+            action = current_agent.step(init_action_list[i])
+            # agent interact with env
+            # self.set_focus_agent(self.agents[i])
+            # self.agent_step(action)
+            # self.get_focus_agent(self.agents[i])
+            action.do(current_agent)
+
+            print(f"agent-{i}: {action.name}")
 
             if not self.agents[i].bt_success:
                 done = False
@@ -482,96 +449,12 @@ class MAGridEnv(gym.Env):
         to_encode = [self.grid.encode().tolist()]
         for agent in self.agents:
             carrying_type = agent.carrying.type if agent.carrying else None
-            to_encode += [agent.pos, agent.dir,carrying_type]
+            to_encode += [agent.position, agent.direction, carrying_type]
 
         for item in to_encode:
             sample_hash.update(str(item).encode("utf8"))
 
         return sample_hash.hexdigest()[:size]
-
-    # def hash(self, size=16):
-    #     """Compute a hash that uniquely identifies the current state of the environment.
-    #     :param size: Size of the hashing
-    #     """
-    #     sample_hash = hashlib.sha256()
-    #
-    #     to_encode = [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
-    #     for item in to_encode:
-    #         sample_hash.update(str(item).encode("utf8"))
-    #
-    #     return sample_hash.hexdigest()[:size]
-
-    # def step(
-    #     self, action: ActType
-    # ) -> tuple[ObsType, SupportsFloat, bool, bool, dict[str, Any]]:
-    #     self.step_count += 1
-    #
-    #     reward = 0
-    #     terminated = False
-    #     truncated = False
-    #
-    #     # Get the position in front of the agent
-    #     fwd_pos = self.front_pos
-    #
-    #     # Get the contents of the cell in front of the agent
-    #     fwd_cell = self.grid.get(*fwd_pos)
-    #
-    #     # Rotate left
-    #     if action == self.actions.left:
-    #         self.agent_dir -= 1
-    #         if self.agent_dir < 0:
-    #             self.agent_dir += 4
-    #
-    #     # Rotate right
-    #     elif action == self.actions.right:
-    #         self.agent_dir = (self.agent_dir + 1) % 4
-    #
-    #     # Move forward
-    #     elif action == self.actions.forward:
-    #         if fwd_cell is None or fwd_cell.can_overlap():
-    #             self.agent_pos = tuple(fwd_pos)
-    #         if fwd_cell is not None and fwd_cell.type == "goal":
-    #             terminated = True
-    #             reward = self._reward()
-    #         if fwd_cell is not None and fwd_cell.type == "lava":
-    #             terminated = True
-    #
-    #     # Pick up an object
-    #     elif action == self.actions.pickup:
-    #         if fwd_cell and fwd_cell.can_pickup():
-    #             if self.carrying is None:
-    #                 self.carrying = fwd_cell
-    #                 self.carrying.cur_pos = np.array([-1, -1])
-    #                 self.grid.set(fwd_pos[0], fwd_pos[1], None)
-    #
-    #     # Drop an object
-    #     elif action == self.actions.drop:
-    #         if not fwd_cell and self.carrying:
-    #             self.grid.set(fwd_pos[0], fwd_pos[1], self.carrying)
-    #             self.carrying.cur_pos = fwd_pos
-    #             self.carrying = None
-    #
-    #     # Toggle/activate an object
-    #     elif action == self.actions.toggle:
-    #         if fwd_cell:
-    #             fwd_cell.toggle(self, fwd_pos)
-    #
-    #     # Done action (not used by default)
-    #     elif action == self.actions.done:
-    #         pass
-    #
-    #     else:
-    #         raise ValueError(f"Unknown action: {action}")
-    #
-    #     if self.step_count >= self.max_steps:
-    #         truncated = True
-    #
-    #     if self.render_mode == "human":
-    #         self.render()
-    #
-    #     obs = self.gen_obs()
-    #
-    #     return obs, reward, terminated, truncated, {}
 
     def gen_obs_grid(self, agent_view_size=None):
         """
@@ -652,8 +535,8 @@ class MAGridEnv(gym.Env):
         highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
 
         for i in range(self.num_agent):
-            self.agent_pos = self.agents[i].pos
-            self.agent_dir = self.agents[i].dir
+            self.agent_pos = self.agents[i].position
+            self.agent_dir = self.agents[i].direction
 
             # Compute which cells are visible to the agent
             _, vis_mask = self.gen_obs_grid()
@@ -695,53 +578,6 @@ class MAGridEnv(gym.Env):
 
         return img
 
-    # def get_full_render(self, highlight, tile_size):
-    #     """
-    #     Render a non-paratial observation for visualization
-    #     """
-    #     # Compute which cells are visible to the agent
-    #     _, vis_mask = self.gen_obs_grid()
-    #
-    #     # Compute the world coordinates of the bottom-left corner
-    #     # of the agent's view area
-    #     f_vec = self.dir_vec
-    #     r_vec = self.right_vec
-    #     top_left = (
-    #         self.agent_pos
-    #         + f_vec * (self.agent_view_size - 1)
-    #         - r_vec * (self.agent_view_size // 2)
-    #     )
-    #
-    #     # Mask of which cells to highlight
-    #     highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
-    #
-    #     # For each cell in the visibility mask
-    #     for vis_j in range(0, self.agent_view_size):
-    #         for vis_i in range(0, self.agent_view_size):
-    #             # If this cell is not visible, don't highlight it
-    #             if not vis_mask[vis_i, vis_j]:
-    #                 continue
-    #
-    #             # Compute the world coordinates of this cell
-    #             abs_i, abs_j = top_left - (f_vec * vis_j) + (r_vec * vis_i)
-    #
-    #             if abs_i < 0 or abs_i >= self.width:
-    #                 continue
-    #             if abs_j < 0 or abs_j >= self.height:
-    #                 continue
-    #
-    #             # Mark this cell to be highlighted
-    #             highlight_mask[abs_i, abs_j] = True
-    #
-    #     # Render the whole grid
-    #     img = self.grid.render(
-    #         tile_size,
-    #         self.agent_pos,
-    #         self.agent_dir,
-    #         highlight_mask=highlight_mask if highlight else None,
-    #     )
-    #
-    #     return img
 
     def get_frame(
         self,
@@ -776,41 +612,8 @@ class MAGridEnv(gym.Env):
             if self.render_size is None:
                 self.render_size = img.shape[:2]
             if self.window is None:
-                pygame.init()
-                pygame.display.init()
-                self.window = pygame.display.set_mode(
-                    (self.screen_size, self.screen_size)
-                )
-                pygame.display.set_caption("minigrid")
-            if self.clock is None:
-                self.clock = pygame.time.Clock()
-            surf = pygame.surfarray.make_surface(img)
-
-            # Create background with mission description
-            offset = surf.get_size()[0] * 0.1
-            # offset = 32 if self.agent_pov else 64
-            bg = pygame.Surface(
-                (int(surf.get_size()[0] + offset), int(surf.get_size()[1] + offset))
-            )
-            bg.convert()
-            bg.fill((255, 255, 255))
-            bg.blit(surf, (offset / 2, 0))
-
-            bg = pygame.transform.smoothscale(bg, (self.screen_size, self.screen_size))
-
-            font_size = 22
-            text = self.mission
-            font = pygame.freetype.SysFont(pygame.font.get_default_font(), font_size)
-            text_rect = font.get_rect(text, size=font_size)
-            text_rect.center = bg.get_rect().center
-            text_rect.y = bg.get_height() - font_size * 1.5
-            font.render_to(bg, text_rect, text, size=font_size)
-
-            self.window.blit(bg, (0, 0))
-            pygame.event.pump()
-            self.clock.tick(self.metadata["render_fps"])
-            pygame.display.flip()
-
+                self.window = Window(self)
+            self.window.render(img)
         elif self.render_mode == "rgb_array":
             return img
 
