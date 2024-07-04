@@ -55,16 +55,14 @@ for mission_str in mission_list1:
 
 
 
-
-
 action_lists = env.get_action_lists()
 
 goal = env.get_goal()
 # 获取球的颜色和位置
 if goal==None:
-    # goal = {"IsHolding(agent-0,key-0)"}
+    goal = {"IsHolding(agent-0,key-0)"}
     # goal = {"IsNear(agent-0,door-0)"}
-    goal = {"IsOpen(door-0)"}  #需要有初始状态？IsClose
+    # goal = {"IsOpen(door-0)"}  #需要有初始状态？IsClose
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
@@ -88,6 +86,7 @@ for i,agent in enumerate(env.agents):
 
 # run env
 env.render()
+env.print_ticks = True
 done = False
 while not done:
     obs,done,_,_ = env.step()
