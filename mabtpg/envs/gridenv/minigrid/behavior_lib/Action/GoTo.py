@@ -62,15 +62,15 @@ class GoTo(Action):
 
         if self.path == []:
             goal_direction = self.goal - np.array(self.agent.position)
-            self.agent.actions = self.turn_to(goal_direction)
+            self.agent.action = self.turn_to(goal_direction)
         else:
             next_direction = self.path[0]
             turn_to_action = self.turn_to(next_direction)
             if turn_to_action == Actions.done:
-                self.agent.actions = Actions.forward
+                self.agent.action = Actions.forward
                 self.path.pop(0)
             else:
-                self.agent.actions = turn_to_action
+                self.agent.action = turn_to_action
             print(self.path)
 
         # self.agent.action = random.choice(list(Actions))
