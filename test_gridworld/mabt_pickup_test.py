@@ -7,9 +7,12 @@ num_agent = 2
 
 # other cfgs
 # env_id = "BabyAI-GoToObj-v0"  # goto
-# env_id = "BabyAI-Open-v0"  # goto pichup
+# env_id = "BabyAI-OneRoomS8-v0"  # goto pichup
 
-env_id = "BabyAI-OneRoomS8-v0"  # 4 conditions
+env_id = "MiniGrid-DoorKey-16x16-v0"
+
+# env_id = "BabyAI-GoToOpen-v0"
+# env_id = "BabyAI-Open-v0"
 # env_id = "BabyAI-BossLevel-v0"  # 4 conditions
 
 tile_size = 32
@@ -58,8 +61,10 @@ action_lists = env.get_action_lists()
 
 goal = env.get_goal()
 # 获取球的颜色和位置
-
-
+if goal==None:
+    # goal = {"IsHolding(agent-0,key-0)"}
+    # goal = {"IsNear(agent-0,door-0)"}
+    goal = {"IsOpen(door-0)"}  #需要有初始状态？IsClose
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)

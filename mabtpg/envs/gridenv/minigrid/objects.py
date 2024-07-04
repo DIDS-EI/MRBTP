@@ -20,6 +20,8 @@ CAN_GOTO = ["ball","key","box","door"]
 
 CAN_PICKUP = ["ball","key","box"]
 
+CAN_TOGGLE = ["door"]
+
 
 # for attr in attr_list:
 #     for obj_type in OBJECT_TO_IDX.keys()[2:-1]:
