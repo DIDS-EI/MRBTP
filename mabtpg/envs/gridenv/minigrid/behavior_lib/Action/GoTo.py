@@ -101,7 +101,7 @@ def heuristic(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 def astar(grid, start, goal):
-    rows, cols = grid.window_width, grid.window_height
+    rows, cols = grid.width, grid.height
     pq = []
     heapq.heappush(pq, (0 + heuristic(start, goal), 0, start, []))
     visited = set()

@@ -105,9 +105,19 @@ class PlanningAgent:
 
 
     def add_conditions(self,planning_condition,parent):
-        for condition_node_name in planning_condition.condition_set:
-            cls_name, args = parse_predicate_logic(condition_node_name)
+        condition_set = planning_condition.condition_set
+        if len(condition_set) == 0: return
+
+        if len(condition_set) == 1:
+            cls_name, args = parse_predicate_logic(list(condition_set)[0])
             parent.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
+        else:
+            sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+            for condition_node_name in condition_set:
+                cls_name, args = parse_predicate_logic(condition_node_name)
+                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
+
+            parent.add_child(sequence_node)
 
 class MABTP:
     def __init__(self):

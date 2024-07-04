@@ -11,7 +11,7 @@ from typing import Any, SupportsFloat
 
 from gymnasium.core import ActType, ObsType
 
-from mabtpg.envs.gridenv.base.agent import Agent
+from mabtpg.envs.gridenv.minigrid.agent import Agent
 
 
 class MAGridEnv(MiniGridEnv):
@@ -55,7 +55,7 @@ class MAGridEnv(MiniGridEnv):
 
 
 
-    def set_focus_agent(self, agent):
+    def set_focus_agent(self, agent:Agent):
         self.agent_pos = agent.position
         self.agent_dir = agent.direction
         self.carrying = agent.carrying

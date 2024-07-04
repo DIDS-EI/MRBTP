@@ -10,8 +10,8 @@ class Agent(object):
         self.action = Actions.done
         self.bt_success = None
 
-        self.pos = (-1, -1)
-        self.dir = -1
+        self.position = (-1, -1)
+        self.direction = -1
         self.carrying = None
 
         self.last_tick_output = None
