@@ -89,7 +89,7 @@ class PlanningAgent:
             # add condition
             self.add_conditions(current_condition,condition_parent)
             # add action
-            cls_name, args = parse_predicate_logic(current_condition.actions)
+            cls_name, args = parse_predicate_logic(current_condition.action)
             action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
 
             # add the sequence node into its parent

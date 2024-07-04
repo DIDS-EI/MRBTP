@@ -148,8 +148,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         obj_list = []
         self.cache = {}
         # list all Objects in env
-        for i in range(self.grid.window_width):
-            for j in range(self.grid.window_height):
+        for i in range(self.grid.width):
+            for j in range(self.grid.height):
                 cell = self.grid.get(i, j)
                 if cell is None:
                     continue
