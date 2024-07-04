@@ -47,5 +47,5 @@ class PickUp(Action):
 
     def update(self) -> Status:
 
-        self.agent.actions = Actions.pickup
+        self.agent.action = Actions.pickup
         return Status.RUNNING
