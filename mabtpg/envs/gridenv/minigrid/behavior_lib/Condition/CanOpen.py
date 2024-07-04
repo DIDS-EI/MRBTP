@@ -28,8 +28,13 @@ class CanOpen(Condition):
         #  For the door is locked and the agent has the corresponding key.
         self.obj = self.env.id2obj[self.obj_id]
 
-        if self.obj.is_open == False and self.target_agent.carrying != self.env.door_key_map[self.obj_id]:
-            return Status.FAILURE
+        if self.obj.is_open == False:
+            if self.target_agent.carrying == None:
+                return Status.FAILURE
+            else:
+                if self.target_agent.carrying.id != self.env.door_key_map[self.obj_id]:
+                    return Status.FAILURE
+                else:
+                    return Status.SUCCESS
         else:
             return Status.SUCCESS
-

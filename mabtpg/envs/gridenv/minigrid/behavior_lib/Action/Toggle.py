@@ -44,5 +44,5 @@ class Toggle(Action):
 
     def update(self) -> Status:
 
-        self.agent.action = Actions.pickup
+        self.agent.action = Actions.toggle
         return Status.RUNNING
