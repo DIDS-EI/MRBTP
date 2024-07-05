@@ -1,6 +1,6 @@
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
-from minigrid.core.world_object import Ball, Box
+from minigrid.core.world_object import Ball, Box,Door
 from gymnasium.envs.registration import register
 # main cfgs
 num_agent = 2
@@ -50,8 +50,16 @@ room_index = env.get_room_index((1,2))
 print("room_index:",room_index)
 
 # Place an object in the room with the specified index
-# ball = Ball('red')
-# env.place_object_in_room(ball,0)
+ball = Ball('red')
+env.place_object_in_room(ball,1)
+
+# make the door open
+for obj in env.obj_list:
+    if obj.type == "door":
+        x,y = obj.cur_pos[0],obj.cur_pos[1]
+        door = Door('yellow',is_open=True,is_locked=False)
+        env.put_obj(door,x,y)
+
 
 
 
@@ -86,8 +94,10 @@ goal = env.get_goal()
 if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
     # goal = {"IsOpen(door-0)"}
-    goal = {"IsOpen(door-0)"}
-    # goal = {"IsHolding(agent-1,ball-0)","IsOpen(door-0)"}  #需要有初始状态？IsClose
+    # goal = {"IsHolding(agent-1,ball-0)","IsOpen(door-0)"}
+    goal = {"IsInRoom(ball-0,0)"}
+    # goal = {"IsInRoom(agent-0,1)"}
+
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
@@ -111,7 +121,7 @@ for i,agent in enumerate(env.agents):
 
 # run env
 env.render()
-env.print_ticks = False
+env.print_ticks = True
 done = False
 while not done:
     obs,done,_,_ = env.step()

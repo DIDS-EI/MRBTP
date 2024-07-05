@@ -10,7 +10,8 @@ from minigrid.envs.babyai.core.verifier import *
 from mabtpg import BehaviorLibrary
 
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name
-
+from typing import Any, SupportsFloat
+from gymnasium.core import ActType, ObsType
 
 # Quick start. Run this in console: python -m minigrid.manual_control --env BabyAI-BossLevelNoUnlock-v0
 
@@ -56,6 +57,22 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         # Assign cells to rooms
         self.room_cells = self.assign_cells_to_rooms()
+
+        ## need to put in after reset()
+        # self.get_objects_lists()
+        # self.adj_rooms_doors = self.get_adjacent_rooms_and_doors()
+
+    def reset(
+            self,
+            *,
+            seed: int | None = None,
+            options: dict[str, Any] | None = None,
+    ) -> tuple[ObsType, dict[str, Any]]:
+        super().reset(seed=seed, options=options)
+
+        self.get_objects_lists()
+        # self.adj_rooms_doors = self.get_adjacent_rooms_and_doors()
+
 
     def assign_cells_to_rooms(self):
         """
@@ -146,7 +163,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         return None
 
-    def initialize_objects(self):
+    def initialize_objects_name_id(self):
         # Initialize dictionaries for counting object types and mapping names to IDs
         self.obj_type_num = {}
         self.id2obj = {}
@@ -169,8 +186,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
                 obj.id = f"{obj.type}-{self.obj_type_num[obj.type]}"
                 self.obj_type_num[obj.type] += 1
 
-                self.id2obj[obj.id] = obj
-
+            self.id2obj[obj.id] = obj
             obj.name = obj_to_planning_name(obj)
             self.obj_name2id[obj.name] = obj.id
 
@@ -189,6 +205,34 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         self.obj_id2name = {id_: name for name, id_ in self.obj_name2id.items()}
 
+
+    def get_adjacent_rooms_and_doors(self):
+        """
+        Get all adjacent rooms and their connecting doors.
+
+        Returns:
+            list: A list of tuples (from_room_id, to_room_id, door_id).
+        """
+        doors_to_adj_rooms = {}
+        door_positions = []
+
+        for obj in self.obj_list:
+            if obj.type == 'door':
+                door_positions.append((obj.cur_pos[0], obj.cur_pos[1], obj.id))
+
+        width, height = self.minigrid_env.grid.width, self.minigrid_env.grid.height
+        for (i, j, door_id) in door_positions:
+            adjacent_rooms = set()
+            for nx, ny in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
+                if 0 <= nx < width and 0 <= ny < height:
+                    for room_id, positions in self.room_cells.items():
+                        if (nx, ny) in positions:
+                            adjacent_rooms.add(room_id)
+            if len(adjacent_rooms) == 2:
+                from_room_id, to_room_id = tuple(adjacent_rooms)
+                doors_to_adj_rooms[door_id] = (from_room_id, to_room_id)
+
+        return doors_to_adj_rooms
 
 
     def _gen_grid(self, width, height):
@@ -238,7 +282,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         for agent in self.agents:
             agent.behavior_lib = behavior_lib
 
-    def get_action_lists(self):
+    def get_objects_lists(self):
         obj_list = []
         self.cache = {}
         # list all Objects in env
@@ -263,8 +307,13 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.obj_list = obj_list
 
         # Initialize dictionaries for counting object types and mapping names to IDs
-        self.initialize_objects()
+        self.initialize_objects_name_id()
 
+
+    def get_action_lists(self):
+
+        self.get_objects_lists()
+        self.doors_to_adj_rooms = self.get_adjacent_rooms_and_doors()
 
         # generate action list for all Agents
         action_list = []

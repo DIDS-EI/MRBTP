@@ -6,7 +6,7 @@ from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
 import random
-
+from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.astar_algo import astar
 
 
 class GoBtwRoom(Action):
@@ -16,8 +16,8 @@ class GoBtwRoom(Action):
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.from_room_id = self.args[1]
-        self.to_room_id = self.args[2]
+        self.from_room_id = int(self.args[1])
+        self.to_room_id = int(self.args[2])
         self.goal = None
 
 
@@ -27,13 +27,10 @@ class GoBtwRoom(Action):
 
         planning_action_list = []
 
-        # 遍历 两两相邻的房间id
-
-
-        for from_room_id, to_room_id in {}:
+        for door_id,(from_room_id,to_room_id) in env.doors_to_adj_rooms.items():
 
             action_model = {}
-            action_model["pre"]= {f"IsInRoom(agent-{agent.id},{from_room_id})"}
+            action_model["pre"]= {f"IsInRoom(agent-{agent.id},{from_room_id})",f"IsOpen({door_id})"}
             action_model["add"]={f"IsInRoom(agent-{agent.id},{to_room_id})"}
             action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != to_room_id}
 
@@ -101,51 +98,3 @@ class GoBtwRoom(Action):
         else:
             return Actions.done # No turn needed if diff == 0
 
-
-import heapq
-
-def heuristic(a, b):
-    return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
-def astar(grid, start, goal):
-    rows, cols = grid.width, grid.height
-    pq = []
-    heapq.heappush(pq, (0 + heuristic(start, goal), 0, start, []))
-    visited = set()
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-
-    goal_surroundings = [
-        (goal[0] - 1, goal[1]),
-        (goal[0] + 1, goal[1]),
-        (goal[0], goal[1] - 1),
-        (goal[0], goal[1] + 1)
-    ]
-
-    valid_goal_surroundings = [
-        (x, y) for (x, y) in goal_surroundings if 0 <= x < rows and 0 <= y < cols and not grid.get(x, y)
-    ]
-
-    while pq:
-        _, cost, (x, y), action_list = heapq.heappop(pq)
-
-        if (x, y) in visited:
-            continue
-
-        visited.add((x, y))
-
-        if (x, y) in valid_goal_surroundings:
-            return action_list  # return action list
-
-        for dx, dy in directions:
-            nx, ny = x + dx, y + dy
-
-            if 0 <= nx < rows and 0 <= ny < cols:
-                cell = grid.get(nx, ny)
-
-                if cell:
-                    continue
-
-                new_actions = action_list + [(dx, dy)]
-                heapq.heappush(pq, (cost + 1 + heuristic((nx, ny), goal), cost + 1, (nx, ny), new_actions))
-
-    return None

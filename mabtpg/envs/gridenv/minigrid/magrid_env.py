@@ -51,6 +51,7 @@ class MAGridEnv(MiniGridEnv):
         # Return first observation
         obs = self.gen_obs()
 
+
         return obs, {}
 
 
