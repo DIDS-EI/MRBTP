@@ -5,46 +5,41 @@ from mabtpg.envs.gridenv.minigrid.objects import CAN_GOTO
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
+import random
 
 
 
-class GoTo(Action):
+class GoBtwRoom(Action):
     num_args = 2
-    valid_args = [CAN_GOTO]
+    valid_args = set()
 
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.obj_id = self.args[1]
+        self.from_room_id = self.args[1]
+        self.to_room_id = self.args[2]
+        self.goal = None
 
-        # self.arg_cur_pos = self.env.id2obj[self.args[1]].cur_pos
-        # self.goal = list(self.arg_cur_pos)
-        # self.goal = self.args[1].split("-")[-1].split("_")
-        # self.goal = list(map(int, self.goal))
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
+        room_num = len(env.room_cells)
+
         planning_action_list = []
-        if "can_goto" not in env.cache:
-            env.cache["can_goto"] = []
-            for obj in env.obj_list:
-                if obj.type in cls.valid_args[0]:
-                    env.cache["can_goto"].append(obj.id)
-                    # env.cache["can_goto"].append(obj_to_planning_name(obj))
 
-        can_goto = env.cache["can_goto"]
-        for obj_id in can_goto:
+        # 遍历 两两相邻的房间id
+
+
+        for from_room_id, to_room_id in {}:
+
             action_model = {}
-            action_model["pre"]= set()
-            action_model["add"]={f"IsNear(agent-{agent.id},{obj_id})"}
-            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
+            action_model["pre"]= {f"IsInRoom(agent-{agent.id},{from_room_id})"}
+            action_model["add"]={f"IsInRoom(agent-{agent.id},{to_room_id})"}
+            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != to_room_id}
 
-            # action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
-            # action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
 
             action_model["cost"] = 1
-            planning_action_list.append(PlanningAction(f"GoTo(agent-{agent.id},{obj_id})", **action_model))
-            # planning_action_list.append(PlanningAction(f"GoTo(agent_{agent.id},{obj_planning_name})",**action_model))
+            planning_action_list.append(PlanningAction(f"GoBtwRoom(agent-{agent.id},{from_room_id},{to_room_id})", **action_model))
 
         return planning_action_list
 
@@ -52,8 +47,20 @@ class GoTo(Action):
     def update(self) -> Status:
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
-            self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
-            self.goal = list(self.arg_cur_pos)
+            # self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
+            # self.goal = list(self.arg_cur_pos)
+
+            room_positions = self.env.room_cells[self.to_room_id]
+            random.shuffle(room_positions)
+
+            for pos in room_positions:
+                x, y = pos
+                cell = self.env.grid.get(x, y)
+                if cell is None:
+                    self.goal = (x, y)
+                    break
+
+            # consider cannot find a goal
 
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
@@ -135,7 +142,7 @@ def astar(grid, start, goal):
             if 0 <= nx < rows and 0 <= ny < cols:
                 cell = grid.get(nx, ny)
 
-                if cell and cell.type=="wall":
+                if cell:
                     continue
 
                 new_actions = action_list + [(dx, dy)]

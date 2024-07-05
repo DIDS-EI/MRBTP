@@ -1,7 +1,7 @@
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
-
-
+from minigrid.core.world_object import Ball, Box
+from gymnasium.envs.registration import register
 # main cfgs
 num_agent = 2
 
@@ -9,11 +9,20 @@ num_agent = 2
 # env_id = "BabyAI-GoToObj-v0"  # goto
 # env_id = "BabyAI-OneRoomS8-v0"  # goto pichup
 
-env_id = "MiniGrid-DoorKey-16x16-v0"
+env_id = "MiniGrid-DoorKey-16x16-v0" #"MiniGrid-DoorKey-16x16-v0"
+# env_id = "MiniGrid-FourRooms-v0"
+# env_id = "MiniGrid-MultiRoom-N2-S4-v0"
+# env_id = "MiniGrid-LockedRoom-v0"
 
 # env_id = "BabyAI-GoToOpen-v0"
 # env_id = "BabyAI-Open-v0"
 # env_id = "BabyAI-BossLevel-v0"  # 4 conditions
+
+# register(
+#     id=env_id,
+#     entry_point="minigrid.envs:MultiRoomEnv",
+#     kwargs={"minNumRooms": 6, "maxNumRooms": 6, "maxRoomSize": 5},
+# )
 
 tile_size = 32
 agent_view_size =7
@@ -27,8 +36,23 @@ mingrid_env = gym.make(
     screen_size=screen_size
 )
 
+
 env = MiniGridToMAGridEnv(mingrid_env, num_agent=num_agent)
 env.reset(seed=0)
+
+## ROOMS
+# Output which positions each room contains
+for room_index, cells in env.room_cells.items():
+    print(f"Room {room_index}: {cells}")
+
+# Query which room a specific position belongs to
+room_index = env.get_room_index((1,2))
+print("room_index:",room_index)
+
+# Place an object in the room with the specified index
+# ball = Ball('red')
+# env.place_object_in_room(ball,0)
+
 
 
 
@@ -61,8 +85,9 @@ goal = env.get_goal()
 # 获取球的颜色和位置
 if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
-    # goal = {"IsNear(agent-0,door-0)"}
-    goal = {"IsOpen(door-0)"}  #需要有初始状态？IsClose
+    # goal = {"IsOpen(door-0)"}
+    goal = {"IsOpen(door-0)"}
+    # goal = {"IsHolding(agent-1,ball-0)","IsOpen(door-0)"}  #需要有初始状态？IsClose
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
@@ -86,7 +111,7 @@ for i,agent in enumerate(env.agents):
 
 # run env
 env.render()
-env.print_ticks = True
+env.print_ticks = False
 done = False
 while not done:
     obs,done,_,_ = env.step()

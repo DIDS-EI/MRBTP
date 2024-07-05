@@ -4,7 +4,11 @@ from minigrid.core.constants import DIR_TO_VEC
 
 def obj_to_planning_name(obj):
     name = f"{obj.color}_{obj.type}"
-    x, y = obj.cur_pos
+    if obj.cur_pos == None:
+        x="None"
+        y="None"
+    else:
+        x, y = obj.cur_pos
     return f"{name}-{x}_{y}"
 
 

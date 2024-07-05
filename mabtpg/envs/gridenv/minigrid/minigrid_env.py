@@ -1,4 +1,4 @@
-
+import random
 
 from mabtpg.envs.gridenv.minigrid.magrid_env import MAGridEnv
 from mabtpg.envs.gridenv.minigrid.magrid import MAGrid
@@ -33,6 +33,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         minigrid_env.reset()
         self.minigrid_env = minigrid_env
 
+
+
         # self.instrs = minigrid_env.instrs
         self.instrs = getattr(minigrid_env, 'instrs', None)
 
@@ -51,6 +53,98 @@ class MiniGridToMAGridEnv(MAGridEnv):
                          **kwargs)
         self.render_mode = "human"
         self.create_behavior_libs()
+
+        # Assign cells to rooms
+        self.room_cells = self.assign_cells_to_rooms()
+
+    def assign_cells_to_rooms(self):
+        """
+        Assign walkable positions to different rooms in the MiniGridEnv environment.
+
+        Returns:
+            dict: A dictionary where keys are room indices and values are lists of walkable cell positions.
+        """
+        width, height = self.minigrid_env.grid.width, self.minigrid_env.grid.height
+        visited = set()
+        room_cells = {}
+
+        def dfs(x, y, room_index):
+            stack = [(x, y)]
+            while stack:
+                cx, cy = stack.pop()
+                if (cx, cy) in visited:
+                    continue
+                visited.add((cx, cy))
+                if room_index not in room_cells:
+                    room_cells[room_index] = []
+                room_cells[room_index].append((cx, cy))
+                for nx, ny in [(cx+1, cy), (cx-1, cy), (cx, cy+1), (cx, cy-1)]:
+                    if 0 <= nx < width and 0 <= ny < height:
+                        if (nx, ny) in visited: continue
+                        cell = self.minigrid_env.grid.get(nx, ny)
+                        if cell is None:
+                            stack.append((nx, ny))
+                        elif cell.type != "wall" and cell.type != "door":
+                            stack.append((nx, ny))
+
+        room_index = 0
+        for i in range(width):
+            for j in range(height):
+                cell = self.minigrid_env.grid.get(i, j)
+                if (i,j) in visited: continue
+                if cell is None:
+                    dfs(i, j, room_index)
+                    room_index += 1
+                elif cell.type != "wall" and cell.type != "door":
+                    dfs(i, j, room_index)
+                    room_index += 1
+
+        return room_cells
+
+
+    def get_room_index(self, pos):
+        """
+        Given a position (i, j), return the room index.
+
+        Args:
+            i (int): The x-coordinate of the position.
+            j (int): The y-coordinate of the position.
+
+        Returns:
+            int: The index of the room that the position belongs to, or -1 if the position is not walkable.
+        """
+        i,j = pos
+        for room_index, cells in self.room_cells.items():
+            if (i, j) in cells:
+                return room_index
+        return -1
+
+    def place_object_in_room(self, obj, room_index):
+        """
+        Place an object in a random position in the specified room.
+
+        Args:
+            room_index (int): The index of the room.
+            obj (WorldObj): The object to place.
+
+        Returns:
+            tuple: The position where the object was placed, or None if no valid position was found.
+        """
+        if room_index not in self.room_cells:
+            raise ValueError(f"Room index {room_index} does not exist.")
+
+        room_positions = self.room_cells[room_index]
+        random.shuffle(room_positions)
+
+        for pos in room_positions:
+            x, y = pos
+            cell = self.minigrid_env.grid.get(x, y)
+            if cell is None:
+                self.minigrid_env.grid.set(x, y, obj)
+                obj.cur_pos = (x, y)
+                return (x, y)
+
+        return None
 
     def initialize_objects(self):
         # Initialize dictionaries for counting object types and mapping names to IDs
@@ -155,10 +249,15 @@ class MiniGridToMAGridEnv(MAGridEnv):
                     continue
 
                 if cell.type != "wall":
+                    if cell.cur_pos == None:
+                        cell.cur_pos = (i,j)
                     obj_list.append(cell)
 
         print("\n" + "-" * 10 + " Objects in the env " + "-" * 10)
         for obj in obj_list:
+            # if obj.cur_pos==None:
+            #     print(obj.type)
+            # else:
             print(obj.type,obj.cur_pos[0],obj.cur_pos[1])
 
         self.obj_list = obj_list
@@ -180,6 +279,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
             print(f"full action list ({len(action_list[i])} in total):")
             for a in action_list[i]:
-                print(a.name,"pre:",a.pre)
+                print(a.name)
+                # print(a.name,"pre:",a.pre)
 
         return action_list

@@ -12,7 +12,7 @@ from typing import Any, SupportsFloat
 from gymnasium.core import ActType, ObsType
 
 from mabtpg.envs.gridenv.minigrid.agent import Agent
-
+from minigrid.core.world_object import Point, WorldObj
 
 class MAGridEnv(MiniGridEnv):
     def __init__(
@@ -218,6 +218,7 @@ class MAGridEnv(MiniGridEnv):
         )
 
         return img
+
 
     def place_agent(self, top=None, size=None, rand_dir=True, max_tries=math.inf):
         """

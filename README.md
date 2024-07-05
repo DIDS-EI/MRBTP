@@ -26,3 +26,28 @@ pip install -e .
 ## 自定义环境
 
 在 test_gridworld/custom_env.py 文件中，自定义一个房间，用 self.grid.horz_wall, self.put_obj 等函数来创建场景
+
+
+
+## MiniGrid 里的动作模型和条件模型
+
+### Action
+
+`PutInRoom(agent, obj, roomid)`
+
+```
+
+```
+
+`GoToRoom(agent, room_id)`
+
+### Condition
+
+`IsInRoom(agent/obj, room_id)`
+
+
+
+
+
+
+
