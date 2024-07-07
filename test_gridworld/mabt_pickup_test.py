@@ -112,7 +112,7 @@ bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].print()
-    bt_list[i].draw(file_name=f"agent-{i}")
+    # bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):
