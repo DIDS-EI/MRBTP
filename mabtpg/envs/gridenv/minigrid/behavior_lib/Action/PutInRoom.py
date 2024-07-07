@@ -6,6 +6,7 @@ from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
 import random
+from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.astar_algo import astar
 
 
 class PutInRoom(Action):
@@ -15,7 +16,7 @@ class PutInRoom(Action):
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.room_index = args[1]
+        self.room_index = int(args[2])
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
@@ -34,7 +35,9 @@ class PutInRoom(Action):
         for room_id in range(room_num):
             for obj_id in can_pickup:
                 action_model = {}
-                action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
+                # error:if the agent go to in another room it will fail
+                # action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
+                action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
                 action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})"}
                 action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
                 action_model["cost"] = 1
@@ -48,21 +51,25 @@ class PutInRoom(Action):
             raise ValueError(f"Room index {self.room_index} does not exist.")
 
 
-        x, y = self.agent.cur_pos
+        x, y = self.agent.position
         directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
         random.shuffle(directions)
 
-        for (nx, ny) in directions:
-            if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
-                cell = self.env.minigrid_env.grid.get(nx, ny)
-                if cell is None:
+        if self.path is None:
+            for (nx, ny) in directions:
+                if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
+                    cell = self.env.minigrid_env.grid.get(nx, ny)
+                    if cell is None:
 
-                    next_direction =  (nx, ny)
-                    turn_to_action = self.turn_to(next_direction)
-                    if turn_to_action == Actions.done:
-                        self.agent.action = Actions.forward
+                        # next_direction =  (nx, ny)
+                        # turn_to_action = self.turn_to(next_direction)
+                        # if turn_to_action == Actions.done:
+                        #     self.agent.action = Actions.forward
+                        self.goal = [nx,ny]
+                        self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
-                    self.agent.action = Actions.drop
+        if self.path == []:
+            self.agent.action = Actions.drop
 
         return Status.RUNNING
 

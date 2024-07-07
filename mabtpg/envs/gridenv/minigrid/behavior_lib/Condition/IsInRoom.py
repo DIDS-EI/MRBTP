@@ -29,6 +29,8 @@ class IsInRoom(Condition):
 
     def update(self) -> Status:
 
+        self.room_index_ls = []
+
         if "agent" in self.args[0]:
             if self.target_agent is None:
                 agent_id = int(self.args[0].split("-")[-1])
@@ -41,8 +43,7 @@ class IsInRoom(Condition):
             if cell is not None and cell.type == "door":
                 self.room_index_ls.extend(list(self.env.doors_to_adj_rooms[cell.id]))
         else:
-            if self.target_obj is None:
-                self.target_obj = self.env.id2obj[self.args[0]]
+            self.target_obj = self.env.id2obj[self.args[0]]
             self.room_index_ls = [self.env.get_room_index(self.target_obj.cur_pos)]
 
 
