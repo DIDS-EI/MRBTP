@@ -51,25 +51,36 @@ class PutInRoom(Action):
             raise ValueError(f"Room index {self.room_index} does not exist.")
 
 
-        x, y = self.agent.position
-        directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
-        random.shuffle(directions)
-
+        # first go to another room
         if self.path is None:
+            room_points_ls = self.env.room_cells[self.room_index]
+            random.shuffle(room_points_ls)
+            self.goal = room_points_ls[0]
+            self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
+
+            print(self.path)
+            assert self.path
+
+        elif self.path==[]:
+            x, y = self.agent.position
+            directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
+            random.shuffle(directions)
+
             for (nx, ny) in directions:
                 if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
                     cell = self.env.minigrid_env.grid.get(nx, ny)
                     if cell is None:
+                        self.agent.action = Actions.drop
 
-                        # next_direction =  (nx, ny)
-                        # turn_to_action = self.turn_to(next_direction)
-                        # if turn_to_action == Actions.done:
-                        #     self.agent.action = Actions.forward
-                        self.goal = [nx,ny]
-                        self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
-
-        if self.path == []:
-            self.agent.action = Actions.drop
+        else:
+            next_direction = self.path[0]
+            turn_to_action = self.turn_to(next_direction)
+            if turn_to_action == Actions.done:
+                self.agent.action = Actions.forward
+                self.path.pop(0)
+            else:
+                self.agent.action = turn_to_action
+            print(self.path)
 
         return Status.RUNNING
 

@@ -54,11 +54,11 @@ ball = Ball('red')
 env.place_object_in_room(ball,1)
 
 # make the door open
-for obj in env.obj_list:
-    if obj.type == "door":
-        x,y = obj.cur_pos[0],obj.cur_pos[1]
-        door = Door('yellow',is_open=True,is_locked=False)
-        env.put_obj(door,x,y)
+# for obj in env.obj_list:
+#     if obj.type == "door":
+#         x,y = obj.cur_pos[0],obj.cur_pos[1]
+#         door = Door('yellow',is_open=True,is_locked=False)
+#         env.put_obj(door,x,y)
 
 
 
@@ -95,9 +95,9 @@ if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
     # goal = {"IsOpen(door-0)"}
     # goal = {"IsHolding(agent-1,ball-0)","IsOpen(door-0)"}
-    goal = {"IsInRoom(ball-0,0)"}
+    # goal = {"IsInRoom(ball-0,0)"}
     # goal = {"IsInRoom(agent-0,1)"}
-
+    goal = {"IsInRoom(ball-0,0)","IsOpen(door-0)"}
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
