@@ -6,6 +6,7 @@ from minigrid.core.constants import DIR_TO_VEC
 
 
 class CanGoTo(Condition):
+    '''Once an agent picks up an object, other agents cannot go to it anymore.'''
     num_args = 1
 
     def __init__(self,*args):
