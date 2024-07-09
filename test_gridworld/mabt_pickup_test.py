@@ -1,6 +1,7 @@
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
 from minigrid.core.world_object import Ball, Box,Door
+
 from gymnasium.envs.registration import register
 # main cfgs
 num_agent = 2
@@ -54,11 +55,11 @@ ball = Ball('red')
 env.place_object_in_room(ball,1)
 
 # make the door open
-# for obj in env.obj_list:
-#     if obj.type == "door":
-#         x,y = obj.cur_pos[0],obj.cur_pos[1]
-#         door = Door('yellow',is_open=True,is_locked=False)
-#         env.put_obj(door,x,y)
+for obj in env.obj_list:
+    if obj.type == "door":
+        x,y = obj.cur_pos[0],obj.cur_pos[1]
+        door = Door('yellow',is_open=True,is_locked=False)
+        env.put_obj(door,x,y)
 
 
 
@@ -94,10 +95,13 @@ goal = env.get_goal()
 if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
     # goal = {"IsOpen(door-0)"}
-    # goal = {"IsHolding(agent-1,ball-0)","IsOpen(door-0)"}
-    # goal = {"IsInRoom(ball-0,0)"}
     # goal = {"IsInRoom(agent-0,1)"}
-    goal = {"IsInRoom(ball-0,0)","IsOpen(door-0)"}
+    goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
+
+    # goal = {"IsHolding(agent-0,ball-0)"}
+    # goal = {"IsInRoom(ball-0,0)"}
+
+
 
 print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
@@ -112,7 +116,7 @@ bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].print()
-    # bt_list[i].draw(file_name=f"agent-{i}")
+    bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

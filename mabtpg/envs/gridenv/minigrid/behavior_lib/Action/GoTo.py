@@ -5,7 +5,7 @@ from mabtpg.envs.gridenv.minigrid.objects import CAN_GOTO
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
-from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.astar_algo import astar
+from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
 class GoTo(Action):
@@ -25,17 +25,20 @@ class GoTo(Action):
     @classmethod
     def get_planning_action_list(cls, agent, env):
         planning_action_list = []
-        if "can_goto" not in env.cache:
-            env.cache["can_goto"] = []
-            for obj in env.obj_list:
-                if obj.type in cls.valid_args[0]:
-                    env.cache["can_goto"].append(obj.id)
-                    # env.cache["can_goto"].append(obj_to_planning_name(obj))
-
         can_goto = env.cache["can_goto"]
         for obj_id in can_goto:
             action_model = {}
-            action_model["pre"]= set()
+
+            # action_model["pre"]= set()
+
+            # The premise is that the agent must be in the room where the object is located.
+            if "door" not in obj_id:
+                room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
+                action_model["pre"] = {f"IsInRoom(agent-{agent.id},{room_index})"}
+            else:
+                # door
+                action_model["pre"] = set()
+
             action_model["add"]={f"IsNear(agent-{agent.id},{obj_id})"}
             action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
 

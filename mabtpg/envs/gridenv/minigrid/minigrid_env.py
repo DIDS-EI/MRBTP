@@ -12,6 +12,7 @@ from mabtpg import BehaviorLibrary
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name
 from typing import Any, SupportsFloat
 from gymnasium.core import ActType, ObsType
+from mabtpg.envs.gridenv.minigrid.objects import CAN_GOTO,CAN_PICKUP,CAN_TOGGLE
 
 # Quick start. Run this in console: python -m minigrid.manual_control --env BabyAI-BossLevelNoUnlock-v0
 
@@ -309,11 +310,31 @@ class MiniGridToMAGridEnv(MAGridEnv):
         # Initialize dictionaries for counting object types and mapping names to IDs
         self.initialize_objects_name_id()
 
+    def initialize_object_list(self, key, valid_types):
+        """
+        Initialize and cache a list of objects of specified types in the environment.
+        """
+        if key not in self.cache:
+            self.cache[key] = [obj.id for obj in self.obj_list if obj.type in valid_types]
+        return self.cache[key]
+
+    def initialize_cache(self):
+        """
+        Utilize the generic helper function to initialize all relevant object lists.
+        """
+        can_goto = self.initialize_object_list("can_goto", CAN_GOTO)
+        can_pickup = self.initialize_object_list("can_pickup", CAN_PICKUP)
+        can_toggle = self.initialize_object_list("can_toggle", CAN_TOGGLE)
+        return can_goto, can_pickup, can_toggle
+
 
     def get_action_lists(self):
 
         self.get_objects_lists()
         self.doors_to_adj_rooms = self.get_adjacent_rooms_and_doors()
+
+        # obj cache
+        can_goto, can_pickup, can_toggle = self.initialize_cache()
 
         # generate action list for all Agents
         action_list = []

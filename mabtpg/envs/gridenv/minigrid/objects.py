@@ -26,3 +26,4 @@ CAN_TOGGLE = ["door"]
 # for attr in attr_list:
 #     for obj_type in OBJECT_TO_IDX.keys()[2:-1]:
 #         pass
+

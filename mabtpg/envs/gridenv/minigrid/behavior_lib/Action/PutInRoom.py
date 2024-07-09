@@ -1,12 +1,12 @@
 from mabtpg.behavior_tree.base_nodes import Action
 from mabtpg.behavior_tree import Status
 from minigrid.core.actions import Actions
-from mabtpg.envs.gridenv.minigrid.objects import CAN_PICKUP
+from mabtpg.envs.gridenv.minigrid.objects import CAN_PICKUP,CAN_GOTO
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
 import random
-from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.astar_algo import astar
+from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
 class PutInRoom(Action):
@@ -26,20 +26,25 @@ class PutInRoom(Action):
         planning_action_list = []
         if "can_pickup" not in env.cache:
             env.cache["can_pickup"] = []
+            env.cache["can_goto"] = []
             for obj in env.obj_list:
                 if obj.type in cls.valid_args[0]:
                     env.cache["can_pickup"].append(obj.id)
-                    # env.cache["can_pickup"].append(obj_to_planning_name(obj))
+                if obj.type in [CAN_GOTO]:
+                    env.cache["can_goto"].append(obj.id)
 
         can_pickup = env.cache["can_pickup"]
+        can_goto = env.cache["can_goto"]
         for room_id in range(room_num):
             for obj_id in can_pickup:
                 action_model = {}
                 # error:if the agent go to in another room it will fail
-                # action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
-                action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
-                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})"}
+                action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
+                # action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
+                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})",f"IsNear(agent-{agent.id},{obj_id})"}
                 action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
+                action_model["del_set"] |= {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
+
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"PutInRoom(agent-{agent.id},{obj_id},{room_id})",**action_model))
 
@@ -52,35 +57,53 @@ class PutInRoom(Action):
 
 
         # first go to another room
-        if self.path is None:
-            room_points_ls = self.env.room_cells[self.room_index]
-            random.shuffle(room_points_ls)
-            self.goal = room_points_ls[0]
-            self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
+        # if self.path is None:
+        #     room_points_ls = self.env.room_cells[self.room_index]
+        #     random.shuffle(room_points_ls)
+        #     self.goal = room_points_ls[0]
+        #     self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
+        #
+        #     print(self.path)
+        #     assert self.path
+        #
+        # elif self.path==[]:
+        #     x, y = self.agent.position
+        #     directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
+        #     random.shuffle(directions)
+        #
+        #     for (nx, ny) in directions:
+        #         if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
+        #             cell = self.env.minigrid_env.grid.get(nx, ny)
+        #             if cell is None:
+        #                 self.agent.action = Actions.drop
+        #
+        # else:
+        #     next_direction = self.path[0]
+        #     turn_to_action = self.turn_to(next_direction)
+        #     if turn_to_action == Actions.done:
+        #         self.agent.action = Actions.forward
+        #         self.path.pop(0)
+        #     else:
+        #         self.agent.action = turn_to_action
+        #     print(self.path)
 
-            print(self.path)
-            assert self.path
 
-        elif self.path==[]:
-            x, y = self.agent.position
-            directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
-            random.shuffle(directions)
+        x, y = self.agent.position
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        random.shuffle(directions)
 
-            for (nx, ny) in directions:
-                if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
-                    cell = self.env.minigrid_env.grid.get(nx, ny)
-                    if cell is None:
+        for (dx, dy) in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
+                cell = self.env.minigrid_env.grid.get(nx, ny)
+                if cell is None:
+                    turn_to_action = self.turn_to((dx, dy))
+                    if turn_to_action == Actions.done:
                         self.agent.action = Actions.drop
+                    else:
+                        self.agent.action = turn_to_action
 
-        else:
-            next_direction = self.path[0]
-            turn_to_action = self.turn_to(next_direction)
-            if turn_to_action == Actions.done:
-                self.agent.action = Actions.forward
-                self.path.pop(0)
-            else:
-                self.agent.action = turn_to_action
-            print(self.path)
+
 
         return Status.RUNNING
 

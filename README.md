@@ -47,7 +47,39 @@ pip install -e .
 
 
 
+### 对于 GoTo action
+
+到门的 pre 是什么呢
+
+```python
+            # The premise is that the agent must be in the room where the object is located.
+            if "door" not in obj_id:
+                room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
+                action_model["pre"] = {f"IsInRoom(agent-{agent.id},{room_index})"}
+            else:
+                # door
+                action_model["pre"] = set()
+```
+
+### 对于 PutInRoom
+
+智能体0把物体0放到房间0的 pre 是什么呢
+
+```python
+                # error:if the agent go to in another room it will fail
+                # action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
+                action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
+                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})"}
+                action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
+```
 
 
 
+钥匙用过以后还能放下
+
+
+
+PutInRoom 会改变 IsNear 条件 
+
+Condition IsInRoom(agent-0,1): SUCCESS  在门上也算是 IsIn 两边任何一个room
 

@@ -24,7 +24,7 @@ class IsHolding(Condition):
             self.target_agent = self.env.agents[agent_id]
 
 
-        if self.target_agent.carrying is not None:
+        if self.target_agent.carrying is not None and self.target_agent.carrying==self.env.id2obj[self.obj_id]:
             return Status.SUCCESS
         else:
             return Status.FAILURE

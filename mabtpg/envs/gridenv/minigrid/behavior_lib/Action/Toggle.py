@@ -19,13 +19,6 @@ class Toggle(Action):
     @classmethod
     def get_planning_action_list(cls, agent, env):
         planning_action_list = []
-        if "can_toggle" not in env.cache:
-            env.cache["can_toggle"] = []
-            for obj in env.obj_list:
-                if obj.type in cls.valid_args[0]:
-                    env.cache["can_toggle"].append(obj.id)
-                    # env.cache["can_pickup"].append(obj_to_planning_name(obj))
-
         can_toggle = env.cache["can_toggle"]
         for obj_id in can_toggle:
             action_model = {}

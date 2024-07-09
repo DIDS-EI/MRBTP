@@ -6,11 +6,11 @@ from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
 import random
-from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.astar_algo import astar
+from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
 class GoBtwRoom(Action):
-    num_args = 2
+    num_args = 3
     valid_args = set()
 
     def __init__(self, *args):
@@ -23,22 +23,34 @@ class GoBtwRoom(Action):
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
-        room_num = len(env.room_cells)
+
+        can_goto = env.cache["can_goto"]
 
         planning_action_list = []
 
-        for door_id,(from_room_id,to_room_id) in env.doors_to_adj_rooms.items():
+        room_num = len(env.room_cells)
+        # 通过单次遍历生成所有行动模型
+        for door_id, (room1_id, room2_id) in env.doors_to_adj_rooms.items():
+            # 处理从 room1 到 room2
+            action_model = cls.create_action_model(agent.id, door_id, room1_id, room2_id, room_num, can_goto)
+            planning_action_list.append(
+                PlanningAction(f"GoBtwRoom(agent-{agent.id},{room1_id},{room2_id})", **action_model))
 
-            action_model = {}
-            action_model["pre"]= {f"IsInRoom(agent-{agent.id},{from_room_id})",f"IsOpen({door_id})"}
-            action_model["add"]={f"IsInRoom(agent-{agent.id},{to_room_id})"}
-            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != to_room_id}
-
-
-            action_model["cost"] = 1
-            planning_action_list.append(PlanningAction(f"GoBtwRoom(agent-{agent.id},{from_room_id},{to_room_id})", **action_model))
-
+            # 处理从 room2 到 room1
+            action_model = cls.create_action_model(agent.id, door_id, room2_id, room1_id, room_num, can_goto)
+            planning_action_list.append(
+                PlanningAction(f"GoBtwRoom(agent-{agent.id},{room2_id},{room1_id})", **action_model))
         return planning_action_list
+
+    @classmethod
+    def create_action_model(cls,agent_id, door_id, from_room_id, to_room_id, room_num, can_goto):
+        action_model = {}
+        action_model["pre"] = {f"IsInRoom(agent-{agent_id},{from_room_id})", f"IsOpen({door_id})"}
+        action_model["add"] = {f"IsInRoom(agent-{agent_id},{to_room_id})"}
+        action_model["del_set"] = {f'IsInRoom(agent-{agent_id},{rid})' for rid in range(room_num) if rid != to_room_id}
+        action_model["del_set"] |= {f'IsNear(agent-{agent_id},{obj})' for obj in can_goto}
+        action_model["cost"] = 1
+        return action_model
 
 
     def update(self) -> Status:
