@@ -5,8 +5,8 @@ import numpy as np
 from minigrid.core.constants import DIR_TO_VEC
 
 
-class CanOpen(Condition):
-    num_args = 2
+class CanGoTo(Condition):
+    num_args = 1
 
     def __init__(self,*args):
         ins_name = self.__class__.get_ins_name(*args)
@@ -17,7 +17,7 @@ class CanOpen(Condition):
         super().__init__(*args)
 
         self.target_agent = None
-        self.obj_id = self.args[1]
+        self.obj_id = self.args[0] #
         self.obj = None
 
     def update(self) -> Status:
@@ -28,13 +28,12 @@ class CanOpen(Condition):
         #  For the door is locked and the agent has the corresponding key.
         self.obj = self.env.id2obj[self.obj_id]
 
-        if self.obj.is_open == False:
-            if self.target_agent.carrying == None:
+        # Determine if `self.obj.cur_pos` is a numpy array and compare accordingly
+        if isinstance(self.obj.cur_pos, np.ndarray):
+            if (self.obj.cur_pos == (-1, -1)).all():
                 return Status.FAILURE
-            else:
-                if self.target_agent.carrying.id != self.env.door_key_map[self.obj_id]:
-                    return Status.FAILURE
-                else:
-                    return Status.SUCCESS
         else:
-            return Status.SUCCESS
+            if self.obj.cur_pos == (-1, -1):
+                return Status.FAILURE
+
+        return Status.SUCCESS

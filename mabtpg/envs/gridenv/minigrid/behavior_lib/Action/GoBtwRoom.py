@@ -10,6 +10,7 @@ from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
 class GoBtwRoom(Action):
+    can_be_expanded = False
     num_args = 3
     valid_args = set()
 

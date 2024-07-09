@@ -55,11 +55,11 @@ ball = Ball('red')
 env.place_object_in_room(ball,1)
 
 # make the door open
-for obj in env.obj_list:
-    if obj.type == "door":
-        x,y = obj.cur_pos[0],obj.cur_pos[1]
-        door = Door('yellow',is_open=True,is_locked=False)
-        env.put_obj(door,x,y)
+# for obj in env.obj_list:
+#     if obj.type == "door":
+#         x,y = obj.cur_pos[0],obj.cur_pos[1]
+#         door = Door('yellow',is_open=True,is_locked=False)
+#         env.put_obj(door,x,y)
 
 
 
@@ -94,9 +94,10 @@ goal = env.get_goal()
 # 获取球的颜色和位置
 if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
-    # goal = {"IsOpen(door-0)"}
+    goal = {"IsOpen(door-0)"}
+    # goal = {"IsNear(agent-0,key-0)","IsNear(agent-1,key-0)"}
     # goal = {"IsInRoom(agent-0,1)"}
-    goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
+    # goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
 
     # goal = {"IsHolding(agent-0,ball-0)"}
     # goal = {"IsInRoom(ball-0,0)"}
@@ -109,7 +110,7 @@ print("BT goal: " + str(goal))
 
 from mabtpg.mabtp.mabtp import MABTP
 
-planning_algorithm = MABTP()
+planning_algorithm = MABTP(verbose = True)
 planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
 

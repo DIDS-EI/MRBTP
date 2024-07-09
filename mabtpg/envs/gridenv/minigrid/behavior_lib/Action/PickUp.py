@@ -9,6 +9,7 @@ import numpy as np
 
 
 class PickUp(Action):
+    can_be_expanded = True
     num_args = 2
     valid_args = [CAN_PICKUP]
 
@@ -19,10 +20,13 @@ class PickUp(Action):
     @classmethod
     def get_planning_action_list(cls, agent, env):
         planning_action_list = []
+        room_num = len(env.room_cells)
         can_pickup = env.cache["can_pickup"]
         for obj_id in can_pickup:
             action_model = {}
-            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})",f"IsHandEmpty(agent-{agent.id})"}  #
+
+            room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
+            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})",f"IsHandEmpty(agent-{agent.id})",f"IsInRoom(agent-{agent.id},{room_index})"}
             action_model["add"]={f"IsHolding(agent-{agent.id},{obj_id})"}
 
             # get key that open one door
@@ -30,8 +34,9 @@ class PickUp(Action):
                 door_id = env.key_door_map[obj_id]
                 action_model["add"] |= {f"CanOpen(agent-{agent.id},{door_id})"} # |
 
-            action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})"}
-            # action_model["del_set"] = set()
+            action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})",f"CanGoTo({obj_id})",f"IsNear(agent-{agent.id},{obj_id})"}
+            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != room_index}
+
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"PickUp(agent-{agent.id},{obj_id})",**action_model))
 

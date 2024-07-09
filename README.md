@@ -83,3 +83,4 @@ PutInRoom 会改变 IsNear 条件
 
 Condition IsInRoom(agent-0,1): SUCCESS  在门上也算是 IsIn 两边任何一个room
 
+CanGoTo({obj_id}) 要不要涉及 智能体也作为参数呢？增加这个 条件 的原因是：一个智能体拿起这个物体后，其它智能体 再 GoTo 会找不到路径报错

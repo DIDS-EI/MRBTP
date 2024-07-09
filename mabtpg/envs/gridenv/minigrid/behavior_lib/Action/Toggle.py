@@ -9,6 +9,7 @@ import numpy as np
 
 
 class Toggle(Action):
+    can_be_expanded = True
     num_args = 2
     valid_args = [CAN_TOGGLE]
 

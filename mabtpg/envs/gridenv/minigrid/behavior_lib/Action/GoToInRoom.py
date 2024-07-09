@@ -8,55 +8,55 @@ import numpy as np
 from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
-class GoTo(Action):
+class GoToInRoom(Action):
+    can_be_expanded = True
     num_args = 2
     valid_args = [CAN_GOTO]
 
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.obj_id = self.args[1]
 
-        # self.arg_cur_pos = self.env.id2obj[self.args[1]].cur_pos
-        # self.goal = list(self.arg_cur_pos)
-        # self.goal = self.args[1].split("-")[-1].split("_")
-        # self.goal = list(map(int, self.goal))
+        self.agent_id = self.args[0]
+        self.obj_id = self.args[1]
+        self.room_id = self.args[2]
+
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
         planning_action_list = []
+        room_num = len(env.room_cells)
         can_goto = env.cache["can_goto"]
+
         for obj_id in can_goto:
-            action_model = {}
-
-            # action_model["pre"]= set()
-
-            # The premise is that the agent must be in the room where the object is located.
             if "door" not in obj_id:
                 room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
-                action_model["pre"] = {f"IsInRoom(agent-{agent.id},{room_index})"}
-            else:
-                # door
-                action_model["pre"] = set()
+                planning_action_list.append(cls.create_action(agent.id, obj_id, room_index, can_goto, room_num))
 
-            action_model["add"]={f"IsNear(agent-{agent.id},{obj_id})"}
-            action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
+        for door_id, (room1_id, room2_id) in env.doors_to_adj_rooms.items():
+            for room_index in [room1_id, room2_id]:
+                planning_action_list.append(cls.create_action(agent.id, door_id, room_index, can_goto, room_num))
 
-            # action_model["add"]={f"IsNear(agent-{agent.id},{obj_planning_name})"}
-            # action_model["del_set"] = {f'IsNear(agent-{agent.id},{obj_planning_name})' for obj in can_goto if obj != obj_planning_name}
-
-            action_model["cost"] = 1
-            planning_action_list.append(PlanningAction(f"GoTo(agent-{agent.id},{obj_id})", **action_model))
-            # planning_action_list.append(PlanningAction(f"GoTo(agent_{agent.id},{obj_planning_name})",**action_model))
 
         return planning_action_list
 
+    @classmethod
+    def create_action(cls, agent_id, target_id, room_index, can_goto, room_num):
+        action_model = {
+            "pre": {f"CanGoTo({target_id})", f"IsInRoom(agent-{agent_id},{room_index})"},
+            "add": {f"IsNear(agent-{agent_id},{target_id})"},
+            "del_set": {f'IsNear(agent-{agent_id},{obj})' for obj in can_goto if obj != target_id},
+            "cost": 1
+        }
+        action_model["del_set"].update(
+            {f'IsInRoom(agent-{agent_id},{rid})' for rid in range(room_num) if rid != room_index})
+        return PlanningAction(f"GoToInRoom(agent-{agent_id},{target_id},{room_index})", **action_model)
 
     def update(self) -> Status:
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
-            self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
-            self.goal = list(self.arg_cur_pos)
+            self.goal = list(self.env.id2obj[self.obj_id].cur_pos)
+            # print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
 
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
@@ -65,6 +65,8 @@ class GoTo(Action):
 
         if self.path == []:
             goal_direction = self.goal - np.array(self.agent.position)
+            # print("obj_id:", self.obj_id, "\t goal:", self.goal, "\t agent.position", self.agent.position)
+            # print("goal_direction:",goal_direction)
             self.agent.action = self.turn_to(goal_direction)
         else:
             next_direction = self.path[0]

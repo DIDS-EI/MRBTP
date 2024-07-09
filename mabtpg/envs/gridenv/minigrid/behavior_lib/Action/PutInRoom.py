@@ -10,6 +10,7 @@ from mabtpg.envs.gridenv.minigrid.behavior_lib.Action.utilis_algo import astar
 
 
 class PutInRoom(Action):
+    can_be_expanded = False
     num_args = 3
     valid_args = [CAN_PICKUP]
 
@@ -41,10 +42,10 @@ class PutInRoom(Action):
                 # error:if the agent go to in another room it will fail
                 action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
                 # action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
-                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})",f"IsNear(agent-{agent.id},{obj_id})"}
+                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})",f"IsNear(agent-{agent.id},{obj_id})",f"CanGoTo({obj_id})"}
                 action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
                 action_model["del_set"] |= {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
-
+                action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != room_id}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"PutInRoom(agent-{agent.id},{obj_id},{room_id})",**action_model))
 
