@@ -2,7 +2,7 @@ import py_trees as ptree
 from typing import Any
 
 class Sequence(ptree.composites.Sequence):
-    print_name = "Sequence"
+    print_name = "sequence"
     ins_name = "Sequence"
     type = "Sequence"
     is_composite = True

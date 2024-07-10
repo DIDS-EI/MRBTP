@@ -14,7 +14,7 @@ from mabtpg.utils.any_tree_node import new_tree_like
 
 from mabtpg.behavior_tree.base_nodes import base_node_map, composite_node_map,base_node_type_map
 
-
+import sys
 
 class BehaviorTree(ptree.trees.BehaviourTree):
     def __init__(self,anytree=None, behavior_lib=None):
@@ -63,6 +63,16 @@ class BehaviorTree(ptree.trees.BehaviourTree):
 
     def print(self):
         print_tree_from_root(self.root)
+
+
+    def save_btml(self,path):
+        original_stdout = sys.stdout
+
+        with open(path, 'w') as f:
+            sys.stdout = f
+            print_tree_from_root(self.root)
+
+        sys.stdout = original_stdout
 
     def draw(self,file_name="behavior_tree",png_only=False):
         render_dot_tree(self.root,name=file_name,png_only=png_only)

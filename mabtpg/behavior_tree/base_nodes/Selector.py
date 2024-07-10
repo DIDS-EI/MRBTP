@@ -2,7 +2,7 @@ import py_trees as ptree
 from typing import Any
 
 class Selector(ptree.composites.Selector):
-    print_name = "Selector"
+    print_name = "selector"
     ins_name = "Selector"
     type = "Selector"
     is_composite = True

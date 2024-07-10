@@ -144,7 +144,7 @@ class PlanningAgent:
             stack.append(children)
 
         while stack != []:
-            current_condition = stack.pop()
+            current_condition = stack.pop(0)
 
             # create a sequence node and its condition-action pair
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)

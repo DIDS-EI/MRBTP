@@ -94,13 +94,13 @@ goal = env.get_goal()
 # 获取球的颜色和位置
 if goal==None:
     # goal = {"IsHolding(agent-0,key-0)"}
-    goal = {"IsOpen(door-0)"}
+    # goal = {"IsOpen(door-0)"}
     # goal = {"IsNear(agent-0,key-0)","IsNear(agent-1,key-0)"}
     # goal = {"IsInRoom(agent-0,1)"}
     # goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
 
     # goal = {"IsHolding(agent-0,ball-0)"}
-    # goal = {"IsInRoom(ball-0,0)"}
+    goal = {"IsInRoom(ball-0,0)"}
 
 
 
@@ -113,11 +113,14 @@ from mabtpg.mabtp.mabtp import MABTP
 planning_algorithm = MABTP(verbose = True)
 planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
+
+
 # 怀疑： bug 是因为 输出 BT 的时候，挂载在 根节点 下的 孩子结点的顺序导致的。 应该按照扩展的顺序挂载 根节点下面的孩子结点
 
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
-    bt_list[i].print()
+    bt_list[i].save_btml(f"robot-{i}.btml")
+
     bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
