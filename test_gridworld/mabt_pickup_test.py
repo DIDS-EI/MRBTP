@@ -53,6 +53,10 @@ print("room_index:",room_index)
 # Place an object in the room with the specified index
 ball = Ball('red')
 env.place_object_in_room(ball,1)
+ball = Ball('grey')
+env.place_object_in_room(ball,1)
+ball = Ball('yellow')
+env.place_object_in_room(ball,0)
 
 # make the door open
 # for obj in env.obj_list:
@@ -100,7 +104,10 @@ if goal==None:
     # goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
 
     # goal = {"IsHolding(agent-0,ball-0)"}
-    goal = {"IsInRoom(ball-0,0)"}
+    goal = {"IsInRoom(ball-0,1)"}
+    # goal = {"IsInRoom(ball-0,0)","IsInRoom(ball-1,0)"}
+
+    # goal = {"IsInRoom(ball-0,0)", "IsNear(agent-0,ball-2)","IsNear(agent-1,ball-2)"}
 
 
 
@@ -110,12 +117,9 @@ print("BT goal: " + str(goal))
 
 from mabtpg.mabtp.mabtp import MABTP
 
-planning_algorithm = MABTP(verbose = True)
+planning_algorithm = MABTP(verbose = False)
 planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
-
-
-# 怀疑： bug 是因为 输出 BT 的时候，挂载在 根节点 下的 孩子结点的顺序导致的。 应该按照扩展的顺序挂载 根节点下面的孩子结点
 
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)

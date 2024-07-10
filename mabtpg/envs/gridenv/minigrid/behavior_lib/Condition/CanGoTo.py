@@ -17,14 +17,10 @@ class CanGoTo(Condition):
 
         super().__init__(*args)
 
-        self.target_agent = None
-        self.obj_id = self.args[0] #
+        self.obj_id = self.args[0]
         self.obj = None
 
     def update(self) -> Status:
-        if self.target_agent is None:
-            agent_id = int(self.args[0].split("-")[-1])
-            self.target_agent = self.env.agents[agent_id]
 
         #  For the door is locked and the agent has the corresponding key.
         self.obj = self.env.id2obj[self.obj_id]

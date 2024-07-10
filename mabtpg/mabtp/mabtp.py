@@ -85,6 +85,7 @@ class PlanningAgent:
         near_state_dic = {}
         holding_state_dic = {}
         empty_hand_dic = {}
+        room_state_dic = {}
 
         for c in premise_condition:
             # 检测 IsNear 模式
@@ -96,8 +97,9 @@ class PlanningAgent:
                 obj_id = elements[1].strip()
                 if agent_id in near_state_dic:
                     if near_state_dic[agent_id] != obj_id:
-                        print(
-                            f"Conflict detected: {agent_id} is near more than one object: {near_state_dic[agent_id]} and {obj_id}.")
+                        if self.verbose:
+                            print(
+                                f"Conflict detected: {agent_id} is near more than one object: {near_state_dic[agent_id]} and {obj_id}.")
                         return True
                 else:
                     near_state_dic[agent_id] = obj_id
@@ -111,11 +113,13 @@ class PlanningAgent:
                 obj_id = elements[1].strip()
                 if agent_id in holding_state_dic:
                     if holding_state_dic[agent_id] != obj_id:
-                        print(
-                            f"Conflict detected: {agent_id} is holding more than one object: {holding_state_dic[agent_id]} and {obj_id}.")
+                        if self.verbose:
+                            print(
+                                f"Conflict detected: {agent_id} is holding more than one object: {holding_state_dic[agent_id]} and {obj_id}.")
                         return True
                 elif agent_id in empty_hand_dic:
-                    print(f"Conflict detected: {agent_id} is reported both holding {obj_id} and having an empty hand.")
+                    if self.verbose:
+                        print(f"Conflict detected: {agent_id} is reported both holding {obj_id} and having an empty hand.")
                     return True
                 else:
                     holding_state_dic[agent_id] = obj_id
@@ -125,12 +129,23 @@ class PlanningAgent:
             if match_empty:
                 agent_id = match_empty.group(1).strip()
                 if agent_id in holding_state_dic:
-                    print(
-                        f"Conflict detected: {agent_id} is reported both having an empty hand and holding {holding_state_dic[agent_id]}.")
+                    if self.verbose:
+                        print(
+                            f"Conflict detected: {agent_id} is reported both having an empty hand and holding {holding_state_dic[agent_id]}.")
                     return True
                 empty_hand_dic[agent_id] = True
 
-
+            # 检测 IsInRoom 模式
+            match_room = re.search(r'IsInRoom\(([^,]+),(\d+)\)', c)
+            if match_room:
+                entity_id = match_room.group(1).strip()
+                room_id = match_room.group(2).strip()
+                if entity_id in room_state_dic:
+                    if room_state_dic[entity_id] != room_id:
+                        print(f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
+                        return True
+                else:
+                    room_state_dic[entity_id] = room_id
 
         return False
 

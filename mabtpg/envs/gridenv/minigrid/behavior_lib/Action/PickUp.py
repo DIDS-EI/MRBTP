@@ -36,6 +36,9 @@ class PickUp(Action):
 
             action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})",f"CanGoTo({obj_id})",f"IsNear(agent-{agent.id},{obj_id})"}
             action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != room_index}
+            # delete all obj in hand
+            action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list if obj.id != obj_id}
+
 
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"PickUp(agent-{agent.id},{obj_id})",**action_model))
