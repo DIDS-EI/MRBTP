@@ -5,7 +5,7 @@ from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import get_direction_index
 import numpy as np
 import random
-from mabtpg.utils.astar import astar
+from mabtpg.utils.astar import astar,is_near
 
 
 class GoBtwRoom(Action):
@@ -77,10 +77,16 @@ class GoBtwRoom(Action):
             assert self.path
 
         if self.path == []:
-            goal_direction = self.goal - np.array(self.agent.position)
-            print("\t goal:", self.goal, "\t agent.position", self.agent.position)
-            print("goal_direction:",goal_direction)
-            self.agent.action = self.turn_to(goal_direction)
+            # goal_direction = self.goal - np.array(self.agent.position)
+            # self.agent.action = self.turn_to(goal_direction)
+
+            if is_near(self.goal,self.agent.position):
+                goal_direction = self.goal - np.array(self.agent.position)
+                self.agent.action = self.turn_to(goal_direction)
+            else:
+                print("obj_id:", self.obj_id, "\t goal:", self.goal, "\t agent.position", self.agent.position)
+                print("goal_direction:",self.goal - np.array(self.agent.position))
+                self.path = None
         else:
             next_direction = self.path[0]
             turn_to_action = self.turn_to(next_direction)
