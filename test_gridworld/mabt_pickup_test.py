@@ -4,7 +4,7 @@ from minigrid.core.world_object import Ball, Box,Door
 
 from gymnasium.envs.registration import register
 # main cfgs
-num_agent = 2
+num_agent = 1
 
 # other cfgs
 # env_id = "BabyAI-GoToObj-v0"  # goto
@@ -52,12 +52,12 @@ print("room_index:",room_index)
 
 # Place an object in the room with the specified index
 ball = Ball('red')
-env.place_object_in_room(ball,1)
-ball = Ball('grey')
-env.place_object_in_room(ball,1)
-ball = Ball('yellow')
 env.place_object_in_room(ball,0)
-
+ball = Ball('grey')
+env.place_object_in_room(ball,0)
+# ball = Ball('yellow')
+# env.place_object_in_room(ball,0)
+env.reset(seed=0)
 # make the door open
 # for obj in env.obj_list:
 #     if obj.type == "door":
@@ -104,7 +104,12 @@ if goal==None:
     # goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
 
     # goal = {"IsHolding(agent-0,ball-0)"}
-    goal = {"IsInRoom(ball-0,1)"}
+
+    # goal = {"IsInRoom(ball-0,1)"}
+    goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    # goal = {"IsNear(ball-0,ball-1)"}
+
+
     # goal = {"IsInRoom(ball-0,0)","IsInRoom(ball-1,0)"}
 
     # goal = {"IsInRoom(ball-0,0)", "IsNear(agent-0,ball-2)","IsNear(agent-1,ball-2)"}
@@ -125,7 +130,7 @@ for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].save_btml(f"robot-{i}.btml")
 
-    bt_list[i].draw(file_name=f"agent-{i}")
+    # bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

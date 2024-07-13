@@ -1,5 +1,5 @@
 import random
-
+import io
 from mabtpg.envs.gridenv.minigrid.magrid_env import MAGridEnv
 from mabtpg.envs.gridenv.minigrid.magrid import MAGrid
 
@@ -57,7 +57,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.create_behavior_libs()
 
         # Assign cells to rooms
-        self.room_cells = self.assign_cells_to_rooms()
+        self.room_cells,self.cells_room = self.assign_cells_to_rooms()
+
 
         ## need to put in after reset()
         # self.get_objects_lists()
@@ -117,7 +118,12 @@ class MiniGridToMAGridEnv(MAGridEnv):
                     dfs(i, j, room_index)
                     room_index += 1
 
-        return room_cells
+        cells_room = {}
+        for room_index, cells in room_cells.items():
+            for cell in cells:
+                cells_room[cell] = room_index
+
+        return room_cells,cells_room
 
 
     def get_room_index(self, pos):
@@ -131,10 +137,12 @@ class MiniGridToMAGridEnv(MAGridEnv):
         Returns:
             int: The index of the room that the position belongs to, or -1 if the position is not walkable.
         """
-        i,j = pos
-        for room_index, cells in self.room_cells.items():
-            if (i, j) in cells:
-                return room_index
+        # i,j = pos
+        # for room_index, cells in self.room_cells.items():
+        #     if (i, j) in cells:
+        #         return room_index
+        if not isinstance(pos, np.ndarray) and  pos in self.cells_room:
+            return self.cells_room[pos]
         return -1
 
     def place_object_in_room(self, obj, room_index):
@@ -353,3 +361,42 @@ class MiniGridToMAGridEnv(MAGridEnv):
                 # print(a.name,"pre:",a.pre)
 
         return action_list
+
+    def get_map(self):
+        width, height = self.minigrid_env.grid.width, self.minigrid_env.grid.height
+        cell_width = 10   # Set the width of each cell
+        map_string = io.StringIO()  # Use StringIO to construct the string
+
+        # Determine the positions of agents
+        pos2angent_dic={}
+        for agent in self.agents:
+            pos = agent.position
+            if not isinstance(pos, tuple):  # Check if pos is not a tuple
+                raise TypeError("The variable 'pos' must be of type tuple")
+            if pos in pos2angent_dic:
+                pos2angent_dic[pos].append(str(agent.id))
+            else:
+                pos2angent_dic[pos] = [(str(agent.id))]
+
+
+        for j in range(height):
+            for i in range(width):
+                cell = self.minigrid_env.grid.get(i, j)
+                pos = (i,j)
+                if pos in pos2angent_dic:
+                    pos = (i, j)
+                    agents_str = "agent-"+','.join(pos2angent_dic[pos])
+                    map_string.write(f"{agents_str:<{cell_width}}")
+                    continue
+                if cell is None:
+                    map_string.write(f"{' . ':<{cell_width}}")
+                elif cell.type == "wall":
+                    map_string.write(f"{' WALL ':<{cell_width}}")
+                    # map_string.write(f"{' # ':<{cell_width}}")
+                else:
+                    map_string.write(f"{cell.id:<{cell_width}}")
+            map_string.write("\n")  # Add newline character
+
+        map_str = map_string.getvalue()  # Get the complete string
+        map_string.close()  # Close the StringIO object
+        return map_str
