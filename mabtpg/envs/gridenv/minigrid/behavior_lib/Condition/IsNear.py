@@ -3,7 +3,7 @@ from mabtpg.behavior_tree import Status
 
 import numpy as np
 from minigrid.core.constants import DIR_TO_VEC
-
+from mabtpg.utils.astar import astar,is_near
 
 # is agent near and facing to the target object
 class IsNear(Condition):
@@ -63,13 +63,9 @@ class IsNear(Condition):
             pos_str = self.env.id2obj[self.target_obj_id].cur_pos
             self.target_pos = list(pos_str)
 
-            if self.is_near():
+            if is_near(self.source_pos,self.target_pos):
                 return Status.SUCCESS
             else:
                 return Status.FAILURE
 
-    def is_near(self):
-        # Check if two positions are near each other based on a specified threshold.
-        x_diff = abs(self.source_pos[0] - self.target_pos[0])
-        y_diff = abs(self.source_pos[1] - self.target_pos[1])
-        return (x_diff + y_diff) <= 1
+

@@ -61,14 +61,21 @@ class PutInRoom(Action):
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         random.shuffle(directions)
 
+        print("self.target_position:",self.target_position)
+
         if self.target_position == None:
             for (dx, dy) in directions:
                 nx, ny = x + dx, y + dy
                 if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
                     cell = self.env.minigrid_env.grid.get(nx, ny)
-                    if cell is None:
-                        self.target_position = (nx, ny)
-                        break
+                    if (nx, ny) in self.env.cells_room and self.env.cells_room[(nx, ny)] == self.room_index:
+                        if cell is None:
+                            self.target_position = (nx, ny)
+                            break
+            # if there is no place, find go forward
+            if self.target_position == None:
+                self.agent.action = Actions.forward
+
         else:
             direction = (self.target_position[0] - self.agent.position[0], self.target_position[1] - self.agent.position[1])
             turn_to_action = self.turn_to(direction)

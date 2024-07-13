@@ -4,7 +4,7 @@ from minigrid.core.world_object import Ball, Box,Door
 
 from gymnasium.envs.registration import register
 # main cfgs
-num_agent = 1
+num_agent = 2
 
 # other cfgs
 # env_id = "BabyAI-GoToObj-v0"  # goto

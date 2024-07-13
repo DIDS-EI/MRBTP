@@ -141,7 +141,9 @@ class MiniGridToMAGridEnv(MAGridEnv):
         # for room_index, cells in self.room_cells.items():
         #     if (i, j) in cells:
         #         return room_index
-        if not isinstance(pos, np.ndarray) and  pos in self.cells_room:
+        if isinstance(pos, np.ndarray):
+            pos = tuple(pos.tolist())
+        if pos in self.cells_room:
             return self.cells_room[pos]
         return -1
 

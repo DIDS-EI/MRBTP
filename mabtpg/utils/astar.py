@@ -52,7 +52,11 @@ def astar(grid, start, goal):
 
 
 
-
+def is_near(source_pos,target_pos):
+    # Check if two positions are near each other based on a specified threshold.
+    x_diff = abs(source_pos[0] - target_pos[0])
+    y_diff = abs(source_pos[1] - target_pos[1])
+    return (x_diff + y_diff) <= 1
 
 
 
