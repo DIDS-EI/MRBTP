@@ -69,23 +69,25 @@ class GoBtwRoom(Action):
                     self.goal = (x, y)
                     break
 
-            # consider cannot find a goal
+            if self.goal:
+                self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
+                print(self.path)
 
-            self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
-
-            print(self.path)
-            assert self.path
+            # 如果未找到路径，移动到门口并等待
+            if self.path is None:
+                door_id = self.env.adj_rooms_to_doors[(self.from_room_id, self.to_room_id)]
+                door_positions = list(self.env.id2obj[door_id].cur_pos)  # 获取从房间的门口位置
+                self.path = astar(self.env.grid, start=self.agent.position, goal=door_positions)
+                print(self.path)
+                assert(self.path)
 
         if self.path == []:
             # goal_direction = self.goal - np.array(self.agent.position)
             # self.agent.action = self.turn_to(goal_direction)
-
-            if is_near(self.goal,self.agent.position):
+            if is_near(self.goal, self.agent.position):
                 goal_direction = self.goal - np.array(self.agent.position)
                 self.agent.action = self.turn_to(goal_direction)
             else:
-                print("obj_id:", self.obj_id, "\t goal:", self.goal, "\t agent.position", self.agent.position)
-                print("goal_direction:",self.goal - np.array(self.agent.position))
                 self.path = None
         else:
             next_direction = self.path[0]

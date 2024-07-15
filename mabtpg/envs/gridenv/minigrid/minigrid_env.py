@@ -225,6 +225,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
             list: A list of tuples (from_room_id, to_room_id, door_id).
         """
         doors_to_adj_rooms = {}
+        adj_rooms_to_doors = {}
         door_positions = []
 
         for obj in self.obj_list:
@@ -242,8 +243,9 @@ class MiniGridToMAGridEnv(MAGridEnv):
             if len(adjacent_rooms) == 2:
                 from_room_id, to_room_id = tuple(adjacent_rooms)
                 doors_to_adj_rooms[door_id] = (from_room_id, to_room_id)
+                adj_rooms_to_doors[(from_room_id, to_room_id)] = door_id
 
-        return doors_to_adj_rooms
+        return doors_to_adj_rooms,adj_rooms_to_doors
 
 
     def _gen_grid(self, width, height):
@@ -341,7 +343,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
     def get_action_lists(self):
 
         self.get_objects_lists()
-        self.doors_to_adj_rooms = self.get_adjacent_rooms_and_doors()
+        self.doors_to_adj_rooms,self.adj_rooms_to_doors = self.get_adjacent_rooms_and_doors()
 
         # obj cache
         can_goto, can_pickup, can_toggle = self.initialize_cache()

@@ -6,24 +6,9 @@ from gymnasium.envs.registration import register
 # main cfgs
 num_agent = 2
 
-# other cfgs
-# env_id = "BabyAI-GoToObj-v0"  # goto
-# env_id = "BabyAI-OneRoomS8-v0"  # goto pichup
 
-env_id = "MiniGrid-DoorKey-16x16-v0" #"MiniGrid-DoorKey-16x16-v0"
-# env_id = "MiniGrid-FourRooms-v0"
-# env_id = "MiniGrid-MultiRoom-N2-S4-v0"
-# env_id = "MiniGrid-LockedRoom-v0"
+env_id = "MiniGrid-DoorKey-16x16-v0"
 
-# env_id = "BabyAI-GoToOpen-v0"
-# env_id = "BabyAI-Open-v0"
-# env_id = "BabyAI-BossLevel-v0"  # 4 conditions
-
-# register(
-#     id=env_id,
-#     entry_point="minigrid.envs:MultiRoomEnv",
-#     kwargs={"minNumRooms": 6, "maxNumRooms": 6, "maxRoomSize": 5},
-# )
 
 tile_size = 32
 agent_view_size =7
@@ -54,7 +39,7 @@ print("room_index:",room_index)
 ball = Ball('red')
 env.place_object_in_room(ball,0)
 ball = Ball('grey')
-env.place_object_in_room(ball,0)
+env.place_object_in_room(ball,1)
 # ball = Ball('yellow')
 # env.place_object_in_room(ball,0)
 env.reset(seed=0)
@@ -106,7 +91,9 @@ if goal==None:
     # goal = {"IsHolding(agent-0,ball-0)"}
 
     # goal = {"IsInRoom(ball-0,1)"}
-    goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    # goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    # goal = {"IsNear(agent-0,door-0)"}
+    goal = {"IsNear(agent-0,ball-1)"}
     # goal = {"IsNear(ball-0,ball-1)"}
 
 

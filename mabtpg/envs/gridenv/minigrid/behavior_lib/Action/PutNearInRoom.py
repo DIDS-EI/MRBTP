@@ -8,7 +8,7 @@ import random
 from mabtpg.utils.astar import astar,is_near
 
 class PutNearInRoom(Action):
-    can_be_expanded = False
+    can_be_expanded = True
     num_args = 4
     valid_args = [CAN_PICKUP]
 

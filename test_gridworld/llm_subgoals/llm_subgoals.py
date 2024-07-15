@@ -44,6 +44,9 @@ behavior_lib_path = f"{root_path}/envs/gridenv/minigrid/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
 for cls in behavior_lib["Condition"].values():
     print(f"{cls.__name__}")
+print("--------------")
+for cls in behavior_lib["Action"].values():
+    print(f"{cls.__name__}")
 
 # 首先得到环境地图
 # print(env.minigrid_env.unwrapped)
