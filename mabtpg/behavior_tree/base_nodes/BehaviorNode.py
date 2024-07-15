@@ -14,21 +14,23 @@ class BahaviorNode(ptree.behaviour.Behaviour):
         '''
     print_name_prefix = ""
 
-    @classmethod
-    def get_ins_name(cls,*args):
-        name = cls.__name__
+
+    def get_ins_name(self):
+        args = self.args
+        name = self.__class__.__name__
         if len(args) > 0:
-            ins_name = f'{name}({",".join(list(args))})'
+            ins_name = f'{name}({",".join(args)})'
         else:
             ins_name = f'{name}()'
         return ins_name
 
     def __init__(self,*args):
-        ins_name = self.__class__.get_ins_name(*args)
         self.args = args
+        ins_name = self.get_ins_name()
+
         self.agent = None
         self.env = None
-
+        self.ins_name = ins_name
         super().__init__(ins_name)
 
 
@@ -52,7 +54,7 @@ class BahaviorNode(ptree.behaviour.Behaviour):
 
     @property
     def print_name(self):
-        return f'{self.print_name_prefix}{self.get_ins_name(*self.args)}'
+        return f'{self.print_name_prefix}{self.get_ins_name()}'
 
     @property
     def arg_str(self):

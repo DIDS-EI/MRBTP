@@ -123,7 +123,7 @@ bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env
 
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
-    bt_list[i].save_btml(f"robot-{i}.btml")
+    bt_list[i].save_btml(f"robot-{i}.bt")
 
     bt_list[i].draw(file_name=f"agent-{i}")
 

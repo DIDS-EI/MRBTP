@@ -1,7 +1,7 @@
 from mabtpg.behavior_tree.base_nodes.BehaviorNode import BahaviorNode
 
 class Action(BahaviorNode):
-    print_name_prefix = "act "
+    print_name_prefix = "action "
     type = 'Action'
 
     def __init__(self,*args):

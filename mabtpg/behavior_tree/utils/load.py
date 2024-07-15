@@ -1,5 +1,5 @@
 import py_trees as ptree
-from mabtpg.behavior_tree.btml import btmlCompiler
+from mabtpg.behavior_tree.btml.back import btmlCompiler
 import os
 import importlib.util
 from mabtpg.utils.path import get_root_path
@@ -9,7 +9,7 @@ def load_btml(btml_path):
     return tree_root
 
 def load_bt_from_btml(btml_path, scene=None,  behavior_lib_path=None):
-    btml_bt = btmlCompiler.load(btml_path,scene,behavior_lib_path)
+    btml_bt = btmlCompiler.load(btml_path, scene, behavior_lib_path)
     bt =  ptree.trees.BehaviourTree(btml_bt)
 
     with open(btml_path, 'r') as f:

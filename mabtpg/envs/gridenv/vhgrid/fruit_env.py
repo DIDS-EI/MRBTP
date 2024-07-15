@@ -15,8 +15,6 @@ class FruitEnv(VHGridEnv):
         super().__init__(**kwargs)
 
     def _gen_grid(self, width, height):
-        #TODO: 智能体也是容器类， 画出物体跟随智能体
-        #TODO: 智能体的动作用类来表示
         super()._gen_grid(width,height)
 
         # objects

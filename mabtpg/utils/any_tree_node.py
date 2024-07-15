@@ -1,7 +1,7 @@
 
 
 class AnyTreeNode:
-    def __init__(self, node_type, cls_name="",args=(),children=()):
+    def __init__(self, node_type, cls_name=None,args=(),children=()):
         self.node_type = node_type
         self.cls_name = cls_name
         self.args = args
@@ -10,6 +10,8 @@ class AnyTreeNode:
     def add_child(self,child):
         self.children.append(child)
 
+    def add_children(self,children):
+        self.children += children
 
     def __repr__(self):
         return f'{self.node_type} {self.cls_name} {self.args}'

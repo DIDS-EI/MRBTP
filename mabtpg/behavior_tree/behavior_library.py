@@ -1,6 +1,7 @@
 import os
 from mabtpg.utils import ROOT_PATH
 import importlib.util
+import copy
 
 def get_classes_from_folder(folder_path):
     cls_dict = {}
@@ -29,6 +30,9 @@ class BehaviorLibrary(dict):
         super().__init__()
         if lib_path:
             self.load_from_btml(lib_path)
+
+    def clone(self):
+        return copy.deepcopy(self)
 
     def load_from_btml(self, lib_path):
         type_list = ["Action", "Condition"]

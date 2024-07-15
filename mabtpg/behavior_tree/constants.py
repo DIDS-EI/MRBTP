@@ -2,5 +2,6 @@
 class NODE_TYPE:
     sequence = "sequence"
     selector = "selector"
-    condition = "cond"
-    action = "act"
+    condition = "condition"
+    action = "action"
+    composite_condition = "composite_condition"

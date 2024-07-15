@@ -9,11 +9,6 @@ class IsHandEmpty(Condition):
     num_args = 1
 
     def __init__(self,*args):
-        ins_name = self.__class__.get_ins_name(*args)
-        self.args = args
-        self.agent = None
-        self.env = None
-
         super().__init__(*args)
 
         self.target_agent = None

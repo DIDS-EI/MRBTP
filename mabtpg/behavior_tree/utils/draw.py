@@ -52,7 +52,7 @@ def dot_tree(
                                  common.BlackBoxLevel.COMPONENT: "lawngreen",
                                  common.BlackBoxLevel.BIG_PICTURE: "white"
                                  }
-        if node.type =="Selector":
+        if node.type =="Selector" or node.type == "Fallback":
             attributes = ('box', '#B0FFFF', 'black')  # octagon
         elif node.type =="Sequence":
             attributes = ('box', '#FF8080', 'black')
@@ -113,8 +113,11 @@ def dot_tree(
         '''
         if node_name == "Sequence":
             node_name = "&rarr;"
-        if node_name == "Selector":
+        elif node_name == "Selector" or node_name == "Fallback" :
             node_name = " ? "
+        elif "&" in node_name:
+            node_name = node_name.replace("&", "&\n")
+
         return node_name
 
     fontsize = 20
@@ -324,10 +327,12 @@ def render_dot_tree(root: behaviour.Behaviour,
     filename_wo_extension = utilities.get_valid_filename(filename_wo_extension_to_convert)
     filenames = {}
 
+
     if png_only:
         write_dict = {"png": graph.write_png}
     else:
-        write_dict = {"dot": graph.write, "png": graph.write_png, "svg": graph.write_svg}
+        # write_dict = {"dot": graph.write, "png": graph.write_png, "svg": graph.write_svg}
+        write_dict = {"svg": graph.write_svg}
 
     for extension, writer in write_dict.items():
         filename = filename_wo_extension + '.' + extension
@@ -335,4 +340,4 @@ def render_dot_tree(root: behaviour.Behaviour,
         print("Writing {}".format(pathname))
         writer(pathname)
         filenames[extension] = pathname
-    return filenames["png"]
+    return

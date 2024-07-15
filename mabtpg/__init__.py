@@ -5,6 +5,9 @@ import warnings
 # 忽略特定的 UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, module="gymnasium.core")
 
+import os
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"
+
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.behavior_tree.behavior_library import BehaviorLibrary
 

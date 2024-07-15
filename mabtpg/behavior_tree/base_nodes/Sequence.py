@@ -7,6 +7,8 @@ class Sequence(ptree.composites.Sequence):
     type = "Sequence"
     is_composite = True
 
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,name = "Sequence",**kwargs)
+    def __init__(self,memory=False):
+        super().__init__(memory = memory,name = "Sequence")
 
+    def bind_agent(self,agent):
+        pass

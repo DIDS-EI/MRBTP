@@ -1,0 +1,18 @@
+sequence
+    fallback
+        condition IsOpen(door-0)
+        action OpenDoor(agent-0,door-0)
+
+def action OpenDoor(agent,door):
+    fallback
+        sequence
+            condition CanOpen(agent,door) & IsNear(agent,door)
+            action Toggle(agent,door)
+        sequence
+            condition CanOpen(agent,door)
+            action GoToInRoom(agent,door,0)
+        sequence
+            condition IsNear(agent,key-0)
+            action PickUp(agent,key-0)
+        action Goto(agent,key-0)
+
