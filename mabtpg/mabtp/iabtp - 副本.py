@@ -96,6 +96,9 @@ class PlanningAgent:
         empty_hand_dic = {}
         room_state_dic = {}
 
+        # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
+        toggle_state_dic = {}
+
         for c in premise_condition:
             # 检测 IsNear 模式
             match_near = re.search(r'IsNear\(([^)]+)\)', c)
@@ -157,6 +160,26 @@ class PlanningAgent:
                 else:
                     room_state_dic[entity_id] = room_id
 
+            # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
+            # 检测 IsOpen 和 IsClose 模式
+            match_open = re.search(r'IsOpen\(([^)]+)\)', c)
+            match_close = re.search(r'IsClose\(([^)]+)\)', c)
+
+            if match_open:
+                obj_id = match_open.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'close':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'open'
+            if match_close:
+                obj_id = match_close.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'open':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'close'
+
         return False
 
     def output_bt(self,behavior_lib=None):
@@ -213,33 +236,35 @@ class PlanningAgent:
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
+                print("condition_node_name:",condition_node_name)
                 cls_name, args = parse_predicate_logic(condition_node_name)
                 sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
 
-            sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
-
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
-
-            parent.add_child(composite_condition)
+            parent.add_child(sequence_node)
 
 class IABTP:
     def __init__(self,verbose=False):
         self.planned_agent_list = None
         self.verbose = verbose
+        self.precondition = None
 
-    def planning(self, goal, action_lists):
+    def planning(self, goal, action_lists,precondition=None):
+
+        # If the plan conflicts with the precondition, it is considered a conflict
+        self.precondition = precondition
+
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose))
 
-        explored_condition_list = [goal]
+            agent = PlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition)
+            if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
+            planning_agent_list.append(agent)
 
-        while explored_condition_list != []:
-            condition = explored_condition_list.pop(0)
-            if self.verbose: print_colored(f"C:{condition}","green")
-            for agent in planning_agent_list:
-                if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
+            explored_condition_list = [goal]
+
+            while explored_condition_list != []:
+                condition = explored_condition_list.pop(0)
+                if self.verbose: print_colored(f"C:{condition}","green")
                 premise_condition_list = agent.one_step_expand(condition)
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
