@@ -142,7 +142,8 @@ class PlanningAgent:
                 room_id = match_room.group(2).strip()
                 if entity_id in room_state_dic:
                     if room_state_dic[entity_id] != room_id:
-                        print(f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
+                        if self.verbose:
+                            print(f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
                         return True
                 else:
                     room_state_dic[entity_id] = room_id

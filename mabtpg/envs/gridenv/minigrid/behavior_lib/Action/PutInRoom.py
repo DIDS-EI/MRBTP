@@ -17,6 +17,8 @@ class PutInRoom(Action):
         self.path = None
         self.room_index = int(args[2])
 
+        self.target_position = None
+
     @classmethod
     def get_planning_action_list(cls, agent, env):
 
@@ -55,6 +57,34 @@ class PutInRoom(Action):
         if self.room_index not in self.env.room_cells:
             raise ValueError(f"Room index {self.room_index} does not exist.")
 
+        x, y = self.agent.position
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        random.shuffle(directions)
+
+        print("self.target_position:",self.target_position)
+
+        if self.target_position == None:
+            for (dx, dy) in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
+                    cell = self.env.minigrid_env.grid.get(nx, ny)
+                    if (nx, ny) in self.env.cells_room and self.env.cells_room[(nx, ny)] == self.room_index:
+                        if cell is None:
+                            self.target_position = (nx, ny)
+                            break
+            # if there is no place, find go forward
+            if self.target_position == None:
+                self.agent.action = Actions.forward
+
+        else:
+            direction = (self.target_position[0] - self.agent.position[0], self.target_position[1] - self.agent.position[1])
+            turn_to_action = self.turn_to(direction)
+            if turn_to_action == Actions.done:
+                self.agent.action = Actions.drop
+            else:
+                self.agent.action = turn_to_action
+
+        return Status.RUNNING
 
         # first go to another room
         # if self.path is None:
@@ -87,25 +117,6 @@ class PutInRoom(Action):
         #         self.agent.action = turn_to_action
         #     print(self.path)
 
-
-        x, y = self.agent.position
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        random.shuffle(directions)
-
-        for (dx, dy) in directions:
-            nx, ny = x + dx, y + dy
-            if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
-                cell = self.env.minigrid_env.grid.get(nx, ny)
-                if cell is None:
-                    turn_to_action = self.turn_to((dx, dy))
-                    if turn_to_action == Actions.done:
-                        self.agent.action = Actions.drop
-                    else:
-                        self.agent.action = turn_to_action
-
-
-
-        return Status.RUNNING
 
 
 

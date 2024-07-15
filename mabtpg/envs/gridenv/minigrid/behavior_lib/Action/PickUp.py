@@ -39,6 +39,9 @@ class PickUp(Action):
             # delete all obj in hand
             action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list if obj.id != obj_id}
 
+            action_model["del_set"] = {f'IsNear({obj_id},{obj.id})' for obj in env.obj_list if
+                                       obj.id != obj_id}
+
 
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"PickUp(agent-{agent.id},{obj_id})",**action_model))

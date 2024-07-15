@@ -1,0 +1,28 @@
+[Map]
+ WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .        key-0      .         WALL     ball-1     .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL     ball-0     .         .         .         .         .         .         .        door-0     .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL      .         .         .         .         .         .         .         .         WALL      .         .         .         .         .         WALL
+ WALL     agent-0,1  .         .         .         .         .         .         .         WALL      .         .         .         .        goal-0     WALL
+ WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL      WALL
+
+智能体为： agent-0， agent-1
+其中，部分门需要获得钥匙才能打开：door-0: key-0
+
+[Goal]
+IsNear_ball-0_ball-1
+
+
+[SubGoals]
+IsOpen_door-0
+IsNear_ball-0_ball-1
