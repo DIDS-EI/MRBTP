@@ -1,81 +1,81 @@
-selector
-    cond IsOpen(door-0)
+fallback
+    condition IsOpen(door-0)
     sequence
-        selector
+        fallback
             sequence
-                cond IsClose(door-0)
-                cond IsNear(agent-0,door-0)
-                cond CanOpen(agent-0,door-0)
+                condition CanOpen(agent-0,door-0)
+                condition IsClose(door-0)
+                condition IsNear(agent-0,door-0)
             sequence
-                selector
+                fallback
                     sequence
-                        cond IsClose(door-0)
-                        cond IsInRoom(agent-0,0)
-                        cond CanOpen(agent-0,door-0)
-                        cond CanGoTo(door-0)
+                        condition CanOpen(agent-0,door-0)
+                        condition IsClose(door-0)
+                        condition CanGoTo(door-0)
+                        condition IsInRoom(agent-0,0)
                     sequence
-                        selector
+                        fallback
                             sequence
-                                cond IsNear(agent-0,key-0)
-                                cond CanGoTo(door-0)
-                                cond IsClose(door-0)
-                                cond IsInRoom(agent-0,0)
-                                cond IsHandEmpty(agent-0)
+                                condition IsHandEmpty(agent-0)
+                                condition IsNear(agent-0,key-0)
+                                condition IsClose(door-0)
+                                condition CanGoTo(door-0)
+                                condition IsInRoom(agent-0,0)
                             sequence
-                                selector
+                                fallback
                                     sequence
-                                        cond IsClose(door-0)
-                                        cond CanGoTo(key-0)
-                                        cond CanGoTo(door-0)
-                                        cond IsInRoom(agent-0,0)
-                                        cond IsHandEmpty(agent-0)
+                                        condition IsHandEmpty(agent-0)
+                                        condition CanGoTo(key-0)
+                                        condition IsClose(door-0)
+                                        condition CanGoTo(door-0)
+                                        condition IsInRoom(agent-0,0)
                                     sequence
                                         sequence
-                                            cond CanGoTo(key-0)
-                                            cond CanGoTo(door-0)
-                                            cond IsClose(door-0)
-                                            cond IsInRoom(agent-0,0)
-                                            cond IsHolding(agent-0,ball-0)
-                                        act PutInRoom(agent-0,ball-0,0)
+                                            condition IsHolding(agent-0,ball-0)
+                                            condition CanGoTo(key-0)
+                                            condition IsClose(door-0)
+                                            condition CanGoTo(door-0)
+                                            condition IsInRoom(agent-0,0)
+                                        action PutInRoom(agent-0,ball-0,0)
                                     sequence
                                         sequence
-                                            cond IsHolding(agent-0,ball-1)
-                                            cond CanGoTo(key-0)
-                                            cond CanGoTo(door-0)
-                                            cond IsClose(door-0)
-                                            cond IsInRoom(agent-0,0)
-                                        act PutInRoom(agent-0,ball-1,0)
-                                act GoToInRoom(agent-0,key-0,0)
+                                            condition CanGoTo(key-0)
+                                            condition IsHolding(agent-0,ball-1)
+                                            condition IsClose(door-0)
+                                            condition CanGoTo(door-0)
+                                            condition IsInRoom(agent-0,0)
+                                        action PutInRoom(agent-0,ball-1,0)
+                                action GoToInRoom(agent-0,key-0,0)
                             sequence
                                 sequence
-                                    cond IsClose(door-0)
-                                    cond IsNear(agent-0,key-0)
-                                    cond CanGoTo(door-0)
-                                    cond IsInRoom(agent-0,0)
-                                    cond IsHolding(agent-0,ball-0)
-                                act PutInRoom(agent-0,ball-0,0)
+                                    condition IsNear(agent-0,key-0)
+                                    condition IsHolding(agent-0,ball-0)
+                                    condition IsClose(door-0)
+                                    condition CanGoTo(door-0)
+                                    condition IsInRoom(agent-0,0)
+                                action PutInRoom(agent-0,ball-0,0)
                             sequence
                                 sequence
-                                    cond IsClose(door-0)
-                                    cond IsInRoom(agent-0,0)
-                                    cond IsHolding(agent-0,key-0)
-                                    cond CanGoTo(door-0)
-                                act PutInRoom(agent-0,key-0,0)
+                                    condition IsClose(door-0)
+                                    condition IsHolding(agent-0,key-0)
+                                    condition CanGoTo(door-0)
+                                    condition IsInRoom(agent-0,0)
+                                action PutInRoom(agent-0,key-0,0)
                             sequence
                                 sequence
-                                    cond IsClose(door-0)
-                                    cond IsNear(agent-0,key-0)
-                                    cond IsHolding(agent-0,ball-1)
-                                    cond CanGoTo(door-0)
-                                    cond IsInRoom(agent-0,0)
-                                act PutInRoom(agent-0,ball-1,0)
-                        act PickUp(agent-0,key-0)
-                act GoToInRoom(agent-0,door-0,0)
+                                    condition IsNear(agent-0,key-0)
+                                    condition IsHolding(agent-0,ball-1)
+                                    condition IsClose(door-0)
+                                    condition CanGoTo(door-0)
+                                    condition IsInRoom(agent-0,0)
+                                action PutInRoom(agent-0,ball-1,0)
+                        action PickUp(agent-0,key-0)
+                action GoToInRoom(agent-0,door-0,0)
             sequence
                 sequence
-                    cond IsClose(door-0)
-                    cond IsInRoom(agent-0,1)
-                    cond CanOpen(agent-0,door-0)
-                    cond CanGoTo(door-0)
-                act GoToInRoom(agent-0,door-0,1)
-        act Toggle(agent-0,door-0)
+                    condition IsInRoom(agent-0,1)
+                    condition CanOpen(agent-0,door-0)
+                    condition IsClose(door-0)
+                    condition CanGoTo(door-0)
+                action GoToInRoom(agent-0,door-0,1)
+        action Toggle(agent-0,door-0)

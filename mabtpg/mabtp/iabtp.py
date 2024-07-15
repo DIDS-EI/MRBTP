@@ -6,7 +6,7 @@ from mabtpg.behavior_tree.constants import NODE_TYPE
 import re
 import mabtpg
 from mabtpg.utils.tools import print_colored
-
+from mabtpg.behavior_tree import BTML
 
 class PlanningCondition:
     def __init__(self,condition,action=None):
@@ -218,7 +218,10 @@ class PlanningAgent:
                 sequence_node.add_child(action_node)
                 current_condition.parent.add_child(sequence_node)
 
-        bt = BehaviorTree(anytree=anytree_root,behavior_lib=behavior_lib)
+        btml = BTML()
+        btml.bt_root = anytree_root
+
+        bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
 
         return bt
 
