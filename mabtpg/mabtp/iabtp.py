@@ -228,18 +228,23 @@ class IABTP:
         self.planned_agent_list = None
         self.verbose = verbose
 
-    def planning(self, goal, action_lists):
+    def planning(self, goal, action_lists,precondition=None):
+
+        # If the plan conflicts with the precondition, it is considered a conflict
+        self.precondition = precondition
+
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose))
 
-        explored_condition_list = [goal]
+            agent = PlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition)
+            if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
+            planning_agent_list.append(agent)
 
-        while explored_condition_list != []:
-            condition = explored_condition_list.pop(0)
-            if self.verbose: print_colored(f"C:{condition}","green")
-            for agent in planning_agent_list:
-                if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
+            explored_condition_list = [goal]
+
+            while explored_condition_list != []:
+                condition = explored_condition_list.pop(0)
+                if self.verbose: print_colored(f"C:{condition}","green")
                 premise_condition_list = agent.one_step_expand(condition)
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
