@@ -49,7 +49,8 @@ class PlanningAgent:
                         continue
                     # When planning, directly remove this condition.
                     if self.precondition != None:
-                        premise_condition -= self.precondition
+                        if action.pre & self.precondition == set():
+                            premise_condition -= self.precondition
 
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
@@ -95,6 +96,7 @@ class PlanningAgent:
         holding_state_dic = {}
         empty_hand_dic = {}
         room_state_dic = {}
+        toggle_state_dic={}
 
         for c in premise_condition:
             # 检测 IsNear 模式
@@ -156,6 +158,27 @@ class PlanningAgent:
                         return True
                 else:
                     room_state_dic[entity_id] = room_id
+
+
+            # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
+            # 检测 IsOpen 和 IsClose 模式
+            match_open = re.search(r'IsOpen\(([^)]+)\)', c)
+            match_close = re.search(r'IsClose\(([^)]+)\)', c)
+
+            if match_open:
+                obj_id = match_open.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'close':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'open'
+            if match_close:
+                obj_id = match_close.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'open':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'close'
 
         return False
 

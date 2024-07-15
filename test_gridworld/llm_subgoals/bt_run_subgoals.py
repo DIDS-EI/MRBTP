@@ -74,9 +74,8 @@ subgoal_bt_ls[frozenset(subgoal)] = bt_list
 
 # When planning, directly remove this condition.
 subgoal =  subgoal_ls[1]
-# precondition = {"IsOpen(door-0)"}
-precondition= None
-planning_algorithm.planning(frozenset(subgoal),action_lists=action_lists ) #precondition=frozenset(precondition)
+precondition = {"IsOpen(door-0)"}
+planning_algorithm.planning(frozenset(subgoal),action_lists=action_lists,precondition=frozenset(precondition)) #
 bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
 subgoal_bt_ls[frozenset(subgoal)] = bt_list
 
