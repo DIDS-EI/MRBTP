@@ -15,19 +15,13 @@ fallback
                                     sequence
                                         condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHolding(agent-0,ball-0) & IsInRoom(agent-0,0)
                                         action PutInRoom(agent-0,ball-0,0)
-                                    sequence
-                                        condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHolding(agent-0,ball-1) & IsInRoom(agent-0,0)
-                                        action PutInRoom(agent-0,ball-1,0)
                                 action GoToInRoom(agent-0,key-0,0)
-                            sequence
-                                condition CanGoTo(door-0) & IsClose(door-0) & IsHolding(agent-0,key-0) & IsInRoom(agent-0,0)
-                                action PutInRoom(agent-0,key-0,0)
                             sequence
                                 condition CanGoTo(door-0) & IsClose(door-0) & IsHolding(agent-0,ball-0) & IsInRoom(agent-0,0) & IsNear(agent-0,key-0)
                                 action PutInRoom(agent-0,ball-0,0)
                             sequence
-                                condition CanGoTo(door-0) & IsClose(door-0) & IsHolding(agent-0,ball-1) & IsInRoom(agent-0,0) & IsNear(agent-0,key-0)
-                                action PutInRoom(agent-0,ball-1,0)
+                                condition CanGoTo(door-0) & IsClose(door-0) & IsHolding(agent-0,key-0) & IsInRoom(agent-0,0)
+                                action PutInRoom(agent-0,key-0,0)
                         action PickUp(agent-0,key-0)
                 action GoToInRoom(agent-0,door-0,0)
             sequence

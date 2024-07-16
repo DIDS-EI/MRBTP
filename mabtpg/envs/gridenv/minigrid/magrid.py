@@ -96,6 +96,11 @@ class MAGrid(Grid):
 
         agent_dir_dict = {}
         for agent in agents:
+            # print("agent.position:",agent.position,type(agent.position))
+            # print("agent_dir_dict:",agent_dir_dict,type(agent_dir_dict))
+            if isinstance(agent.position, np.ndarray):
+                agent.position = tuple(agent.position)
+
             if agent.position not in agent_dir_dict:
                 agent_dir_dict[agent.position] = [agent.direction]
             else:

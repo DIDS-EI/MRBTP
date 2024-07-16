@@ -59,6 +59,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         # Assign cells to rooms
         self.room_cells,self.cells_room = self.assign_cells_to_rooms()
+        self.action_list = None
 
 
         ## need to put in after reset()
@@ -365,7 +366,48 @@ class MiniGridToMAGridEnv(MAGridEnv):
                 print(a.name)
                 # print(a.name,"pre:",a.pre)
 
+        self.action_list = action_list
         return action_list
+
+    def get_initial_state(self):
+
+        states_ls = set()
+        for act_ls in self.action_list:
+            for act in act_ls:
+                states_ls |= act.pre
+                states_ls |= act.add
+                states_ls |= act.del_set
+        # Determine one by one if the current state is satisfied.
+
+        import copy
+        from mabtpg.utils.any_tree_node import AnyTreeNode
+        from mabtpg.behavior_tree.constants import NODE_TYPE
+        from mabtpg.behavior_tree import BTML
+        from mabtpg.behavior_tree.behavior_tree import BehaviorTree
+        from mabtpg.behavior_tree import Status
+        from mabtpg.utils import get_root_path
+        from mabtpg.utils import parse_predicate_logic
+
+        root_path = get_root_path()
+        behavior_lib_path = f"{root_path}/envs/gridenv/minigrid/behavior_lib"
+        behavior_lib = BehaviorLibrary(behavior_lib_path)
+        start = copy.deepcopy(states_ls)
+        for state in states_ls:
+            anytree_root = AnyTreeNode(NODE_TYPE.selector)
+            cls_name, args = parse_predicate_logic(state)
+            anytree_root.add_child(AnyTreeNode(NODE_TYPE.condition, cls_name, args))
+            btml = BTML()
+            btml.bt_root = anytree_root
+            bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
+            # bt.tick()
+            self.agents[0].bind_bt(bt)
+            self.print_ticks = False
+            obs,done,_,_ = self.step(num_agent=1)
+            if bt.root.status == Status.FAILURE:
+                start -= {state}
+                print(state)
+        return start
+
 
     def get_map(self):
         width, height = self.minigrid_env.grid.width, self.minigrid_env.grid.height

@@ -21,6 +21,7 @@ class CanGoTo(Condition):
         self.obj = self.env.id2obj[self.obj_id]
 
         # Determine if `self.obj.cur_pos` is a numpy array and compare accordingly
+
         if isinstance(self.obj.cur_pos, np.ndarray):
             if (self.obj.cur_pos == (-1, -1)).all():
                 return Status.FAILURE
@@ -28,4 +29,5 @@ class CanGoTo(Condition):
             if self.obj.cur_pos == (-1, -1):
                 return Status.FAILURE
 
+        # print("CanGoTo", self.obj_id)
         return Status.SUCCESS

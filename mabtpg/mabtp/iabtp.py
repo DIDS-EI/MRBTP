@@ -8,25 +8,14 @@ import mabtpg
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
 
-class PlanningCondition:
-    def __init__(self,condition,action=None):
-        self.condition_set = condition
-        self.action = action
-        self.children = []
-        # for generate bt
-        self.parent_node = None
+from mabtpg.mabtp.mabtp import PlanningCondition,PlanningAgent,MABTP
 
-class PlanningAgent:
-    def __init__(self,action_list,goal,id=None,verbose=False,precondition=None):
-        self.id = id
-        self.action_list = action_list
-        self.expanded_condition_dict = {}
-        self.goal_condition = PlanningCondition(goal)
-        self.expanded_condition_dict[goal] = self.goal_condition
 
+class IAPlanningAgent(PlanningAgent):
+    def __init__(self, action_list, goal, id=None, verbose=False, precondition=None,start = None):
+        super().__init__(action_list, goal, id, verbose)
         self.precondition = precondition
-
-        self.verbose = verbose
+        self.start = start
 
     def one_step_expand(self, condition):
 
@@ -63,6 +52,10 @@ class PlanningAgent:
                             print_colored(f'outside','purple')
                         print_colored(f'a:{action.name} \t c_attr:{premise_condition}','orange')
 
+                    # If the initial state satisfies the current state, stop the search.
+                    if self.start!=None and self.start>=planning_condition:
+                        break
+
         # insert premise conditions into BT
         if inside_condition:
             self.inside_expand(inside_condition, premise_condition_list)
@@ -70,26 +63,6 @@ class PlanningAgent:
             self.outside_expand(premise_condition_list)
 
         return premise_condition_list
-
-    # check if `condition` is the consequence of `action`
-    def is_consequence(self,condition,action):
-        if condition & ((action.pre | action.add) - action.del_set) <= set():
-            return False
-        if (condition - action.del_set) != condition:
-            return False
-        return True
-
-    def has_no_subset(self, condition):
-        for expanded_condition in self.expanded_condition_dict:
-            if expanded_condition <= condition:
-                return False
-        return True
-
-    def inside_expand(self,inside_condition, premise_condition_list):
-        inside_condition.children += premise_condition_list
-
-    def outside_expand(self,premise_condition_list):
-        self.goal_condition.children += premise_condition_list
 
     def check_conflict(self, premise_condition):
         near_state_dic = {}
@@ -182,49 +155,6 @@ class PlanningAgent:
 
         return False
 
-    def output_bt(self,behavior_lib=None):
-        anytree_root = AnyTreeNode(NODE_TYPE.selector)
-        stack = []
-        # add goal conditions into root
-        self.add_conditions(self.goal_condition,anytree_root)
-        for children in self.goal_condition.children:
-            children.parent = anytree_root
-            stack.append(children)
-
-        while stack != []:
-            current_condition = stack.pop(0)
-
-            # create a sequence node and its condition-action pair
-            sequence_node = AnyTreeNode(NODE_TYPE.sequence)
-            if current_condition.children == []:
-                condition_parent = sequence_node
-            else:
-                condition_parent = AnyTreeNode(NODE_TYPE.selector)
-                sequence_node.add_child(condition_parent)
-                # add children into stack
-                for children in current_condition.children:
-                    children.parent = condition_parent
-                    stack.append(children)
-            # add condition
-            self.add_conditions(current_condition,condition_parent)
-            # add action
-            cls_name, args = parse_predicate_logic(current_condition.action)
-            action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
-
-            # add the sequence node into its parent
-            if current_condition.children == [] and len(current_condition.condition_set) == 0:
-                current_condition.parent.add_child(action_node)
-            else:
-                sequence_node.add_child(action_node)
-                current_condition.parent.add_child(sequence_node)
-
-        btml = BTML()
-        btml.bt_root = anytree_root
-
-        bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
-
-        return bt
-
 
     def add_conditions(self,planning_condition,parent):
         condition_set = planning_condition.condition_set
@@ -246,20 +176,22 @@ class PlanningAgent:
 
             parent.add_child(composite_condition)
 
-class IABTP:
-    def __init__(self,verbose=False):
-        self.planned_agent_list = None
-        self.verbose = verbose
+class IABTP(MABTP):
+
+    def __init__(self, verbose=False, output_active_tree_only=False, start = None):
+        super().__init__(verbose)
+        self.output_active_tree_only = output_active_tree_only
+        self.start = start
 
     def planning(self, goal, action_lists,precondition=None):
-
         # If the plan conflicts with the precondition, it is considered a conflict
         self.precondition = precondition
 
         planning_agent_list = []
+        # When there is only one agent, action_lists contain all the actions of that single agent.
         for id,action_list in enumerate(action_lists):
 
-            agent = PlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition)
+            agent = IAPlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition, start = self.start)
             if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
             planning_agent_list.append(agent)
 
@@ -272,11 +204,3 @@ class IABTP:
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
         self.planned_agent_list = planning_agent_list
-
-
-    def output_bt_list(self,behavior_libs):
-        bt_list = []
-        for i,agent in enumerate(self.planned_agent_list):
-            bt = agent.output_bt(behavior_libs[i])
-            bt_list.append(bt)
-        return bt_list

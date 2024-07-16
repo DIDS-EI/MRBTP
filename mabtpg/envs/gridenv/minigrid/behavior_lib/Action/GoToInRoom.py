@@ -70,8 +70,8 @@ class GoToInRoom(Action):
                 goal_direction = self.goal - np.array(self.agent.position)
                 self.agent.action = self.turn_to(goal_direction)
             else:
-                print("obj_id:", self.obj_id, "\t goal:", self.goal, "\t agent.position", self.agent.position)
-                print("goal_direction:",self.goal - np.array(self.agent.position))
+                # print("obj_id:", self.obj_id, "\t goal:", self.goal, "\t agent.position", self.agent.position)
+                # print("goal_direction:",self.goal - np.array(self.agent.position))
                 self.path = None
         else:
             next_direction = self.path[0]
