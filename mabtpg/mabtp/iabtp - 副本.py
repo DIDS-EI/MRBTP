@@ -49,8 +49,7 @@ class PlanningAgent:
                         continue
                     # When planning, directly remove this condition.
                     if self.precondition != None:
-                        if action.pre & self.precondition == set():
-                            premise_condition -= self.precondition
+                        premise_condition -= self.precondition
 
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
@@ -96,7 +95,9 @@ class PlanningAgent:
         holding_state_dic = {}
         empty_hand_dic = {}
         room_state_dic = {}
-        toggle_state_dic={}
+
+        # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
+        toggle_state_dic = {}
 
         for c in premise_condition:
             # 检测 IsNear 模式
@@ -158,7 +159,6 @@ class PlanningAgent:
                         return True
                 else:
                     room_state_dic[entity_id] = room_id
-
 
             # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
             # 检测 IsOpen 和 IsClose 模式
@@ -236,20 +236,17 @@ class PlanningAgent:
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
+                print("condition_node_name:",condition_node_name)
                 cls_name, args = parse_predicate_logic(condition_node_name)
                 sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
 
-            sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
-
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
-
-            parent.add_child(composite_condition)
+            parent.add_child(sequence_node)
 
 class IABTP:
     def __init__(self,verbose=False):
         self.planned_agent_list = None
         self.verbose = verbose
+        self.precondition = None
 
     def planning(self, goal, action_lists,precondition=None):
 
