@@ -127,13 +127,15 @@ class MAGridEnv(MiniGridEnv):
         else:
             raise ValueError(f"Unknown action: {action}")
 
-    def step(self,action=None):
+    def step(self,action=None,num_agent = None):
+        if num_agent is None:
+            num_agent = self.num_agent
         self.step_count += 1
         done = True
         # truncated = False
 
         print("---------")
-        for i in range(self.num_agent):
+        for i in range(num_agent):
             action = self.agents[i].step()
             # 执行单智能体与环境交互
             self.set_focus_agent(self.agents[i])

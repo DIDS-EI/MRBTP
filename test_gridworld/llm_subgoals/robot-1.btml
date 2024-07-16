@@ -1,5 +1,5 @@
 fallback
-    condition IsNear(ball-0,ball-1)
+    condition IsInRoom(ball-0,1)
     sequence
         fallback
             condition IsHolding(agent-1,ball-0) & IsInRoom(agent-1,1)
@@ -18,34 +18,17 @@ fallback
                                             sequence
                                                 condition CanGoTo(ball-0) & IsHolding(agent-1,key-0) & IsInRoom(agent-1,1)
                                                 action PutInRoom(agent-1,key-0,1)
-                                            sequence
-                                                fallback
-                                                    condition CanGoTo(ball-0) & IsHolding(agent-1,ball-1) & IsInRoom(agent-1,1)
-                                                    sequence
-                                                        fallback
-                                                            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,1) & IsNear(agent-1,ball-1)
-                                                            sequence
-                                                                condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsInRoom(agent-1,1)
-                                                                action GoToInRoom(agent-1,ball-1,1)
-                                                        action PickUp(agent-1,ball-1)
-                                                action PutInRoom(agent-1,ball-1,1)
                                         action GoBtwRoom(agent-1,1,0)
                                     sequence
                                         condition CanGoTo(ball-0) & IsHolding(agent-1,key-0) & IsInRoom(agent-1,0)
                                         action PutInRoom(agent-1,key-0,0)
-                                    sequence
-                                        condition CanGoTo(ball-0) & IsHolding(agent-1,ball-1) & IsInRoom(agent-1,0)
-                                        action PutInRoom(agent-1,ball-1,0)
                                 action GoToInRoom(agent-1,ball-0,0)
-                            sequence
-                                condition IsHolding(agent-1,key-0) & IsInRoom(agent-1,0) & IsNear(agent-1,ball-0)
-                                action PutInRoom(agent-1,key-0,0)
                             sequence
                                 condition IsHolding(agent-1,ball-0) & IsInRoom(agent-1,0)
                                 action PutInRoom(agent-1,ball-0,0)
                             sequence
-                                condition IsHolding(agent-1,ball-1) & IsInRoom(agent-1,0) & IsNear(agent-1,ball-0)
-                                action PutInRoom(agent-1,ball-1,0)
+                                condition IsHolding(agent-1,key-0) & IsInRoom(agent-1,0) & IsNear(agent-1,ball-0)
+                                action PutInRoom(agent-1,key-0,0)
                         action PickUp(agent-1,ball-0)
                 action GoBtwRoom(agent-1,0,1)
-        action PutNearInRoom(agent-1,ball-0,ball-1,1)
+        action PutInRoom(agent-1,ball-0,1)

@@ -4,10 +4,11 @@ from minigrid.core.world_object import Ball, Box,Door
 
 from gymnasium.envs.registration import register
 # main cfgs
-num_agent = 2
+num_agent = 1
 
 
-env_id = "MiniGrid-DoorKey-16x16-v0"
+# env_id = "MiniGrid-DoorKey-16x16-v0"  # 最初的，开门拿钥匙放球
+env_id = "MiniGrid-KeyCorridorS6R3-v0"
 
 
 tile_size = 32
@@ -36,12 +37,12 @@ room_index = env.get_room_index((1,2))
 print("room_index:",room_index)
 
 # Place an object in the room with the specified index
-ball = Ball('red')
-env.place_object_in_room(ball,0)
-ball = Ball('grey')
-env.place_object_in_room(ball,1)
-ball = Ball('yellow')
-env.place_object_in_room(ball,0)
+# ball = Ball('red')
+# env.place_object_in_room(ball,0)
+# ball = Ball('grey')
+# env.place_object_in_room(ball,1)
+# ball = Ball('yellow')
+# env.place_object_in_room(ball,0)
 env.reset(seed=0)
 # make the door open
 # for obj in env.obj_list:
@@ -88,10 +89,10 @@ if goal==None:
     # goal = {"IsInRoom(agent-0,1)"}
     # goal = {"IsInRoom(agent-0,1)", "IsInRoom(agent-1,1)"} # ???
 
-    # goal = {"IsHolding(agent-0,ball-0)"}
+    goal = {"IsHolding(agent-0,ball-0)"}
 
     # goal = {"IsInRoom(ball-0,1)"}
-    goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    # goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
     # goal = {"IsNear(agent-0,door-0)"}
     # goal = {"IsNear(agent-0,ball-1)"}
     # goal = {"IsNear(ball-0,ball-1)"}
@@ -107,7 +108,7 @@ print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
 print("BT goal: " + str(goal))
 
-from mabtpg.btp.mabtp import MABTP
+from mabtpg.mabtp.mabtp import MABTP
 
 planning_algorithm = MABTP(verbose = False)
 planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
@@ -117,7 +118,7 @@ for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].save_btml(f"robot-{i}.bt")
 
-    # bt_list[i].draw(file_name=f"agent-{i}")
+    bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

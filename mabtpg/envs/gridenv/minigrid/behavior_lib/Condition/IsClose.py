@@ -23,5 +23,6 @@ class IsClose(Condition):
         if self.obj.is_open:
             return Status.FAILURE
         else:
+            # print("IsClose",self.obj_id)
             return Status.SUCCESS
 
