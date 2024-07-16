@@ -14,6 +14,10 @@ class SelfAcceptTask(Action):
     def update(self) -> Status:
         self.env.comm['task'][self.subgoal] = self.agent.agent_id
 
+        subgoal_set = self.env.comm['subgoal_map'][self.subgoal]
+
         self.agent.planning_for_subgoal(self.subgoal)
 
+        self.env.comm['precondition'].update(subgoal_set)
+        self.agent.subgoal = self.subgoal
         return Status.RUNNING

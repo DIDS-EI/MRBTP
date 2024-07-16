@@ -59,7 +59,7 @@ for door,key in env.door_key_map.items():
 # ============================================================
 action_lists = env.get_action_lists()
 
-from mabtpg.mabtp.iabtp import IABTP
+from mabtpg.btp.iabtp import IABTP
 planning_algorithm = IABTP(verbose = False)
 
 subgoal_ls= [frozenset({"IsOpen(door-0)"}), frozenset({"IsNear(ball-0,ball-1)"})]

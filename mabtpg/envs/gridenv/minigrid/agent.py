@@ -2,7 +2,7 @@ from minigrid.core.actions import Actions
 from mabtpg.behavior_tree.utils import Status
 
 class Agent(object):
-    def __init__(self,env=None,id=1):
+    def __init__(self,env=None,id=0):
         self.env = env
         self.id = id
         self.subgoal = None
@@ -21,22 +21,29 @@ class Agent(object):
 
 
     def planning_for_subgoal(self,subgoal):
-        from mabtpg.mabtp.iabtp import IABTP
-
-        planning_algorithm = IABTP(verbose=False)
+        from mabtpg.btp.pbtp import PBTP
 
         if self.env.action_lists is None:
             self.env.action_lists = self.env.get_action_lists()
 
         subgoal_set = self.env.comm['subgoal_map'][subgoal]
+        precondition = frozenset(self.env.comm['precondition'])
+
+        action_list = self.env.action_lists[self.id]
+
+        planning_algorithm = PBTP(action_list,subgoal_set,verbose=False,precondition=precondition)
+        planning_algorithm.planning()
+        bt = planning_algorithm.output_bt(self.behavior_lib)
+
+        bt.bind_agent(self)
+        self.subtree = bt
+
+        print('-----------------')
+        print(f'{self.agent_id} planning for {subgoal}: {subgoal_set}, output bt:')
+        bt.print()
+        bt.draw(f'{self.agent_id} {subgoal}')
 
 
-        subgoal_ls = [frozenset({"IsOpen(door-0)"}), frozenset({"IsNear(ball-0,ball-1)"})]
-        subgoal_bt_ls = {}
-
-        planning_algorithm.planning(frozenset(subgoal), action_lists=action_lists)
-        bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
-        subgoal_bt_ls[frozenset(subgoal)] = bt_list
 
     @property
     def agent_id(self):
@@ -48,29 +55,8 @@ class Agent(object):
 
     def step(self):
         self.action = Actions.done
-        self.bt.tick()
 
-        bt_output = self.bt.visitor.output_str
-
-        if bt_output != self.last_tick_output:
-            if self.env.print_ticks:
-                # print(f"==== time:s ======")
-
-                print(bt_output)
-
-                # just output action
-                # 分割字符串
-                # parts = bt_output.split("Action", 1)
-                # # 获取 'Action' 后面的内容
-                # if len(parts) > 1:
-                #     bt_output = parts[1].strip()  # 使用 strip() 方法去除可能的前后空格
-                # else:
-                #     bt_output = ""  # 如果 'Action' 不存在于字符串中，则返回空字符串
-                # print("Action ", bt_output)
-                # print("\n")
-
-                self.last_tick_output = bt_output
-
+        self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
 
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action

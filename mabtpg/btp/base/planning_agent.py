@@ -1,4 +1,3 @@
-
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.utils import parse_predicate_logic
 from mabtpg.utils.any_tree_node import AnyTreeNode
@@ -7,24 +6,16 @@ import re
 import mabtpg
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
-
-class PlanningCondition:
-    def __init__(self,condition,action=None):
-        self.condition_set = condition
-        self.action = action
-        self.children = []
-        # for generate bt
-        self.parent_node = None
+from mabtpg.btp.base.planning_condition import PlanningCondition
 
 class PlanningAgent:
-    def __init__(self,action_list,goal,id=None,verbose=False,precondition=None):
+    def __init__(self,action_list,goal,id=None,verbose=False):
         self.id = id
         self.action_list = action_list
         self.expanded_condition_dict = {}
+        self.goal = goal
         self.goal_condition = PlanningCondition(goal)
         self.expanded_condition_dict[goal] = self.goal_condition
-
-        self.precondition = precondition
 
         self.verbose = verbose
 
@@ -43,14 +34,6 @@ class PlanningAgent:
                     # conflict check
                     if self.check_conflict(premise_condition):
                         continue
-
-                    # If the plan conflicts with the precondition, it is considered a conflict
-                    if self.precondition!=None and self.check_conflict(premise_condition|self.precondition):
-                        continue
-                    # When planning, directly remove this condition.
-                    if self.precondition != None:
-                        if action.pre & self.precondition == set():
-                            premise_condition -= self.precondition
 
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
@@ -219,12 +202,11 @@ class PlanningAgent:
                 current_condition.parent.add_child(sequence_node)
 
         btml = BTML()
-        btml.bt_root = anytree_root
+        btml.anytree_root = anytree_root
 
         bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
 
         return bt
-
 
     def add_conditions(self,planning_condition,parent):
         condition_set = planning_condition.condition_set
@@ -240,43 +222,18 @@ class PlanningAgent:
                 sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
 
             sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
+            sub_btml.anytree_root = sequence_node
 
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
+            composite_condition = AnyTreeNode("composite_condition",cls_name=None, info={'sub_btml':sub_btml})
 
             parent.add_child(composite_condition)
 
-class IABTP:
-    def __init__(self,verbose=False):
-        self.planned_agent_list = None
-        self.verbose = verbose
 
-    def planning(self, goal, action_lists,precondition=None):
+    def planning(self):
+        explored_condition_list = [self.goal]
 
-        # If the plan conflicts with the precondition, it is considered a conflict
-        self.precondition = precondition
-
-        planning_agent_list = []
-        for id,action_list in enumerate(action_lists):
-
-            agent = PlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition)
-            if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
-            planning_agent_list.append(agent)
-
-            explored_condition_list = [goal]
-
-            while explored_condition_list != []:
-                condition = explored_condition_list.pop(0)
-                if self.verbose: print_colored(f"C:{condition}","green")
-                premise_condition_list = agent.one_step_expand(condition)
-                explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
-
-        self.planned_agent_list = planning_agent_list
-
-
-    def output_bt_list(self,behavior_libs):
-        bt_list = []
-        for i,agent in enumerate(self.planned_agent_list):
-            bt = agent.output_bt(behavior_libs[i])
-            bt_list.append(bt)
-        return bt_list
+        while explored_condition_list != []:
+            condition = explored_condition_list.pop(0)
+            if self.verbose: print_colored(f"C:{condition}","green")
+            premise_condition_list = self.one_step_expand(condition)
+            explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]

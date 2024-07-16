@@ -20,6 +20,8 @@ base_node_type_map={
     "act": 'Action',
     "action": 'Action',
     "composite_action": 'Action',
+    "sub": 'Action',
+    "subtree": 'Action',
 
     "cond": "Condition",
     "condition": "Condition",

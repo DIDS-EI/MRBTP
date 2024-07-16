@@ -7,6 +7,7 @@ class BTML:
     def __init__(self):
         self.cls_name = None
         self.var_args = ()
+        self.ins_args = ()
 
         self.anytree_root = None
         self.sub_btml_dict = {}
@@ -17,12 +18,10 @@ class BTML:
         new_btml.sub_btml_dict = copy.deepcopy(self.sub_btml_dict)
         return new_btml
 
-    def instantiate(self, arg_dict):
-        if not isinstance(arg_dict,dict):
-            new_arg_dict = {}
-            for i in range(len(self.var_args)):
-                new_arg_dict[self.var_args[i]] = arg_dict[i]
-            arg_dict = new_arg_dict
+    def instantiate(self, args):
+        arg_dict = {}
+        for i in range(len(self.var_args)):
+            arg_dict[self.var_args[i]] = args[i]
 
         def new_func(node):
             new_node = AnyTreeNode(node.node_type,node.cls_name)
@@ -45,6 +44,7 @@ class BTML:
         # traverse_and_modify_tree(self.anytree_root, func)
 
         new_btml = BTML()
+        new_btml.ins_args = args
         new_btml.cls_name = self.cls_name
         new_btml.anytree_root = new_tree
         new_btml.sub_btml_dict = self.sub_btml_dict
