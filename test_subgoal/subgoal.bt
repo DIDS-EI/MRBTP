@@ -1,0 +1,17 @@
+sequence
+    fallback
+        condition IsOpen(door-0)
+        subtree AssignTask(self,subgoal-0)
+    fallback
+        condition IsInRoom(ball-0,1)
+        action AssignTask(self,subgoal-1)
+
+def subtree AssignTask(agent,subgoal):
+    fallback
+        sequence
+            condition IsSelfTask(agent,subgoal)
+            action DoTask(agent,subgoal)
+        condition IsOthersTask(subgoal)
+        sequence
+            condition CanDoTask(agent,subgoal)
+            action SelfAcceptTask(subgoal)

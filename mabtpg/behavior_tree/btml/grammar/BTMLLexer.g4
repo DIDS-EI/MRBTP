@@ -31,7 +31,7 @@ WS              : [ \t]+ -> skip; // Skip whitespace
 SEQUENCE        : 'sequence' | 'seq';
 SELECTOR        : 'fallback' | 'selector' | 'fal' | 'sel';
 PARALLEL        : 'parallel';
-ACT             : 'action' | 'act';
+ACT             : 'action' | 'act' | 'subtree' | 'sub';
 COND            : 'condition' | 'cond';
 NOT             : 'Not';
 

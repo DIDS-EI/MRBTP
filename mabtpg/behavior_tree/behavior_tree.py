@@ -24,11 +24,11 @@ class BehaviorTree(ptree.trees.BehaviourTree):
             btml = load_btml(btml)
 
         self.btml = btml
-        anytree_root = btml.bt_root
-        self.behavior_lib = behavior_lib.clone()
+        anytree_root = btml.anytree_root
+        self.behavior_lib = behavior_lib
 
-        if behavior_lib:
-            self.create_composite_behavior_lib()
+        # if behavior_lib:
+        #     self.create_composite_behavior_lib()
 
         if behavior_lib:
             bt_root = new_tree_like(anytree_root, self.new_node_with_lib)
@@ -49,7 +49,11 @@ class BehaviorTree(ptree.trees.BehaviourTree):
 
             composite_cls = type(cls_name, (node_type,), {})
 
-            composite_cls.subtree_func = lambda _: BehaviorTree(sub_btml,self.behavior_lib)
+            def subtree_func(s):
+                ins_btml = s.instantiate_subtree(sub_btml)
+                return BehaviorTree(ins_btml,self.behavior_lib)
+
+            composite_cls.subtree_func = subtree_func
 
             super_type = base_node_type_map[node.node_type]
             if cls_name in self.behavior_lib[super_type]:
@@ -85,23 +89,33 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     def new_node_with_lib(self, node):
         if node.node_type in control_node_map.keys():
             node_type = control_node_map[node.node_type]
-            return node_type(memory=False)
+            return node_type()
         elif node.node_type in base_node_type_map.keys():
             node_type = base_node_type_map[node.node_type]
             cls_name = node.cls_name
-            return self.behavior_lib[node_type][cls_name](*node.args)
+            if cls_name in self.btml.sub_btml_dict:
+                sub_btml = self.btml.sub_btml_dict[cls_name]
+                ins_btml = sub_btml.instantiate(node.args)
+                # create nodes by anytree
+                node_type = composite_node_map[node.node_type]
+                bt_node = type(cls_name, (node_type,), {})(*node.args)
+                bt_node.subtree = BehaviorTree(ins_btml, self.behavior_lib)
+                return bt_node
+            else:
+                return self.behavior_lib[node_type][cls_name](*node.args)
         else:
             node_type = composite_node_map[node.node_type]
             cls_name = node.cls_name
-            if cls_name:
-            # def composite
-                def_composite = self.btml.composite_behavior_lib[cls_name]
-                subtree_root = def_composite.args
-            else:
+            # if cls_name:
+            # # def composite
+            #     def_composite = self.btml.composite_behavior_lib[cls_name]
+            #     subtree_root = def_composite.args
+            # else:
             # inline composite
-                subtree_root = node.args
+            assert cls_name is None, "expecting an inline composite condition."
+            subtree_root = node.info["sub_btml"]
 
-            subtree_btml = self.btml.clone_with_new_root(subtree_root.bt_root)
+            subtree_btml = self.btml.clone_with_new_root(subtree_root.anytree_root)
             sub_tree = BehaviorTree(subtree_btml,self.behavior_lib)
 
             return node_type(cls_name,sub_tree)

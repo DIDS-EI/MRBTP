@@ -57,10 +57,11 @@ class BTMLListener(BTMLParserListener):
                 if str(i) != ',':
                     args.append(f"{i}")
 
-        node = AnyTreeNode(node_type, cls_name, args)
-        def_btml.anytree = node
-
-        self.btml.composite_btml_list.append(def_btml)
+        # node = AnyTreeNode(node_type, cls_name, args)
+        # node = AnyTreeNode('composite_action', cls_name, args)
+        def_btml.cls_name = cls_name
+        def_btml.var_args = args
+        self.btml.sub_btml_dict[cls_name] = def_btml
         self.current_tree = def_btml
         self.stack = []
 
@@ -82,7 +83,7 @@ class BTMLListener(BTMLParserListener):
             child = self.stack.pop()
             self.stack[-1].add_child(child)
         else:
-            self.current_tree.bt_root = self.stack[0]
+            self.current_tree.anytree_root = self.stack[0]
 
 
     # Enter a parse tree produced by BTMLParser#Behavior_sign.
@@ -113,9 +114,9 @@ class BTMLListener(BTMLParserListener):
             sequence_node.add_children(node_list)
 
             sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
+            sub_btml.anytree_root = sequence_node
 
-            self.stack[-1].add_child(AnyTreeNode("composite_condition",cls_name=None, args=sub_btml))
+            self.stack[-1].add_child(AnyTreeNode("composite_condition",cls_name=None, info={"sub_btml":sub_btml}))
         else:
             self.stack[-1].add_child(node_list[0])
 

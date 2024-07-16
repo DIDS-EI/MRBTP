@@ -1,11 +1,22 @@
-
+import copy
 
 class AnyTreeNode:
-    def __init__(self, node_type, cls_name=None,args=(),children=()):
+    def __init__(self, node_type, cls_name=None,args=(),children=(),info={}):
         self.node_type = node_type
         self.cls_name = cls_name
         self.args = args
         self.children = list(children)
+        self.info = info
+
+    @property
+    def print_name(self):
+        return f"{self.node_type} {self.cls_name}({','.join(self.args)})"
+
+    def print(self):
+        print_tree_from_root(self)
+
+    def clone_self(self):
+        return copy.deepcopy(self)
 
     def add_child(self,child):
         self.children.append(child)
@@ -44,6 +55,22 @@ def traverse_and_modify_tree(root,func):
         node = stack.pop()
         func(node)
         stack.extend(node.children)
+
+
+
+def print_tree_from_root(node, indent=0):
+    """
+    Recursively prints the tree, each child with increased indentation.
+
+    :param node: The current tree node to print.
+    :param indent: The number of '\t' to prefix the line with.
+    """
+    # 打印当前节点，增加缩进来表示层级
+    print(f"{'    ' * indent}{node.print_name}")
+    # 如果该节点有子节点，递归打印子节点
+    if hasattr(node, "children"):
+        for child in node.children:
+            print_tree_from_root(child, indent + 1)
 
 
 def print_tree(root):

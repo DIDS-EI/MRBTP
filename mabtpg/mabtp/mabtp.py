@@ -187,7 +187,7 @@ class PlanningAgent:
                 current_condition.parent.add_child(sequence_node)
 
         btml = BTML()
-        btml.bt_root = anytree_root
+        btml.anytree_root = anytree_root
 
         bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
 
@@ -208,7 +208,7 @@ class PlanningAgent:
                 sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
 
             sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
+            sub_btml.anytree_root = sequence_node
 
             composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
 

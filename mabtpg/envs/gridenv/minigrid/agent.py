@@ -5,6 +5,9 @@ class Agent(object):
     def __init__(self,env=None,id=1):
         self.env = env
         self.id = id
+        self.subgoal = None
+        self.subtree = None
+
         self.behavior_lib = None
 
         self.action = Actions.done
@@ -15,6 +18,29 @@ class Agent(object):
         self.carrying = None
 
         self.last_tick_output = None
+
+
+    def planning_for_subgoal(self,subgoal):
+        from mabtpg.mabtp.iabtp import IABTP
+
+        planning_algorithm = IABTP(verbose=False)
+
+        if self.env.action_lists is None:
+            self.env.action_lists = self.env.get_action_lists()
+
+        subgoal_set = self.env.comm['subgoal_map'][subgoal]
+
+
+        subgoal_ls = [frozenset({"IsOpen(door-0)"}), frozenset({"IsNear(ball-0,ball-1)"})]
+        subgoal_bt_ls = {}
+
+        planning_algorithm.planning(frozenset(subgoal), action_lists=action_lists)
+        bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
+        subgoal_bt_ls[frozenset(subgoal)] = bt_list
+
+    @property
+    def agent_id(self):
+        return f'agent-{self.id}'
 
     def bind_bt(self,bt):
         self.bt = bt

@@ -4,11 +4,11 @@ from mabtpg.behavior_tree.base_nodes.Action import Action
 class CompositeAction(Action):
     print_name_prefix = "action "
     type = 'Action'
-    subtree_func = None
 
     def __init__(self,*args):
-        self.subtree = self.subtree_func()
+        self.args = args
         super().__init__(*args)
+        self.subtree = None
 
 
     def bind_agent(self,agent):
@@ -20,3 +20,4 @@ class CompositeAction(Action):
     def update(self) -> Status:
         self.subtree.tick()
         return self.subtree.root.status
+

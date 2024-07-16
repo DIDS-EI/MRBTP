@@ -7,8 +7,8 @@ class Fallback(ptree.composites.Selector):
     type = "Fallback"
     is_composite = True
 
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,name = "Fallback", **kwargs)
+    def __init__(self,memory=False):
+        super().__init__(memory = memory,name = "Fallback")
 
     def bind_agent(self,agent):
         pass

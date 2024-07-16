@@ -2,6 +2,7 @@ import os
 from mabtpg.utils import ROOT_PATH
 import importlib.util
 import copy
+from mabtpg.behavior_tree.base_nodes import Action,Condition
 
 def get_classes_from_folder(folder_path):
     cls_dict = {}
@@ -35,10 +36,23 @@ class BehaviorLibrary(dict):
         return copy.deepcopy(self)
 
     def load_from_btml(self, lib_path):
-        type_list = ["Action", "Condition"]
-        for type in type_list:
-            path = os.path.join(lib_path, type)
-            self[type] = get_classes_from_folder(path)
+        # type_list = ["Action", "Condition"]
+        self['Action'] = {}
+        self['Condition'] = {}
+
+        folder_list = os.listdir(lib_path)
+
+        for folder_name in folder_list:
+            path = os.path.join(lib_path, folder_name)
+            if os.path.isfile(path): continue
+            # self[type] = get_classes_from_folder(path)
+            for name,cls in get_classes_from_folder(path).items():
+                if issubclass(cls,Action):
+                    self['Action'][name] = cls
+                elif issubclass(cls,Condition):
+                    self['Condition'][name] = cls
+                else:
+                    raise TypeError(name + ' is not Action or Condition.')
 
     def load_from_dict(self, lib_dict):
         for node_type, node_list in lib_dict.items():

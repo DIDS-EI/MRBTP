@@ -35,6 +35,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         minigrid_env.reset()
         self.minigrid_env = minigrid_env
 
+        self.actions_lists = None
 
 
         # self.instrs = minigrid_env.instrs
