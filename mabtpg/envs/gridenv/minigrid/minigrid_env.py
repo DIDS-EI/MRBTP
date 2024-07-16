@@ -370,6 +370,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         return action_list
 
     def get_initial_state(self):
+        agent = self.agents[0]
 
         states_ls = set()
         for act_ls in self.action_list:
@@ -393,19 +394,24 @@ class MiniGridToMAGridEnv(MAGridEnv):
         behavior_lib = BehaviorLibrary(behavior_lib_path)
         start = copy.deepcopy(states_ls)
         for state in states_ls:
-            anytree_root = AnyTreeNode(NODE_TYPE.selector)
+
             cls_name, args = parse_predicate_logic(state)
-            anytree_root.add_child(AnyTreeNode(NODE_TYPE.condition, cls_name, args))
-            btml = BTML()
-            btml.bt_root = anytree_root
-            bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
-            # bt.tick()
-            self.agents[0].bind_bt(bt)
-            self.print_ticks = False
-            obs,done,_,_ = self.step(num_agent=1)
-            if bt.root.status == Status.FAILURE:
+            condition_node = behavior_lib["Condition"][cls_name](*args)
+            condition_node.bind_agent(agent)
+            status = condition_node.update()
+            if status == Status.FAILURE:
                 start -= {state}
-                print(state)
+            # anytree_root.add_child(AnyTreeNode(NODE_TYPE.condition, cls_name, args))
+            # btml = BTML()
+            # btml.bt_root = anytree_root
+            # bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
+            # # bt.tick()
+            # self.agents[0].bind_bt(bt)
+            # self.print_ticks = False
+            # obs,done,_,_ = self.step(num_agent=1)
+            # if bt.root.status == Status.FAILURE:
+            #     start -= {state}
+        # print(start)
         return start
 
 

@@ -104,7 +104,7 @@ print(start)
 
 
 
-from mabtpg.mabtp.iabtp import IABTP
+from mabtpg.btp.iabtp import IABTP
 planning_algorithm = IABTP(verbose = False)
 
 # goal = {"IsInRoom(ball-0,6)"}
