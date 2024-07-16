@@ -18,6 +18,7 @@ class CompositeAction(Action):
 
 
     def update(self) -> Status:
-        self.subtree.tick()
+        self.subtree.tick(verbose=True)
+
         return self.subtree.root.status
 

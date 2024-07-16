@@ -97,7 +97,7 @@ print("\n" + "-" * 10 + " get BT planning goal " + "-" * 10)
 print("mission: " + env.mission)
 print("BT goal: " + str(goal))
 
-from mabtpg.mabtp.mabtp import MABTP
+from mabtpg.btp.mabtp import MABTP
 
 planning_algorithm = MABTP(verbose = False)
 planning_algorithm.planning(frozenset(goal),action_lists=action_lists)

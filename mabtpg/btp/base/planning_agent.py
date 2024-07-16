@@ -1,4 +1,3 @@
-
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.utils import parse_predicate_logic
 from mabtpg.utils.any_tree_node import AnyTreeNode
@@ -7,15 +6,18 @@ import re
 import mabtpg
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
+from mabtpg.btp.base.planning_condition import PlanningCondition
 
-from mabtpg.mabtp.mabtp import PlanningCondition,PlanningAgent,MABTP
+class PlanningAgent:
+    def __init__(self,action_list,goal,id=None,verbose=False):
+        self.id = id
+        self.action_list = action_list
+        self.expanded_condition_dict = {}
+        self.goal = goal
+        self.goal_condition = PlanningCondition(goal)
+        self.expanded_condition_dict[goal] = self.goal_condition
 
-
-class IAPlanningAgent(PlanningAgent):
-    def __init__(self, action_list, goal, id=None, verbose=False, precondition=None,start = None):
-        super().__init__(action_list, goal, id, verbose)
-        self.precondition = precondition
-        self.start = start
+        self.verbose = verbose
 
     def one_step_expand(self, condition):
 
@@ -33,14 +35,6 @@ class IAPlanningAgent(PlanningAgent):
                     if self.check_conflict(premise_condition):
                         continue
 
-                    # If the plan conflicts with the precondition, it is considered a conflict
-                    if self.precondition!=None and self.check_conflict(premise_condition|self.precondition):
-                        continue
-                    # When planning, directly remove this condition.
-                    if self.precondition != None:
-                        if action.pre & self.precondition == set():
-                            premise_condition -= self.precondition
-
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
@@ -52,10 +46,6 @@ class IAPlanningAgent(PlanningAgent):
                             print_colored(f'outside','purple')
                         print_colored(f'a:{action.name} \t c_attr:{premise_condition}','orange')
 
-                    # If the initial state satisfies the current state, stop the search.
-                    if self.start!=None and self.start>=planning_condition:
-                        break
-
         # insert premise conditions into BT
         if inside_condition:
             self.inside_expand(inside_condition, premise_condition_list)
@@ -63,6 +53,26 @@ class IAPlanningAgent(PlanningAgent):
             self.outside_expand(premise_condition_list)
 
         return premise_condition_list
+
+    # check if `condition` is the consequence of `action`
+    def is_consequence(self,condition,action):
+        if condition & ((action.pre | action.add) - action.del_set) <= set():
+            return False
+        if (condition - action.del_set) != condition:
+            return False
+        return True
+
+    def has_no_subset(self, condition):
+        for expanded_condition in self.expanded_condition_dict:
+            if expanded_condition <= condition:
+                return False
+        return True
+
+    def inside_expand(self,inside_condition, premise_condition_list):
+        inside_condition.children += premise_condition_list
+
+    def outside_expand(self,premise_condition_list):
+        self.goal_condition.children += premise_condition_list
 
     def check_conflict(self, premise_condition):
         near_state_dic = {}
@@ -155,6 +165,48 @@ class IAPlanningAgent(PlanningAgent):
 
         return False
 
+    def output_bt(self,behavior_lib=None):
+        anytree_root = AnyTreeNode(NODE_TYPE.selector)
+        stack = []
+        # add goal conditions into root
+        self.add_conditions(self.goal_condition,anytree_root)
+        for children in self.goal_condition.children:
+            children.parent = anytree_root
+            stack.append(children)
+
+        while stack != []:
+            current_condition = stack.pop(0)
+
+            # create a sequence node and its condition-action pair
+            sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+            if current_condition.children == []:
+                condition_parent = sequence_node
+            else:
+                condition_parent = AnyTreeNode(NODE_TYPE.selector)
+                sequence_node.add_child(condition_parent)
+                # add children into stack
+                for children in current_condition.children:
+                    children.parent = condition_parent
+                    stack.append(children)
+            # add condition
+            self.add_conditions(current_condition,condition_parent)
+            # add action
+            cls_name, args = parse_predicate_logic(current_condition.action)
+            action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+
+            # add the sequence node into its parent
+            if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                current_condition.parent.add_child(action_node)
+            else:
+                sequence_node.add_child(action_node)
+                current_condition.parent.add_child(sequence_node)
+
+        btml = BTML()
+        btml.anytree_root = anytree_root
+
+        bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
+
+        return bt
 
     def add_conditions(self,planning_condition,parent):
         condition_set = planning_condition.condition_set
@@ -170,37 +222,18 @@ class IAPlanningAgent(PlanningAgent):
                 sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
 
             sub_btml = BTML()
-            sub_btml.bt_root = sequence_node
+            sub_btml.anytree_root = sequence_node
 
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
+            composite_condition = AnyTreeNode("composite_condition",cls_name=None, info={'sub_btml':sub_btml})
 
             parent.add_child(composite_condition)
 
-class IABTP(MABTP):
 
-    def __init__(self, verbose=False, output_active_tree_only=False, start = None):
-        super().__init__(verbose)
-        self.output_active_tree_only = output_active_tree_only
-        self.start = start
+    def planning(self):
+        explored_condition_list = [self.goal]
 
-    def planning(self, goal, action_lists,precondition=None):
-        # If the plan conflicts with the precondition, it is considered a conflict
-        self.precondition = precondition
-
-        planning_agent_list = []
-        # When there is only one agent, action_lists contain all the actions of that single agent.
-        for id,action_list in enumerate(action_lists):
-
-            agent = IAPlanningAgent(action_list,goal,id,self.verbose,precondition = self.precondition, start = self.start)
-            if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
-            planning_agent_list.append(agent)
-
-            explored_condition_list = [goal]
-
-            while explored_condition_list != []:
-                condition = explored_condition_list.pop(0)
-                if self.verbose: print_colored(f"C:{condition}","green")
-                premise_condition_list = agent.one_step_expand(condition)
-                explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
-
-        self.planned_agent_list = planning_agent_list
+        while explored_condition_list != []:
+            condition = explored_condition_list.pop(0)
+            if self.verbose: print_colored(f"C:{condition}","green")
+            premise_condition_list = self.one_step_expand(condition)
+            explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]

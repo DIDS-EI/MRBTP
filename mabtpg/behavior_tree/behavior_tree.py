@@ -40,6 +40,30 @@ class BehaviorTree(ptree.trees.BehaviourTree):
         self.visitor = StatusVisitor()
         self.visitors.append(self.visitor)
 
+        self.last_tick_output = None
+
+        self.agent = None
+        self.env = None
+
+    def tick(self,verbose=False,bt_name=None):
+        super().tick()
+        if verbose:
+            if bt_name is None:
+                bt_name = f"{self.btml.cls_name}({','.join(self.btml.ins_args)}"
+            bt_output = self.visitor.output_str
+
+            if bt_output != self.last_tick_output:
+                if self.env.print_ticks:
+                    print(f"----- tick verbose for {bt_name} ------")
+
+                    lines = bt_output.splitlines()
+                    for line in lines:
+                        if line.startswith(('condition','action')):
+                            print(line)
+
+                    print()
+                    self.last_tick_output = bt_output
+
     def create_composite_behavior_lib(self):
         for sub_btml in self.btml.composite_btml_list:
             node = sub_btml.anytree
@@ -122,6 +146,9 @@ class BehaviorTree(ptree.trees.BehaviourTree):
 
 
     def bind_agent(self, agent):
+        self.agent = agent
+        self.env = agent.env
+
         def func(node):
             node.bind_agent(agent)
 

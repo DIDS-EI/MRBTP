@@ -3,7 +3,7 @@ import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
 from minigrid.core.world_object import Ball, Box,Door
 from mabtpg.utils import get_root_path
-from mabtpg import BehaviorLibrary
+from mabtpg import BehaviorTree, BehaviorLibrary
 root_path = get_root_path()
 
 
@@ -57,43 +57,47 @@ for door,key in env.door_key_map.items():
 
 
 # ============================================================
-action_lists = env.get_action_lists()
-
-from mabtpg.mabtp.iabtp import IABTP
-planning_algorithm = IABTP(verbose = False)
-
-subgoal_ls= [frozenset({"IsOpen(door-0)"}), frozenset({"IsNear(ball-0,ball-1)"})]
-subgoal_bt_ls = {}
-
-subgoal = subgoal_ls[0]
-planning_algorithm.planning(frozenset(subgoal),action_lists=action_lists)
-bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
-subgoal_bt_ls[frozenset(subgoal)] = bt_list
-
-
-
-# When planning, directly remove this condition.
-subgoal =  subgoal_ls[1]
-# precondition = {"IsOpen(door-0)"}
-precondition= None
-planning_algorithm.planning(frozenset(subgoal),action_lists=action_lists ) #precondition=frozenset(precondition)
-bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
-subgoal_bt_ls[frozenset(subgoal)] = bt_list
-
-
-# bind the behavior tree to agents
-# 第一个智能体绑定完成第一个子目标的行为树
-env.agents[0].bind_bt(subgoal_bt_ls[frozenset(subgoal_ls[0])][0])
-# 第二个智能体绑定完成第二个子目标的行为树
-env.agents[1].bind_bt(subgoal_bt_ls[frozenset(subgoal_ls[1])][1])
+env.action_lists = env.get_action_lists()
 
 
 # 输出并保存行为树
 for i in range(env.num_agent):
-    print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
-    bt_list = subgoal_bt_ls[frozenset(subgoal_ls[0])] if i == 0 else subgoal_bt_ls[frozenset(subgoal_ls[1])]
-    bt_list[i].save_btml(f"robot-{i}.btml")
-    bt_list[i].draw(file_name=f"agent-{i}")
+    bt = BehaviorTree('subgoal.bt',behavior_lib=behavior_lib)
+    env.agents[i].bind_bt(bt)
+
+print('------- subgoal tree for agent-0  ---------')
+env.agents[0].bt.print()
+
+env.comm['subgoal_map'] = {
+    'subgoal-0': frozenset({"IsOpen(door-0)"}),
+    'subgoal-1': frozenset({"IsNear(ball-0,ball-1)"}),
+}
+
+env.comm['precondition'] = set()
+
+
+# # When planning, directly remove this condition.
+# subgoal =  subgoal_ls[1]
+# # precondition = {"IsOpen(door-0)"}
+# precondition= None
+# planning_algorithm.planning(frozenset(subgoal),action_lists=action_lists ) #precondition=frozenset(precondition)
+# bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
+# subgoal_bt_ls[frozenset(subgoal)] = bt_list
+#
+#
+# # bind the behavior tree to agents
+# # 第一个智能体绑定完成第一个子目标的行为树
+# env.agents[0].bind_bt(subgoal_bt_ls[frozenset(subgoal_ls[0])][0])
+# # 第二个智能体绑定完成第二个子目标的行为树
+# env.agents[1].bind_bt(subgoal_bt_ls[frozenset(subgoal_ls[1])][1])
+#
+#
+# # 输出并保存行为树
+# for i in range(env.num_agent):
+#     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
+#     bt_list = subgoal_bt_ls[frozenset(subgoal_ls[0])] if i == 0 else subgoal_bt_ls[frozenset(subgoal_ls[1])]
+#     bt_list[i].save_btml(f"robot-{i}.btml")
+#     bt_list[i].draw(file_name=f"agent-{i}")
 
 
 # run env

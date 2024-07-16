@@ -24,7 +24,9 @@ class MAGridEnv(MiniGridEnv):
         self.agent_pos = (-1, -1)
         self.agent_dir = -1
         self.num_agent = num_agent
-
+        self.comm = {
+            'task': {}
+        }
         self.agents = [Agent(self,i) for i in range(num_agent)]
 
 
