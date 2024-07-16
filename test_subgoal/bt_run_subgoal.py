@@ -28,11 +28,13 @@ env.reset(seed=0)
 # add objs
 ball = Ball('red')
 env.place_object_in_room(ball,0)
+ball = Ball('green')
+env.place_object_in_room(ball,0)
 ball = Ball('yellow')
 env.place_object_in_room(ball,1)
 env.reset(seed=0)
 
-goal = {"IsInRoom(ball-0,1)"}
+goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
 # goal = "IsNear(ball-0,ball-1)"
 
 
@@ -65,12 +67,16 @@ for i in range(env.num_agent):
     bt = BehaviorTree('subgoal.bt',behavior_lib=behavior_lib)
     env.agents[i].bind_bt(bt)
 
+
+
 print('------- subgoal tree for agent-0  ---------')
 env.agents[0].bt.print()
+env.agents[0].bt.draw()
 
 env.comm['subgoal_map'] = {
     'subgoal-0': frozenset({"IsOpen(door-0)"}),
-    'subgoal-1': frozenset({"IsNear(ball-0,ball-1)"}),
+    'subgoal-1': frozenset({"IsNear(ball-0,ball-2)"}),
+    'subgoal-2': frozenset({"IsNear(ball-1,ball-2)"}),
 }
 
 env.comm['precondition'] = set()

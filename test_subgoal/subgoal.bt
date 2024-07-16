@@ -3,8 +3,12 @@ sequence
         condition IsOpen(door-0)
         subtree SelfAssignTask(subgoal-0)
     fallback
-        condition IsInRoom(ball-0,1)
+        condition IsNear(ball-0,ball-2)
         action SelfAssignTask(subgoal-1)
+    fallback
+        condition IsNear(ball-1,ball-2)
+        action SelfAssignTask(subgoal-2)
+
 
 def subtree SelfAssignTask(subgoal):
     fallback
