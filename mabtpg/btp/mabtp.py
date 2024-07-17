@@ -193,7 +193,6 @@ class PlanningAgent:
 
         return bt
 
-
     def add_conditions(self,planning_condition,parent):
         condition_set = planning_condition.condition_set
         if len(condition_set) == 0: return
@@ -210,9 +209,10 @@ class PlanningAgent:
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
 
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, args=sub_btml)
+            composite_condition = AnyTreeNode("composite_condition",cls_name=None, info={'sub_btml':sub_btml})
 
             parent.add_child(composite_condition)
+
 
 class MABTP:
     def __init__(self,verbose=False):
