@@ -56,7 +56,7 @@ class GoToInRoom(Action):
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
             self.goal = list(self.env.id2obj[self.obj_id].cur_pos)
-            # print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
+            print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
 
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 

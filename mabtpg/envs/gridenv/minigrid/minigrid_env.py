@@ -1,5 +1,6 @@
 import random
 import io
+import itertools
 from mabtpg.envs.gridenv.minigrid.magrid_env import MAGridEnv
 from mabtpg.envs.gridenv.minigrid.magrid import MAGrid
 
@@ -342,7 +343,7 @@ class MiniGridToMAGridEnv(MAGridEnv):
         return can_goto, can_pickup, can_toggle
 
 
-    def get_action_lists(self):
+    def get_action_lists(self,centralize=False):
 
         self.get_objects_lists()
         self.doors_to_adj_rooms,self.adj_rooms_to_doors = self.get_adjacent_rooms_and_doors()
@@ -366,7 +367,10 @@ class MiniGridToMAGridEnv(MAGridEnv):
                 print(a.name)
                 # print(a.name,"pre:",a.pre)
 
-        self.action_list = action_list
+        if centralize:
+            self.action_list = list(itertools.chain(*action_list)) #flattened_list
+        else:
+            self.action_list = action_list
         return action_list
 
     def get_initial_state(self):

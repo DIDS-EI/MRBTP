@@ -90,8 +90,8 @@ if goal==None:
 
     # goal = {"IsHolding(agent-0,ball-0)"}
 
-    # goal = {"IsInRoom(ball-0,1)"}
-    goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    goal = {"IsInRoom(ball-0,1)"}
+    # goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
     # goal = {"IsNear(agent-0,door-0)"}
     # goal = {"IsNear(agent-0,ball-1)"}
     # goal = {"IsNear(ball-0,ball-1)"}
