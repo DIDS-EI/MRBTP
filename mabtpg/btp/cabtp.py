@@ -10,12 +10,16 @@ from mabtpg.behavior_tree import BTML
 
 from mabtpg.btp.base import PlanningCondition, PlanningAgent
 
-class SubPBTP(PlanningAgent):
-    '''Behavior Tree Planning with Precondition'''
-    def __init__(self,action_list,goal,id=None,verbose=False,precondition=None):
+class CABTP(PlanningAgent):
+    '''Composition Action Behavior Tree Planning '''
+    def __init__(self,action_list,goal,sub_act_ls,id=None,verbose=False):
         super().__init__(action_list,goal,id,verbose)
 
-        self.precondition = precondition
+        reversed(sub_act_ls)
+        self.sub_act_ls = sub_act_ls
+        self.sub_act_index = len(sub_act_ls) - 1
+
+        self.collect_explored_cond_act = []
 
     def one_step_expand(self, condition):
 
@@ -33,17 +37,20 @@ class SubPBTP(PlanningAgent):
                     if self.check_conflict(premise_condition):
                         continue
 
-                    # If the plan conflicts with the precondition, it is considered a conflict
-                    if self.precondition != None and self.check_conflict(premise_condition | self.precondition):
+                    # Ensures sequential expansion of actions in sub-action sequences
+                    if self.sub_act_ls[self.sub_act_index] not in action.name:
                         continue
-                    # When planning, directly remove this condition.
-                    if self.precondition != None:
-                        if action.pre & self.precondition == set():
-                            premise_condition -= self.precondition
+                    self.sub_act_index -= 1
 
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
+
+                    # collcet
+                    self.collect_explored_cond_act.append((premise_condition,action))
+
+                    if self.sub_act_index < 0:
+                        break
 
                     if self.verbose:
                         if inside_condition:

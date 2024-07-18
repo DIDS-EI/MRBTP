@@ -7,7 +7,7 @@ from mabtpg import BehaviorTree, BehaviorLibrary
 root_path = get_root_path()
 
 
-num_agent = 2
+num_agent = 1
 env_id = "MiniGrid-DoorKey-16x16-v0"
 tile_size = 32
 agent_view_size =7

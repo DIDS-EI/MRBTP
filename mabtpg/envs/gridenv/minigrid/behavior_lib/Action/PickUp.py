@@ -26,7 +26,7 @@ class PickUp(Action):
             action_model = {}
 
             room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
-            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})",f"IsHandEmpty(agent-{agent.id})",f"IsInRoom(agent-{agent.id},{room_index})"}
+            action_model["pre"]= {f"IsNear(agent-{agent.id},{obj_id})",f"IsHandEmpty(agent-{agent.id})",f"IsInRoom(agent-{agent.id},room-{room_index})"}
             action_model["add"]={f"IsHolding(agent-{agent.id},{obj_id})"}
 
             # get key that open one door
@@ -35,7 +35,7 @@ class PickUp(Action):
                 action_model["add"] |= {f"CanOpen(agent-{agent.id},{door_id})"} # |
 
             action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})",f"CanGoTo({obj_id})",f"IsNear(agent-{agent.id},{obj_id})"}
-            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != room_index}
+            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_index}
             # delete all obj in hand
             action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list if obj.id != obj_id}
 

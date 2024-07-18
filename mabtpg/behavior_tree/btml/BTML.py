@@ -21,12 +21,14 @@ class BTML:
     def instantiate(self, args):
         arg_dict = {}
         for i in range(len(self.var_args)):
+            # print("self.var_args[i]:",self.var_args)
             arg_dict[self.var_args[i]] = args[i]
 
         def new_func(node):
             new_node = AnyTreeNode(node.node_type,node.cls_name)
             arg_list = []
             for i in range(len(node.args)):
+                # print("node.args[i]",node.args)
                 arg = node.args[i]
                 if arg in arg_dict:
                     arg_list.append(arg_dict[arg])

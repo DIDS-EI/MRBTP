@@ -43,14 +43,14 @@ class GoToInRoom(Action):
     @classmethod
     def create_action(cls, agent_id, target_id, room_index, can_goto, room_num):
         action_model = {
-            "pre": {f"CanGoTo({target_id})", f"IsInRoom(agent-{agent_id},{room_index})"},
+            "pre": {f"CanGoTo({target_id})", f"IsInRoom(agent-{agent_id},room-{room_index})"},
             "add": {f"IsNear(agent-{agent_id},{target_id})"},
             "del_set": {f'IsNear(agent-{agent_id},{obj})' for obj in can_goto if obj != target_id},
             "cost": 1
         }
         action_model["del_set"].update(
-            {f'IsInRoom(agent-{agent_id},{rid})' for rid in range(room_num) if rid != room_index})
-        return PlanningAction(f"GoToInRoom(agent-{agent_id},{target_id},{room_index})", **action_model)
+            {f'IsInRoom(agent-{agent_id},room-{rid})' for rid in range(room_num) if rid != room_index})
+        return PlanningAction(f"GoToInRoom(agent-{agent_id},{target_id},room-{room_index})", **action_model)
 
     
 

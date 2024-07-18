@@ -17,12 +17,14 @@ base_node_map = {
 }
 
 base_node_type_map={
+    "Action": 'Action',
     "act": 'Action',
     "action": 'Action',
     "composite_action": 'Action',
     "sub": 'Action',
     "subtree": 'Action',
 
+    "Condition": "Condition",
     "cond": "Condition",
     "condition": "Condition",
 }
@@ -36,11 +38,13 @@ control_node_map = {
 
 
 composite_node_map = {
+
     "act": CompositeAction,
     "action": CompositeAction,
     "composite_action": CompositeAction,
     "sub": CompositeAction,
     "subtree": CompositeAction,
+
 
     "cond" : CompositeCondition,
     "condition" : CompositeCondition,
