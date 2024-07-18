@@ -60,3 +60,32 @@ for door,key in env.door_key_map.items():
 
 
 llm = LLMGPT3()
+
+sub_act_ls = ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle']
+
+
+from mabtpg.btp.sub_pbtp import SubPBTP
+
+action_lists = action_lists + composite_action_lists
+
+from mabtpg.btp.mabtp import MABTP
+
+"robot1.btml"
+
+from mabtpg.behavior_tree.btml.BTML import BTML
+btml = BTML()
+
+from mabtpg.utils.any_tree_node import AnyTreeNode
+sequence_node = AnyTreeNode("sequence")
+sequence_node.add_child(AnyTreeNode('Action', 'GoToInRoom', ('agent-0', 'key', 'room')))
+sequence_node.add_child(AnyTreeNode('Action', 'PickUp', ('agent', 'key', 'room')))
+sequence_node.add_child(AnyTreeNode('Action', 'GoToInRoom', ('agent', 'key', 'room')))
+sequence_node.add_child(AnyTreeNode('Action', 'Toggle', ('agent', 'key', 'room')))
+
+sub_btml = BTML()
+sub_btml.cls_name = 'GetKeyAndOpenDoor'
+sub_btml.var_args = ('agent-0','room-0','room-1')
+sub_btml.anytree_root = sequence_node
+btml.sub_btml_dict['GetKeyAndOpenDoor'] = sub_btml
+
+

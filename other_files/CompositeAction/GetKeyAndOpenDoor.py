@@ -6,7 +6,7 @@ from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
 import numpy as np
 
-
+from mabtpg.utils.any_tree_node import AnyTreeNode
 
 class GetKeyAndOpenDoor(Action):
     can_be_expanded = True
@@ -24,7 +24,6 @@ class GetKeyAndOpenDoor(Action):
 
         # 在底层的动作中，根据 agent、key room 找到对应的所有 sub_actions_ls 中的具体动作，比如
         # sub_act_ls = ['GoToInRoom(agent,key,room)','PickUp(agent,key)','GoToInRoom(agent,door,room)','Toggle(agent,door)']
-
 
         return planning_action_list
 

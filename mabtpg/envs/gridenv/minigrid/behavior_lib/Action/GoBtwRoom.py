@@ -13,11 +13,11 @@ class GoBtwRoom(Action):
     num_args = 3
     valid_args = set()
 
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, agent_id,from_room_id,to_room_id):
+        super().__init__(agent_id,from_room_id,to_room_id)
         self.path = None
-        self.from_room_id = int(self.args[1])
-        self.to_room_id = int(self.args[2])
+        self.from_room_id = int(from_room_id)
+        self.to_room_id = int(to_room_id)
         self.goal = None
 
 

@@ -165,7 +165,7 @@ class PlanningAgent:
 
         return False
 
-    def output_bt(self,behavior_lib=None):
+    def create_anytree(self):
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
         # add goal conditions into root
@@ -201,10 +201,19 @@ class PlanningAgent:
                 sequence_node.add_child(action_node)
                 current_condition.parent.add_child(sequence_node)
 
-        btml = BTML()
-        btml.anytree_root = anytree_root
+        self.anytree_root = anytree_root
 
-        bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
+    def create_btml(self):
+        self.create_anytree()
+        btml = BTML()
+        btml.anytree_root = self.anytree_root
+
+        self.btml = btml
+
+    def output_bt(self,behavior_lib=None):
+        self.create_btml()
+
+        bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
 
         return bt
 

@@ -10,11 +10,11 @@ sequence
         action SelfAssignTask(subgoal-2)
 
 
-def subtree SelfAssignTask(subgoal,subgoal):
+def subtree SelfAssignTask(agent-0,room-0,room-1):
     fallback
         sequence
-            condition IsSelfTask(subgoal)
-            action SelfDoTask(subgoal)
+            condition IsSelfTask(agent-0,room-0,room-1)
+            action SelfDoTask(agent-0)
         condition IsTaskAssigned(subgoal)
         sequence
             condition CanSelfDoTask(subgoal)

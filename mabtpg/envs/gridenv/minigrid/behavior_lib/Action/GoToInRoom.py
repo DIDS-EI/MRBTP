@@ -52,6 +52,11 @@ class GoToInRoom(Action):
             {f'IsInRoom(agent-{agent_id},{rid})' for rid in range(room_num) if rid != room_index})
         return PlanningAction(f"GoToInRoom(agent-{agent_id},{target_id},{room_index})", **action_model)
 
+    
+
+
+
+
     def update(self) -> Status:
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
