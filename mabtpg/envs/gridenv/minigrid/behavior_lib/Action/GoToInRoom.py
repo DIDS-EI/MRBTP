@@ -66,7 +66,9 @@ class GoToInRoom(Action):
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
             print(self.path)
-            assert self.path
+
+            if self.path == None:
+                assert self.path
 
         if self.path == []:
 
