@@ -93,7 +93,7 @@ for i,action_list in enumerate(action_lists):
 
                 # pre
                 if i==len(cond_act_ls)-1:
-                    action_model["pre"] = act.pre # ???
+                    action_model["pre"] = act.pre
                 # add del
                 action_model["add"] |= act.add
                 action_model["del_set"] |= act.del_set
@@ -109,41 +109,40 @@ for i,action_list in enumerate(action_lists):
 
 
             # 构建BTML
-            # from mabtpg.behavior_tree.btml.BTML import BTML
-            # btml = BTML()
-            # from mabtpg.utils.any_tree_node import AnyTreeNode
-            # sequence_node = AnyTreeNode("sequence")
-            # for (cond, act) in cond_act_ls:
-            #     print("act:",act)
-            #
-            #     fallback_node = AnyTreeNode("sequence")
-            #
-            #     # condition
-            #     node_list = []
-            #     for c in cond:
-            #         c_args = extract_parameters_from_action_name(c)
-            #         node = AnyTreeNode("Condition", cls_name=extract_predicate_from_action_name(c), args=c_args)
-            #         node_list.append(node)
-            #     sequence_node_tmp = AnyTreeNode('sequence')
-            #     sequence_node_tmp.add_children(node_list)
-            #     sub_btml_tmp = BTML()
-            #     sub_btml_tmp.anytree_root = sequence_node_tmp
-            #     fallback_node.add_child(AnyTreeNode("composite_condition",cls_name=None, info={"sub_btml":sub_btml_tmp}))
-            #
-            #     # action
-            #     act_args_ls = extract_parameters_from_action_name(act.name)
-            #     predicate = extract_predicate_from_action_name(act.name)
-            #     fallback_node.add_child(AnyTreeNode("Action", predicate, (act_args_ls)))
-            #
-            #     sequence_node.add_child(fallback_node)
-
-            planning_algorithm.create_anytree()
-
             from mabtpg.behavior_tree.btml.BTML import BTML
+            btml = BTML()
+
+            from mabtpg.utils.any_tree_node import AnyTreeNode
+            sequence_node = AnyTreeNode("sequence")
+
+            for (cond, act) in cond_act_ls:
+                print("act:",act)
+
+                fallback_node = AnyTreeNode("sequence")
+
+                # condition
+                node_list = []
+                for c in cond:
+                    c_args = extract_parameters_from_action_name(c)
+                    node = AnyTreeNode("Condition", cls_name=extract_predicate_from_action_name(c), args=c_args)
+                    node_list.append(node)
+                sequence_node_tmp = AnyTreeNode('sequence')
+                sequence_node_tmp.add_children(node_list)
+                sub_btml_tmp = BTML()
+                sub_btml_tmp.anytree_root = sequence_node_tmp
+                fallback_node.add_child(AnyTreeNode("composite_condition",cls_name=None, info={"sub_btml":sub_btml_tmp}))
+
+                # action
+                act_args_ls = extract_parameters_from_action_name(act.name)
+                predicate = extract_predicate_from_action_name(act.name)
+                fallback_node.add_child(AnyTreeNode("Action", predicate, (act_args_ls)))
+
+                sequence_node.add_child(fallback_node)
+
             sub_btml = BTML()
             sub_btml.cls_name = 'GetKeyAndOpenDoor'
             sub_btml.var_args = args_ls
-            sub_btml.anytree_root = planning_algorithm.anytree_root
+            sub_btml.anytree_root = sequence_node
 
             if agent_id not in composition_actions_BTML_ls:
                 composition_actions_BTML_ls[agent_id]=[]
