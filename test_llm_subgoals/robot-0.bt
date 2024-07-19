@@ -1,5 +1,5 @@
 fallback
     condition IsOpen(door-0)
     sequence
-        condition IsClose(door-0)
+        condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsInRoom(agent-0,room-0)
         action GetKeyAndOpenDoor(agent-0,door-0,key-0,room-0)
