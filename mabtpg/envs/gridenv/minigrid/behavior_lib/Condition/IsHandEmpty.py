@@ -12,14 +12,16 @@ class IsHandEmpty(Condition):
         super().__init__(*args)
 
         self.target_agent = None
+        self.agent_id = None
 
 
     def update(self) -> Status:
         if self.target_agent is None:
-            agent_id = int(self.args[0].split("-")[-1])
-            self.target_agent = self.env.agents[agent_id]
+            self.agent_id = int(self.args[0].split("-")[-1])
+            self.target_agent = self.env.agents[self.agent_id]
 
         if self.target_agent.carrying is None:
+            # print("IsHandEmpty: ",self.agent_id)
             return Status.SUCCESS
         else:
             return Status.FAILURE

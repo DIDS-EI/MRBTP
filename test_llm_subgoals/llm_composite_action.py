@@ -36,7 +36,7 @@ env.reset(seed=0)
 
 
 # goal = "IsNear(ball-0,ball-1)"
-goal = "IsNear(ball-0,ball-1)"
+# goal = "IsInRoom(ball-0,room-1)"
 action_lists = env.get_action_lists()
 start = env.get_initial_state()
 print(start)
@@ -44,6 +44,7 @@ print(start)
 action_sequences = {
     "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
      "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom']
+# "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
 }
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
@@ -63,7 +64,7 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 
 for i in range(env.num_agent):
     agent_id = "agent-"+str(i)
-    action_lists[i]=[]
+    action_lists[i]=[] # if only composition action
     if agent_id in comp_planning_act_dic:
         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
     # sorted by cost
@@ -72,8 +73,8 @@ for i in range(env.num_agent):
 
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
-# goal = {"IsInRoom(ball-0,room-1)"}
-goal = {"IsOpen(door-0)"}
+goal = {"IsInRoom(ball-0,room-1)"}
+# goal = {"IsOpen(door-0)"}
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
@@ -92,9 +93,25 @@ btml_list = planning_algorithm.get_btml_list()
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.utils.any_tree_node import AnyTreeNode
 from mabtpg.behavior_tree.constants import NODE_TYPE
+
+# bt_list=[]
+# for i,agent in enumerate(planning_algorithm.planned_agent_list):
+#     for name,btml in comp_act_BTML_dic.items():
+#         btml_list[i].anytree_root = agent.anytree_root
+#         btml_list[i].sub_btml_dict[name] = btml
+#         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
+#
+#         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
+#         tmp_bt.draw(file_name = name)
+#
+#     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
+#     bt_list.append(bt)
+
+
+# new
 bt_list=[]
 for i,agent in enumerate(planning_algorithm.planned_agent_list):
-    for name,btml in comp_act_BTML_dic.items():
+    for name,btml in comp_act_BTML_dic["agent-"+str(i)].items():
         btml_list[i].anytree_root = agent.anytree_root
         btml_list[i].sub_btml_dict[name] = btml
         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
@@ -104,6 +121,8 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
 
     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
     bt_list.append(bt)
+
+
 
 
 

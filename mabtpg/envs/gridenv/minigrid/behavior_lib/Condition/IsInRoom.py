@@ -43,6 +43,7 @@ class IsInRoom(Condition):
 
 
         if self.room_id in self.room_index_ls:
+            # print("IsInRoom", self.target_agent,self.target_obj,self.room_index_ls)
             return Status.SUCCESS
         else:
             return Status.FAILURE

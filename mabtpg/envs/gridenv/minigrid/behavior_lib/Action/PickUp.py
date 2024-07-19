@@ -41,6 +41,7 @@ class PickUp(Action):
 
             action_model["del_set"] = {f'IsNear({obj_id},{obj.id})' for obj in env.obj_list if
                                        obj.id != obj_id}
+            action_model["del_set"] = {f'CanGoTo({obj_id})' }
 
 
             action_model["cost"] = 1

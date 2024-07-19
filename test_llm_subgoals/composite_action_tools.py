@@ -24,6 +24,7 @@ class CompositeActionPlanner:
             list: List of planned composite actions.
         """
         composite_planning_action = []
+        comp_actions_BTML = {}
         composite_BTML = None
 
         for act in filtered_actions:
@@ -40,22 +41,34 @@ class CompositeActionPlanner:
                 cond_act_ls = planning_algorithm.collect_explored_cond_act
                 cond_act_ls = list(reversed(cond_act_ls))
                 # Calculate pre, add, and del for composite actions to construct PlanningAgent
+                if cond_act_ls==[]:
+                    continue # ????
 
                 print("cond_act_ls",cond_act_ls)
                 composite_action_model = {
-                    "pre": cond_act_ls[0][1].pre,
-                    "add": cond_act_ls[0][1].add,
-                    "del_set": cond_act_ls[0][1].del_set,
+                    "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
+                    "add": set(),
+                    "del_set": set(),
                     "cost": 0
                 }
                 sum_add = set()
+                # sum_del = set()
                 for i, (cond, act) in enumerate(cond_act_ls):
-                    if i >0:
-                        composite_action_model["pre"] |= (act.pre - sum_add)
-                        composite_action_model["add"] = (composite_action_model["add"] | act.add) -act.del_set
-                        composite_action_model["del_set"] = (composite_action_model["del_set"] | act.del_set) - act.add
+                    # sum_add |= act.add
+                    # composite_action_model["pre"] |= (act.pre - sum_add)
+                    if i==0:
+                        composite_action_model["pre"] = act.pre
+                        composite_action_model["add"] = act.add
+                        composite_action_model["del_set"] = act.del_set
+                    composite_action_model["add"] = (composite_action_model["add"] | act.add) -act.del_set
+                    composite_action_model["del_set"] = (composite_action_model["del_set"] | act.del_set) - act.add
+
+                    if i>0:
+                        composite_action_model["pre"] = (act.pre-sum_add) | (composite_action_model["pre"]-act.del_set)
                     sum_add |= act.add
+
                     args_ls.extend(extract_parameters_from_action_name(act.name))
+
 
                 args_ls = list(sorted(set(args_ls)))
                 planning_action = PlanningAction(f"{comp_actions_name}({','.join(args_ls)})", **composite_action_model)
@@ -63,19 +76,27 @@ class CompositeActionPlanner:
                 composite_planning_action.append(planning_action)
 
                 # get btml
-                if composite_BTML==None:
-                    planning_algorithm.create_anytree()
+                # if composite_BTML==None:
+                #     planning_algorithm.create_anytree()
+                #
+                #     from mabtpg.behavior_tree.btml.BTML import BTML
+                #     sub_btml = BTML()
+                #     sub_btml.cls_name = comp_actions_name
+                #     sub_btml.var_args = args_ls
+                #     sub_btml.anytree_root = planning_algorithm.anytree_root
+                #
+                #     self.comp_actions_BTML_dic[comp_actions_name] = sub_btml
 
-                    from mabtpg.behavior_tree.btml.BTML import BTML
-                    sub_btml = BTML()
-                    sub_btml.cls_name = comp_actions_name
-                    sub_btml.var_args = args_ls
-                    sub_btml.anytree_root = planning_algorithm.anytree_root
+                planning_algorithm.create_anytree()
+                from mabtpg.behavior_tree.btml.BTML import BTML
+                sub_btml = BTML()
+                sub_btml.cls_name = comp_actions_name
+                sub_btml.var_args = args_ls
+                sub_btml.anytree_root = planning_algorithm.anytree_root
 
-                    self.comp_actions_BTML_dic[comp_actions_name] = sub_btml
+                comp_actions_BTML.update({comp_actions_name:sub_btml})
 
-
-        return composite_planning_action
+        return composite_planning_action,comp_actions_BTML
 
     def get_composite_action(self):
         """
@@ -115,9 +136,14 @@ class CompositeActionPlanner:
                 # else:
 
                 # Plan sub-behavior tree from filtered actions
-                agent_comp_pa_ls = self.plan_sub_bt_from_filtered_actions(filtered_actions,sequence,comp_actions_name)
+                agent_comp_pa_ls,agent_comp_btml_dic = self.plan_sub_bt_from_filtered_actions(filtered_actions,sequence,comp_actions_name)
                 if agent_id not in self.comp_actions_dic:
                     self.comp_actions_dic[agent_id] = []
                 self.comp_actions_dic[agent_id].extend(agent_comp_pa_ls)
+
+                # new btml
+                if agent_id not in self.comp_actions_BTML_dic:
+                    self.comp_actions_BTML_dic[agent_id] = {}
+                self.comp_actions_BTML_dic[agent_id].update(agent_comp_btml_dic)
 
         return self.comp_actions_dic,self.comp_actions_BTML_dic

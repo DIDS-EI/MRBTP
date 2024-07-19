@@ -24,9 +24,11 @@ class CanGoTo(Condition):
 
         if isinstance(self.obj.cur_pos, np.ndarray):
             if (self.obj.cur_pos == (-1, -1)).all():
+                # print("Not CanGoTo", self.obj_id)
                 return Status.FAILURE
         else:
             if self.obj.cur_pos == (-1, -1):
+                # print("Not CanGoTo", self.obj_id)
                 return Status.FAILURE
 
         # print("CanGoTo", self.obj_id)
