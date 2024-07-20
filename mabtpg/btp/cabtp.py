@@ -29,6 +29,10 @@ class CABTP(PlanningAgent):
         # find premise conditions
         premise_condition_list = []
         for action in self.action_list:
+
+            if self.sub_act_index < 0:
+                break
+
             if self.is_consequence(condition,action):
                 premise_condition = frozenset((action.pre | condition) - action.add)
                 if self.has_no_subset(premise_condition):

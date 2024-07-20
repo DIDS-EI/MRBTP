@@ -58,14 +58,15 @@ class GoToInRoom(Action):
 
 
     def update(self) -> Status:
+
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
             self.goal = list(self.env.id2obj[self.obj_id].cur_pos)
-            print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
+            # print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
 
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
 
-            print(self.path)
+            # print(self.path)
 
             if self.path == None:
                 assert self.path
@@ -88,10 +89,12 @@ class GoToInRoom(Action):
                 self.path.pop(0)
             else:
                 self.agent.action = turn_to_action
-            print(self.path)
+            # print(self.path)
 
         # self.agent.action = random.choice(list(Actions))
         # print(f"randomly do action: {self.agent.action.name}")
+
+        print("agent:",self.agent.id," GoToInRoom:",self.obj_id,self.room_id)
         return Status.RUNNING
 
     def turn_to(self,direction):

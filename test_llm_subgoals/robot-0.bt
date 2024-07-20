@@ -4,6 +4,22 @@ fallback
         fallback
             condition IsOpen(door-0)
             sequence
-                condition CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsInRoom(agent-0,room-0)
+                condition CanGoTo(door-0) & IsInRoom(agent-0,room-0)
                 action GetKeyAndOpenDoor(agent-0,door-0,key-0,room-0)
+            sequence
+                fallback
+                    condition CanOpen(agent-0,door-0) & IsClose(door-0) & IsNear(agent-0,door-0)
+                    sequence
+                        condition CanGoTo(door-0) & CanOpen(agent-0,door-0) & IsClose(door-0) & IsInRoom(agent-0,room-1)
+                        action GoToInRoom(agent-0,door-0,room-1)
+                action Toggle(agent-0,door-0)
         action MoveItemBetweenRooms(agent-0,ball-0,room-0,room-1)
+    sequence
+        condition IsHolding(agent-0,ball-0) & IsInRoom(agent-0,room-1)
+        action PutInRoom(agent-0,ball-0,room-1)
+    sequence
+        condition CanGoTo(door-0) & IsInRoom(agent-0,room-1) & IsInRoom(agent-1,room-0)
+        action GoToInRoom(agent-0,door-0,room-1)
+    sequence
+        condition CanGoTo(door-0) & CanOpen(agent-1,door-0) & IsClose(door-0) & IsInRoom(agent-0,room-1) & IsInRoom(agent-1,room-1)
+        action GoToInRoom(agent-0,door-0,room-1)

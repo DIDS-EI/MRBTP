@@ -134,8 +134,9 @@ class MAGridEnv(MiniGridEnv):
         done = True
         # truncated = False
 
-        print("---------")
+
         for i in range(num_agent):
+            print(f"---AGENT - {i}---")
             action = self.agents[i].step()
             # 执行单智能体与环境交互
             self.set_focus_agent(self.agents[i])
@@ -146,7 +147,7 @@ class MAGridEnv(MiniGridEnv):
             if not self.agents[i].bt_success:
                 done = False
 
-
+            print("###")
         # if self.step_count >= self.max_steps:
         #     truncated = True
 

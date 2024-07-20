@@ -33,7 +33,12 @@ env.place_object_in_room(ball,0)
 # ball = Ball('yellow')
 # env.place_object_in_room(ball,1)
 env.reset(seed=0)
-
+# make the door open
+# for obj in env.obj_list:
+#     if obj.type == "door":
+#         x,y = obj.cur_pos[0],obj.cur_pos[1]
+#         door = Door('yellow',is_open=True,is_locked=False)
+#         env.put_obj(door,x,y)
 
 # goal = "IsNear(ball-0,ball-1)"
 # goal = "IsInRoom(ball-0,room-1)"
@@ -64,7 +69,7 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 
 for i in range(env.num_agent):
     agent_id = "agent-"+str(i)
-    action_lists[i]=[] # if only composition action
+    # action_lists[i]=[] # if only composition action
     if agent_id in comp_planning_act_dic:
         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
     # sorted by cost
@@ -74,6 +79,7 @@ for i in range(env.num_agent):
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 goal = {"IsInRoom(ball-0,room-1)"}
+# goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsOpen(door-0)"}
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
@@ -140,7 +146,9 @@ env.render()
 env.print_ticks = True
 done = False
 while not done:
+    print("==========================")
     obs,done,_,_ = env.step()
+    print("==========================\n")
 print(f"\ntask finished!")
 
 # continue rendering after task finished

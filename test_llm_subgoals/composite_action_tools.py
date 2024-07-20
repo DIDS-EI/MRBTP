@@ -64,7 +64,9 @@ class CompositeActionPlanner:
                     composite_action_model["del_set"] = (composite_action_model["del_set"] | act.del_set) - act.add
 
                     if i>0:
-                        composite_action_model["pre"] = (act.pre-sum_add) | (composite_action_model["pre"]-act.del_set)
+                        # composite_action_model["pre"] = (act.pre-sum_add) | (composite_action_model["pre"]-act.del_set)
+                        composite_action_model["pre"] |= (act.pre - sum_add)
+                        composite_action_model["pre"] = composite_action_model["pre"] - act.del_set
                     sum_add |= act.add
 
                     args_ls.extend(extract_parameters_from_action_name(act.name))

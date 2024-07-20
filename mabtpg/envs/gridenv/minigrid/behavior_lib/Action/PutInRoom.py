@@ -15,8 +15,8 @@ class PutInRoom(Action):
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.room_index = int(''.join(filter(str.isdigit, args[2]))) #args[2]
-
+        self.room_id = args[2] #int(''.join(filter(str.isdigit, args[2]))) #args[2]
+        self.room_index = int(''.join(filter(str.isdigit, self.room_id )))
         self.target_position = None
 
     @classmethod
@@ -83,7 +83,7 @@ class PutInRoom(Action):
                 self.agent.action = Actions.drop
             else:
                 self.agent.action = turn_to_action
-
+        print("agent:", self.agent.id, " PutInRoom:",self.room_index)
         return Status.RUNNING
 
         # first go to another room

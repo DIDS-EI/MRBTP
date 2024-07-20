@@ -101,6 +101,7 @@ class GoBtwRoom(Action):
 
         # self.agent.action = random.choice(list(Actions))
         # print(f"randomly do action: {self.agent.action.name}")
+        print("agent:", self.agent.id, " GoBtwRoom:", self.from_room_id, self.to_room_id)
         return Status.RUNNING
 
     def turn_to(self,direction):

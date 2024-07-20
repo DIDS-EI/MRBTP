@@ -35,13 +35,13 @@ class PickUp(Action):
                 action_model["add"] |= {f"CanOpen(agent-{agent.id},{door_id})"} # |
 
             action_model["del_set"] = {f"IsHandEmpty(agent-{agent.id})",f"CanGoTo({obj_id})",f"IsNear(agent-{agent.id},{obj_id})"}
-            action_model["del_set"] = {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_index}
+            action_model["del_set"] |= {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_index}
             # delete all obj in hand
-            action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list if obj.id != obj_id}
+            action_model["del_set"] |= {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list if obj.id != obj_id}
 
-            action_model["del_set"] = {f'IsNear({obj_id},{obj.id})' for obj in env.obj_list if
+            action_model["del_set"] |= {f'IsNear({obj_id},{obj.id})' for obj in env.obj_list if
                                        obj.id != obj_id}
-            action_model["del_set"] = {f'CanGoTo({obj_id})' }
+            action_model["del_set"] |= {f'CanGoTo({obj_id})' }
 
 
             action_model["cost"] = 1
@@ -53,4 +53,5 @@ class PickUp(Action):
     def update(self) -> Status:
 
         self.agent.action = Actions.pickup
+        print("agent:", self.agent.id, " PickUp")
         return Status.RUNNING

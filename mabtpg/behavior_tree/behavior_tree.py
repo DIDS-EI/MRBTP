@@ -46,6 +46,7 @@ class BehaviorTree(ptree.trees.BehaviourTree):
         self.env = None
 
     def tick(self,verbose=False,bt_name=None):
+        # print("=========================================")
         super().tick()
         if verbose:
             if bt_name is None:
@@ -61,9 +62,9 @@ class BehaviorTree(ptree.trees.BehaviourTree):
                         if line.startswith(('condition','action')):
                             print(line)
 
-                    print()
+                    # print()
                     self.last_tick_output = bt_output
-
+        # print("=========================================")
     def create_composite_behavior_lib(self):
         for sub_btml in self.btml.composite_btml_list:
             node = sub_btml.anytree

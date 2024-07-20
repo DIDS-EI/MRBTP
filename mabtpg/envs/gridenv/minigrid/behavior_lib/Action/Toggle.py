@@ -39,4 +39,5 @@ class Toggle(Action):
     def update(self) -> Status:
 
         self.agent.action = Actions.toggle
+        print("agent:", self.agent.id,"Toggle")
         return Status.RUNNING
