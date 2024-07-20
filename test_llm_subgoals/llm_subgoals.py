@@ -64,7 +64,7 @@ llm = LLMGPT3()
 sub_act_ls = ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle']
 
 
-from mabtpg.btp.sub_pbtp import SubPBTP
+from mabtpg.btp.cabtp import SubPBTP
 
 action_lists = action_lists + composite_action_lists
 

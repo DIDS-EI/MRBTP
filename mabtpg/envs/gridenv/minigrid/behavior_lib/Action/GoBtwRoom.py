@@ -16,8 +16,8 @@ class GoBtwRoom(Action):
     def __init__(self, agent_id,from_room_id,to_room_id):
         super().__init__(agent_id,from_room_id,to_room_id)
         self.path = None
-        self.from_room_id = int(from_room_id)
-        self.to_room_id = int(to_room_id)
+        self.from_room_id = int(''.join(filter(str.isdigit, from_room_id)))  #from_room_id
+        self.to_room_id = int(''.join(filter(str.isdigit, to_room_id))) #to_room_id
         self.goal = None
 
 
@@ -34,20 +34,20 @@ class GoBtwRoom(Action):
             # 处理从 room1 到 room2
             action_model = cls.create_action_model(agent.id, door_id, room1_id, room2_id, room_num, can_goto)
             planning_action_list.append(
-                PlanningAction(f"GoBtwRoom(agent-{agent.id},{room1_id},{room2_id})", **action_model))
+                PlanningAction(f"GoBtwRoom(agent-{agent.id},room-{room1_id},room-{room2_id})", **action_model))
 
             # 处理从 room2 到 room1
             action_model = cls.create_action_model(agent.id, door_id, room2_id, room1_id, room_num, can_goto)
             planning_action_list.append(
-                PlanningAction(f"GoBtwRoom(agent-{agent.id},{room2_id},{room1_id})", **action_model))
+                PlanningAction(f"GoBtwRoom(agent-{agent.id},room-{room2_id},room-{room1_id})", **action_model))
         return planning_action_list
 
     @classmethod
     def create_action_model(cls,agent_id, door_id, from_room_id, to_room_id, room_num, can_goto):
         action_model = {}
-        action_model["pre"] = {f"IsInRoom(agent-{agent_id},{from_room_id})", f"IsOpen({door_id})"}
-        action_model["add"] = {f"IsInRoom(agent-{agent_id},{to_room_id})"}
-        action_model["del_set"] = {f'IsInRoom(agent-{agent_id},{rid})' for rid in range(room_num) if rid != to_room_id}
+        action_model["pre"] = {f"IsInRoom(agent-{agent_id},room-{from_room_id})", f"IsOpen({door_id})"}
+        action_model["add"] = {f"IsInRoom(agent-{agent_id},room-{to_room_id})"}
+        action_model["del_set"] = {f'IsInRoom(agent-{agent_id},room-{rid})' for rid in range(room_num) if rid != to_room_id}
         action_model["del_set"] |= {f'IsNear(agent-{agent_id},{obj})' for obj in can_goto}
         action_model["cost"] = 1
         return action_model
@@ -101,6 +101,7 @@ class GoBtwRoom(Action):
 
         # self.agent.action = random.choice(list(Actions))
         # print(f"randomly do action: {self.agent.action.name}")
+        print("agent:", self.agent.id, " GoBtwRoom:", self.from_room_id, self.to_room_id)
         return Status.RUNNING
 
     def turn_to(self,direction):

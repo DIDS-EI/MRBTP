@@ -16,7 +16,7 @@ class IsInRoom(Condition):
         self.target_agent = None
         self.target_obj = None
 
-        self.room_id = int(args[1])
+        self.room_id = int(''.join(filter(str.isdigit, args[1]))) # get room id
         self.room_index_ls = []
 
 
@@ -43,6 +43,7 @@ class IsInRoom(Condition):
 
 
         if self.room_id in self.room_index_ls:
+            # print("IsInRoom", self.target_agent,self.target_obj,self.room_index_ls)
             return Status.SUCCESS
         else:
             return Status.FAILURE

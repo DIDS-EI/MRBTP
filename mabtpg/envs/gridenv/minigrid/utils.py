@@ -17,3 +17,4 @@ def get_direction_index(vec):
         if np.array_equal(vec, direction):
             return index
     raise ValueError(f"Vector {vec} not found in DIR_TO_VEC")
+

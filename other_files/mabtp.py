@@ -1,3 +1,4 @@
+
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.utils import parse_predicate_logic
 from mabtpg.utils.any_tree_node import AnyTreeNode
@@ -6,20 +7,24 @@ import re
 import mabtpg
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
-from mabtpg.btp.base.planning_condition import PlanningCondition
+
+class PlanningCondition:
+    def __init__(self,condition,action=None):
+        self.condition_set = condition
+        self.action = action
+        self.children = []
+        # for generate bt
+        self.parent_node = None
 
 class PlanningAgent:
-    def __init__(self,action_list,goal,id=None,verbose=False,start = None):
+    def __init__(self,action_list,goal,id=None,verbose=False):
         self.id = id
         self.action_list = action_list
         self.expanded_condition_dict = {}
-        self.goal = goal
         self.goal_condition = PlanningCondition(goal)
         self.expanded_condition_dict[goal] = self.goal_condition
 
         self.verbose = verbose
-
-        self.start = start # ???delete
 
     def one_step_expand(self, condition):
 
@@ -41,7 +46,6 @@ class PlanningAgent:
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
-
                     if self.verbose:
                         if inside_condition:
                             print_colored(f'inside','purple')
@@ -54,7 +58,6 @@ class PlanningAgent:
             self.inside_expand(inside_condition, premise_condition_list)
         else:
             self.outside_expand(premise_condition_list)
-
 
         return premise_condition_list
 
@@ -83,7 +86,6 @@ class PlanningAgent:
         holding_state_dic = {}
         empty_hand_dic = {}
         room_state_dic = {}
-        toggle_state_dic={}
 
         for c in premise_condition:
             # 检测 IsNear 模式
@@ -146,30 +148,9 @@ class PlanningAgent:
                 else:
                     room_state_dic[entity_id] = room_id
 
-
-            # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
-            # 检测 IsOpen 和 IsClose 模式
-            match_open = re.search(r'IsOpen\(([^)]+)\)', c)
-            match_close = re.search(r'IsClose\(([^)]+)\)', c)
-
-            if match_open:
-                obj_id = match_open.group(1).strip()
-                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'close':
-                    if self.verbose:
-                        print(f"Conflict detected: {obj_id} is reported both open and close.")
-                    return True
-                toggle_state_dic[obj_id] = 'open'
-            if match_close:
-                obj_id = match_close.group(1).strip()
-                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'open':
-                    if self.verbose:
-                        print(f"Conflict detected: {obj_id} is reported both open and close.")
-                    return True
-                toggle_state_dic[obj_id] = 'close'
-
         return False
 
-    def create_anytree(self):
+    def output_bt(self,behavior_lib=None):
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
         # add goal conditions into root
@@ -205,19 +186,10 @@ class PlanningAgent:
                 sequence_node.add_child(action_node)
                 current_condition.parent.add_child(sequence_node)
 
-        self.anytree_root = anytree_root
-
-    def create_btml(self):
-        self.create_anytree()
         btml = BTML()
-        btml.anytree_root = self.anytree_root
+        btml.anytree_root = anytree_root
 
-        self.btml = btml
-
-    def output_bt(self,behavior_lib=None):
-        self.create_btml()
-
-        bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
+        bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib)
 
         return bt
 
@@ -242,12 +214,40 @@ class PlanningAgent:
             parent.add_child(composite_condition)
 
 
-    def planning(self):
-        explored_condition_list = [self.goal]
+class MABTP:
+    def __init__(self,verbose=False):
+        self.planned_agent_list = None
+        self.verbose = verbose
+
+    def planning(self, goal, action_lists):
+        planning_agent_list = []
+        for id,action_list in enumerate(action_lists):
+            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose))
+
+        explored_condition_list = [goal]
 
         while explored_condition_list != []:
             condition = explored_condition_list.pop(0)
             if self.verbose: print_colored(f"C:{condition}","green")
-            premise_condition_list = self.one_step_expand(condition)
-            explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
+            for agent in planning_agent_list:
+                if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
+                premise_condition_list = agent.one_step_expand(condition)
+                explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
+        self.planned_agent_list = planning_agent_list
+
+
+    def output_bt_list(self,behavior_libs):
+        bt_list = []
+        for i,agent in enumerate(self.planned_agent_list):
+            bt = agent.output_bt(behavior_libs[i])
+            bt_list.append(bt)
+        return bt_list
+
+    def get_btml_list(self):
+        btml_list = []
+        for i,agent in enumerate(self.planned_agent_list):
+            agent.create_btml()
+            bt = agent.btml
+            btml_list.append(bt)
+        return btml_list

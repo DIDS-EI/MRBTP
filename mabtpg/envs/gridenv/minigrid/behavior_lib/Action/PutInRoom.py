@@ -15,8 +15,8 @@ class PutInRoom(Action):
     def __init__(self, *args):
         super().__init__(*args)
         self.path = None
-        self.room_index = int(args[2])
-
+        self.room_id = args[2] #int(''.join(filter(str.isdigit, args[2]))) #args[2]
+        self.room_index = int(''.join(filter(str.isdigit, self.room_id )))
         self.target_position = None
 
     @classmethod
@@ -40,15 +40,15 @@ class PutInRoom(Action):
             for obj_id in can_pickup:
                 action_model = {}
                 # error:if the agent go to in another room it will fail
-                action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},{room_id})"}
+                action_model["pre"]= {f"IsHolding(agent-{agent.id},{obj_id})",f"IsInRoom(agent-{agent.id},room-{room_id})"}
                 # action_model["pre"] = {f"IsHolding(agent-{agent.id},{obj_id})", f"IsInRoom({obj_id},{room_id})"}
-                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},{room_id})",f"IsNear(agent-{agent.id},{obj_id})",f"CanGoTo({obj_id})"}
+                action_model["add"]={f"IsHandEmpty(agent-{agent.id})",f"IsInRoom({obj_id},room-{room_id})",f"IsNear(agent-{agent.id},{obj_id})",f"CanGoTo({obj_id})"}
                 # action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
                 action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list}
                 action_model["del_set"] |= {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
-                action_model["del_set"] = {f'IsInRoom(agent-{agent.id},{rid})' for rid in range(room_num) if rid != room_id}
+                action_model["del_set"] = {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_id}
                 action_model["cost"] = 1
-                planning_action_list.append(PlanningAction(f"PutInRoom(agent-{agent.id},{obj_id},{room_id})",**action_model))
+                planning_action_list.append(PlanningAction(f"PutInRoom(agent-{agent.id},{obj_id},room-{room_id})",**action_model))
 
         return planning_action_list
 
@@ -83,7 +83,7 @@ class PutInRoom(Action):
                 self.agent.action = Actions.drop
             else:
                 self.agent.action = turn_to_action
-
+        print("agent:", self.agent.id, " PutInRoom:",self.room_index)
         return Status.RUNNING
 
         # first go to another room

@@ -38,8 +38,8 @@ print("room_index:",room_index)
 # Place an object in the room with the specified index
 ball = Ball('red')
 env.place_object_in_room(ball,0)
-ball = Ball('grey')
-env.place_object_in_room(ball,1)
+# ball = Ball('grey')
+# env.place_object_in_room(ball,1)
 ball = Ball('yellow')
 env.place_object_in_room(ball,0)
 env.reset(seed=0)
@@ -90,8 +90,8 @@ if goal==None:
 
     # goal = {"IsHolding(agent-0,ball-0)"}
 
-    goal = {"IsInRoom(ball-0,1)"}
-    # goal = {"IsInRoom(ball-0,1)","IsInRoom(ball-1,1)"}
+    # goal = {"IsInRoom(ball-0,room-1)"}
+    goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"}
     # goal = {"IsNear(agent-0,door-0)"}
     # goal = {"IsNear(agent-0,ball-1)"}
     # goal = {"IsNear(ball-0,ball-1)"}
@@ -116,7 +116,6 @@ bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env
 for i in range(env.num_agent):
     print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
     bt_list[i].save_btml(f"robot-{i}.bt")
-
     # bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
