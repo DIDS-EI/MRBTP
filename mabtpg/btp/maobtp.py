@@ -13,6 +13,9 @@ from mabtpg.btp.mabtp import MABTP
 from mabtpg.btp.base.planning_condition import PlanningCondition
 import heapq
 
+#
+
+
 class CondCostPair:
     def __init__(self, cond,cost):
         self.cond = cond
@@ -52,7 +55,16 @@ class BfsPlanningAgent(PlanningAgent):
                     if self.check_conflict(premise_condition):
                         continue
 
-                    planning_condition = PlanningCondition(premise_condition,action.name)
+                    # record if it is composition action
+                    composition_action_flag = False
+                    sub_goal = None
+                    if action.cost==0:
+                        composition_action_flag = True
+                        # sub_goal = frozenset((action.pre | action.add) - action.del_set)
+                        # sub_goal = [",".join(sorted(premise_condition))]
+                        sub_goal = [premise_condition]
+
+                    planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 

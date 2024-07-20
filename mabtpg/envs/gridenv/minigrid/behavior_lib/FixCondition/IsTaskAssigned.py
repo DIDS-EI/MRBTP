@@ -9,7 +9,7 @@ class IsTaskAssigned(Condition):
         self.subgoal = subgoal
 
     def update(self) -> Status:
-        if self.subgoal in self.env.comm['task']:
+        if self.subgoal in self.env.blackboard['task']:
             return Status.SUCCESS
         else:
             return Status.FAILURE

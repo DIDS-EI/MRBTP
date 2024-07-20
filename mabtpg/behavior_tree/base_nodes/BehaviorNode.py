@@ -19,7 +19,7 @@ class BahaviorNode(ptree.behaviour.Behaviour):
         args = self.args
         name = self.__class__.__name__
         if len(args) > 0:
-            ins_name = f'{name}({",".join(args)})'
+            ins_name = f'{name}({",".join(map(str,args))})'
         else:
             ins_name = f'{name}()'
         return ins_name

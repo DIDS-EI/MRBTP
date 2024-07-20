@@ -169,6 +169,7 @@ class PlanningAgent:
 
         return False
 
+
     def create_anytree(self):
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
@@ -181,31 +182,113 @@ class PlanningAgent:
         while stack != []:
             current_condition = stack.pop(0)
 
-            # create a sequence node and its condition-action pair
-            sequence_node = AnyTreeNode(NODE_TYPE.sequence)
-            if current_condition.children == []:
-                condition_parent = sequence_node
-            else:
-                condition_parent = AnyTreeNode(NODE_TYPE.selector)
-                sequence_node.add_child(condition_parent)
-                # add children into stack
-                for children in current_condition.children:
-                    children.parent = condition_parent
-                    stack.append(children)
-            # add condition
-            self.add_conditions(current_condition,condition_parent)
-            # add action
-            cls_name, args = parse_predicate_logic(current_condition.action)
-            action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+            if current_condition.composition_action_flag == False:
+                # create a sequence node and its condition-action pair
+                sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+                if current_condition.children == []:
+                    condition_parent = sequence_node
+                else:
+                    condition_parent = AnyTreeNode(NODE_TYPE.selector)
+                    sequence_node.add_child(condition_parent)
+                    # add children into stack
+                    for children in current_condition.children:
+                        children.parent = condition_parent
+                        stack.append(children)
+                # add condition
+                self.add_conditions(current_condition,condition_parent)
+                # add action
+                cls_name, args = parse_predicate_logic(current_condition.action)
+                action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
 
-            # add the sequence node into its parent
-            if current_condition.children == [] and len(current_condition.condition_set) == 0:
-                current_condition.parent.add_child(action_node)
+                # add the sequence node into its parent
+                if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                    current_condition.parent.add_child(action_node)
+                else:
+                    sequence_node.add_child(action_node)
+                    current_condition.parent.add_child(sequence_node)
+
+            # for composition_action
+            # elif current_condition.composition_action_flag == True:
             else:
-                sequence_node.add_child(action_node)
-                current_condition.parent.add_child(sequence_node)
+
+                sel_comp_parent = AnyTreeNode(NODE_TYPE.selector)
+
+                seq_task_parent = AnyTreeNode(NODE_TYPE.sequence)
+                task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",current_condition.sub_goal)
+                cls_name, args = parse_predicate_logic(current_condition.action)
+                task_comp_action = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+                # seq add two children
+                seq_task_parent.add_child(task_flag_condition)
+                seq_task_parent.add_child(task_comp_action)
+                sel_comp_parent.add_child(seq_task_parent)
+
+                sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+                if current_condition.children == []:
+                    condition_parent = sequence_node
+                else:
+                    condition_parent = AnyTreeNode(NODE_TYPE.selector)
+                    sequence_node.add_child(condition_parent)
+                    # add children into stack
+                    for children in current_condition.children:
+                        children.parent = condition_parent
+                        stack.append(children)
+                # add condition
+                self.add_conditions(current_condition,condition_parent)
+                # add action
+                print("current_condition.sub_goal:",current_condition.sub_goal)
+                action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",current_condition.sub_goal)
+
+                # add the sequence node into its parent
+                if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                    current_condition.parent.add_child(action_node)
+                else:
+                    sequence_node.add_child(action_node)
+                    current_condition.parent.add_child(sel_comp_parent)
+
+                sel_comp_parent.add_child(sequence_node)
+
 
         self.anytree_root = anytree_root
+
+
+
+    # def create_anytree(self):
+    #     anytree_root = AnyTreeNode(NODE_TYPE.selector)
+    #     stack = []
+    #     # add goal conditions into root
+    #     self.add_conditions(self.goal_condition,anytree_root)
+    #     for children in self.goal_condition.children:
+    #         children.parent = anytree_root
+    #         stack.append(children)
+    #
+    #     while stack != []:
+    #         current_condition = stack.pop(0)
+    #
+    #         # create a sequence node and its condition-action pair
+    #         sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+    #         if current_condition.children == []:
+    #             condition_parent = sequence_node
+    #         else:
+    #             condition_parent = AnyTreeNode(NODE_TYPE.selector)
+    #             sequence_node.add_child(condition_parent)
+    #             # add children into stack
+    #             for children in current_condition.children:
+    #                 children.parent = condition_parent
+    #                 stack.append(children)
+    #         # add condition
+    #         self.add_conditions(current_condition,condition_parent)
+    #         # add action
+    #         cls_name, args = parse_predicate_logic(current_condition.action)
+    #         action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+    #
+    #         # add the sequence node into its parent
+    #         if current_condition.children == [] and len(current_condition.condition_set) == 0:
+    #             current_condition.parent.add_child(action_node)
+    #         else:
+    #             sequence_node.add_child(action_node)
+    #             current_condition.parent.add_child(sequence_node)
+    #
+    #     self.anytree_root = anytree_root
 
     def create_btml(self):
         self.create_anytree()

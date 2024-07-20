@@ -8,6 +8,9 @@ class Action(BahaviorNode):
         super().__init__(*args)
         self.info = self.get_info(*args)
 
+    # def update(self):
+    #     self.agent =
+
     @classmethod
     def get_info(self,*arg):
         return None

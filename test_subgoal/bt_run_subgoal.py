@@ -73,13 +73,13 @@ print('------- subgoal tree for agent-0  ---------')
 env.agents[0].bt.print()
 env.agents[0].bt.draw()
 
-env.comm['subgoal_map'] = {
+env.blackboard['subgoal_map'] = {
     'subgoal-0': frozenset({"IsOpen(door-0)"}),
     'subgoal-1': frozenset({"IsNear(ball-0,ball-2)"}),
     'subgoal-2': frozenset({"IsNear(ball-1,ball-2)"}),
 }
 
-env.comm['precondition'] = set()
+env.blackboard['precondition'] = set()
 
 
 # # When planning, directly remove this condition.

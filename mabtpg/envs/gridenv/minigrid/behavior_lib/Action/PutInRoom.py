@@ -46,7 +46,7 @@ class PutInRoom(Action):
                 # action_model["del_set"] = {f"IsHolding(agent-{agent.id},{obj_id})"}
                 action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list}
                 action_model["del_set"] |= {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
-                action_model["del_set"] = {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_id}
+                action_model["del_set"] |= {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_id}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"PutInRoom(agent-{agent.id},{obj_id},room-{room_id})",**action_model))
 

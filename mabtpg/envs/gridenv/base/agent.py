@@ -41,6 +41,8 @@ class Agent(Object):
         self.direction = 3
         self.carrying = None
 
+        self.accept_task = None
+        self.current_task = None
 
     def set_components(self):
         self.add_component(Components.Container)
@@ -75,7 +77,10 @@ class Agent(Object):
         if action is None:
             self.action = Actions.Idle
             if self.bt:
+                self.current_task = None
                 self.bt.tick()
+                if self.current_task != self.accept_task:
+                    self.env.blackboard["predict_condition"] -= self.accept_task
                 self.bt_success = self.bt.root.status == Status.SUCCESS
         else:
             self.action = action

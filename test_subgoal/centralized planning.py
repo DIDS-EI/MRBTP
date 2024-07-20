@@ -61,12 +61,12 @@ for door,key in env.door_key_map.items():
 # ============================================================
 env.action_lists = env.get_action_lists(centralize=True)
 
-env.comm['subgoal_map'] = {
+env.blackboard['subgoal_map'] = {
     'subgoal-0': frozenset(goal),
     'subgoal-1': frozenset(goal),
 }
 
-env.comm['precondition'] = set()
+env.blackboard['precondition'] = set()
 # 输出并保存行为树
 bt = BehaviorTree('centralize.bt',behavior_lib=behavior_lib)
 env.agents[0].bind_bt(bt)

@@ -9,7 +9,8 @@ class IsSelfTask(Condition):
         self.subgoal = subgoal
 
     def update(self) -> Status:
-        if self.subgoal == self.agent.subgoal:
+        if self.subgoal == self.agent.accept_task:
+            self.agent.current_task = self.subgoal
             return Status.SUCCESS
         else:
             return Status.FAILURE

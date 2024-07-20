@@ -19,6 +19,8 @@ class Agent(object):
 
         self.last_tick_output = None
 
+        self.accept_task = None
+        self.current_task = None
 
     def planning_for_subgoal(self,subgoal):
         from mabtpg.btp.pbtp import PBTP
@@ -26,8 +28,8 @@ class Agent(object):
         if self.env.action_lists is None:
             self.env.action_lists = self.env.get_action_lists()
 
-        subgoal_set = self.env.comm['subgoal_map'][subgoal]
-        precondition = frozenset(self.env.comm['precondition'])
+        subgoal_set = self.env.blackboard['subgoal_map'][subgoal]
+        precondition = frozenset(self.env.blackboard['precondition'])
 
         action_list = self.env.action_lists[self.id]
 
@@ -55,8 +57,9 @@ class Agent(object):
 
     def step(self):
         self.action = Actions.done
-
+        self.current_task = None
         self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
-
+        if self.current_task != self.accept_task:
+            self.env.blackboard["predict_condition"] -= self.accept_task
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action
