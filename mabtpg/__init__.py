@@ -16,4 +16,8 @@ from mabtpg.envs.gridenv.minigrid.minigrid_env import MiniGridToMAGridEnv
 from mabtpg.utils import ROOT_PATH
 
 from mabtpg.utils.random import Random
+
 Random.initialize()
+
+import gymnasium
+make = gymnasium.make

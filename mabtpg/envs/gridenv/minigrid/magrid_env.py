@@ -56,8 +56,6 @@ class MAGridEnv(MiniGridEnv):
 
         return obs, {}
 
-
-
     def set_focus_agent(self, agent:Agent):
         self.agent_pos = agent.position
         self.agent_dir = agent.direction
