@@ -127,7 +127,7 @@ class BehaviorTree(ptree.trees.BehaviourTree):
                 bt_node.subtree = BehaviorTree(ins_btml, self.behavior_lib)
                 return bt_node
             else:
-                print("node.args:",node.args)
+                # print("node.args:",node.args)
                 return self.behavior_lib[node_type][cls_name](*node.args)
         else:
             node_type = composite_node_map[node.node_type]

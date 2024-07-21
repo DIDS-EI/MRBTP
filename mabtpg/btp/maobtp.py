@@ -60,9 +60,13 @@ class BfsPlanningAgent(PlanningAgent):
                     sub_goal = None
                     if action.cost==0:
                         composition_action_flag = True
+
+                        # it's wrong, it shold be condition_cost
                         # sub_goal = frozenset((action.pre | action.add) - action.del_set)
                         # sub_goal = [",".join(sorted(premise_condition))]
-                        sub_goal = [premise_condition]
+                        # sub_goal = [premise_condition]
+
+                        sub_goal = [condition]
 
                     planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal)
                     premise_condition_list.append(planning_condition)

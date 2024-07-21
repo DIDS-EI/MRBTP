@@ -59,7 +59,7 @@ class Agent(object):
         self.action = Actions.done
         self.current_task = None
         self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
-        if self.current_task != self.accept_task:
-            self.env.blackboard["predict_condition"] -= self.accept_task
+        # if self.current_task != self.accept_task:
+        #     self.env.blackboard["predict_condition"] -= self.accept_task
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action

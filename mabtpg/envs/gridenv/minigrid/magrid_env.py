@@ -25,7 +25,8 @@ class MAGridEnv(MiniGridEnv):
         self.agent_dir = -1
         self.num_agent = num_agent
         self.blackboard = {
-            "predict_condition":set()
+            "predict_condition":set(),
+            "aaa":{1}
         }
         self.agents = [Agent(self,i) for i in range(num_agent)]
 

@@ -24,6 +24,10 @@ class IsInRoom(Condition):
 
     def update(self) -> Status:
 
+        other_do_it = self.check_if_in_predict_condition()
+        if other_do_it:
+            return Status.SUCCESS
+
         self.room_index_ls = []
 
         if "agent" in self.args[0]:

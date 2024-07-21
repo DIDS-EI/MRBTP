@@ -56,7 +56,7 @@ print(start)
 action_sequences = {
     "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
      "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom']
-# "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
+    # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
 }
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
@@ -85,8 +85,9 @@ for i in range(env.num_agent):
 
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
-goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
-# goal = {"IsInRoom(ball-0,room-1)"}
+# goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
+goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsOpen(door-0)"}
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)

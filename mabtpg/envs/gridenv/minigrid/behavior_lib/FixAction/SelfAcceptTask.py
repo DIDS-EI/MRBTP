@@ -1,3 +1,5 @@
+import copy
+
 from mabtpg.behavior_tree.base_nodes import Action
 from mabtpg.behavior_tree import Status
 from minigrid.core.actions import Actions
@@ -13,8 +15,10 @@ class SelfAcceptTask(Action):
 
     def update(self) -> Status:
 
-        self.agent.accept_task = self.subgoal
-        self.env.blackboard["predict_condition"] |= self.subgoal
+        # 是否有人做了，如果没人做我就做
+        if self.subgoal not in self.env.blackboard["predict_condition"]:
+            self.agent.accept_task = self.subgoal
+            self.env.blackboard["predict_condition"] |= self.subgoal
 
         # self.env.blackboard['task'][self.subgoal] = self.agent.agent_id
         #
