@@ -58,6 +58,7 @@ class BfsPlanningAgent(PlanningAgent):
                     # record if it is composition action
                     composition_action_flag = False
                     sub_goal = None
+                    dependency = None
                     if action.cost==0:
                         composition_action_flag = True
 
@@ -66,9 +67,14 @@ class BfsPlanningAgent(PlanningAgent):
                         # sub_goal = [",".join(sorted(premise_condition))]
                         # sub_goal = [premise_condition]
 
-                        sub_goal = [condition]
+                        # sub_goal = frozenset(
+                        #     condition & (frozenset((action.pre | action.add) - action.del_set))
+                        # )
+                        sub_goal = condition
+                        # dependency = frozenset(premise_condition)
 
-                    planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal)
+                    # planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal,dependency)
+                    planning_condition = PlanningCondition(premise_condition, action.name, composition_action_flag,sub_goal)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 

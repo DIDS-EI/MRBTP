@@ -8,6 +8,7 @@ class AnyTreeNode:
         self.children = list(children)
         self.info = info
 
+
     @property
     def print_name(self):
         return f"{self.node_type} {self.cls_name}({','.join(self.args)})"

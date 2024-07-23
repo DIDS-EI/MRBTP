@@ -171,6 +171,9 @@ class PlanningAgent:
 
 
     def create_anytree(self):
+
+        task_num=0
+
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
         # add goal conditions into root
@@ -198,6 +201,7 @@ class PlanningAgent:
                 self.add_conditions(current_condition,condition_parent)
                 # add action
                 cls_name, args = parse_predicate_logic(current_condition.action)
+                # args = tuple(list(args) + [current_condition.action_pre])
                 action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
 
                 # add the sequence node into its parent
@@ -214,8 +218,12 @@ class PlanningAgent:
                 sel_comp_parent = AnyTreeNode(NODE_TYPE.selector)
 
                 seq_task_parent = AnyTreeNode(NODE_TYPE.sequence)
-                task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",current_condition.sub_goal)
+
+                task_flag_condition = AnyTreeNode(NODE_TYPE.condition, "IsSelfTask",
+                                                  ([current_condition.sub_goal]))
+                # task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",([task_num,current_condition.sub_goal]))
                 cls_name, args = parse_predicate_logic(current_condition.action)
+                # args = tuple(list(args) + [current_condition.action_pre])
                 task_comp_action = AnyTreeNode(NODE_TYPE.action,cls_name,args)
                 # seq add two children
                 seq_task_parent.add_child(task_flag_condition)
@@ -235,9 +243,12 @@ class PlanningAgent:
                 # add condition
                 self.add_conditions(current_condition,condition_parent)
                 # add action
-                print("current_condition.sub_goal:",current_condition.sub_goal)
-                action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",current_condition.sub_goal)
+                # print("current_condition.sub_goal:",current_condition.sub_goal)
+                # action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,current_condition.sub_goal,current_condition.dependency))
 
+                action_node = AnyTreeNode(NODE_TYPE.action, "SelfAcceptTask", [current_condition.sub_goal])
+                # action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,current_condition.sub_goal))
+                # task_num += 1
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:
                     current_condition.parent.add_child(action_node)

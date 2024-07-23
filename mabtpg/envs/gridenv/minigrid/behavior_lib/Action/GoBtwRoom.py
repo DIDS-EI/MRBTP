@@ -21,6 +21,7 @@ class GoBtwRoom(Action):
         self.goal = None
 
 
+
     @classmethod
     def get_planning_action_list(cls, agent, env):
 
@@ -54,6 +55,10 @@ class GoBtwRoom(Action):
 
 
     def update(self) -> Status:
+
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
             # self.arg_cur_pos = self.env.id2obj[self.obj_id].cur_pos
@@ -78,8 +83,14 @@ class GoBtwRoom(Action):
                 door_id = self.env.adj_rooms_to_doors[(self.from_room_id, self.to_room_id)]
                 door_positions = list(self.env.id2obj[door_id].cur_pos)  # 获取从房间的门口位置
                 self.path = astar(self.env.grid, start=self.agent.position, goal=door_positions)
+
+                if self.path==None:
+                    if is_near(self.goal, self.agent.position):
+                        goal_direction = self.goal - np.array(self.agent.position)
+                        self.agent.action = self.turn_to(goal_direction)
+                    else:
+                        assert(self.path)
                 print(self.path)
-                assert(self.path)
 
         if self.path == []:
             # goal_direction = self.goal - np.array(self.agent.position)

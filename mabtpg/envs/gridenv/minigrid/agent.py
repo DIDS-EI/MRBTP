@@ -57,9 +57,30 @@ class Agent(object):
 
     def step(self):
         self.action = Actions.done
-        self.current_task = None
         self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
-        # if self.current_task != self.accept_task:
-        #     self.env.blackboard["predict_condition"] -= self.accept_task
+        print("cur",self.current_task,"acp",self.accept_task)
+        if self.current_task != self.accept_task:
+            if self.current_task!=None:
+
+                self.env.blackboard["predict_condition"] -= self.current_task["subgoal"]
+
+                # 先遍历这个键值，删除里面对应的任务里 depend
+                task_key = (self.current_task["task_id"],self.current_task["subgoal"])
+                # 如果有受它依赖的任务，那么解除这些任务的依赖
+                if task_key in self.env.blackboard["dependent_tasks_dic"]:
+                    successor_tasks = self.env.blackboard["dependent_tasks_dic"][task_key]
+                    for st in successor_tasks:
+                        self.env.blackboard["task_predict_condition"][st] -= self.current_task["subgoal"]
+                    # 这个任务的记录，删除记录依赖
+                    del self.env.blackboard["dependent_tasks_dic"][task_key]
+
+
+
+                # self.env.blackboard["premise_dep2subgoal"] = {k: v for k, v in self.env.blackboard["premise_dep2subgoal"].items() if v != \
+                #                                               (self.current_task["task_id"],self.current_task["subgoal"])}
+                    # if self.current_task["subgoal"] in self.env.blackboard["condition_dependency"]:
+                    #     del self.env.blackboard["condition_dependency"][self.current_task["subgoal"]]
+
+
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action

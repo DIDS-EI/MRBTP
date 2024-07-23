@@ -9,7 +9,9 @@ from itertools import permutations
 
 from composite_action_tools import CompositeActionPlanner
 
-num_agent = 2
+from mabtpg.utils.tools import print_colored
+
+num_agent = 1
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
 tile_size = 32
@@ -54,9 +56,16 @@ start = env.get_initial_state()
 print(start)
 
 action_sequences = {
+    # "GetObj": ['GoToInRoom', 'PickUp'],
+    # "ToggleDoor":['GoToInRoom','Toggle']
+    # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',"PutInRoom"],
+    # "PutDown":['']
+
     "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
      "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom']
     # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
+
+
 }
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
@@ -86,14 +95,24 @@ for i in range(env.num_agent):
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
-# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
-goal = {"IsInRoom(ball-0,room-1)"}
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
+goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
+# goal = {"IsInRoom(ball-0,room-1)"}
+# goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsOpen(door-0)"}
+
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
 behavior_lib = [agent.behavior_lib for agent in env.agents]
 btml_list = planning_algorithm.get_btml_list()
+
+
+# from mabtpg.btp.mabtp import MABTP
+# planning_algorithm = MABTP(verbose = False)
+# planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
+# behavior_lib = [agent.behavior_lib for agent in env.agents]
+# btml_list = planning_algorithm.get_btml_list()
 
 
 # bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
@@ -126,13 +145,13 @@ from mabtpg.behavior_tree.constants import NODE_TYPE
 bt_list=[]
 for i,agent in enumerate(planning_algorithm.planned_agent_list):
     # for name,btml in comp_act_BTML_dic["agent-"+str(i)].items():
-    for name, btml in comp_act_BTML_dic["agent-0"].items():
+    for j,(name, btml) in enumerate(comp_act_BTML_dic.items()):
         btml_list[i].anytree_root = agent.anytree_root
         btml_list[i].sub_btml_dict[name] = btml
         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
 
         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-        tmp_bt.draw(file_name = name)
+        tmp_bt.draw(file_name = name+f"-{j}")
 
     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
     bt_list.append(bt)
@@ -155,9 +174,9 @@ env.render()
 env.print_ticks = True
 done = False
 while not done:
-    print("==========================")
+    print_colored("======================================================================================","blue")
     obs,done,_,_ = env.step()
-    print("==========================\n")
+    # print("==========================\n")
 print(f"\ntask finished!")
 
 # continue rendering after task finished

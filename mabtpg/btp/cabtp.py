@@ -1,3 +1,4 @@
+import copy
 
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 from mabtpg.utils import parse_predicate_logic
@@ -10,58 +11,74 @@ from mabtpg.behavior_tree import BTML
 
 from mabtpg.btp.base import PlanningCondition, PlanningAgent
 
+
+
+
 class CABTP(PlanningAgent):
     '''Composition Action Behavior Tree Planning '''
-    def __init__(self,action_list,goal,sub_act_ls,id=None,verbose=False):
+    def __init__(self,action_list,goal,sequence,id=None,verbose=False):
         super().__init__(action_list,goal,id,verbose)
 
-        reversed(sub_act_ls)
-        self.sub_act_ls = sub_act_ls
-        self.sub_act_index = len(sub_act_ls) - 1
+        # reversed(sequence)
+        self.sequence = copy.deepcopy(sequence)
+        self.sequence.reverse()
+
+        self.sequence_index = 0
 
         self.collect_explored_cond_act = []
 
-    def one_step_expand(self, condition):
+    def one_step_expand(self, condition,seq_index):
 
         # Determine whether the expansion is within the tree or outside the tree before expanding!
         inside_condition = self.expanded_condition_dict.get(condition, None)
 
         # find premise conditions
         premise_condition_list = []
+        cond_seqindex_ls = []
+
         for action in self.action_list:
 
-            if self.sub_act_index < 0:
+            # if seq_index==2:
+            #     xxx=1
+
+            if seq_index+1 >= len(self.sequence):
                 break
 
+            # Ensures sequential expansion of actions in sub-action sequences
+            if self.sequence[seq_index+1] not in action.name:
+                continue
+
             if self.is_consequence(condition,action):
+            # if True:
                 premise_condition = frozenset((action.pre | condition) - action.add)
                 if self.has_no_subset(premise_condition):
-
+                # if True:
                     # conflict check
                     if self.check_conflict(premise_condition):
                         continue
 
-                    # Ensures sequential expansion of actions in sub-action sequences
-                    if self.sub_act_ls[self.sub_act_index] not in action.name:
-                        continue
-                    self.sub_act_index -= 1
 
                     planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
-                    # collcet
-                    self.collect_explored_cond_act.append((premise_condition,action))
+                    # seq
+                    planning_condition.parent_cond = condition
+                    cond_seqindex_ls.append((premise_condition,seq_index+1))
 
-                    if self.sub_act_index < 0:
-                        break
+                    # collcet
+                    # self.collect_explored_cond_act.append((seq_index+1,planning_condition))
+                    self.collect_explored_cond_act.append((seq_index + 1, planning_condition, action))
 
                     if self.verbose:
-                        if inside_condition:
-                            print_colored(f'inside','purple')
-                        else:
-                            print_colored(f'outside','purple')
-                        print_colored(f'a:{action.name} \t c_attr:{premise_condition}','orange')
+                        print_colored(f"---- Index:{seq_index+1}:  {action.name} ", "orange")
+
+                    # if self.verbose:
+                    #     if inside_condition:
+                    #         print_colored(f'inside','purple')
+                    #     else:
+                    #         print_colored(f'outside','purple')
+                    #     print_colored(f'a:{action.name} c_attr:{str(premise_condition)}','orange')
 
         # insert premise conditions into BT
         if inside_condition:
@@ -69,6 +86,16 @@ class CABTP(PlanningAgent):
         else:
             self.outside_expand(premise_condition_list)
 
-        return premise_condition_list
+        return premise_condition_list,cond_seqindex_ls
 
 
+    def planning(self):
+        # cond,index
+        explored_condition_list = [(self.goal,-1)]
+
+        while explored_condition_list != []:
+            cond_seqindex = explored_condition_list.pop(0)
+            cond,seq_index = cond_seqindex
+            if self.verbose: print_colored(f"C:{cond}  Index:{seq_index}", "green")
+            premise_condition_list,cond_seqindex_ls = self.one_step_expand(cond,seq_index)
+            explored_condition_list += cond_seqindex_ls

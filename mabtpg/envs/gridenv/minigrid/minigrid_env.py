@@ -62,6 +62,15 @@ class MiniGridToMAGridEnv(MAGridEnv):
         self.room_cells,self.cells_room = self.assign_cells_to_rooms()
         self.action_list = None
 
+        self.obj_type_num = None
+        self.id2obj = None
+        self.obj_name2id = None
+        self.obj_id2name=None
+
+        # Initialize a dictionary to map doors to their corresponding keys
+        self.door_key_map = None
+        self.key_door_map = None
+
 
         ## need to put in after reset()
         # self.get_objects_lists()
@@ -372,6 +381,12 @@ class MiniGridToMAGridEnv(MAGridEnv):
             self.action_list = list(itertools.chain(*action_list)) #flattened_list
         else:
             self.action_list = action_list
+
+        # write it into blackboard
+        for act_ls in action_list:
+            for act in act_ls:
+                self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+
         return action_list
 
     def get_initial_state(self):

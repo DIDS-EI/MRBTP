@@ -17,6 +17,7 @@ class Toggle(Action):
         super().__init__(*args)
         self.path = None
 
+
     @classmethod
     def get_planning_action_list(cls, agent, env):
         planning_action_list = []
@@ -37,6 +38,9 @@ class Toggle(Action):
 
 
     def update(self) -> Status:
+
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
 
         self.agent.action = Actions.toggle
         print("agent:", self.agent.id,"Toggle")

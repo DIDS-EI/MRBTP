@@ -19,6 +19,7 @@ class PutInRoom(Action):
         self.room_index = int(''.join(filter(str.isdigit, self.room_id )))
         self.target_position = None
 
+
     @classmethod
     def get_planning_action_list(cls, agent, env):
 
@@ -54,6 +55,10 @@ class PutInRoom(Action):
 
 
     def update(self) -> Status:
+
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
         if self.room_index not in self.env.room_cells:
             raise ValueError(f"Room index {self.room_index} does not exist.")
 

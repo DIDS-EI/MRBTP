@@ -59,15 +59,19 @@ class GoToInRoom(Action):
 
     def update(self) -> Status:
 
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
         if self.path is None:
             # Find the specific location of an object on the map based on its ID
             self.goal = list(self.env.id2obj[self.obj_id].cur_pos)
-            # print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
+            print("obj_id:",self.obj_id,"\t goal:",self.goal,"\t agent.position",self.agent.position)
+
+            if is_near(self.goal, self.agent.position):
+                goal_direction = self.goal - np.array(self.agent.position)
+                self.agent.action = self.turn_to(goal_direction)
 
             self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
-
-            # print(self.path)
-
             if self.path == None:
                 assert self.path
 

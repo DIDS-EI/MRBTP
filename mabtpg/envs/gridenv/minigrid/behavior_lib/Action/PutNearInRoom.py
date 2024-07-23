@@ -22,6 +22,7 @@ class PutNearInRoom(Action):
         self.target_position = None
         self.target_obj_pos = None
 
+
     @classmethod
     def get_planning_action_list(cls, agent, env):
 
@@ -55,7 +56,7 @@ class PutNearInRoom(Action):
 
                 action_model["del_set"] = {f'IsHolding(agent-{agent.id},{obj.id})' for obj in env.obj_list}
                 action_model["del_set"] |= {f'IsNear(agent-{agent.id},{obj})' for obj in can_goto if obj != obj_id}
-                action_model["del_set"] = {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_id}
+                action_model["del_set"] |= {f'IsInRoom(agent-{agent.id},room-{rid})' for rid in range(room_num) if rid != room_id}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"PutNearInRoom(agent-{agent.id},{obj_id},{target_obj_id},room-{room_id})",**action_model))
 
@@ -63,6 +64,10 @@ class PutNearInRoom(Action):
 
 
     def update(self) -> Status:
+
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
         if self.room_index not in self.env.room_cells:
             raise ValueError(f"Room index {self.room_index} does not exist.")
 

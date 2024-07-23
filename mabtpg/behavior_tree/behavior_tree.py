@@ -17,7 +17,7 @@ from mabtpg.behavior_tree.base_nodes import base_node_map, control_node_map,base
 
 import copy
 import sys
-
+from mabtpg.utils.tools import print_colored
 class BehaviorTree(ptree.trees.BehaviourTree):
     def __init__(self, btml=None, behavior_lib=None):
         if isinstance(btml, str):
@@ -50,17 +50,22 @@ class BehaviorTree(ptree.trees.BehaviourTree):
         super().tick()
         if verbose:
             if bt_name is None:
-                bt_name = f"{self.btml.cls_name}({','.join(self.btml.ins_args)}"
+                bt_name = f"{self.btml.cls_name}({','.join(self.btml.ins_args)})"
             bt_output = self.visitor.output_str
 
             if bt_output != self.last_tick_output:
                 if self.env.print_ticks:
-                    print(f"----- tick verbose for {bt_name} ------")
+                    print_colored(f"----- tick verbose for {bt_name} ------",color="yellow")
 
                     lines = bt_output.splitlines()
                     for line in lines:
                         if line.startswith(('condition','action')):
-                            print(line)
+                            if "SUCCESS" in line:
+                                print_colored(line,color="green")
+                            elif "RUNNING" in line:
+                                print_colored(line, color="green")
+                            else:
+                                print(line)
 
                     # print()
                     self.last_tick_output = bt_output
@@ -127,7 +132,9 @@ class BehaviorTree(ptree.trees.BehaviourTree):
                 bt_node.subtree = BehaviorTree(ins_btml, self.behavior_lib)
                 return bt_node
             else:
-                # print("node.args:",node.args)
+                # print("cls_name:",cls_name,"node.args:",node.args)
+                # if cls_name=="IsSelfTask":
+                #     a=1
                 return self.behavior_lib[node_type][cls_name](*node.args)
         else:
             node_type = composite_node_map[node.node_type]
