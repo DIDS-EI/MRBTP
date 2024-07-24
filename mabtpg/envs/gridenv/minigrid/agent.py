@@ -67,15 +67,15 @@ class Agent(object):
         print_colored(f"last: {self.last_accept_task}",color='orange')
         if self.current_task != self.accept_task and self.last_accept_task!=None:
             print_colored(f"Have Finish Last Task! cur_task = {self.current_task}",color='orange')
-            self.env.blackboard["predict_condition"] -= self.current_task["subgoal"]
+            self.env.blackboard["predict_condition"] -= self.last_accept_task["subgoal"]
             # 先遍历这个键值，删除里面对应的任务里 depend
-            task_key = (self.current_task["task_id"],self.current_task["subgoal"])
+            task_key = (self.last_accept_task["task_id"],self.last_accept_task["subgoal"])
             # 如果有受它依赖的任务，那么解除这些任务的依赖
             print_colored(f"Task Dependency: {self.env.blackboard['dependent_tasks_dic']}",color='orange')
             if task_key in self.env.blackboard["dependent_tasks_dic"]:
                 successor_tasks = self.env.blackboard["dependent_tasks_dic"][task_key]
                 for st in successor_tasks:
-                    self.env.blackboard["task_predict_condition"][st] -= self.current_task["subgoal"]
+                    self.env.blackboard["task_predict_condition"][st] -= self.last_accept_task["subgoal"]
                     print_colored("Release Task Dependency....",color='orange')
                     print_colored(f"{st} \t {self.env.blackboard['task_predict_condition'][st]}",color='orange')
                 # 这个任务的记录，删除记录依赖

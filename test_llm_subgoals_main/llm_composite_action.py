@@ -1,3 +1,5 @@
+import time
+
 from mabtpg.algo.llm_client.llms.gpt3 import LLMGPT3
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
@@ -6,12 +8,12 @@ from mabtpg.utils import get_root_path
 from mabtpg import BehaviorLibrary
 root_path = get_root_path()
 from itertools import permutations
-
+import time
 from composite_action_tools import CompositeActionPlanner
 
 from mabtpg.utils.tools import print_colored
 
-num_agent = 2
+num_agent = 3
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
 tile_size = 32
@@ -35,8 +37,8 @@ ball = Ball('red')
 env.place_object_in_room(ball,0)
 ball = Ball('yellow')
 env.place_object_in_room(ball,0)
-# ball = Ball('grey')
-# env.place_object_in_room(ball,0)
+ball = Ball('grey')
+env.place_object_in_room(ball,0)
 # ball = Ball('red')
 # env.place_object_in_room(ball,0)
 # ball = Ball('red')
@@ -61,8 +63,13 @@ action_sequences = {
     # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',"PutInRoom"],
     # "PutDown":['']
 
+    # ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle','PutInRoom'], 怎么搜出来，现在的 CABTP 还是有问题。PutInRoom 后面规划不出 Toggle，不满足增加而不删除
+
     "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
-     "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom']
+    "PutObjInRoom":["PutInRoom"],
+     "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
+    "GoBtwRoom":["GoBtwRoom"]
+
     # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
 
 
@@ -85,7 +92,7 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 
 for i in range(env.num_agent):
     agent_id = "agent-"+str(i)
-    # action_lists[i]=[] # if only composition action
+    action_lists[i]=[] # if only composition action
     if agent_id in comp_planning_act_dic:
         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
     # sorted by cost
@@ -95,14 +102,16 @@ for i in range(env.num_agent):
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
-# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
-goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
+goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsOpen(door-0)"}
 
-start = None
+print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="red")
+start_time = time.time()
+# start = None
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
@@ -115,6 +124,9 @@ btml_list = planning_algorithm.get_btml_list()
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 # behavior_lib = [agent.behavior_lib for agent in env.agents]
 # btml_list = planning_algorithm.get_btml_list()
+
+print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="red")
+print_colored(f"Time: {time.time()-start_time}",color="red")
 
 
 # bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])

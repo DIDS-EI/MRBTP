@@ -15,7 +15,10 @@ class BTML:
     def clone_with_new_root(self,root):
         new_btml = BTML()
         new_btml.anytree_root = root
-        new_btml.sub_btml_dict = copy.deepcopy(self.sub_btml_dict)
+        new_btml.sub_btml_dict = self.sub_btml_dict
+        # new_btml.sub_btml_dict = copy.deepcopy(self.sub_btml_dict)
+        # import dill
+        # new_btml.sub_btml_dict = dill.loads(dill.dumps(self.sub_btml_dict))
         return new_btml
 
     def instantiate(self, args):

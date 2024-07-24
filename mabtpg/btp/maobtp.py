@@ -67,10 +67,14 @@ class BfsPlanningAgent(PlanningAgent):
                         # sub_goal = [",".join(sorted(premise_condition))]
                         # sub_goal = [premise_condition]
 
-                        sub_goal = frozenset(
-                            condition & (frozenset((action.pre | action.add) - action.del_set))
-                        )
+                        # sub_goal = frozenset(
+                        #     condition & (frozenset((action.pre | action.add) - action.del_set))
+                        # )
                         # sub_goal = condition
+
+                        sub_goal = frozenset(
+                            condition & frozenset(action.add)
+                        )
 
                         # subgoal改成 当前状态+add(A)-del(A)
                         # 相当于是根据组合动作做预测
