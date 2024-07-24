@@ -11,7 +11,7 @@ from composite_action_tools import CompositeActionPlanner
 
 from mabtpg.utils.tools import print_colored
 
-num_agent = 1
+num_agent = 2
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
 tile_size = 32
@@ -85,7 +85,7 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 
 for i in range(env.num_agent):
     agent_id = "agent-"+str(i)
-    action_lists[i]=[] # if only composition action
+    # action_lists[i]=[] # if only composition action
     if agent_id in comp_planning_act_dic:
         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
     # sorted by cost
@@ -97,10 +97,12 @@ from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
 # goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
 goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
+# goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsOpen(door-0)"}
 
+start = None
 planning_algorithm = MAOBTP(verbose = False,start=start)
 # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
 planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
@@ -151,7 +153,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
 
         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-        tmp_bt.draw(file_name = name+f"-{j}")
+        # tmp_bt.draw(file_name = name+f"-{j}")
 
     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
     bt_list.append(bt)
@@ -162,7 +164,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
 
 for i in range(env.num_agent):
     bt_list[i].save_btml(f"robot-{i}.bt")
-    bt_list[i].draw(file_name=f"agent-{i}")
+    # bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

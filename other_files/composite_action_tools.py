@@ -77,22 +77,27 @@ class CompositeActionPlanner:
                     "cost": 0
                 }
                 sum_add = set()
+                # sum_del = set()
                 for i, a in enumerate(cond_act_ls):
-                    composite_action_model["pre"] |= a.pre - sum_add
+                    # sum_add |= act.add
+                    # composite_action_model["pre"] |= (act.pre - sum_add)
+                    if i==0:
+                        composite_action_model["pre"] = a.pre
+                        composite_action_model["add"] = a.add
+                        composite_action_model["del_set"] = a.del_set
+                    composite_action_model["add"] = (composite_action_model["add"] | a.add) -a.del_set
+                    composite_action_model["del_set"] = (composite_action_model["del_set"] | a.del_set) - a.add
 
-                    composite_action_model["add"] |= a.add
-                    composite_action_model["add"] -= a.del_set
-
-                    composite_action_model["del_set"] |= a.del_set
-                    composite_action_model["del_set"] -= a.add
-
+                    if i>0:
+                        # composite_action_model["pre"] = (act.pre-sum_add) | (composite_action_model["pre"]-act.del_set)
+                        composite_action_model["pre"] |= (a.pre - sum_add)
+                        # composite_action_model["pre"] = composite_action_model["pre"] - a.del_set
                     sum_add |= a.add
+
+                    # add把pre减掉         ？
+                    # composite_action_model["add"] -= composite_action_model["pre"]
+
                     args_ls.extend(extract_parameters_from_action_name(a.name))
-
-                # add里总是有 IsHandEmpty
-                composite_action_model["del_set"] = composite_action_model["del_set"] - composite_action_model["add"]
-                composite_action_model["add"] = composite_action_model["add"]-composite_action_model["pre"]
-
 
                 # # Preserve order and remove duplicates
                 # gobetween(room-0,room-1), gobetween(room-01,room-0)
