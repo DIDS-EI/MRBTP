@@ -1,0 +1,26 @@
+fallback
+    condition IsInRoom(ball-0,room-1) & IsInRoom(ball-1,room-1)
+    sequence
+        fallback
+            condition IsInRoom(agent-1,room-0) & IsInRoom(ball-1,room-1) & IsOpen(door-0)
+            sequence
+                condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsInRoom(ball-1,room-1)
+                action GetKeyAndOpenDoor(agent-1,key-0,room-0,door-0)
+        action MoveItemBetweenRooms(agent-1,ball-0,room-0,room-1)
+    sequence
+        fallback
+            condition IsInRoom(agent-1,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+            sequence
+                condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsInRoom(ball-0,room-1)
+                action GetKeyAndOpenDoor(agent-1,key-0,room-0,door-0)
+        action MoveItemBetweenRooms(agent-1,ball-1,room-0,room-1)
+    sequence
+        condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(ball-1,room-1)
+        action GetKeyAndOpenDoor(agent-1,key-0,room-0,door-0)
+    sequence
+        fallback
+            condition IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsOpen(door-0)
+            sequence
+                condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0)
+                action GetKeyAndOpenDoor(agent-1,key-0,room-0,door-0)
+        action MoveItemBetweenRooms(agent-1,ball-1,room-0,room-1)
