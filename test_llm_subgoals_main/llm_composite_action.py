@@ -13,7 +13,7 @@ from composite_action_tools import CompositeActionPlanner
 
 from mabtpg.utils.tools import print_colored
 
-num_agent = 3
+num_agent = 2
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
 tile_size = 32
@@ -35,10 +35,10 @@ env.reset(seed=0)
 # add objs
 ball = Ball('red')
 env.place_object_in_room(ball,0)
-ball = Ball('yellow')
-env.place_object_in_room(ball,0)
-ball = Ball('grey')
-env.place_object_in_room(ball,0)
+# ball = Ball('yellow')
+# env.place_object_in_room(ball,0)
+# ball = Ball('grey')
+# env.place_object_in_room(ball,0)
 # ball = Ball('red')
 # env.place_object_in_room(ball,0)
 # ball = Ball('red')
@@ -62,17 +62,19 @@ action_sequences = {
     # "ToggleDoor":['GoToInRoom','Toggle']
     # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',"PutInRoom"],
     # "PutDown":['']
+    # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
 
     # ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle','PutInRoom'], 怎么搜出来，现在的 CABTP 还是有问题。PutInRoom 后面规划不出 Toggle，不满足增加而不删除
 
-    "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
-    "PutObjInRoom":["PutInRoom"],
-     "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
-    "GoBtwRoom":["GoBtwRoom"]
+    # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
+    # "PutObjInRoom":["PutInRoom"],
+    #  "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
+    # "GoBtwRoom":["GoBtwRoom"]
 
-    # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
-
-
+    "GoAndPickUp": ['GoToInRoom', 'PickUp'],
+    "GoToInRoom": ["GoToInRoom"],
+    "Toggle": ["Toggle"],
+    "MoveItemBetweenRooms": ['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
 }
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
@@ -92,7 +94,7 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 
 for i in range(env.num_agent):
     agent_id = "agent-"+str(i)
-    action_lists[i]=[] # if only composition action
+    # action_lists[i]=[] # if only composition action
     if agent_id in comp_planning_act_dic:
         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
     # sorted by cost
@@ -102,10 +104,10 @@ for i in range(env.num_agent):
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
-goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
 # goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
 # goal = {"IsNear(ball-0,door-0)"}
-# goal = {"IsInRoom(ball-0,room-1)"}
+goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsOpen(door-0)"}
 
@@ -165,7 +167,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
 
         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-        # tmp_bt.draw(file_name = name+f"-{j}")
+        tmp_bt.draw(file_name = name+f"-{j}")
 
     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
     bt_list.append(bt)
@@ -176,7 +178,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
 
 for i in range(env.num_agent):
     bt_list[i].save_btml(f"robot-{i}.bt")
-    # bt_list[i].draw(file_name=f"agent-{i}")
+    bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

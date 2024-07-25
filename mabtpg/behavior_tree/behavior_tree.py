@@ -95,6 +95,26 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     def clone(self):
         return copy.deepcopy(self)
 
+    # def new_node(self, node):
+    #     if node.node_type in control_node_map.keys():
+    #         node_type = control_node_map[node.node_type]
+    #         return node_type(memory=False)
+    #     elif node.node_type in base_node_type_map.keys():
+    #         node_type = base_node_map[node.node_type]
+    #         cls_name = node.cls_name
+    #         args = node.args
+    #         return type(cls_name, (node_type,), {})(*args)
+    #     else:
+    #         node_type = composite_node_map[node.node_type]
+    #         args = node.args
+    #         condition_list = []
+    #         for anytree_condition in args:
+    #             c_node_type = base_node_map[anytree_condition.node_type]
+    #             cls_name = anytree_condition.cls_name
+    #             c_args = anytree_condition.args
+    #             condition_list.append(type(cls_name, (c_node_type,), {})(*c_args))
+    #         return node_type(*condition_list)
+
     def new_node(self, node):
         if node.node_type in control_node_map.keys():
             node_type = control_node_map[node.node_type]
@@ -106,14 +126,15 @@ class BehaviorTree(ptree.trees.BehaviourTree):
             return type(cls_name, (node_type,), {})(*args)
         else:
             node_type = composite_node_map[node.node_type]
-            args = node.args
-            condition_list = []
-            for anytree_condition in args:
-                c_node_type = base_node_map[anytree_condition.node_type]
-                cls_name = anytree_condition.cls_name
-                c_args = anytree_condition.args
-                condition_list.append(type(cls_name, (c_node_type,), {})(*c_args))
-            return node_type(*condition_list)
+            cls_name = node.cls_name
+            assert cls_name is None, "expecting an inline composite condition."
+            subtree_root = node.info["sub_btml"]
+
+            subtree_btml = self.btml.clone_with_new_root(subtree_root.anytree_root)
+            sub_tree = BehaviorTree(subtree_btml)
+
+            return node_type(cls_name,sub_tree)
+
 
 
     def new_node_with_lib(self, node):

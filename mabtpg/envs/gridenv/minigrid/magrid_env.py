@@ -147,7 +147,7 @@ class MAGridEnv(MiniGridEnv):
         else:
             raise ValueError(f"Unknown action: {action}")
 
-    def   step(self,action=None,num_agent = None):
+    def step(self,action=None,num_agent = None):
         if num_agent is None:
             num_agent = self.num_agent
         self.step_count += 1

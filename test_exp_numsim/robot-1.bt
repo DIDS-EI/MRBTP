@@ -1,0 +1,22 @@
+fallback
+    condition a(1) & b(1) & c(1) & d(1) & e(2)
+    sequence
+        fallback
+            condition a(1) & b(1) & d(1) & e(2)
+            sequence
+                condition a(1) & b(1) & d(1)
+                action A2(0)
+        action A1(0)
+    sequence
+        condition a(1) & b(1) & c(1) & d(1)
+        action A2(0)
+    sequence
+        fallback
+            condition b(1) & d(1) & e(2)
+            sequence
+                condition b(1) & d(1)
+                action A2(0)
+        action A1(0)
+    sequence
+        condition b(1) & c(1) & d(1)
+        action A2(0)

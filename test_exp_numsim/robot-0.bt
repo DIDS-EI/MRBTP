@@ -1,0 +1,14 @@
+fallback
+    condition a(1) & b(1) & c(1) & d(1) & e(2)
+    sequence
+        condition b(1) & c(1) & d(1) & e(2)
+        action A0(0)
+    sequence
+        condition b(1) & d(1) & e(2)
+        action A0(0)
+    sequence
+        condition b(1) & c(1) & d(1)
+        action A0(0)
+    sequence
+        condition b(1) & d(1)
+        action A0(0)

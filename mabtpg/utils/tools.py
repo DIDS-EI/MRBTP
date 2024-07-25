@@ -15,7 +15,8 @@ def print_colored(text, color):
         "yellow": '\033[93m',  # Yellow
         "orange": '\033[38;2;255;165;0m',  # RGB for Orange
         "red": '\033[91m',     # Red
-        "purple": '\033[95m'   # Purple
+        "purple": '\033[95m',   # Purple
+        'magenta': '\033[35m'
     }
 
     color_code = color_codes.get(color, '\033[0m')  # Default to no color if not found

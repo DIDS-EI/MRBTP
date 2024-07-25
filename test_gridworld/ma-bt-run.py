@@ -27,7 +27,7 @@ class Action:
                 self.del_set.add(i)
 
     def print_action(self):
-        print (self.pre)
+        print(self.pre)
         print(self.add)
         print(self.del_set)
 
