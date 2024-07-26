@@ -136,7 +136,6 @@ class BehaviorTree(ptree.trees.BehaviourTree):
             return node_type(cls_name,sub_tree)
 
 
-
     def new_node_with_lib(self, node):
         if node.node_type in control_node_map.keys():
             node_type = control_node_map[node.node_type]

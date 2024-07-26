@@ -1,17 +1,22 @@
 import copy
 
 class AnyTreeNode:
-    def __init__(self, node_type, cls_name=None,args=(),children=(),info={}):
+    def __init__(self, node_type, cls_name=None,args=(),children=(),info={},has_args = True):
         self.node_type = node_type
         self.cls_name = cls_name
         self.args = args
         self.children = list(children)
         self.info = info
 
+        self.has_args = has_args
+
 
     @property
     def print_name(self):
-        return f"{self.node_type} {self.cls_name}({','.join(self.args)})"
+        if not self.has_args:
+            return f"{self.node_type} {self.cls_name}"
+        else:
+            return f"{self.node_type} {self.cls_name}({','.join(self.args)})"
 
     def print(self):
         print_tree_from_root(self)
@@ -26,7 +31,10 @@ class AnyTreeNode:
         self.children += children
 
     def __repr__(self):
-        return f'{self.node_type} {self.cls_name} {self.args}'
+        if not self.has_args:
+            return f"{self.node_type} {self.cls_name}"
+        else:
+            return f'{self.node_type} {self.cls_name} {self.args}'
 
 def new_tree_like(root,new_func):
     if not root:

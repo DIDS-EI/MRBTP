@@ -9,8 +9,6 @@ class Leaf:
 
     def tick(self,state):
         if self.type=='cond':
-            print("self.content:",self.content)
-            print("state:", state)
             if self.content <= state:
                 return 'success',self.content
             else:

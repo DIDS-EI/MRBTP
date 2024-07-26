@@ -116,22 +116,26 @@ def generate_predicates(num_pred):
 # generate data
 num_data = 1
 num_elements = 10
-num_cond_pred=5
-num_obj=2
 
-# 生成谓词列表
-predicates = generate_predicates(num_cond_pred)
+# 数字
+total_elements_set = frozenset(range(num_elements))
 
-# 随机生成每个谓词对应的物体数目，并确保总数目为 num_elements
-total_elements_set = set()
-while len(total_elements_set) < num_elements:
-    predicate = random.choice(predicates)
-    obj = random.randint(1, num_obj)
-    element = f"{predicate}({obj})"
-    total_elements_set.add(element)
-# 确保总数目为 num_elements
-while len(total_elements_set) > num_elements:
-    total_elements_set.pop()
+# # # 字母
+# num_cond_pred=5
+# num_obj=2
+# # 生成谓词列表
+# predicates = generate_predicates(num_cond_pred)
+# # 随机生成每个谓词对应的物体数目，并确保总数目为 num_elements
+# total_elements_set = set()
+# while len(total_elements_set) < num_elements:
+#     predicate = random.choice(predicates)
+#     obj = random.randint(1, num_obj)
+#     element = f"{predicate}({obj})"
+#     total_elements_set.add(element)
+# # 确保总数目为 num_elements
+# while len(total_elements_set) > num_elements:
+#     total_elements_set.pop()
+
 
 total_elements_set = frozenset(total_elements_set)
 print("Generated total_elements_set:", total_elements_set)
@@ -179,55 +183,49 @@ for action in new_actions:
     for agent_index in assigned_agents:
         agent_actions[agent_index].append(action)
 
+# 检查每个智能体是否有动作，如果没有则随机分配一个动作
+for i in range(num_agent):
+    if not agent_actions[i]:  # 如果该智能体没有被分配任何动作
+        # 随机选择一个动作分配给这个智能体
+        action_to_assign = random.choice(new_actions)
+        agent_actions[i].append(action_to_assign)
+
+
 dataset['agent_actions'] = agent_actions
 dataset['num_agent'] = num_agent
 
-# 输出结果
-
+# 打印分配结果，查看每个智能体的动作列表
 for i, actions in enumerate(dataset['agent_actions']):
     print(f"Agent {i + 1} actions:")
     for action in actions:
         print(f"  act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}")
 
 # 跑一下算法看看效果
+goal = dataset["goal"]
+start = dataset["start"]
+agent_actions = dataset['agent_actions']
+num_agent = len(agent_actions)
 
 from DMR import DMR
 dmr = DMR(dataset["goal"], dataset["start"], dataset["agent_actions"], dataset["num_agent"])
 dmr.planning()
+dmr.get_btml_and_bt_ls()
 
 # 要tick进行测试，能否从 start 到 goal。
 # 要几步
+from mabtpg.envs.numericenv.numeric_env import NumericEnv
+env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
+for i,agent in enumerate(env.agents):
+    agent.action = agent_actions[i]
+    agent.bind_bt(dmr.bt_ls[i])
+
+
+
+env.print_ticks = True
 done = False
-# while not done:
-
-print_colored("======================================================================================", "blue")
-for i in range(num_agent):
-    print_colored(f"---AGENT - {i}---", color="yellow")
-    # print(dmr.default_bt_ls[i])
-    # dmr.default_bt_ls[i].tick(dataset["start"])
-
-
-
-robot_list = dmr.default_bt_ls
-state = dataset["start"]
-
-steps = 0
-canrun,have_success,have_running,all_fail = False,False,False,True
-running_actions=[]
-for rob in robot_list:
-    val, obj = rob.tick(state)
-    if val == 'success' or val == 'running':
-        canrun = True
-        all_fail = False
-    if val == 'success':
-        have_success = True
-    if val == 'running':
-        have_running = True
-        running_actions.append(obj)
-
-
-
-
-
-
+while not done:
+    print_colored("======================================================================================","blue")
+    obs,done,_,_ = env.step()
+    # print("==========================\n")
+    done = True
 print(f"\ntask finished!")

@@ -33,7 +33,7 @@ class PlanningAgentTest(PlanningAgent):
                     if self.check_conflict(premise_condition):
                         continue
                     print("action:",action)
-                    planning_condition = PlanningCondition(premise_condition,action)  # action, not action's name
+                    planning_condition = PlanningCondition(premise_condition,action.name)  # action, not action's name
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
@@ -57,18 +57,108 @@ class PlanningAgentTest(PlanningAgent):
     def check_conflict(self, premise_condition):
         return False
 
+    def add_default_conditions(self, planning_condition, parent_node):
+        condition_set = planning_condition.condition_set
+        if len(condition_set) == 0: return
+        if len(condition_set) == 1:
+            parent_node.add_child([condition_set[0]])
+        else:
+            sequence_node = ControlBT(type='>')
+            for cond in condition_set:
+                if isinstance(cond, int):
+                    cond = [cond]
+                cond_node = Leaf(type='cond', content=frozenset(cond))
+                sequence_node.add_child([cond_node])
+            parent_node.add_child([sequence_node])
+
+    def create_default_bt(self):
+        task_num = 0
+
+        # Create the root node of the behavior tree
+        self.default_bt = ControlBT(type='?')
+
+        # Add goal conditions to the root
+        goal_node = Leaf(type='cond', content=self.goal_condition.condition_set)
+        self.default_bt.add_child([goal_node])
+
+        stack = [(self.goal_condition, self.default_bt)]
+        while stack:
+            current_condition, parent_node = stack.pop(0)
+
+            if not current_condition.composition_action_flag:
+                # Create a sequence node and its condition-action pair
+                sequence_node = ControlBT(type='>')
+
+                if not current_condition.children:
+                    condition_parent = sequence_node
+                else:
+                    condition_parent = ControlBT(type='?')
+                    sequence_node.add_child([condition_parent])
+
+                    for child in current_condition.children:
+                        stack.append((child, condition_parent))
+
+                # Add condition
+                # print("current_condition.condition_set:",current_condition.condition_set)
+                self.add_default_conditions(current_condition, condition_parent)
+
+                # Add action
+                print("current_condition.action:",current_condition.action)
+                action_node = Leaf(type='act', content=current_condition.action)
+                sequence_node.add_child([action_node])
+
+                # Add the sequence node to its parent
+                parent_node.add_child([sequence_node])
+
+            else:
+                # Handle composition actions
+                sel_comp_parent = ControlBT(type='?')
+                seq_task_parent = ControlBT(type='>')
+
+                task_flag_condition = Leaf(type='cond', content="IsSelfTask")
+                task_flag_condition.content = ([task_num, current_condition.sub_goal])
+                task_comp_action = Leaf(type='act', content=current_condition.action)
+
+                seq_task_parent.add_child([task_flag_condition, task_comp_action])
+                sel_comp_parent.add_child([seq_task_parent])
+
+                sequence_node = ControlBT(type='>')
+
+                if not current_condition.children:
+                    condition_parent = sequence_node
+                else:
+                    condition_parent = ControlBT(type='?')
+                    sequence_node.add_child([condition_parent])
+
+                    for child in current_condition.children:
+                        stack.append((child, condition_parent))
+
+                self.add_default_conditions(current_condition, condition_parent)
+
+                action_node = Leaf(type='act', content="SelfAcceptTask")
+                action_node.content = (task_num, current_condition.sub_goal)
+                task_num += 1
+
+                # Add the sequence node to its parent
+                parent_node.add_child([sel_comp_parent])
+                sel_comp_parent.add_child([sequence_node])
+
+        # self.default_bt.print_nodes()
+
+
+
     def add_conditions(self,planning_condition,parent):
         condition_set = planning_condition.condition_set
         if len(condition_set) == 0: return
 
         if len(condition_set) == 1:
-            # cls_name, args = parse_predicate_logic(list(condition_set)[0])
-            parent.add_child(AnyTreeNode(NODE_TYPE.condition,str(condition_set[0])))
+            cls_name, args = parse_predicate_logic(list(condition_set)[0])
+            parent.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
                 # cls_name, args = parse_predicate_logic(condition_node_name)
-                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,str(condition_node_name)))
+                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,str(condition_node_name),''))
 
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
@@ -85,6 +175,13 @@ class PlanningAgentTest(PlanningAgent):
 
         self.btml = btml
 
+    def get_btml_list(self):
+        btml_list = []
+        for i, agent in enumerate(self.planned_agent_list):
+            agent.create_btml()
+            bt = agent.btml
+            btml_list.append(bt)
+        return btml_list
 
     def create_anytree(self):
 
@@ -118,7 +215,7 @@ class PlanningAgentTest(PlanningAgent):
                 # add action
                 # cls_name, args = parse_predicate_logic(current_condition.action)
                 # args = tuple(list(args) + [current_condition.action_pre])
-                action_node = AnyTreeNode(NODE_TYPE.action,current_condition.action.name,[current_condition.action],has_args=False)
+                action_node = AnyTreeNode(NODE_TYPE.action,current_condition.action,[])
 
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:
@@ -203,5 +300,15 @@ class MABTP_test(MABTP):
                 break
 
         self.planned_agent_list = planning_agent_list
+
+
+
+    def create_default_bt(self):
+        default_bt_ls = []
+        for i,agent in enumerate(self.planned_agent_list):
+            agent.create_default_bt()
+            bt = agent.default_bt
+            default_bt_ls.append(bt)
+        return default_bt_ls
 
 

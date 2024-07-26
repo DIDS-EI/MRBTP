@@ -31,6 +31,10 @@ class DMR:
         print_colored(f"Time: {time.time() - start_time}", color="red")
 
 
+        # get default bt
+        self.default_bt_ls = self.planning_algorithm.create_default_bt()
+
+
     def get_btml_and_bt_ls(self):
         # get btml and bt
         self.btml_ls = self.planning_algorithm.get_btml_list()
