@@ -1,8 +1,8 @@
 fallback
-    condition 0() & 1() & 3() & 4() & 9()
+    condition NumCondition(0) & NumCondition(1) & NumCondition(3) & NumCondition(4) & NumCondition(9)
     sequence
-        condition 0() & 1() & 4()
-        action A1(0)(A1(0))
+        condition NumCondition(0) & NumCondition(1) & NumCondition(4)
+        action NumAction(A1(0))
     sequence
-        condition 4() & 7()
-        action A1(0)(A1(0))
+        condition NumCondition(4) & NumCondition(7)
+        action NumAction(A1(0))

@@ -116,6 +116,11 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     #         return node_type(*condition_list)
 
     def new_node(self, node):
+        from mabtpg.envs.numericenv.base.Action import NumAction
+        from mabtpg.envs.numericenv.base.Condition import NumCondition
+        base_node_map["NumAction"] = NumAction
+        base_node_map["NumCondition"] = NumCondition
+
         if node.node_type in control_node_map.keys():
             node_type = control_node_map[node.node_type]
             return node_type(memory=False)

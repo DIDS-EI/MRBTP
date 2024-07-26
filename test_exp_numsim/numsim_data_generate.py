@@ -215,11 +215,9 @@ dmr.get_btml_and_bt_ls()
 # 要几步
 from mabtpg.envs.numericenv.numeric_env import NumericEnv
 env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
+env.actions_lists = dataset["agent_actions"]
 for i,agent in enumerate(env.agents):
-    agent.action = agent_actions[i]
     agent.bind_bt(dmr.bt_ls[i])
-
-
 
 env.print_ticks = True
 done = False

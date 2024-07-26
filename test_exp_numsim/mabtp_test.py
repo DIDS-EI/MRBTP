@@ -63,12 +63,12 @@ class PlanningAgentTest(PlanningAgent):
 
         if len(condition_set) == 1:
             # cls_name, args = parse_predicate_logic(list(condition_set)[0])
-            parent.add_child(AnyTreeNode(NODE_TYPE.condition,str(condition_set[0])))
+            parent.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",str(condition_set[0])))
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
                 # cls_name, args = parse_predicate_logic(condition_node_name)
-                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,str(condition_node_name)))
+                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",str(condition_node_name)))
 
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
@@ -118,7 +118,7 @@ class PlanningAgentTest(PlanningAgent):
                 # add action
                 # cls_name, args = parse_predicate_logic(current_condition.action)
                 # args = tuple(list(args) + [current_condition.action_pre])
-                action_node = AnyTreeNode(NODE_TYPE.action,current_condition.action.name,[current_condition.action],has_args=False)
+                action_node = AnyTreeNode(NODE_TYPE.action,"NumAction",[current_condition.action],has_args=False)
 
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:

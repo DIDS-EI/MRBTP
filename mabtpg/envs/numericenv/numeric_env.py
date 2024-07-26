@@ -12,6 +12,7 @@ class NumericEnv(Env):
         self.num_agent = num_agent
         self.start = start
         self.goal = goal
+        self.actions_lists = None
 
         self.state = set(self.start)
 
