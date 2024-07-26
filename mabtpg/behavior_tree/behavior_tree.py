@@ -55,7 +55,7 @@ class BehaviorTree(ptree.trees.BehaviourTree):
 
             if bt_output != self.last_tick_output:
                 if self.env.print_ticks:
-                    print_colored(f"----- tick verbose for {bt_name} ------",color="yellow")
+                    print_colored(f"----- tick verbose for {bt_name} ------",color="green")
 
                     lines = bt_output.splitlines()
                     for line in lines:
@@ -116,10 +116,10 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     #         return node_type(*condition_list)
 
     def new_node(self, node):
-        from mabtpg.envs.numericenv.base.Action import NumAction
-        from mabtpg.envs.numericenv.base.Condition import NumCondition
-        base_node_map["NumAction"] = NumAction
-        base_node_map["NumCondition"] = NumCondition
+        # from mabtpg.envs.numericenv.behavior_lib.Action.NumAction import NumAction
+        # from mabtpg.envs.numericenv.behavior_lib.Condition.NumCondition import NumCondition
+        # base_node_map["NumAction"] = NumAction
+        # base_node_map["NumCondition"] = NumCondition
 
         if node.node_type in control_node_map.keys():
             node_type = control_node_map[node.node_type]

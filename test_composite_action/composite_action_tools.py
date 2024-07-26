@@ -63,6 +63,7 @@ class CompositeActionPlanner:
                         break
                 if len(cond_act_ls) !=len(sequence):
                     print("No matching combination of actions found!!!")
+                    continue
 
 
                 # cond_act_ls = list(reversed(seq_planning_cond))
@@ -73,27 +74,25 @@ class CompositeActionPlanner:
                     "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
                     "add": set(),
                     "del_set": set(),
-                    "cost": 1
+                    "cost": 0
                 }
                 sum_add = set()
-                # sum_del = set()
                 for i, a in enumerate(cond_act_ls):
-                    # sum_add |= act.add
-                    # composite_action_model["pre"] |= (act.pre - sum_add)
-                    if i==0:
-                        composite_action_model["pre"] = a.pre
-                        composite_action_model["add"] = a.add
-                        composite_action_model["del_set"] = a.del_set
-                    composite_action_model["add"] = (composite_action_model["add"] | a.add) -a.del_set
-                    composite_action_model["del_set"] = (composite_action_model["del_set"] | a.del_set) - a.add
+                    composite_action_model["pre"] |= a.pre - sum_add
 
-                    if i>0:
-                        # composite_action_model["pre"] = (act.pre-sum_add) | (composite_action_model["pre"]-act.del_set)
-                        composite_action_model["pre"] |= (a.pre - sum_add)
-                        # composite_action_model["pre"] = composite_action_model["pre"] - a.del_set
+                    composite_action_model["add"] |= a.add
+                    composite_action_model["add"] -= a.del_set
+
+                    composite_action_model["del_set"] |= a.del_set
+                    composite_action_model["del_set"] -= a.add
+
                     sum_add |= a.add
-
                     args_ls.extend(extract_parameters_from_action_name(a.name))
+
+                # add里总是有 IsHandEmpty
+                composite_action_model["del_set"] = composite_action_model["del_set"] - composite_action_model["add"]
+                composite_action_model["add"] = composite_action_model["add"]-composite_action_model["pre"]
+
 
                 # # Preserve order and remove duplicates
                 # gobetween(room-0,room-1), gobetween(room-01,room-0)

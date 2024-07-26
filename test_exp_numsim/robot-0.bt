@@ -1,8 +1,40 @@
 fallback
-    condition NumCondition(0) & NumCondition(1) & NumCondition(3) & NumCondition(4) & NumCondition(9)
+    condition 0 & 1 & 3 & 4 & 9
     sequence
-        condition NumCondition(0) & NumCondition(1) & NumCondition(4)
-        action NumAction(A1(0))
+        fallback
+            condition 3 & 4 & 7 & 9
+            sequence
+                fallback
+                    condition 4 & 7
+                    sequence
+                        fallback
+                            condition NumCondition(7)
+                            sequence
+                                condition NumCondition(1)
+                                action NumAction([<numsim_tools.Action object at 0x000001E08FD1BF40>])
+                        action NumAction([<numsim_tools.Action object at 0x000001E08FD1BEE0>])
+                    sequence
+                        condition 1 & 4
+                        action NumAction([<numsim_tools.Action object at 0x000001E08FD1BF40>])
+                action NumAction([<numsim_tools.Action object at 0x000001E08FD19C30>])
+            sequence
+                fallback
+                    condition 3 & 7 & 9
+                    sequence
+                        condition 1 & 3 & 9
+                        action NumAction([<numsim_tools.Action object at 0x000001E08FD1BF40>])
+                action NumAction([<numsim_tools.Action object at 0x000001E08FD1BEE0>])
+            sequence
+                condition 1 & 3 & 4 & 9
+                action NumAction([<numsim_tools.Action object at 0x000001E08FD1BF40>])
+        action NumAction([<numsim_tools.Action object at 0x000001E08F4F7EE0>])
     sequence
-        condition NumCondition(4) & NumCondition(7)
-        action NumAction(A1(0))
+        fallback
+            condition 0 & 1 & 4
+            sequence
+                condition 0 & 1
+                action NumAction([<numsim_tools.Action object at 0x000001E08FD1BEE0>])
+        action NumAction([<numsim_tools.Action object at 0x000001E08FD19C30>])
+    sequence
+        condition 0 & 1 & 3 & 9
+        action NumAction([<numsim_tools.Action object at 0x000001E08FD1BEE0>])

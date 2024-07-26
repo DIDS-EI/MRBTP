@@ -32,7 +32,6 @@ class PlanningAgentTest(PlanningAgent):
                     # conflict check
                     if self.check_conflict(premise_condition):
                         continue
-                    print("action:",action)
                     planning_condition = PlanningCondition(premise_condition,action)  # action, not action's name
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
@@ -63,12 +62,13 @@ class PlanningAgentTest(PlanningAgent):
 
         if len(condition_set) == 1:
             # cls_name, args = parse_predicate_logic(list(condition_set)[0])
-            parent.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",str(condition_set[0])))
+            print("condition_set:",condition_set)
+            parent.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[int(list(condition_set)[0])],has_args=False))
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
                 # cls_name, args = parse_predicate_logic(condition_node_name)
-                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",str(condition_node_name)))
+                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[condition_node_name],has_args=False))
 
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
@@ -116,9 +116,8 @@ class PlanningAgentTest(PlanningAgent):
                 # add condition
                 self.add_conditions(current_condition,condition_parent)
                 # add action
-                # cls_name, args = parse_predicate_logic(current_condition.action)
-                # args = tuple(list(args) + [current_condition.action_pre])
-                action_node = AnyTreeNode(NODE_TYPE.action,"NumAction",[current_condition.action],has_args=False)
+                args = [current_condition.action]
+                action_node = AnyTreeNode(NODE_TYPE.action,"NumAction",[args],has_args=False)
 
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:

@@ -62,8 +62,11 @@ def generate_dataset(num_elements, total_elements_set,max_depth):
 
                 actions.append(action)
                 current_leaves.append((new_state, depth + 1))
+
+                # node and edges
                 nodes[node_index] = new_state
-                edges.append((list(nodes.keys())[list(nodes.values()).index(leaf)], node_index, action.name+"_"+str(action.add_part)))
+                edges.append((list(nodes.keys())[list(nodes.values()).index(leaf)], node_index, \
+                              action.name+"_"+str(action.add_part)+"\n pre_"+str(set(action.pre))))
                 node_index += 1
 
         # 如果当前深度的叶子节点被处理完了，将这些叶子节点合并到 start 中
@@ -115,7 +118,8 @@ def generate_predicates(num_pred):
 
 # generate data
 num_data = 1
-num_elements = 10
+num_elements =10
+max_depth = 3
 
 # 数字
 total_elements_set = frozenset(range(num_elements))
@@ -142,7 +146,7 @@ print("Generated total_elements_set:", total_elements_set)
 
 datasets = []
 for _ in range(num_data):
-    dataset = generate_dataset(num_elements=num_elements, total_elements_set=total_elements_set, max_depth=1)
+    dataset = generate_dataset(num_elements=num_elements, total_elements_set=total_elements_set, max_depth=max_depth)
     datasets.append(dataset)
 
 # print and save as .dot
@@ -165,14 +169,14 @@ num_agent = 2
 new_actions = list(dataset['actions'])
 
 # SUB ACTION
-# for action in dataset['actions']:
-#     # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
-#     if len(action.add)>=3:
-#     # if random.random() < 0.5:
-#         split_action_ls = split_action(action,min_splits=2,max_splits=5)
-#         print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
-#         # print_action_data_table(set(), set(), split_action_ls)
-#         new_actions.extend(split_action_ls)
+for action in dataset['actions']:
+    # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
+    if len(action.add)>=3:
+        if random.random() < 0.8:
+            split_action_ls = split_action(action,min_splits=2,max_splits=5)
+            print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
+            # print_action_data_table(set(), set(), split_action_ls)
+            new_actions.extend(split_action_ls)
 
 # 分配动作给智能体
 agent_actions = [[] for _ in range(num_agent)]
@@ -209,21 +213,28 @@ num_agent = len(agent_actions)
 from DMR import DMR
 dmr = DMR(dataset["goal"], dataset["start"], dataset["agent_actions"], dataset["num_agent"])
 dmr.planning()
-dmr.get_btml_and_bt_ls()
 
 # 要tick进行测试，能否从 start 到 goal。
 # 要几步
 from mabtpg.envs.numericenv.numeric_env import NumericEnv
 env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
 env.actions_lists = dataset["agent_actions"]
+
+behavior_lib = [agent.behavior_lib for agent in env.agents]
+dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib)
+
 for i,agent in enumerate(env.agents):
     agent.bind_bt(dmr.bt_ls[i])
 
 env.print_ticks = True
 done = False
+print_colored(f"start: {start}","blue")
+obs = set()
 while not done:
     print_colored("======================================================================================","blue")
     obs,done,_,_ = env.step()
+    print_colored(f"state: {obs}","blue")
     # print("==========================\n")
-    done = True
+    # done = True
 print(f"\ntask finished!")
+print("obs>=goal:",obs>=goal)

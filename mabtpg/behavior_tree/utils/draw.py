@@ -111,6 +111,7 @@ def dot_tree(
         if with_qualified_names:
             node_label += f"\n({utilities.get_fully_qualified_name(behaviour)})"
         '''
+        node_name = str(node_name)
         if node_name == "Sequence":
             node_name = "&rarr;"
         elif node_name == "Selector" or node_name == "Fallback" :

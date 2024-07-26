@@ -38,6 +38,9 @@ class Agent(object):
         self.behavior_lib = BehaviorLibrary()
         self.behavior_lib.load_from_dict(self.behavior_dict)
 
+    @property
+    def agent_id(self):
+        return f'agent-{self.id}'
 
     def bind_bt(self,bt):
         self.bt = bt
@@ -49,7 +52,7 @@ class Agent(object):
 
         if action is None:
             if self.bt:
-                self.bt.tick()
+                self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
                 self.bt_success = self.bt.root.status == Status.SUCCESS
         else:
             self.action = action

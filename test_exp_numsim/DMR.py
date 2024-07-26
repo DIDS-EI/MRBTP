@@ -21,22 +21,22 @@ class DMR:
         self.default_bt_ls=None
 
     def planning(self):
-        print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="red")
+        print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
         start_time = time.time()
 
         self.planning_algorithm = MABTP_test(verbose = False)
         self.planning_algorithm.planning(frozenset(self.goal),action_lists=self.action_lists)
 
-        print_colored(f"Finish Multi-Robot Behavior Tree Planning!", color="red")
-        print_colored(f"Time: {time.time() - start_time}", color="red")
+        print_colored(f"Finish Multi-Robot Behavior Tree Planning!", color="green")
+        print_colored(f"Time: {time.time() - start_time}", color="green")
 
 
-    def get_btml_and_bt_ls(self):
+    def get_btml_and_bt_ls(self,behavior_lib=None):
         # get btml and bt
         self.btml_ls = self.planning_algorithm.get_btml_list()
         self.bt_ls = []
         for i in range(self.num_agent):
-            bt = BehaviorTree(btml=self.btml_ls[i])
+            bt = BehaviorTree(btml=self.btml_ls[i],behavior_lib=behavior_lib[i])
             self.bt_ls.append(bt)
 
             self.bt_ls[i].save_btml(f"robot-{i}.bt")
