@@ -17,17 +17,25 @@ class PlanningAction:
     def __str__(self):
         return self.name
 
+
+    def generate_from_goal(self, goal, num, total_elements_set):
+        added = False  # Flag to ensure at least one element is added
+        for _ in range(num):
+            element = random.choice(list(total_elements_set))
+            if element in goal:
+                if random.random() > 0.5:
+                    self.add.add(element)
+                    added = True
+                    if random.random() > 0.5:
+                        self.pre.add(element)
+            else:
+                if random.random() > 0.9:
+                    self.del_set.add(element)
+                    if random.random() > 0.5:
+                        self.pre.add(element)
+
+
     def generate_from_state_local(self,state,literals_num_set,all_obj_set=set(),obj_num=0,obj=None):
-        # pre_num = random.randint(0, min(pre_max, len(state)))
-        # self.pre = set(np.random.choice(list(state), pre_num, replace=False))
-        #
-        # add_set = literals_num_set - self.pre
-        # add_num = random.randint(0, len(add_set))
-        # self.add = set(np.random.choice(list(add_set), add_num, replace=False))
-        #
-        # del_set = literals_num_set - self.add
-        # del_num = random.randint(0, len(del_set))
-        # self.del_set = set(np.random.choice(list(del_set), del_num, replace=False))
 
         pre_num = random.randint(0, len(state))
         self.pre = set(random.sample(state, pre_num))
@@ -46,6 +54,7 @@ class PlanningAction:
             if obj!=None:
                 self.vild_args.add(obj)
                 self.vaild_num = len(self.vild_args)
+
 
     def update(self,name,pre,del_set,add):
         self.name = name

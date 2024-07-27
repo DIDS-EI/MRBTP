@@ -176,6 +176,7 @@ for action in dataset['actions']:
             split_action_ls = split_action(action,min_splits=2,max_splits=5)
             print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
             # print_action_data_table(set(), set(), split_action_ls)
+            new_actions.pop(action)
             new_actions.extend(split_action_ls)
 
 # 分配动作给智能体

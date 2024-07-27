@@ -15,7 +15,16 @@ class NumCondition(Condition):
     def modify_ins_name(self):
         return f"{self.name}"
 
+    @property
+    def print_name(self):
+        return f'{self.print_name_prefix}{self.ins_name}'
+
     def update(self) -> Status:
+
+        other_do_it = self.check_if_in_predict_condition()
+        if other_do_it:
+            return Status.SUCCESS
+
         if self.name in self.env.state:
             return Status.SUCCESS
         else:

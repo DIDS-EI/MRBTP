@@ -2,7 +2,8 @@ import random
 import string
 import networkx as nx
 from mabtpg.utils.tools import print_colored
-from numsim_tools import Action
+from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
+# from numsim_tools import Action
 
 
 class DataGenerator:
@@ -38,11 +39,11 @@ class DataGenerator:
         return parts
 
     def generate_random_state(self):
-        num = random.randint(min(self.num_elements, 5), self.num_elements)
+        num = random.randint(min(self.num_elements,5), self.num_elements)
         return frozenset(random.sample(self.total_elements_set, num))
 
     def generate_random_goal(self):
-        num_goal = random.randint(min(self.num_elements, 5), self.num_elements / 2)
+        num_goal = random.randint(min(self.num_elements,5), int(self.num_elements / 2))
         return frozenset(random.sample(self.total_elements_set, num_goal))
 
 
@@ -97,7 +98,7 @@ class DataGenerator:
         return dataset
 
     def generate_start_and_action(self, goal, leaf):
-        action = Action()
+        action = PlanningAction()
         action.generate_from_goal(goal, self.num_elements, self.total_elements_set)
 
         # Ensure action.del_set does not contain any element from leaf
@@ -166,6 +167,41 @@ class DataGenerator:
         # first_letter = alphabet[index % 26]
         # second_letter = depth
         return f"A{index}({depth})"
+
+    def split_action(self,action, min_splits=2, max_splits=4):
+        def generate_split_action_name(parent_name, index):
+            return f"SUB{parent_name}_{index}"
+
+        add_elements = list(action.add)
+        num_splits = random.randint(min_splits, min(len(add_elements), max_splits))
+        random.shuffle(add_elements)
+
+        split_actions = []
+        current_pre = action.pre
+        remaining_add = set(action.add)
+        remaining_del = set(action.del_set)
+
+        # Ensure the last split gets whatever remains
+        for i in range(num_splits):
+            new_name = generate_split_action_name(action.name, i)
+            if i == num_splits - 1:
+                new_add = remaining_add
+                new_del = remaining_del
+            else:
+                num_add_to_take = max(1, len(remaining_add) // (num_splits - i))
+                new_add = set(random.sample(list(remaining_add), num_add_to_take))
+                remaining_add -= new_add
+
+                num_del_to_take = max(1, len(remaining_del) // (num_splits - i))
+                new_del = set(random.sample(list(remaining_del), num_del_to_take))
+                remaining_del -= new_del
+
+            new_action = PlanningAction(new_name, current_pre, new_add, new_del)
+            current_pre = new_add
+
+            split_actions.append(new_action)
+
+        return split_actions
 
 
 # Usage example
