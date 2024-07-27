@@ -52,11 +52,11 @@ class DMR:
                     self.btml_ls[i].sub_btml_dict[name] = btml
 
                     tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-                    tmp_bt.draw(file_name = f"{name}")
+                    # tmp_bt.draw(file_name = f"{name}")
 
         for i in range(self.num_agent):
             bt = BehaviorTree(btml=self.btml_ls[i],behavior_lib=behavior_lib[i])
             self.bt_ls.append(bt)
 
             self.bt_ls[i].save_btml(f"robot-{i}.bt")
-            self.bt_ls[i].draw(file_name=f"robot-{i}")
+            # self.bt_ls[i].draw(file_name=f"robot-{i}")
