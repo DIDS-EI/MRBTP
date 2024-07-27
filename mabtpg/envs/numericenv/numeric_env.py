@@ -50,6 +50,13 @@ class NumericEnv(Env):
             "action_pre": {}
         }
 
+    def set_agent_actions(self,agent_actions):
+        self.actions_lists = agent_actions
+        for act_ls in agent_actions:
+            for act in act_ls:
+                self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+
+
     def print_agent_action_tabulate(self,agent_id,action):
         YELLOW = "\033[93m"
         RESET = "\033[0m"

@@ -95,21 +95,17 @@ dmr = DMR(goal, start, agent_actions, num_agent, with_comp_action=True)
 dmr.planning()
 
 
-
-
-
+# #########################
+# Simulation
+# #########################
 # 要tick进行测试，能否从 start 到 goal。
 # 要几步
 from mabtpg.envs.numericenv.numeric_env import NumericEnv
-env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
-env.actions_lists = agent_actions
-for act_ls in agent_actions:
-    for act in act_ls:
-        env.blackboard["action_pre"][act.name] = frozenset(act.pre)
+env = NumericEnv(num_agent=num_agent,start=start,goal=goal,agent_actions=agent_actions)
+env.set_agent_actions(agent_actions)
 
 behavior_lib = [agent.behavior_lib for agent in env.agents]
 dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=comp_actions_BTML_dic)
-
 
 for i,agent in enumerate(env.agents):
     agent.bind_bt(dmr.bt_ls[i])
