@@ -12,3 +12,7 @@ minigrid~=2.3.1
 requests~=2.32.3
 opencv-python~=4.10.0.84
 ipdb~=0.13.13
+gym
+tabulate
+pandas
+
