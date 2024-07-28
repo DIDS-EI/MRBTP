@@ -4,9 +4,10 @@ from mabtpg.behavior_tree import Status
 class IsSelfTask(Condition):
     num_args = 1
 
-    def __init__(self,task_id,subgoal):
+    def __init__(self,task_id,action_name,subgoal):
         super().__init__(subgoal)
         self.task_id = task_id
+        self.task_action_name = action_name
         self.subgoal = subgoal
 
     def update(self) -> Status:

@@ -100,7 +100,7 @@ class DataGenerator:
         }
         return dataset
 
-    def generate_start_and_action(self, parent_lead, parts):
+    def generate_start_and_action(self, goal, leaf):
         action = PlanningAction()
         action.generate_from_goal(goal, self.num_elements, self.total_elements_set)
 
@@ -136,44 +136,6 @@ class DataGenerator:
         action.del_set = frozenset(action.del_set-goal)
 
         return frozenset(start), action
-
-
-    # def generate_start_and_action(self, goal, leaf):
-    #     action = PlanningAction()
-    #     action.generate_from_goal(goal, self.num_elements, self.total_elements_set)
-    #
-    #     # Ensure action.del_set does not contain any element from leaf
-    #     action.del_set -= leaf
-    #
-    #     # Ensure action.add is not empty
-    #     if not action.add:
-    #         element_to_add = random.choice(list(goal))
-    #         action.add.add(element_to_add)
-    #
-    #     # Calculate start state
-    #     start = (goal - action.add) | action.del_set
-    #
-    #     # Ensure start is not empty
-    #     if not start:
-    #         # If start is empty, add any arbitrary element, here we use 0 for simplicity
-    #         # element_to_add = random.randint(0,  num_elements)  # Choosing a number outside the goal range for uniqueness
-    #         element_to_add = random.choice(list(self.total_elements_set))
-    #         start.add(element_to_add)
-    #         action.pre.add(element_to_add)
-    #
-    #     # Ensure action.pre is a subset of start
-    #     if not action.pre <= start:
-    #         start |= action.pre
-    #         # action.pre = start & action.pre
-    #
-    #         # additional_pre = start - action.pre
-    #         # action.pre.update(additional_pre)
-    #
-    #     action.pre = frozenset(action.pre-action.add)
-    #     action.add = frozenset(action.add)
-    #     action.del_set = frozenset(action.del_set-goal)
-    #
-    #     return frozenset(start), action
 
 
     def save_tree_as_dot(self, dataset, filename):

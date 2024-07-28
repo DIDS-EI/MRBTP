@@ -8,7 +8,6 @@ class NumAction(Action):
     num_args = 4
 
     def __init__(self,args):
-        super().__init__(args)
         self.action = args[0]
         self.name = self.action.name
         self.pre = self.action.pre
@@ -16,7 +15,9 @@ class NumAction(Action):
         self.del_set = self.action.del_set
 
         self.get_info_name()
-        self.ins_name = self.modify_ins_name()
+        self.ins_name = self.get_ins_name()
+        super().__init__(args)
+        self.name = self.action.name
 
     def get_info_name(self):
         # Convert frozensets to sorted lists, then join elements with ', '
@@ -28,7 +29,7 @@ class NumAction(Action):
         self.info_name = (f"{self.name}  \n  pre: ({self.pre_str}) \n "
                      f"add: ({self.add_str})   \n del: ({self.del_set_str})")
 
-    def modify_ins_name(self):
+    def get_ins_name(self):
         return f"{self.info_name}"
 
     @classmethod
