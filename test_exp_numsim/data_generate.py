@@ -69,7 +69,7 @@ class DataGenerator:
 
                 parts = self.get_parts_from_state(leaf)
                 for part in parts:
-                    new_state, action = self.generate_start_and_action(part, leaf)
+                    new_state, action = self.generate_start_and_action(leaf, part)
                     action.name = self.generate_action_name(depth, action_index)
                     action_index += 1
 
@@ -100,40 +100,35 @@ class DataGenerator:
         }
         return dataset
 
-    def generate_start_and_action(self, parent_lead, parts):
+    def generate_start_and_action(self, parent_lead, part):
         action = PlanningAction()
-        action.generate_from_goal(goal, self.num_elements, self.total_elements_set)
+        action.add = part
 
-        # Ensure action.del_set does not contain any element from leaf
-        action.del_set -= leaf
+        for e in self.total_elements_set:
+            if e not in parent_lead:
+                if random.random() < 0.5:
+                    if random.random() < 0.5:
+                        action.pre.add(e)
+                    else:
+                        action.del_set.add(e)
+            elif e not in part:
+                if random.random() < 0.5:
+                    action.pre.add(e)
 
-        # Ensure action.add is not empty
-        if not action.add:
-            element_to_add = random.choice(list(goal))
-            action.add.add(element_to_add)
+        action.pre -= part
+        action.del_set -= parent_lead
+
 
         # Calculate start state
-        start = (goal - action.add) | action.del_set
-
-        # Ensure start is not empty
-        if not start:
-            # If start is empty, add any arbitrary element, here we use 0 for simplicity
-            # element_to_add = random.randint(0,  num_elements)  # Choosing a number outside the goal range for uniqueness
-            element_to_add = random.choice(list(self.total_elements_set))
-            start.add(element_to_add)
-            action.pre.add(element_to_add)
+        start = (part - action.add) | action.del_set
 
         # Ensure action.pre is a subset of start
         if not action.pre <= start:
             start |= action.pre
-            # action.pre = start & action.pre
-
-            # additional_pre = start - action.pre
-            # action.pre.update(additional_pre)
 
         action.pre = frozenset(action.pre-action.add)
         action.add = frozenset(action.add)
-        action.del_set = frozenset(action.del_set-goal)
+        action.del_set = frozenset(action.del_set-part)
 
         return frozenset(start), action
 
@@ -240,6 +235,7 @@ class DataGenerator:
                     new_del = set(random.sample(list(remaining_del), num_del_to_take))
                 remaining_del -= new_del
 
+            # new_action = PlanningAction(new_name, current_pre, new_add, new_del,cost=0)
             new_action = PlanningAction(new_name, current_pre, new_add, new_del)
             current_pre = new_add
 

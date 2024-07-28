@@ -9,14 +9,18 @@ np.random.seed(0)
 #  get data
 num_data = 10
 num_elements = 30
-max_depth = 3
+max_depth = 5
+
+# num_data = 1
+# num_elements = 10
+# max_depth = 2
 
 data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
-for i,dataset in enumerate(datasets[5:6]):
-    print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
-    data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
+# for i,dataset in enumerate(datasets[:]):
+#     print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
+#     data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
 
 
 
@@ -24,7 +28,7 @@ for i,dataset in enumerate(datasets[5:6]):
 
 
 
-for data_id,dataset in  enumerate(datasets[5:6]):
+for data_id,dataset in  enumerate(datasets[:]):
     print("data_id:",data_id)
     # BTP with composition action
     # dataset = datasets[0]
@@ -36,19 +40,19 @@ for data_id,dataset in  enumerate(datasets[5:6]):
     split_actions_dict = {}
 
     new_actions = list(dataset['actions'])
-    # for action in dataset['actions']:
-    #     # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
-    #     if len(action.add)>=3:
-    #         split_action_ls = data_generator.split_action(action,min_splits=2,max_splits=5)
-    #         print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
-    #
-    #         # 考虑保留组合动作，子动作不保留？
-    #         # new_actions.remove(action)
-    #         # action.cost=0
-    #         # new_actions.extend(split_action_ls)
-    #
-    #         split_actions_dict[action] = split_action_ls
-    #     action.cost = 0
+    for action in dataset['actions']:
+        # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
+        if len(action.add)>=3:
+            split_action_ls = data_generator.split_action(action,min_splits=2,max_splits=5)
+            print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
+
+            # 考虑保留组合动作，子动作不保留？
+            # new_actions.remove(action)
+            # action.cost=0
+            # new_actions.extend(split_action_ls) #???? 如果还保留子动作，则需要再条数
+
+            split_actions_dict[action] = split_action_ls
+        action.cost = 0
 
     # 将每个组合动作的 btml 保存起来
     # 得到一个 comp_act_BTML_dic[action.name] = sub_btml
@@ -95,7 +99,7 @@ for data_id,dataset in  enumerate(datasets[5:6]):
 
     # 运行多智能体算法
     from DMR import DMR
-    dmr = DMR(goal, start, agent_actions, num_agent, with_comp_action=True)
+    dmr = DMR(goal, start, agent_actions, num_agent, with_comp_action=True)  # False 也还需要再调试
     dmr.planning()
 
 
