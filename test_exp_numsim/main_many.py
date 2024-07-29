@@ -7,9 +7,9 @@ random.seed(0)
 np.random.seed(0)
 
 #  get data
-num_data = 100
-num_elements = 50
-max_depth = 5
+num_data = 1
+num_elements = 30
+max_depth = 3
 
 # num_data = 1
 # num_elements = 10
@@ -18,9 +18,9 @@ max_depth = 5
 data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
-# for i,dataset in enumerate(datasets[:]):
-#     print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
-#     data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
+for i,dataset in enumerate(datasets[:]):
+    print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
+    data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
 
 
 
