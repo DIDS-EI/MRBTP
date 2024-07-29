@@ -168,8 +168,8 @@ class PlanningAgentTest(PlanningAgent):
             parent.add_child(composite_condition)
 
 
-    def create_btml(self):
-        self.create_anytree()
+    def create_btml(self,task_num=0):
+        self.create_anytree(task_num)
         btml = BTML()
         btml.anytree_root = self.anytree_root
 

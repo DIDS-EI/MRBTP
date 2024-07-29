@@ -10,26 +10,27 @@ class Condition(BahaviorNode):
 
     def check_if_in_predict_condition(self):
 
-
+        if self.name in self.agent.predict_condition:
+            return True
 
 
         # 在自己假设空间里的就是假设已完成
         # 没有在执行任务，就是总假设空间
-        if self.agent.accept_task == None:
-            if self.name in self.env.blackboard["predict_condition"]:
-                return True
-        else:
-            # 没有在执行任务，就是总假设空间
-            task_id = self.agent.accept_task["task_id"]
-            subgoal = self.agent.accept_task["subgoal"]
-            if (task_id,subgoal) not in self.env.blackboard["task_predict_condition"]:
-                if self.name in self.env.blackboard["task_predict_condition"]:
-                    return True
-
-            # 任务的假设空间
-            if self.name in self.env.blackboard["task_predict_condition"][(task_id,subgoal)]:
-                return True
-        return False
+        # if self.agent.accept_task == None:
+        #     if self.name in self.env.blackboard["predict_condition"]:
+        #         return True
+        # else:
+        #     # 没有在执行任务，就是总假设空间
+        #     task_id = self.agent.accept_task["task_id"]
+        #     subgoal = self.agent.accept_task["subgoal"]
+        #     if (task_id,subgoal) not in self.env.blackboard["task_predict_condition"]:
+        #         if self.name in self.env.blackboard["task_predict_condition"]:
+        #             return True
+        #
+        #     # 任务的假设空间
+        #     if self.name in self.env.blackboard["task_predict_condition"][(task_id,subgoal)]:
+        #         return True
+        # return False
 
 
 
@@ -66,12 +67,12 @@ class Condition(BahaviorNode):
                 #  0: frozenset({'IsInRoom(agent-1,room-0)', 'IsOpen(door-0)'} ---1)}
         #       #  0: isinroom(ball,1)
 
-        subgoal = set()
-        if self.agent.accept_task!=None:
-            subgoal = self.agent.accept_task['subgoal']
-
-        if self.name in self.env.blackboard["predict_condition"]-subgoal:
-            return True
+        # subgoal = set()
+        # if self.agent.accept_task!=None:
+        #     subgoal = self.agent.accept_task['subgoal']
+        #
+        # if self.name in self.env.blackboard["predict_condition"]-subgoal:
+        #     return True
 
 
 

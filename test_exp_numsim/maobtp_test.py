@@ -55,8 +55,10 @@ class BfsPlanningAgent(PlanningAgentTest):
                         sub_goal = frozenset(
                             condition & frozenset(action.add)
                         )
+                        # sub_del = action.del_set
+                    sub_del = set()
 
-                    planning_condition = PlanningCondition(premise_condition, action, composition_action_flag,sub_goal)
+                    planning_condition = PlanningCondition(premise_condition, action, composition_action_flag, sub_goal,sub_del)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
@@ -125,8 +127,9 @@ class MAOBTP_test(MAOBTP):
 
     def get_btml_list(self):
         btml_list = []
+        task_num = 0
         for i,agent in enumerate(self.planned_agent_list):
-            agent.create_btml()
+            agent.create_btml(task_num)
             bt = agent.btml
             btml_list.append(bt)
         return btml_list

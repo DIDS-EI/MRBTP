@@ -5,8 +5,8 @@ from mabtpg.utils.tools import print_colored
 
 #  get data
 num_data = 1
-num_elements = 15
-max_depth = 1
+num_elements = 30
+max_depth = 5
 
 data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]

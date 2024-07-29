@@ -167,7 +167,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
 
         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-        # tmp_bt.draw(file_name = name+f"-{j}")
+        tmp_bt.draw(file_name = name+f"-{j}")
 
     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
     bt_list.append(bt)

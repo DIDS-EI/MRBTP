@@ -67,9 +67,10 @@ class DataGenerator:
                 if depth >= self.max_depth:
                     continue
 
-                parts = self.get_parts_from_state(leaf)
+                if leaf!=set():
+                    parts = self.get_parts_from_state(leaf)
                 for part in parts:
-                    new_state, action = self.generate_start_and_action(leaf, part)
+                    new_state, action = self.generate_start_and_action(leaf, part,goal)
                     action.name = self.generate_action_name(depth, action_index)
                     action_index += 1
 
@@ -100,31 +101,35 @@ class DataGenerator:
         }
         return dataset
 
-    def generate_start_and_action(self, parent_lead, part):
+    def generate_start_and_action(self, parent_leaf, part,goal):
         action = PlanningAction()
         action.add = part
 
-        for e in self.total_elements_set:
-            if e not in parent_lead:
-                if random.random() < 0.5:
-                    if random.random() < 0.5:
-                        action.pre.add(e)
-                    else:
-                        action.del_set.add(e)
-            elif e not in part:
-                if random.random() < 0.5:
-                    action.pre.add(e)
+        pre_size = random.randint(0, len(self.total_elements_set)-len(goal))
+        action.pre = set(random.sample(self.total_elements_set-goal, pre_size))
 
-        action.pre -= part
-        action.del_set -= parent_lead
+        del_size = random.randint(0, len(self.total_elements_set)-len(parent_leaf))
+        action.del_set = set(random.sample(self.total_elements_set - parent_leaf, del_size))
 
+        start = (parent_leaf-action.add)|action.pre
+
+        # for e in self.total_elements_set:
+        #     if e not in parent_lead:
+        #         if random.random() < 0.5:
+        #             if random.random() < 0.5:
+        #                 action.pre.add(e)
+        #             else:
+        #                 action.del_set.add(e)
+        #     elif e not in part:
+        #         if random.random() < 0.5:
+        #             action.pre.add(e)
 
         # Calculate start state
-        start = (part - action.add) | action.del_set
-
-        # Ensure action.pre is a subset of start
-        if not action.pre <= start:
-            start |= action.pre
+        # start = (part - action.add) | action.del_set
+        #
+        # # Ensure action.pre is a subset of start
+        # if not action.pre <= start:
+        #     start |= action.pre
 
         action.pre = frozenset(action.pre-action.add)
         action.add = frozenset(action.add)

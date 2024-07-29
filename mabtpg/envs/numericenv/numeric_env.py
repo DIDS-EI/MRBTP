@@ -28,25 +28,23 @@ class NumericEnv(Env):
         self.blackboard = {
             # other subgoal: the agent's subgoal
             # if some subgoal's dependency is the agent's subgoal, [other subgoal] cannot to regard success
-
             # task: task_id,subgoal
-            "task_num": 0,  # 给所有任务编个号
+            # "task_num": 0,  # 给所有任务编个号
             # "running_tasks":[],# [(1,x),(2,x)]
-
             # Each key is the task name, and the value is a list containing all tasks that depend on it as successors.
             # 每个键是任务名，值是一个包含所有受其依赖的后续任务的列表
             # (1,x) : [(2,x),(3,x),(4,x)]
             # (2,x) : [(3,x),(4,x),..]
             # ...
             # (8,x) : []
-            "dependent_tasks_dic": {},
+            # "dependent_tasks_dic": {},
 
             # 记录每个任务的 dependency
             # (1,x): set
             # (2,x): set
-            "task_predict_condition": {},
-            "predict_condition": set(),  # 总的假设空间
 
+            "task_agents_queue":[], # 在执行任务的智能体的列表，里面存正在做任务的 agent 的列表
+            # "predict_condition": set(),  # 总的假设空间
             "action_pre": {}
         }
 

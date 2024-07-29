@@ -44,6 +44,7 @@ class DMR:
         self.btml_ls = self.planning_algorithm.get_btml_list()
         self.bt_ls = []
 
+
         # add composition action
         if comp_actions_BTML_dic is not None:
             for i,agent in enumerate(self.planning_algorithm.planned_agent_list):

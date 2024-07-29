@@ -64,21 +64,27 @@ class PlanningAgentTest(PlanningAgent):
         if len(condition_set) == 1:
             # cls_name, args = parse_predicate_logic(list(condition_set)[0])
             # print("condition_set:",condition_set)
-            if subgoal:
-                parent.add_child(
-                    AnyTreeNode(NODE_TYPE.condition, "IsTaskDone", [int(list(condition_set)[0])], has_args=False))
-            else:
-                parent.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[int(list(condition_set)[0])],has_args=False))
+            # if subgoal:
+            #     parent.add_child(
+            #         AnyTreeNode(NODE_TYPE.condition, "IsTaskDone", [int(list(condition_set)[0])], has_args=False))
+            # else:
+            #     parent.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[int(list(condition_set)[0])],has_args=False))
+            parent.add_child(
+                AnyTreeNode(NODE_TYPE.condition, "NumCondition", [int(list(condition_set)[0])], has_args=False))
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
-            if subgoal:
-                for condition_node_name in condition_set:
-                    # cls_name, args = parse_predicate_logic(condition_node_name)
-                    sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"IsTaskDone",[condition_node_name],has_args=False))
-            else:
-                for condition_node_name in condition_set:
-                    # cls_name, args = parse_predicate_logic(condition_node_name)
-                    sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[condition_node_name],has_args=False))
+            # if subgoal:
+            #     for condition_node_name in condition_set:
+            #         # cls_name, args = parse_predicate_logic(condition_node_name)
+            #         sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"IsTaskDone",[condition_node_name],has_args=False))
+            # else:
+            #     for condition_node_name in condition_set:
+            #         # cls_name, args = parse_predicate_logic(condition_node_name)
+            #         sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,"NumCondition",[condition_node_name],has_args=False))
+            for condition_node_name in condition_set:
+                # cls_name, args = parse_predicate_logic(condition_node_name)
+                sequence_node.add_child(
+                    AnyTreeNode(NODE_TYPE.condition, "NumCondition", [condition_node_name], has_args=False))
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
 
@@ -87,17 +93,15 @@ class PlanningAgentTest(PlanningAgent):
             parent.add_child(composite_condition)
 
 
-    def create_btml(self):
-        self.create_anytree()
+    def create_btml(self,task_num=0):
+        self.create_anytree(task_num)
         btml = BTML()
         btml.anytree_root = self.anytree_root
 
         self.btml = btml
 
 
-    def create_anytree(self):
-
-        task_num=0
+    def create_anytree(self,task_num=0):
 
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
@@ -144,21 +148,23 @@ class PlanningAgentTest(PlanningAgent):
                 seq_task_parent = AnyTreeNode(NODE_TYPE.sequence)
 
                 action_name = current_condition.action.name
-                task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",([task_num,action_name,current_condition.sub_goal]))
+                task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",([task_num,action_name,current_condition.sub_goal,current_condition.sub_del]))
                 args = [current_condition.action]
                 task_comp_action = AnyTreeNode(NODE_TYPE.action,"NumAction",[args],has_args=False)
 
                 # 再来一个 fallback ，连接 subgoal 和 task_comp_action
-                subgoal_parent = AnyTreeNode(NODE_TYPE.selector)
-                self.add_conditions(parent=subgoal_parent,condition_set=current_condition.sub_goal,subgoal=True)
-                subgoal_parent.add_child(task_comp_action)
-
-                seq_task_parent.add_child(task_flag_condition)
-                seq_task_parent.add_child(subgoal_parent)
+                # subgoal_parent = AnyTreeNode(NODE_TYPE.selector)
+                # self.add_conditions(parent=subgoal_parent,condition_set=current_condition.sub_goal,subgoal=True)
+                # subgoal_parent.add_child(task_comp_action)
+                #
+                # seq_task_parent.add_child(task_flag_condition)
+                # seq_task_parent.add_child(subgoal_parent)
 
                 # seq add two children
-                # seq_task_parent.add_child(task_flag_condition)
-                # seq_task_parent.add_child(task_comp_action)
+                seq_task_parent.add_child(task_flag_condition)
+                seq_task_parent.add_child(task_comp_action)
+                #### Finish task action
+                seq_task_parent.add_child(AnyTreeNode(NODE_TYPE.action,"FinishTask"))
                 sel_comp_parent.add_child(seq_task_parent)
 
                 sequence_node = AnyTreeNode(NODE_TYPE.sequence)
@@ -175,7 +181,7 @@ class PlanningAgentTest(PlanningAgent):
                 self.add_conditions(current_condition,condition_parent)
                 # add action
                 action_name = current_condition.action.name
-                action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,action_name,current_condition.sub_goal))
+                action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,action_name,current_condition.sub_goal,current_condition.sub_del))
                 task_num += 1
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:

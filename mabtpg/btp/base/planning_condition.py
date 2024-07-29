@@ -1,5 +1,5 @@
 class PlanningCondition:
-    def __init__(self,condition,action=None,composition_action_flag=False,sub_goal=None,dependency=None):
+    def __init__(self,condition,action=None,composition_action_flag=False,sub_goal=None,sub_del=None):
         self.condition_set = condition
         self.action = action
         self.children = []
@@ -9,4 +9,4 @@ class PlanningCondition:
         # for composition_action
         self.composition_action_flag = composition_action_flag
         self.sub_goal = sub_goal
-        self.dependency = dependency
+        self.sub_del = sub_del
