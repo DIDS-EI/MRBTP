@@ -10,6 +10,9 @@ class Condition(BahaviorNode):
 
     def check_if_in_predict_condition(self):
 
+
+
+
         # 在自己假设空间里的就是假设已完成
         # 没有在执行任务，就是总假设空间
         if self.agent.accept_task == None:

@@ -228,6 +228,13 @@ class PlanningAgent:
                 # seq add two children
                 seq_task_parent.add_child(task_flag_condition)
                 seq_task_parent.add_child(task_comp_action)
+
+                #### Finish task action
+                seq_task_parent.add_child(AnyTreeNode(NODE_TYPE.action,"FinishTask"))
+
+
+
+
                 sel_comp_parent.add_child(seq_task_parent)
 
                 sequence_node = AnyTreeNode(NODE_TYPE.sequence)

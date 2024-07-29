@@ -178,7 +178,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
 
 for i in range(env.num_agent):
     bt_list[i].save_btml(f"robot-{i}.bt")
-    # bt_list[i].draw(file_name=f"agent-{i}")
+    bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):
