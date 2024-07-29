@@ -7,8 +7,8 @@ random.seed(0)
 np.random.seed(0)
 
 #  get data
-num_data = 10
-num_elements = 30
+num_data = 100
+num_elements = 50
 max_depth = 5
 
 # num_data = 1
@@ -49,10 +49,10 @@ for data_id,dataset in  enumerate(datasets[:]):
             # 考虑保留组合动作，子动作不保留？
             # new_actions.remove(action)
             # action.cost=0
-            # new_actions.extend(split_action_ls) #???? 如果还保留子动作，则需要再条数
+            new_actions.extend(split_action_ls) #???? 如果还保留子动作，则需要再条数
 
             split_actions_dict[action] = split_action_ls
-        action.cost = 0
+            action.cost = 0
 
     # 将每个组合动作的 btml 保存起来
     # 得到一个 comp_act_BTML_dic[action.name] = sub_btml

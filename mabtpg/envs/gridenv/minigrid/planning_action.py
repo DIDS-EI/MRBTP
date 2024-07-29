@@ -3,7 +3,7 @@ import random
 
 # Define action categories, which include prerequisites, adding and deleting impacts
 class PlanningAction:
-    def __init__(self,name='anonymous action',pre=set(),add=set(),del_set=set(),cost=10,vaild_num=0,vild_args=set()):
+    def __init__(self,name='anonymous action',pre=set(),add=set(),del_set=set(),cost=1,vaild_num=0,vild_args=set()):
         self.pre=copy.deepcopy(pre)
         self.add=copy.deepcopy(add)
         self.del_set=copy.deepcopy(del_set)

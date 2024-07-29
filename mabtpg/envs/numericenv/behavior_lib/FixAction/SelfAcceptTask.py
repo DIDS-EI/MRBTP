@@ -20,10 +20,10 @@ class SelfAcceptTask(Action):
         # 如果自己没有做这个, 还已经有人做了，自己的接受到的任务叶为空
         if (self.agent.accept_task==None or self.agent.accept_task["task_id"]!=self.task_id):
             if (self.task_id,self.subgoal)  in  self.env.blackboard["dependent_tasks_dic"].keys():
-                self.agent.accept_task = None
+                # self.agent.accept_task = None
                 # 任务也给它接受着，尽管它可能因为里面的动作没有 putdown 做不了
-                # self.agent.accept_task = {"task_id": self.task_id,
-                #                           "subgoal": self.subgoal}
+                self.agent.accept_task = {"task_id": self.task_id,
+                                          "subgoal": self.subgoal}
                 return Status.RUNNING
 
 

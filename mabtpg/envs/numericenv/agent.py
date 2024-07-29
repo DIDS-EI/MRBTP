@@ -70,6 +70,7 @@ class Agent(object):
                 print_colored(f"accp: {self.accept_task} ", color='orange')
                 print_colored(f"last: {self.last_accept_task}", color='orange')
                 if self.current_task != self.accept_task and self.last_accept_task != None:
+                # if self.last_accept_task != None and self.last_accept_task != self.accept_task:
                     print_colored(f"Have Finish Last Task! cur_task = {self.current_task}", color='orange')
 
                     self.env.blackboard["predict_condition"] -= self.last_accept_task["subgoal"]
