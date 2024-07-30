@@ -10,5 +10,9 @@ class Fallback(ptree.composites.Selector):
     def __init__(self,memory=False):
         super().__init__(memory = memory,name = "Fallback")
 
+    @property
+    def draw_name(self):
+        return f"{self.ins_name}"
+
     def bind_agent(self,agent):
         pass

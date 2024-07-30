@@ -38,7 +38,7 @@ class DataGenerator:
                 empty_part.add(element_to_move)
                 if random_part:
                     non_empty_parts.append(random_part)
-        print_colored(f"State Split {state} into {parts}", color='orange')
+        # print_colored(f"State Split {state} into {parts}", color='orange')
         return parts
 
     def generate_random_state(self):
@@ -241,7 +241,7 @@ class DataGenerator:
                 remaining_del -= new_del
 
             # new_action = PlanningAction(new_name, current_pre, new_add, new_del,cost=0)
-            new_action = PlanningAction(new_name, current_pre, new_add, new_del)
+            new_action = PlanningAction(new_name, frozenset(current_pre), frozenset(new_add), frozenset(new_del))
             current_pre = new_add
 
             split_actions.append(new_action)

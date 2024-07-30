@@ -77,7 +77,7 @@ class NumericEnv(Env):
         self.step_count += 1
         done = True
 
-        cur_agent_actions = {}
+        # cur_agent_actions = {}
 
         for i in range(num_agent):
             print_colored(f"---AGENT - {i}---",color="yellow")
@@ -86,18 +86,22 @@ class NumericEnv(Env):
             if action is None:
                 print(f"Agent {i} has no action")
             else:
-                cur_agent_actions[i] = action
+                # cur_agent_actions[i] = action
                 self.print_agent_action_tabulate(i,action)
+                if self.state >= action.pre:
+                    self.state = (self.state | action.add) - action.del_set
+                else:
+                    print_colored(f"AGENT-{i} cannot do it!", color="red")
 
             if not self.agents[i].bt_success:
                 done = False
 
         # execute
-        for agent_id,action in cur_agent_actions.items():
-            if self.state >= action.pre:
-                self.state = (self.state | action.add) - action.del_set
-            else:
-                print_colored(f"AGENT-{agent_id} cannot do it!", color="red")
+        # for agent_id,action in cur_agent_actions.items():
+        #     if self.state >= action.pre:
+        #         self.state = (self.state | action.add) - action.del_set
+        #     else:
+        #         print_colored(f"AGENT-{agent_id} cannot do it!", color="red")
 
 
         if self.render_mode == "human":

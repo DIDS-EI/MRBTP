@@ -33,7 +33,10 @@ class Agent(object):
 
         self.last_accept_task = None
         self.current_task = None
-        self.predict_condition = set()
+        self.predict_condition = {
+            "success":set(),
+            "fail":set(),
+        }
 
 
     def init_statistics(self):
@@ -91,14 +94,21 @@ class Agent(object):
                 print("Index out of range.")  # 索引超出范围，理论上不会发生，因为索引是从 list.index 获取的
 
             # 更新队列里所有智能体的假设空间
-            last_predict_condition = set()
+            last_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
             last_sub_goal = set()
             last_sub_del = set()
             for i,agent in enumerate(self.env.blackboard["task_agents_queue"]):
                 if i==0:
-                    agent.predict_condition = set()
+                    agent.predict_condition = {
+                        "success":set(),
+                        "fail":set(),
+                    }
                 else:
-                    agent.predict_condition = (last_predict_condition | last_sub_goal) -last_sub_del
+                    agent.predict_condition["success"] = (last_predict_condition["success"] | last_sub_goal) -last_sub_del
+                    agent.predict_condition["fail"] = (last_predict_condition[ "fail"] | last_sub_del) - last_sub_goal
 
                 last_predict_condition = agent.predict_condition
                 last_sub_goal = agent.current_task["sub_goal"]
@@ -112,14 +122,22 @@ class Agent(object):
         if self.env.blackboard["task_agents_queue"]!=[]:
             last_predict_condition = self.env.blackboard["task_agents_queue"][-1].predict_condition
         else:
-            last_predict_condition = set()
+            last_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
 
         if self.current_task!=None:
             self.env.blackboard["task_agents_queue"].append(self)
             self.predict_condition = copy.deepcopy(last_predict_condition)
 
             # now the new_predict_condition
-            new_predict_condition = (last_predict_condition | self.current_task["sub_goal"]) - self.current_task["sub_del"]
+            new_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
+            new_predict_condition["success"] = (last_predict_condition["success"] | self.current_task["sub_goal"]) - self.current_task["sub_del"]
+            new_predict_condition["fail"] = (last_predict_condition["fail"] | self.current_task["sub_del"]) - self.current_task["sub_goal"]
             for agent in self.env.agents:
                 if agent!=self and agent not in self.env.blackboard["task_agents_queue"]:
                     agent.predict_condition = copy.deepcopy(new_predict_condition)

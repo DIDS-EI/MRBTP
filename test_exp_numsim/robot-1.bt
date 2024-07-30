@@ -1,35 +1,108 @@
 fallback
-    condition 0 & 1 & 2 & 5 & 6
-    fallback
-        sequence
-            condition IsSelfTask(frozenset({0, 2, 5}))
-            action A0(0) pre: (3, 7) add: (0, 2, 5)  del: (3, 9)
-            action FinishTask()
-        sequence
+    condition 0 & 2 & 3 & 6 & 9
+    sequence
+        fallback
+            condition 0 & 2 & 4 & 8 & 9
             fallback
-                condition 1 & 3 & 6 & 7
-                fallback
-                    sequence
-                        condition IsSelfTask(frozenset({1, 3, 6, 7}))
-                        action A2(1) pre: () add: (1, 3, 6, 7)  del: (9)
-                        action FinishTask()
-                    sequence
-                        action SelfAcceptTask(frozenset({1, 3, 6, 7}))
-            action SelfAcceptTask(frozenset({0, 2, 5}))
+                sequence
+                    condition IsSelfTask(frozenset({0, 2, 4, 8, 9}))
+                    action A3(1) pre: (1, 5) add: (0, 2, 4, 8, 9)  del: (3, 7)
+                    action FinishTask()
+                sequence
+                    fallback
+                        condition 1 & 5
+                        fallback
+                            sequence
+                                condition IsSelfTask(frozenset({1, 5}))
+                                action A7(2) pre: () add: (1, 4, 5, 8)  del: (0, 2, 3, 6, 7, 9)
+                                action FinishTask()
+                            sequence
+                                action SelfAcceptTask(frozenset({1, 5})) id:5 act:A7(2)
+                    action SelfAcceptTask(frozenset({0, 2, 4, 8, 9})) id:1 act:A3(1)
+            fallback
+                sequence
+                    condition IsSelfTask(frozenset({8, 9}))
+                    action A5(1) pre: (1, 4) add: (3, 8, 9)  del: ()
+                    action FinishTask()
+                sequence
+                    condition 0 & 1 & 2 & 4
+                    action SelfAcceptTask(frozenset({8, 9})) id:2 act:A5(1)
+            sequence
+                condition 0 & 2 & 5 & 7 & 8 & 9
+                action A9(2) pre: (5, 7) add: (1, 4)  del: ()
+            sequence
+                condition 8 & 9
+                action SUBA3(1)_1 pre: (8, 9) add: (0, 2, 4)  del: (3)
+            sequence
+                condition 0 & 2 & 3 & 4 & 9
+                action SUBA5(1)_2 pre: (3) add: (8)  del: ()
+        action A0(0) pre: (4, 8) add: (3, 6)  del: (5)
     sequence
-        condition 0 & 2 & 3 & 5 & 7
-        action A1(0) pre: (3, 7) add: (1, 6)  del: (3, 4)
+        fallback
+            condition 0 & 3 & 6
+            sequence
+                condition 0 & 4 & 8
+                action A0(0) pre: (4, 8) add: (3, 6)  del: (5)
+            sequence
+                condition 1 & 3 & 6 & 8
+                action A2(0) pre: (1, 8) add: (0)  del: (1, 5, 7, 8)
+            fallback
+                sequence
+                    condition IsSelfTask(frozenset({3}))
+                    action A5(1) pre: (1, 4) add: (3, 8, 9)  del: ()
+                    action FinishTask()
+                sequence
+                    condition 0 & 1 & 4 & 6
+                    action SelfAcceptTask(frozenset({3})) id:3 act:A5(1)
+            sequence
+                condition 0 & 6
+                action SUBA4(1)_1 pre: (6) add: (3)  del: (2)
+            sequence
+                condition 3 & 6
+                action SUBA4(1)_2 pre: (3) add: (0)  del: (4)
+            sequence
+                condition 0 & 1 & 3
+                action SUBA6(1)_1 pre: (1) add: (6)  del: (5)
+            sequence
+                condition 0 & 3 & 5 & 7 & 8
+                action SUBA11(2)_0 pre: (5, 7, 8) add: (6)  del: ()
+        action A1(0) pre: () add: (2, 9)  del: (1, 5, 7, 8)
+    sequence
+        fallback
+            condition 1 & 2 & 3 & 6 & 8 & 9
+            fallback
+                sequence
+                    condition IsSelfTask(frozenset({8, 9, 3}))
+                    action A5(1) pre: (1, 4) add: (3, 8, 9)  del: ()
+                    action FinishTask()
+                sequence
+                    condition 1 & 2 & 4 & 6
+                    action SelfAcceptTask(frozenset({8, 9, 3})) id:4 act:A5(1)
+        action A2(0) pre: (1, 8) add: (0)  del: (1, 5, 7, 8)
     fallback
         sequence
-            condition IsSelfTask(frozenset({1, 6}))
-            action A2(1) pre: () add: (1, 3, 6, 7)  del: (9)
+            condition IsSelfTask(frozenset({9, 3}))
+            action A5(1) pre: (1, 4) add: (3, 8, 9)  del: ()
             action FinishTask()
         sequence
-            condition 0 & 2 & 5
-            action SelfAcceptTask(frozenset({1, 6}))
+            condition 0 & 1 & 2 & 4 & 6
+            action SelfAcceptTask(frozenset({9, 3})) id:0 act:A5(1)
     sequence
-        condition 0 & 1 & 2 & 3 & 4 & 6 & 8 & 9
-        action A3(1) pre: (3, 4, 8, 9) add: (5, 7)  del: ()
+        condition 0 & 1 & 2 & 5 & 6 & 9
+        action A14(2) pre: (1, 5) add: (3)  del: (7)
     sequence
-        condition 1 & 5 & 6 & 9
-        action A9(2) pre: (9) add: (0, 2)  del: ()
+        condition 2 & 3 & 6 & 9
+        action SUBA4(1)_2 pre: (3) add: (0)  del: (4)
+    sequence
+        condition 0 & 2 & 6 & 9
+        action SUBA5(1)_1 pre: (9) add: (3)  del: ()
+    sequence
+        condition 0 & 1 & 2 & 3 & 9
+        action SUBA6(1)_1 pre: (1) add: (6)  del: (5)
+    sequence
+        fallback
+            condition 0 & 2 & 3 & 5 & 7 & 8 & 9
+            sequence
+                condition 0 & 2 & 3 & 5 & 7 & 9
+                action SUBA5(1)_2 pre: (3) add: (8)  del: ()
+        action SUBA11(2)_0 pre: (5, 7, 8) add: (6)  del: ()

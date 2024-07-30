@@ -15,7 +15,7 @@ class NumAction(Action):
         self.del_set = self.action.del_set
 
         self.get_info_name()
-        self.ins_name = self.get_ins_name()
+        self.ins_name = self.get_info_name()
         super().__init__(args)
         self.name = self.action.name
 

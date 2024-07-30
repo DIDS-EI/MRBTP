@@ -10,9 +10,13 @@ class Condition(BahaviorNode):
 
     def check_if_in_predict_condition(self):
 
-        if self.name in self.agent.predict_condition:
-            return True
+        if self.name in self.agent.predict_condition['success']:
+            return True,True
 
+        if self.name in self.agent.predict_condition['fail']:
+            return True,False
+
+        return False, False  # 确保总是返回两个值
 
         # 在自己假设空间里的就是假设已完成
         # 没有在执行任务，就是总假设空间

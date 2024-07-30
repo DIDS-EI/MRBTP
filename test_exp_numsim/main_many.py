@@ -7,7 +7,7 @@ random.seed(0)
 np.random.seed(0)
 
 #  get data
-num_data = 10
+num_data = 100
 num_elements = 10
 max_depth = 3
 
@@ -18,7 +18,7 @@ max_depth = 3
 data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
-for i,dataset in enumerate(datasets[4:5]):
+for i,dataset in enumerate(datasets[54:55]):
     print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
     data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
 
@@ -28,7 +28,7 @@ for i,dataset in enumerate(datasets[4:5]):
 
 
 
-for data_id,dataset in  enumerate(datasets[4:5]):
+for data_id,dataset in enumerate(datasets[54:55]):
     print("data_id:",data_id)
     # BTP with composition action
     # dataset = datasets[0]
@@ -44,7 +44,7 @@ for data_id,dataset in  enumerate(datasets[4:5]):
         # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
         if len(action.add)>=3:
             split_action_ls = data_generator.split_action(action,min_splits=2,max_splits=5)
-            print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
+            # print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
             # 考虑保留组合动作，子动作不保留？
             # new_actions.remove(action)

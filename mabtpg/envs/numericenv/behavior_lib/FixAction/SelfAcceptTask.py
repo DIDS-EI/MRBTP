@@ -16,6 +16,14 @@ class SelfAcceptTask(Action):
         self.sub_goal = sub_goal
         self.sub_del = sub_del
 
+    # @property
+    # def print_name(self):
+    #     return f'SelfAcceptTask({self.sub_goal}) id:{self.task_id}  act:{self.task_action_name}'
+
+    @property
+    def print_name(self):
+        return f'{self.print_name_prefix}{self.get_ins_name()} id:{self.task_id} act:{self.task_action_name}'
+
     def update(self) -> Status:
 
 
