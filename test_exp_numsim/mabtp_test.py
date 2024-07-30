@@ -184,11 +184,11 @@ class PlanningAgentTest(PlanningAgent):
                 action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,action_name,current_condition.sub_goal,current_condition.sub_del))
                 task_num += 1
                 # add the sequence node into its parent
-                if current_condition.children == [] and len(current_condition.condition_set) == 0:
-                    current_condition.parent.add_child(action_node)
-                else:
-                    sequence_node.add_child(action_node)
-                    current_condition.parent.add_child(sel_comp_parent)
+                # if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                #     current_condition.parent.add_child(action_node)
+                # else:
+                sequence_node.add_child(action_node)
+                current_condition.parent.add_child(sel_comp_parent)
 
                 sel_comp_parent.add_child(sequence_node)
 

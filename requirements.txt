@@ -14,7 +14,5 @@ opencv-python~=4.10.0.84
 ipdb~=0.13.13
 networkx~=3.3
 tabulate~=0.9.0
-gym
-tabulate
-pandas
+pandas~=2.2.2
 
