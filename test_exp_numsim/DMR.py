@@ -53,7 +53,7 @@ class DMR:
                     self.btml_ls[i].sub_btml_dict[name] = btml
 
                     tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-                    # tmp_bt.draw(file_name = f"data/{name}")
+                    tmp_bt.draw(file_name = f"data/{name}")
 
         for i in range(self.num_agent):
             bt = BehaviorTree(btml=self.btml_ls[i],behavior_lib=behavior_lib[i])

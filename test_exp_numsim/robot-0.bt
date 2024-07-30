@@ -6,7 +6,7 @@ fallback
             fallback
                 sequence
                     condition IsSelfTask(frozenset({0, 2, 4, 8, 9}))
-                    action A3(1) pre: (1, 5) add: (0, 2, 4, 8, 9)  del: (3, 7)
+                    action CMP_A3(1) pre: (1, 5) add: (0, 2, 4, 8, 9)  del: (3, 7)
                     action FinishTask()
                 sequence
                     fallback
@@ -14,22 +14,22 @@ fallback
                         fallback
                             sequence
                                 condition IsSelfTask(frozenset({1, 5}))
-                                action A7(2) pre: () add: (1, 4, 5, 8)  del: (0, 2, 3, 6, 7, 9)
+                                action CMP_A7(2) pre: () add: (1, 4, 5, 8)  del: (0, 2, 3, 6, 7, 9)
                                 action FinishTask()
                             sequence
-                                action SelfAcceptTask(frozenset({1, 5})) id:4 act:A7(2)
-                    action SelfAcceptTask(frozenset({0, 2, 4, 8, 9})) id:1 act:A3(1)
+                                action SelfAcceptTask(frozenset({1, 5})) id:4 act:CMP_A7(2)
+                    action SelfAcceptTask(frozenset({0, 2, 4, 8, 9})) id:1 act:CMP_A3(1)
             sequence
                 condition 0 & 2 & 5 & 7 & 8 & 9
                 action A9(2) pre: (5, 7) add: (1, 4)  del: ()
             fallback
                 sequence
                     condition IsSelfTask(frozenset({2, 4}))
-                    action A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
+                    action CMP_A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
                     action FinishTask()
                 sequence
                     condition 0 & 5 & 7 & 8 & 9
-                    action SelfAcceptTask(frozenset({2, 4})) id:2 act:A11(2)
+                    action SelfAcceptTask(frozenset({2, 4})) id:2 act:CMP_A11(2)
             sequence
                 condition 0 & 1 & 2 & 4 & 9
                 action A12(2) pre: (1) add: (8)  del: ()
@@ -52,11 +52,11 @@ fallback
             fallback
                 sequence
                     condition IsSelfTask(frozenset({6}))
-                    action A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
+                    action CMP_A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
                     action FinishTask()
                 sequence
                     condition 0 & 3 & 5 & 7 & 8
-                    action SelfAcceptTask(frozenset({6})) id:3 act:A11(2)
+                    action SelfAcceptTask(frozenset({6})) id:3 act:CMP_A11(2)
             sequence
                 condition 0 & 6 & 9
                 action SUBA5(1)_1 pre: (9) add: (3)  del: ()
@@ -74,11 +74,11 @@ fallback
     fallback
         sequence
             condition IsSelfTask(frozenset({2, 6}))
-            action A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
+            action CMP_A11(2) pre: (5, 7, 8) add: (1, 2, 4, 6)  del: ()
             action FinishTask()
         sequence
             condition 0 & 3 & 5 & 7 & 8 & 9
-            action SelfAcceptTask(frozenset({2, 6})) id:0 act:A11(2)
+            action SelfAcceptTask(frozenset({2, 6})) id:0 act:CMP_A11(2)
     sequence
         condition 0 & 2 & 6 & 9
         action SUBA5(1)_1 pre: (9) add: (3)  del: ()

@@ -46,12 +46,13 @@ for data_id,dataset in enumerate(datasets[54:55]):
             split_action_ls = data_generator.split_action(action,min_splits=2,max_splits=5)
             # print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
-            # 考虑保留组合动作，子动作不保留？
+
             # new_actions.remove(action)
             # action.cost=0
             new_actions.extend(split_action_ls) #???? 如果还保留子动作，则需要再条数
 
             split_actions_dict[action] = split_action_ls
+            action.name = "CMP_"+action.name
             action.cost = 0
 
     # 将每个组合动作的 btml 保存起来
