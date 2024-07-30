@@ -53,6 +53,10 @@ class BahaviorNode(ptree.behaviour.Behaviour):
         return super().terminate(new_status)
 
     @property
+    def draw_name(self):
+        return self.name
+
+    @property
     def print_name(self):
         return f'{self.print_name_prefix}{self.get_ins_name()}'
 

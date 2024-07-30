@@ -133,7 +133,7 @@ def dot_tree(
     root_name = str(root.id)
     node_root = pydot.Node(
         name=root_name,
-        label=get_node_label(root.ins_name, root),
+        label=get_node_label(root.draw_name, root),
         shape=node_shape,
         style="filled",
         fillcolor=node_colour,
@@ -162,7 +162,7 @@ def dot_tree(
                 # Attributes that may be useful: tooltip, xlabel
                 node = pydot.Node(
                     name=str(c.id),
-                    label=get_node_label(c.name, c),
+                    label=get_node_label(c.draw_name, c),
                     shape=node_shape,
                     style="filled",
                     fillcolor=node_colour,

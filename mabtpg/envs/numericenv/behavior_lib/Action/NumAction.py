@@ -29,12 +29,15 @@ class NumAction(Action):
         self.info_name = (f"{self.name}  \n  pre: ({self.pre_str}) \n "
                      f"add: ({self.add_str})   \n del: ({self.del_set_str})")
 
-    def get_ins_name(self):
+    @property
+    def draw_name(self):
         return f"{self.info_name}"
+
 
     @classmethod
     def get_info(self,*arg):
         return None
+
 
     @property
     def print_name(self):
