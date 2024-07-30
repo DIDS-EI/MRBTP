@@ -67,8 +67,8 @@ class BfsPlanningAgent(PlanningAgent):
                         sub_goal = frozenset(
                             condition & frozenset(action.add)
                         )
-                        # sub_del = action.del_set
-                    sub_del = set()
+                        sub_del = action.del_set
+                        # sub_del = set()
 
                     # planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal,dependency)
                     planning_condition = PlanningCondition(premise_condition, action.name, composition_action_flag,sub_goal,sub_del)

@@ -17,9 +17,12 @@ class IsHandEmpty(Condition):
 
     def update(self) -> Status:
 
-        other_do_it = self.check_if_in_predict_condition()
-        if other_do_it:
-            return Status.SUCCESS
+        is_in_predict, is_true = self.check_if_in_predict_condition()
+        if is_in_predict:
+            if is_true:
+                return Status.SUCCESS
+            else:
+                return Status.FAILURE
 
         if self.target_agent is None:
             self.agent_id = int(self.args[0].split("-")[-1])

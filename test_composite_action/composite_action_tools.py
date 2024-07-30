@@ -69,7 +69,7 @@ class CompositeActionPlanner:
                 # cond_act_ls = list(reversed(seq_planning_cond))
                 # Calculate pre, add, and del for composite actions to construct PlanningAgent
 
-                print("cond_act_ls",cond_act_ls)
+                # print("cond_act_ls",cond_act_ls)
                 composite_action_model = {
                     "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
                     "add": set(),

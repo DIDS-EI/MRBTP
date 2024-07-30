@@ -1,5 +1,6 @@
 import random
 import io
+import re
 import itertools
 from mabtpg.envs.gridenv.minigrid.magrid_env import MAGridEnv
 from mabtpg.envs.gridenv.minigrid.magrid import MAGrid
@@ -75,6 +76,8 @@ class MiniGridToMAGridEnv(MAGridEnv):
         ## need to put in after reset()
         # self.get_objects_lists()
         # self.adj_rooms_doors = self.get_adjacent_rooms_and_doors()
+
+        self.verbose=False
 
     def reset(
             self,
@@ -473,3 +476,95 @@ class MiniGridToMAGridEnv(MAGridEnv):
         map_str = map_string.getvalue()  # Get the complete string
         map_string.close()  # Close the StringIO object
         return map_str
+
+    def check_conflict(self, premise_condition):
+        near_state_dic = {}
+        holding_state_dic = {}
+        empty_hand_dic = {}
+        room_state_dic = {}
+        toggle_state_dic = {}
+
+        for c in premise_condition:
+            # 检测 IsNear 模式
+            match_near = re.search(r'IsNear\(([^)]+)\)', c)
+            if match_near:
+                content = match_near.group(1)
+                elements = content.split(',')
+                agent_id = elements[0].strip()
+                obj_id = elements[1].strip()
+                if agent_id in near_state_dic:
+                    if near_state_dic[agent_id] != obj_id:
+                        if self.verbose:
+                            print(
+                                f"Conflict detected: {agent_id} is near more than one object: {near_state_dic[agent_id]} and {obj_id}.")
+                        return True
+                else:
+                    near_state_dic[agent_id] = obj_id
+
+            # 检测 IsHolding 模式
+            match_holding = re.search(r'IsHolding\(([^)]+)\)', c)
+            if match_holding:
+                content = match_holding.group(1)
+                elements = content.split(',')
+                agent_id = elements[0].strip()
+                obj_id = elements[1].strip()
+                if agent_id in holding_state_dic:
+                    if holding_state_dic[agent_id] != obj_id:
+                        if self.verbose:
+                            print(
+                                f"Conflict detected: {agent_id} is holding more than one object: {holding_state_dic[agent_id]} and {obj_id}.")
+                        return True
+                elif agent_id in empty_hand_dic:
+                    if self.verbose:
+                        print(
+                            f"Conflict detected: {agent_id} is reported both holding {obj_id} and having an empty hand.")
+                    return True
+                else:
+                    holding_state_dic[agent_id] = obj_id
+
+            # 检测 IsHandEmpty 模式
+            match_empty = re.search(r'IsHandEmpty\(([^)]+)\)', c)
+            if match_empty:
+                agent_id = match_empty.group(1).strip()
+                if agent_id in holding_state_dic:
+                    if self.verbose:
+                        print(
+                            f"Conflict detected: {agent_id} is reported both having an empty hand and holding {holding_state_dic[agent_id]}.")
+                    return True
+                empty_hand_dic[agent_id] = True
+
+            # 检测 IsInRoom 模式
+            match_room = re.search(r'IsInRoom\(([^,]+),(\d+)\)', c)
+            if match_room:
+                entity_id = match_room.group(1).strip()
+                room_id = match_room.group(2).strip()
+                if entity_id in room_state_dic:
+                    if room_state_dic[entity_id] != room_id:
+                        if self.verbose:
+                            print(
+                                f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
+                        return True
+                else:
+                    room_state_dic[entity_id] = room_id
+
+            # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
+            # 检测 IsOpen 和 IsClose 模式
+            match_open = re.search(r'IsOpen\(([^)]+)\)', c)
+            match_close = re.search(r'IsClose\(([^)]+)\)', c)
+
+            if match_open:
+                obj_id = match_open.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'close':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'open'
+            if match_close:
+                obj_id = match_close.group(1).strip()
+                if obj_id in toggle_state_dic and toggle_state_dic[obj_id] == 'open':
+                    if self.verbose:
+                        print(f"Conflict detected: {obj_id} is reported both open and close.")
+                    return True
+                toggle_state_dic[obj_id] = 'close'
+
+        return False

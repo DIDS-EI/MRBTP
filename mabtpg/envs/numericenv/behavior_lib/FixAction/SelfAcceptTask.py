@@ -10,7 +10,7 @@ class SelfAcceptTask(Action):
     can_be_expanded = False
     num_args = 1
 
-    def __init__(self, task_id,action_name,sub_goal,sub_del=set()):
+    def __init__(self, task_id,action_name,sub_goal,sub_del):
         self.task_id = task_id
         self.task_action_name = get_action_name(action_name)
         self.sub_goal = convert_to_num_frozenset(sub_goal)

@@ -21,9 +21,13 @@ class Agent(object):
 
         self.last_tick_output = None
 
-        self.accept_task = None
-        self.current_task = None
         self.last_accept_task = None
+        self.current_task = None
+        self.predict_condition = {
+            "success":set(),
+            "fail":set(),
+        }
+
 
 
     def planning_for_subgoal(self,subgoal):
@@ -63,36 +67,81 @@ class Agent(object):
         self.action = Actions.done
         self.current_task = None
         self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
-        print(f"cur: {self.current_task}")
-        print_colored(f"accp: {self.accept_task} ",color='orange')
-        print_colored(f"last: {self.last_accept_task}",color='orange')
-        if self.current_task != self.accept_task and self.last_accept_task!=None:
+
+        # print_colored(f"cur: {self.current_task}", color='orange')
+        # print_colored(f"accp: {self.last_accept_task} ", color='orange')
+
+        if self.current_task != self.last_accept_task:
             self.finish_current_task()
-
-        self.last_accept_task = copy.deepcopy(self.accept_task)
-
-
-                # self.env.blackboard["premise_dep2subgoal"] = {k: v for k, v in self.env.blackboard["premise_dep2subgoal"].items() if v != \
-                #                                               (self.current_task["task_id"],self.current_task["subgoal"])}
-                    # if self.current_task["subgoal"] in self.env.blackboard["condition_dependency"]:
-                    #     del self.env.blackboard["condition_dependency"][self.current_task["subgoal"]]
+            self.update_current_task()
+            if self.current_task != None:
+                self.bt.tick(verbose=True, bt_name=f'Twice {self.agent_id} bt')
+                self.bt_success = self.bt.root.status == Status.SUCCESS
 
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action
 
 
     def finish_current_task(self):
-        print_colored(f"Have Finish Last Task! cur_task = {self.current_task}", color='orange')
-        self.env.blackboard["predict_condition"] -= self.last_accept_task["subgoal"]
-        # 先遍历这个键值，删除里面对应的任务里 depend
-        task_key = (self.last_accept_task["task_id"], self.last_accept_task["subgoal"])
-        # 如果有受它依赖的任务，那么解除这些任务的依赖
-        print_colored(f"Task Dependency: {self.env.blackboard['dependent_tasks_dic']}", color='orange')
-        if task_key in self.env.blackboard["dependent_tasks_dic"]:
-            successor_tasks = self.env.blackboard["dependent_tasks_dic"][task_key]
-            for st in successor_tasks:
-                self.env.blackboard["task_predict_condition"][st] -= self.last_accept_task["subgoal"]
-                print_colored("Release Task Dependency....", color='orange')
-                print_colored(f"{st} \t {self.env.blackboard['task_predict_condition'][st]}", color='orange')
-            # 这个任务的记录，删除记录依赖
-            del self.env.blackboard["dependent_tasks_dic"][task_key]
+        if self.last_accept_task!=None:
+            print_colored(f"Have Finish Last Task! last_accept_task = {self.last_accept_task}", color='orange')
+
+            try:
+                # self.env.blackboard["task_agents_queue"].remove(self)  # 直接移除对象
+                index = self.env.blackboard["task_agents_queue"].index(self)  # 查找 self 的索引
+                self.env.blackboard["task_agents_queue"].pop(index)  # 通过索引移除
+            except ValueError:
+                print("The agent is not in the queue.")  # self 不在队列中
+            except IndexError:
+                print("Index out of range.")  # 索引超出范围，理论上不会发生，因为索引是从 list.index 获取的
+
+            # 更新队列里所有智能体的假设空间
+            last_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
+            last_sub_goal = set()
+            last_sub_del = set()
+            for i,agent in enumerate(self.env.blackboard["task_agents_queue"]):
+                if i==0:
+                    agent.predict_condition = {
+                        "success":set(),
+                        "fail":set(),
+                    }
+                else:
+                    agent.predict_condition["success"] = (last_predict_condition["success"] | last_sub_goal) -last_sub_del
+                    agent.predict_condition["fail"] = (last_predict_condition[ "fail"] | last_sub_del) - last_sub_goal
+
+                last_predict_condition = agent.predict_condition
+                last_sub_goal = agent.current_task["sub_goal"]
+                last_sub_del = agent.current_task["sub_del"]
+
+
+
+    def update_current_task(self):
+
+        # get last agent's predict_condition
+        if self.env.blackboard["task_agents_queue"]!=[]:
+            last_predict_condition = self.env.blackboard["task_agents_queue"][-1].predict_condition
+        else:
+            last_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
+
+        if self.current_task!=None:
+            self.env.blackboard["task_agents_queue"].append(self)
+            self.predict_condition = copy.deepcopy(last_predict_condition)
+
+            # now the new_predict_condition
+            new_predict_condition = {
+                "success":set(),
+                "fail":set(),
+            }
+            new_predict_condition["success"] = (last_predict_condition["success"] | self.current_task["sub_goal"]) - self.current_task["sub_del"]
+            new_predict_condition["fail"] = (last_predict_condition["fail"] | self.current_task["sub_del"]) - self.current_task["sub_goal"]
+            for agent in self.env.agents:
+                if agent!=self and agent not in self.env.blackboard["task_agents_queue"]:
+                    agent.predict_condition = copy.deepcopy(new_predict_condition)
+
+        self.last_accept_task = copy.deepcopy(self.current_task)
