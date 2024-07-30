@@ -91,6 +91,8 @@ class MAOBTP_test(MAOBTP):
         self.verbose = verbose
         self.start = start
 
+        self.record_expanded_num = 0
+
     def bfs_planning(self, goal, action_lists):
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
@@ -103,7 +105,7 @@ class MAOBTP_test(MAOBTP):
 
 
         while explored_condition_list != []:
-
+            self.record_expanded_num += 1
             condition_cost = heapq.heappop(explored_condition_list)
             condition,cost = condition_cost.cond,condition_cost.cost
 

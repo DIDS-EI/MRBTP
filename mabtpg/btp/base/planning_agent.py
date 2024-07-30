@@ -8,8 +8,9 @@ from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
 from mabtpg.btp.base.planning_condition import PlanningCondition
 
+
 class PlanningAgent:
-    def __init__(self,action_list,goal,id=None,verbose=False,start = None):
+    def __init__(self, action_list, goal, id=None, verbose=False, start=None, env=None):
         self.id = id
         self.action_list = action_list
         self.expanded_condition_dict = {}
@@ -19,7 +20,9 @@ class PlanningAgent:
 
         self.verbose = verbose
 
-        self.start = start # ???delete
+        self.start = start  # ???delete
+
+        self.env = env
 
     def one_step_expand(self, condition):
 
@@ -29,25 +32,25 @@ class PlanningAgent:
         # find premise conditions
         premise_condition_list = []
         for action in self.action_list:
-            if self.is_consequence(condition,action):
+            if self.is_consequence(condition, action):
                 premise_condition = frozenset((action.pre | condition) - action.add)
                 if self.has_no_subset(premise_condition):
 
                     # conflict check
-                    if self.check_conflict(premise_condition):
-                        continue
+                    if self.env != None:
+                        if self.env.check_conflict(premise_condition):
+                            continue
 
-                    planning_condition = PlanningCondition(premise_condition,action.name)
+                    planning_condition = PlanningCondition(premise_condition, action.name)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
-
                     if self.verbose:
                         if inside_condition:
-                            print_colored(f'inside','purple')
+                            print_colored(f'inside', 'purple')
                         else:
-                            print_colored(f'outside','purple')
-                        print_colored(f'a:{action.name} \t c_attr:{premise_condition}','orange')
+                            print_colored(f'outside', 'purple')
+                        print_colored(f'a:{action.name} \t c_attr:{premise_condition}', 'orange')
 
         # insert premise conditions into BT
         if inside_condition:
@@ -55,11 +58,10 @@ class PlanningAgent:
         else:
             self.outside_expand(premise_condition_list)
 
-
         return premise_condition_list
 
     # check if `condition` is the consequence of `action`
-    def is_consequence(self,condition,action):
+    def is_consequence(self, condition, action):
         if condition & ((action.pre | action.add) - action.del_set) <= set():
             return False
         if (condition - action.del_set) != condition:
@@ -72,10 +74,10 @@ class PlanningAgent:
                 return False
         return True
 
-    def inside_expand(self,inside_condition, premise_condition_list):
+    def inside_expand(self, inside_condition, premise_condition_list):
         inside_condition.children += premise_condition_list
 
-    def outside_expand(self,premise_condition_list):
+    def outside_expand(self, premise_condition_list):
         self.goal_condition.children += premise_condition_list
 
     def check_conflict(self, premise_condition):
@@ -83,7 +85,7 @@ class PlanningAgent:
         holding_state_dic = {}
         empty_hand_dic = {}
         room_state_dic = {}
-        toggle_state_dic={}
+        toggle_state_dic = {}
 
         for c in premise_condition:
             # 检测 IsNear 模式
@@ -117,7 +119,8 @@ class PlanningAgent:
                         return True
                 elif agent_id in empty_hand_dic:
                     if self.verbose:
-                        print(f"Conflict detected: {agent_id} is reported both holding {obj_id} and having an empty hand.")
+                        print(
+                            f"Conflict detected: {agent_id} is reported both holding {obj_id} and having an empty hand.")
                     return True
                 else:
                     holding_state_dic[agent_id] = obj_id
@@ -141,11 +144,11 @@ class PlanningAgent:
                 if entity_id in room_state_dic:
                     if room_state_dic[entity_id] != room_id:
                         if self.verbose:
-                            print(f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
+                            print(
+                                f"Conflict detected: {entity_id} is reported in more than one room: {room_state_dic[entity_id]} and {room_id}.")
                         return True
                 else:
                     room_state_dic[entity_id] = room_id
-
 
             # 检查 IsOpen() 和 IsClose() 不能针对同一个物体都有
             # 检测 IsOpen 和 IsClose 模式
@@ -169,15 +172,14 @@ class PlanningAgent:
 
         return False
 
-
     def create_anytree(self):
 
-        task_num=0
+        task_num = 0
 
         anytree_root = AnyTreeNode(NODE_TYPE.selector)
         stack = []
         # add goal conditions into root
-        self.add_conditions(self.goal_condition,anytree_root)
+        self.add_conditions(self.goal_condition, anytree_root)
         for children in self.goal_condition.children:
             children.parent = anytree_root
             stack.append(children)
@@ -198,11 +200,11 @@ class PlanningAgent:
                         children.parent = condition_parent
                         stack.append(children)
                 # add condition
-                self.add_conditions(current_condition,condition_parent)
+                self.add_conditions(current_condition, condition_parent)
                 # add action
                 cls_name, args = parse_predicate_logic(current_condition.action)
                 # args = tuple(list(args) + [current_condition.action_pre])
-                action_node = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+                action_node = AnyTreeNode(NODE_TYPE.action, cls_name, args)
 
                 # add the sequence node into its parent
                 if current_condition.children == [] and len(current_condition.condition_set) == 0:
@@ -221,16 +223,18 @@ class PlanningAgent:
 
                 # task_flag_condition = AnyTreeNode(NODE_TYPE.condition, "IsSelfTask",
                 #                                   ([current_condition.sub_goal]))
-                task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",([task_num,current_condition.sub_goal]))
+                task_flag_condition = AnyTreeNode(NODE_TYPE.condition, "IsSelfTask",
+                                                  ([task_num, current_condition.action, current_condition.sub_goal,
+                                           current_condition.sub_del]))
                 cls_name, args = parse_predicate_logic(current_condition.action)
                 # args = tuple(list(args) + [current_condition.action_pre])
-                task_comp_action = AnyTreeNode(NODE_TYPE.action,cls_name,args)
+                task_comp_action = AnyTreeNode(NODE_TYPE.action, cls_name, args)
                 # seq add two children
                 seq_task_parent.add_child(task_flag_condition)
                 seq_task_parent.add_child(task_comp_action)
 
                 #### Finish task action
-                seq_task_parent.add_child(AnyTreeNode(NODE_TYPE.action,"FinishTask"))
+                seq_task_parent.add_child(AnyTreeNode(NODE_TYPE.action, "FinishTask"))
                 sel_comp_parent.add_child(seq_task_parent)
 
                 sequence_node = AnyTreeNode(NODE_TYPE.sequence)
@@ -244,13 +248,11 @@ class PlanningAgent:
                         children.parent = condition_parent
                         stack.append(children)
                 # add condition
-                self.add_conditions(current_condition,condition_parent)
+                self.add_conditions(current_condition, condition_parent)
                 # add action
-                # print("current_condition.sub_goal:",current_condition.sub_goal)
-                # action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,current_condition.sub_goal,current_condition.dependency))
-
-                # action_node = AnyTreeNode(NODE_TYPE.action, "SelfAcceptTask", [current_condition.sub_goal])
-                action_node = AnyTreeNode(NODE_TYPE.action,"SelfAcceptTask",(task_num,current_condition.sub_goal))
+                action_node = AnyTreeNode(NODE_TYPE.action, "SelfAcceptTask",
+                                          (task_num, current_condition.action, current_condition.sub_goal,
+                                           current_condition.sub_del))
                 task_num += 1
                 # add the sequence node into its parent
                 # if current_condition.children == [] and len(current_condition.condition_set) == 0:
@@ -261,10 +263,7 @@ class PlanningAgent:
 
                 sel_comp_parent.add_child(sequence_node)
 
-
         self.anytree_root = anytree_root
-
-
 
     # def create_anytree(self):
     #     anytree_root = AnyTreeNode(NODE_TYPE.selector)
@@ -311,40 +310,39 @@ class PlanningAgent:
 
         self.btml = btml
 
-    def output_bt(self,behavior_lib=None):
+    def output_bt(self, behavior_lib=None):
         self.create_btml()
 
         bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
 
         return bt
 
-    def add_conditions(self,planning_condition,parent):
+    def add_conditions(self, planning_condition, parent):
         condition_set = planning_condition.condition_set
         if len(condition_set) == 0: return
 
         if len(condition_set) == 1:
             cls_name, args = parse_predicate_logic(list(condition_set)[0])
-            parent.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
+            parent.add_child(AnyTreeNode(NODE_TYPE.condition, cls_name, args))
         else:
             sequence_node = AnyTreeNode(NODE_TYPE.sequence)
             for condition_node_name in condition_set:
                 cls_name, args = parse_predicate_logic(condition_node_name)
-                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition,cls_name,args))
+                sequence_node.add_child(AnyTreeNode(NODE_TYPE.condition, cls_name, args))
 
             sub_btml = BTML()
             sub_btml.anytree_root = sequence_node
 
-            composite_condition = AnyTreeNode("composite_condition",cls_name=None, info={'sub_btml':sub_btml})
+            composite_condition = AnyTreeNode("composite_condition", cls_name=None, info={'sub_btml': sub_btml})
 
             parent.add_child(composite_condition)
-
 
     def planning(self):
         explored_condition_list = [self.goal]
 
         while explored_condition_list != []:
             condition = explored_condition_list.pop(0)
-            if self.verbose: print_colored(f"C:{condition}","green")
+            if self.verbose: print_colored(f"C:{condition}", "green")
             premise_condition_list = self.one_step_expand(condition)
-            explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
-
+            explored_condition_list += [planning_condition.condition_set for planning_condition in
+                                        premise_condition_list]

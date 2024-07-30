@@ -63,6 +63,8 @@ class Agent(object):
         if action is None:
             if self.bt:
 
+
+
                 self.current_task = None
 
                 self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
@@ -74,6 +76,9 @@ class Agent(object):
                 if self.current_task != self.last_accept_task:
                     self.finish_current_task()
                     self.update_current_task()
+                    if self.current_task!=None:
+                        self.bt.tick(verbose=True, bt_name=f'Twice {self.agent_id} bt')
+                        self.bt_success = self.bt.root.status == Status.SUCCESS
 
         else:
             self.action = action

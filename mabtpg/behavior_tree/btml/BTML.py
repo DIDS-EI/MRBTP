@@ -37,6 +37,7 @@ class BTML:
             for i in range(len(node.args)):
                 # print("node.args[i]",node.args)
                 arg = node.args[i]
+                # print("arg:",arg)
                 if arg in arg_dict:
                     arg_list.append(arg_dict[arg])
                 else:

@@ -4,7 +4,7 @@ from mabtpg.envs.base.env import Env
 from mabtpg.utils.tools import print_colored
 from mabtpg import BehaviorLibrary
 from mabtpg.envs.numericenv.agent import Agent
-
+from mabtpg.envs.numericenv.numsim_tools import str_to_frozenset,get_action_name
 class NumericEnv(Env):
     def __init__(self,
         num_agent: int = 1,
@@ -52,7 +52,7 @@ class NumericEnv(Env):
         self.actions_lists = agent_actions
         for act_ls in agent_actions:
             for act in act_ls:
-                self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+                self.blackboard["action_pre"][get_action_name(act.name)] = frozenset(act.pre)
 
 
     def print_agent_action_tabulate(self,agent_id,action):
@@ -76,7 +76,7 @@ class NumericEnv(Env):
             num_agent = self.num_agent
         self.step_count += 1
         done = True
-
+        agents_step = 0
         # cur_agent_actions = {}
 
         for i in range(num_agent):
@@ -92,6 +92,7 @@ class NumericEnv(Env):
                     self.state = (self.state | action.add) - action.del_set
                 else:
                     print_colored(f"AGENT-{i} cannot do it!", color="red")
+                agents_step+=1
 
             if not self.agents[i].bt_success:
                 done = False
@@ -107,7 +108,7 @@ class NumericEnv(Env):
         if self.render_mode == "human":
             self.render()
 
-        return self.state, done, None, {}
+        return self.state, done, None, {},agents_step
 
     def create_behavior_libs(self):
         from mabtpg.utils import get_root_path

@@ -1,6 +1,8 @@
 import re
 
 def parse_predicate_logic(predicate_instance):
+
+
     # 使用正则表达式解析字符串
     match = re.match(r"(\w+)\((.*)\)", predicate_instance)
     if match:
@@ -10,4 +12,5 @@ def parse_predicate_logic(predicate_instance):
         args = tuple(arg.strip() for arg in args_str.split(','))
         return type, args
     else:
-        raise ValueError("Invalid predicate logic format")
+        return predicate_instance,()
+        # raise ValueError("Invalid predicate logic format")

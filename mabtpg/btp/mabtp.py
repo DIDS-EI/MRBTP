@@ -12,10 +12,13 @@ from mabtpg.btp.base.planning_agent import PlanningAgent
 
 
 class MABTP:
-    def __init__(self,verbose=False,start = None):
+    def __init__(self,verbose=False,start = None,env=None):
         self.planned_agent_list = None
         self.verbose = verbose
         self.start = start
+
+        self.record_expanded_num = 0
+        self.env = env
 
     def planning(self, goal, action_lists):
         planning_agent_list = []
@@ -40,7 +43,7 @@ class MABTP:
     def bfs_planning(self, goal, action_lists):
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start))
+            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start,env=self.env))
 
         explored_condition_list = [goal]
 

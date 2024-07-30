@@ -11,21 +11,24 @@ from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
 
 from mabtpg.btp.base import PlanningCondition
-from mabtp_test import  PlanningAgentTest
+from mabtpg.btp.base import PlanningAgent
+from mabtp_test import PlanningAgentTest
 
 
 
-class Num_CABTP(PlanningAgentTest):
+# class Num_CABTP(PlanningAgentTest):
+class Num_CABTP(PlanningAgent):
     '''Composition Action Behavior Tree Planning '''
     def __init__(self,goal,action_list,sequence,id=None,verbose=False):
         super().__init__(action_list, goal, id, verbose)
         self.sequence = copy.deepcopy(sequence)
         self.sequence.reverse()
-
-
         self.sequence_index = 0
 
         self.collect_explored_cond_act = []
+
+        self.record_expanded_num = 0
+
     def one_step_expand(self, cond_seqindex):
         condition,seq_index = cond_seqindex
         # Determine whether the expansion is within the tree or outside the tree before expanding!
@@ -54,7 +57,7 @@ class Num_CABTP(PlanningAgentTest):
                         continue
 
 
-                    planning_condition = PlanningCondition(premise_condition,action)
+                    planning_condition = PlanningCondition(premise_condition,action.name)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
@@ -82,6 +85,7 @@ class Num_CABTP(PlanningAgentTest):
         explored_condition_list = [(self.goal,-1)]
 
         while explored_condition_list != []:
+            self.record_expanded_num +=1
             cond_seqindex = explored_condition_list.pop(0)
             cond,seq_index = cond_seqindex
             if self.verbose: print_colored(f"C:{cond}  Index:{seq_index}", "green")
