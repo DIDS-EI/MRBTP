@@ -1,7 +1,7 @@
 import random
 import pickle
 from data_generate import DataGenerator
-from mabtpg.envs.numericenv.numsim_tools import create_directory_if_not_exists
+from mabtpg.envs.numericenv.numsim_tools import create_directory_if_not_exists,print_action_data_table
 from mabtpg.utils.tools import print_colored
 import numpy as np
 
@@ -9,28 +9,31 @@ random.seed(0)
 np.random.seed(0)
 
 #  get data
-num_data = 200
-num_elements = 30
-max_depth = 5
+num_data = 1
+num_elements = 5
+max_depth = 1
+max_branch = 2
 
+num_agent = 2
 # num_data = 1
 # num_elements = 10
 # max_depth = 2
 
-data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth, need_split_action=True)
+data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth, max_branch=max_branch,need_split_action=True)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
+print("======================")
 
 vaild_data = 0
-max_vaild_data = 100
+max_vaild_data = 1
 
-for data_id,dataset in enumerate(datasets[:]):
-    # print_action_data_table(dataset['goal'], dataset['start'], dataset['actions'])
-    # data_generator.save_tree_as_dot(dataset, f'data/{i}_generated_tree.dot')
+for data_id,dataset in enumerate(datasets[:1]):
+    print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
+    data_generator.save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
 
     print("data_id:", data_id)
-    with_comp_action = True
-    num_agent = 2
+    with_comp_action = False
+
     # 每个数据，再根据给定的智能体数量，得到 agents_actions
     agents_actions = data_generator.assign_actions_to_agents(dataset,num_agent,with_comp_action=with_comp_action)
     goal = dataset['goal']
@@ -42,8 +45,11 @@ for data_id,dataset in enumerate(datasets[:]):
     # #########################
     # 运行多智能体算法
     from DMR import DMR
-    dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=False)  # False 也还需要再调试
+    dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=True)  # False 也还需要再调试
     dmr.planning()
+
+    if dmr.expanded_time >= 5:
+        continue
 
     # 计算的时候用 C(num)，模拟和输出用 num
     # #########################
@@ -66,17 +72,23 @@ for data_id,dataset in enumerate(datasets[:]):
     done = False
     max_env_step=20
     env_step = 0
+    total_agents_step = 0
     obs = set()
     while not done:
         print_colored("======================================================================================","blue")
         obs,done,_,_,agents_step = env.step()
         env_step += 1
+        total_agents_step += agents_step
         print_colored(f"state: {obs}","blue")
         if env_step>=max_env_step:
             break
     print(f"\ntask finished!")
     print_colored(f"goal:{dataset['goal_num']}", "blue")
     print("obs>=goal:",obs>=dataset['goal_num'])
+
+    print("env_step:",env_step)
+    print("total_agents_step:",total_agents_step)
+    print("start:",start)
 
     # save data
     if done==True and (obs>=dataset['goal_num']):

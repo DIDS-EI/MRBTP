@@ -43,6 +43,10 @@ class NumericEnv(Env):
             # (1,x): set
             # (2,x): set
 
+            "predict_condition": {
+                "success": set(),
+                "fail": set(),
+            },
             "task_agents_queue":[], # 在执行任务的智能体的列表，里面存正在做任务的 agent 的列表
             # "predict_condition": set(),  # 总的假设空间
             "action_pre": {}
@@ -90,9 +94,10 @@ class NumericEnv(Env):
                 self.print_agent_action_tabulate(i,action)
                 if self.state >= action.pre:
                     self.state = (self.state | action.add) - action.del_set
+                    agents_step += 1
                 else:
                     print_colored(f"AGENT-{i} cannot do it!", color="red")
-                agents_step+=1
+
 
             if not self.agents[i].bt_success:
                 done = False

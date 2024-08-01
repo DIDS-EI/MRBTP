@@ -3,8 +3,9 @@ from mabtpg.behavior_tree.utils import Status
 from mabtpg.utils.tools import print_colored
 import copy
 
+
 class Agent(object):
-    def __init__(self,env=None,id=0):
+    def __init__(self, env=None, id=0):
         self.env = env
         self.id = id
         self.subgoal = None
@@ -24,13 +25,11 @@ class Agent(object):
         self.last_accept_task = None
         self.current_task = None
         self.predict_condition = {
-            "success":set(),
-            "fail":set(),
+            "success": set(),
+            "fail": set(),
         }
 
-
-
-    def planning_for_subgoal(self,subgoal):
+    def planning_for_subgoal(self, subgoal):
         from mabtpg.btp.pbtp import PBTP
 
         if self.env.action_lists is None:
@@ -41,7 +40,7 @@ class Agent(object):
 
         action_list = self.env.action_lists[self.id]
 
-        planning_algorithm = PBTP(action_list,subgoal_set,verbose=False,precondition=precondition)
+        planning_algorithm = PBTP(action_list, subgoal_set, verbose=False, precondition=precondition)
         planning_algorithm.planning()
         bt = planning_algorithm.output_bt(self.behavior_lib)
 
@@ -53,20 +52,18 @@ class Agent(object):
         bt.print()
         bt.draw(f'{self.agent_id} {subgoal}')
 
-
-
     @property
     def agent_id(self):
         return f'agent-{self.id}'
 
-    def bind_bt(self,bt):
+    def bind_bt(self, bt):
         self.bt = bt
         bt.bind_agent(self)
 
     def step(self):
         self.action = Actions.done
         self.current_task = None
-        self.bt.tick(verbose=True,bt_name=f'{self.agent_id} bt')
+        self.bt.tick(verbose=True, bt_name=f'{self.agent_id} bt')
 
         # print_colored(f"cur: {self.current_task}", color='orange')
         # print_colored(f"accp: {self.last_accept_task} ", color='orange')
@@ -81,9 +78,9 @@ class Agent(object):
         self.bt_success = self.bt.root.status == Status.SUCCESS
         return self.action
 
-
     def finish_current_task(self):
-        if self.last_accept_task!=None:
+        # 上次有任务完成了
+        if self.last_accept_task != None:
             print_colored(f"Have Finish Last Task! last_accept_task = {self.last_accept_task}", color='orange')
 
             try:
@@ -97,51 +94,51 @@ class Agent(object):
 
             # 更新队列里所有智能体的假设空间
             last_predict_condition = {
-                "success":set(),
-                "fail":set(),
+                "success": set(),
+                "fail": set(),
             }
             last_sub_goal = set()
             last_sub_del = set()
-            for i,agent in enumerate(self.env.blackboard["task_agents_queue"]):
-                if i==0:
+            for i, agent in enumerate(self.env.blackboard["task_agents_queue"]):
+                if i == 0:
                     agent.predict_condition = {
-                        "success":set(),
-                        "fail":set(),
+                        "success": set(),
+                        "fail": set(),
                     }
                 else:
-                    agent.predict_condition["success"] = (last_predict_condition["success"] | last_sub_goal) -last_sub_del
-                    agent.predict_condition["fail"] = (last_predict_condition[ "fail"] | last_sub_del) - last_sub_goal
+                    agent.predict_condition["success"] = (last_predict_condition[
+                                                              "success"] | last_sub_goal) - last_sub_del
+                    agent.predict_condition["fail"] = (last_predict_condition["fail"] | last_sub_del) - last_sub_goal
 
                 last_predict_condition = agent.predict_condition
                 last_sub_goal = agent.current_task["sub_goal"]
                 last_sub_del = agent.current_task["sub_del"]
 
-
+            # 更新队列外面的智能体的假设空间
+            self.env.blackboard["predict_condition"]["success"] = (last_predict_condition[
+                                                                       "success"] | last_sub_goal) - last_sub_del
+            self.env.blackboard["predict_condition"]["fail"] = (last_predict_condition[
+                                                                    "fail"] | last_sub_del) - last_sub_goal
+            for agent in self.env.agents:
+                if agent not in self.env.blackboard["task_agents_queue"]:
+                    agent.predict_condition = self.env.blackboard["predict_condition"]
 
     def update_current_task(self):
 
-        # get last agent's predict_condition
-        if self.env.blackboard["task_agents_queue"]!=[]:
-            last_predict_condition = self.env.blackboard["task_agents_queue"][-1].predict_condition
-        else:
-            last_predict_condition = {
-                "success":set(),
-                "fail":set(),
-            }
-
-        if self.current_task!=None:
+        # 把最新的任务加到队尾
+        if self.current_task != None:
             self.env.blackboard["task_agents_queue"].append(self)
-            self.predict_condition = copy.deepcopy(last_predict_condition)
+            self.predict_condition = copy.deepcopy(self.env.blackboard["predict_condition"])
 
             # now the new_predict_condition
-            new_predict_condition = {
-                "success":set(),
-                "fail":set(),
-            }
-            new_predict_condition["success"] = (last_predict_condition["success"] | self.current_task["sub_goal"]) - self.current_task["sub_del"]
-            new_predict_condition["fail"] = (last_predict_condition["fail"] | self.current_task["sub_del"]) - self.current_task["sub_goal"]
+            self.env.blackboard["predict_condition"]["success"] = (self.env.blackboard["predict_condition"]["success"] |
+                                                                   self.current_task["sub_goal"]) - self.current_task[
+                                                                      "sub_del"]
+            self.env.blackboard["predict_condition"]["fail"] = (self.env.blackboard["predict_condition"]["fail"] |
+                                                                self.current_task["sub_del"]) - self.current_task[
+                                                                   "sub_goal"]
             for agent in self.env.agents:
-                if agent!=self and agent not in self.env.blackboard["task_agents_queue"]:
-                    agent.predict_condition = copy.deepcopy(new_predict_condition)
+                if agent != self and agent not in self.env.blackboard["task_agents_queue"]:
+                    agent.predict_condition = copy.deepcopy(self.env.blackboard["predict_condition"])
 
         self.last_accept_task = copy.deepcopy(self.current_task)

@@ -36,6 +36,8 @@ def simulation():
         env_steps += 1
         agents_steps += agents_one_step
         print_colored(f"state: {obs}","blue")
+        if obs>=goal:
+            break
         if env_steps>=max_env_step:
             break
     print(f"\ntask finished!")
@@ -49,8 +51,8 @@ def simulation():
 
 
 num_elements = 10
-max_depth = 3
-num_agent = 2
+max_depth = 5
+num_agent = 5
 
 # Define the directory name based on the input parameters
 dir_name = f"vaild_data_elements={num_elements}_depth={max_depth}_agent={num_agent}"
@@ -91,7 +93,12 @@ for data_id,dataset in enumerate(loaded_data[:]):
     dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=False)  # False 也还需要再调试
     dmr.planning()
 
-    record_expanded_num = dataset['CABTP_expanded_num'] + dmr.record_expanded_num
+    if with_comp_action:
+        CABTP_expanded_num=dataset['CABTP_expanded_num']
+        record_expanded_num = dataset['CABTP_expanded_num'] + dmr.record_expanded_num
+    else:
+        CABTP_expanded_num=0
+        record_expanded_num = dmr.record_expanded_num
     expanded_time = dmr.expanded_time
 
     # #########################
@@ -106,7 +113,7 @@ for data_id,dataset in enumerate(loaded_data[:]):
     # #########################
     # Record results
     results.append({
-        'CABTP_expanded_num':dataset['CABTP_expanded_num'],
+        'CABTP_expanded_num':CABTP_expanded_num,
         'record_expanded_num': record_expanded_num,
         'expanded_time': expanded_time,
         'success': success,
@@ -115,10 +122,12 @@ for data_id,dataset in enumerate(loaded_data[:]):
     })
 
     # Update totals
-    total_CABTP_record_expanded_num += dataset['CABTP_expanded_num']
+    total_success += 1 if success else 0
+    # if success:
+    total_CABTP_record_expanded_num += CABTP_expanded_num
     total_record_expanded_num += record_expanded_num
     total_expanded_time += expanded_time
-    total_success += 1 if success else 0
+
     total_env_steps += env_steps
     total_agents_step += agents_step
     total_entries += 1
@@ -133,7 +142,7 @@ for data_id,dataset in enumerate(loaded_data[:]):
 average_CABTP_record_expanded_num = total_CABTP_record_expanded_num / total_entries if total_entries > 0 else 0
 average_record_expanded_num = total_record_expanded_num / total_entries if total_entries > 0 else 0
 average_expanded_time = total_expanded_time / total_entries if total_entries > 0 else 0
-success_rate = total_success / total_entries if total_entries > 0 else 0
+success_rate = total_success / len(loaded_data) if len(loaded_data) > 0 else 0
 average_env_steps = total_env_steps / total_entries if total_entries > 0 else 0
 average_agents_step = total_agents_step / total_entries if total_entries > 0 else 0
 

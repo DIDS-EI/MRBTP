@@ -3,7 +3,7 @@ import string
 import networkx as nx
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.numericenv.numsim_tools import frozenset_to_str,convert_cstr_set_to_num_set
-
+from mabtpg.utils.tools import print_colored
 import numpy as np
 
 random.seed(0)
@@ -11,7 +11,7 @@ np.random.seed(0)
 
 
 class DataGenerator:
-    def __init__(self, num_elements=10, total_elements_set=None, max_depth=2, need_split_action=False, num_agent=2):
+    def __init__(self, num_elements=10, total_elements_set=None, max_depth=2, max_branch=5,need_split_action=False, num_agent=2):
         self.num_elements = num_elements
         if total_elements_set == None:
             self.total_elements_set = frozenset(f"C({i})" for i in range(num_elements))
@@ -19,12 +19,13 @@ class DataGenerator:
         else:
             self.total_elements_set = frozenset(total_elements_set)
         self.max_depth = max_depth
+        self.max_branch = max_branch
         self.need_split_action = need_split_action
 
         self.num_agent = num_agent
 
     def get_parts_from_state(self, state):
-        part_num = random.randint(1, min(3, len(state)))
+        part_num = random.randint(1, min(self.max_branch,len(state))) # 划分成几部分
         state_list = list(state)
         random.shuffle(state_list)
 
@@ -50,12 +51,25 @@ class DataGenerator:
         num = random.randint(min(self.num_elements, 5), self.num_elements)
         return frozenset(random.sample(self.total_elements_set, num))
 
-    def generate_random_goal(self):
-        num_goal = random.randint(min(self.num_elements, 5), int(self.num_elements / 2))
-        return frozenset(random.sample(self.total_elements_set, num_goal))
+    def generate_random_goal(self,range_num=None,range_elements=None):
+        if range_num==None:
+            num_goal = random.randint(min(self.num_elements, 1), int(self.num_elements / 2))
+            return frozenset(random.sample(self.total_elements_set, num_goal))
+        else:
+            num_goal = random.randint(min(range_elements, 1), range_elements)
+            total_elements_set = frozenset(f"C({i})" for i in range(range_num*range_elements,(range_num+1)*range_elements))
+            return frozenset(random.sample(total_elements_set, num_goal))
 
     def generate_dataset(self):
-        goal = self.generate_random_goal()
+
+        # range_num=0
+        # range_elements = self.num_elements
+        range_num=None
+        range_elements=self.num_elements
+
+        goal = self.generate_random_goal(range_num,range_elements)
+        # range_num +=1
+
         start = set()
         actions = []
         leaves = [(goal, 0)]
@@ -76,7 +90,10 @@ class DataGenerator:
                 else:
                     parts=[]
                 for part in parts:
-                    new_state, action = self.generate_start_and_action(leaf, part, goal)
+                    # if random.random()>0.5 or len(actions)<=1:
+                    new_state, action,range_num = self.generate_start_and_action(leaf, part, goal,range_num,range_elements)
+                    # range_num+=1
+
                     action.name = self.generate_action_name(depth, action_index, action.pre, action.add, action.del_set)
                     action_index += 1
 
@@ -115,7 +132,7 @@ class DataGenerator:
         # cut composition to sub actions
         if self.need_split_action:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
-             dataset['comp_actions_BTML_dic'],dataset['cabtp_expanded_num']) = \
+             dataset['comp_actions_BTML_dic'],dataset['CABTP_expanded_num']) = \
                 self.split_actions_and_plan_sub_btml(actions)
 
         return dataset
@@ -151,18 +168,19 @@ class DataGenerator:
         for action in actions:
             # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
             if len(action.add) >= 3:
-                split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=6)
-                # print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
+                if random.random() < 0.8:
+                    split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=6)
+                    print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
-                # without_cmp
-                new_actions_without_cmp.remove(action)
-                new_actions_without_cmp.extend(split_action_ls)
+                    # without_cmp
+                    new_actions_without_cmp.remove(action)
+                    new_actions_without_cmp.extend(split_action_ls)
 
-                # with_cmp
-                new_actions_with_cmp.extend(split_action_ls)
-                split_actions_dict[action] = split_action_ls
-                action.name = generate_composition_action_name(action.name)
-                action.cost = 0
+                    # with_cmp
+                    new_actions_with_cmp.extend(split_action_ls)
+                    split_actions_dict[action] = split_action_ls
+                    action.name = generate_composition_action_name(action.name)
+                    action.cost = 0
 
         # 将每个组合动作的 btml 保存起来
         # 得到一个 comp_act_BTML_dic[action.name] = sub_btml
@@ -186,23 +204,40 @@ class DataGenerator:
             comp_actions_BTML_dic[comp_act.name] = sub_btml
         return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num
 
-    def generate_start_and_action(self, parent_leaf, part, goal):
+    def generate_start_and_action(self, parent_leaf, part, goal,range_num=None,range_elements=None):
         action = PlanningAction()
         action.add = part
 
-        pre_size = random.randint(0, len(self.total_elements_set) - len(goal))
-        action.pre = set(random.sample(self.total_elements_set - goal, pre_size))
+        if range_num ==None:
+            pre_size = random.randint(0, len(self.total_elements_set) - len(goal))
+            action.pre = set(random.sample(self.total_elements_set - goal, pre_size))
 
-        del_size = random.randint(0, len(self.total_elements_set) - len(parent_leaf))
-        action.del_set = set(random.sample(self.total_elements_set - parent_leaf, del_size))
+            del_size = random.randint(0, len(self.total_elements_set) - len(parent_leaf))
+            action.del_set = set(random.sample(self.total_elements_set - parent_leaf, del_size))
 
-        start = (parent_leaf - action.add) | action.pre
+            start = (parent_leaf - action.add) | action.pre
+        else:
+            total_elements_set =  frozenset(f"C({i})" for i in range(range_num*self.num_elements,(range_num+1)*self.num_elements))
+            pre_size = random.randint(1, int(len(total_elements_set)/2))
+            action.pre = set(random.sample(total_elements_set - goal, pre_size))
+
+            range_num += 1
+            del_total_elements_set = frozenset( f"C({i})" for i in range(range_num * self.num_elements, (range_num + 1) * self.num_elements))
+            del_size = random.randint(0, int(len(del_total_elements_set)-pre_size))
+            action.del_set = set(random.sample(del_total_elements_set - action.pre-parent_leaf, del_size))
+
+            # start = (parent_leaf - action.add) | action.pre
+            action.pre = frozenset(action.pre - action.add)
+            action.add = frozenset(action.add)
+            action.del_set = frozenset(action.del_set - part)
+            start = action.pre
 
         action.pre = frozenset(action.pre - action.add)
         action.add = frozenset(action.add)
         action.del_set = frozenset(action.del_set - part)
 
-        return frozenset(start), action
+
+        return frozenset(start), action, range_num
 
     def save_tree_as_dot(self, dataset, filename):
         G = nx.DiGraph()
