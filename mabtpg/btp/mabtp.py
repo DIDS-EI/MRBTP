@@ -44,7 +44,7 @@ class MABTP:
                 premise_condition_list = agent.one_step_expand(condition)
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
-            if self.start!=None and self.start<=condition:
+            if self.start!=None and self.start>=condition:
                 break
 
             if time.time() - start_time>10:
@@ -70,7 +70,7 @@ class MABTP:
                 premise_condition_list = agent.one_step_expand(condition)
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 
-            if self.start!=None and self.start<=condition:
+            if self.start!=None and self.start>=condition:
                 break
 
         self.planned_agent_list = planning_agent_list

@@ -129,7 +129,7 @@ class MAOBTP(MABTP):
                 premise_condition_cost_list = agent.one_step_expand(condition_cost)
                 explored_condition_list += [condition_cost for condition_cost in premise_condition_cost_list]
 
-            if self.start!=None and self.start<=condition:
+            if self.start!=None and self.start>=condition:
                 break
 
             if time.time() - start_time > 5:

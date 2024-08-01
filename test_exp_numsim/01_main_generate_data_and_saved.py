@@ -10,16 +10,18 @@ np.random.seed(0)
 
 #  get data
 num_data = 1
-num_elements = 5
 max_depth = 1
+
+
 max_branch = 2
+max_leaves = 2
+cmp_ratio = 0.5
+
 
 num_agent = 2
-# num_data = 1
-# num_elements = 10
-# max_depth = 2
 
-data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth, max_branch=max_branch,need_split_action=True)
+
+data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch,max_leaves=max_leaves,cmp_ratio=cmp_ratio,need_split_action=True)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
 print("======================")
@@ -32,7 +34,7 @@ for data_id,dataset in enumerate(datasets[:1]):
     data_generator.save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
 
     print("data_id:", data_id)
-    with_comp_action = False
+    with_comp_action = True
 
     # 每个数据，再根据给定的智能体数量，得到 agents_actions
     agents_actions = data_generator.assign_actions_to_agents(dataset,num_agent,with_comp_action=with_comp_action)
@@ -93,7 +95,7 @@ for data_id,dataset in enumerate(datasets[:1]):
     # save data
     if done==True and (obs>=dataset['goal_num']):
         # Define the directory name based on the input parameters
-        dir_name = f"vaild_data_elements={num_elements}_depth={max_depth}_agent={num_agent}"
+        dir_name = f"vaild_data_leaf={max_leaves}_branch={max_branch}_agent={num_agent}"
         # Create the directory if it does not exist
         create_directory_if_not_exists(dir_name)
 

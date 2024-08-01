@@ -11,68 +11,108 @@ np.random.seed(0)
 
 
 class DataGenerator:
-    def __init__(self, max_depth=2, max_leaves=5, max_branch=5,cmp_ratio=0.5,need_split_action=False, num_agent=2):
-
+    def __init__(self, num_elements=10, total_elements_set=None, max_depth=2, max_branch=5,need_split_action=False, num_agent=2):
+        self.num_elements = num_elements
+        if total_elements_set == None:
+            self.total_elements_set = frozenset(f"C({i})" for i in range(num_elements))
+            # self.total_elements_set = frozenset(range(num_elements))
+        else:
+            self.total_elements_set = frozenset(total_elements_set)
         self.max_depth = max_depth
-        self.max_leaves = max_leaves
         self.max_branch = max_branch
-        self.cmp_ratio = cmp_ratio
         self.need_split_action = need_split_action
 
         self.num_agent = num_agent
 
-        self.unique = 1
+        self.unique =-1
 
+    def get_parts_from_state(self, state):
+        part_num = random.randint(1, min(self.max_branch,len(state))) # 划分成几部分
+        state_list = list(state)
+        random.shuffle(state_list)
+
+        parts = [set() for _ in range(part_num)]
+        for i, element in enumerate(state_list):
+            parts[i % part_num].add(element)
+
+        non_empty_parts = [part for part in parts if part]
+        empty_parts_count = part_num - len(non_empty_parts)
+
+        if empty_parts_count > 0:
+            for _ in range(empty_parts_count):
+                random_part = random.choice(non_empty_parts)
+                element_to_move = random_part.pop()
+                empty_part = next(part for part in parts if not part)
+                empty_part.add(element_to_move)
+                if random_part:
+                    non_empty_parts.append(random_part)
+        # print_colored(f"State Split {state} into {parts}", color='orange')
+        return parts
+
+    def generate_random_state(self):
+        num = random.randint(min(self.num_elements, 5), self.num_elements)
+        return frozenset(random.sample(self.total_elements_set, num))
+
+    def generate_random_goal(self,range_num=None,range_elements=None):
+        if range_num==None:
+            num_goal = random.randint(min(self.num_elements, 1), int(self.num_elements / 2))
+            return frozenset(random.sample(self.total_elements_set, num_goal))
+        else:
+            num_goal = random.randint(min(range_elements, 1), range_elements)
+            total_elements_set = frozenset(f"C({i})" for i in range(range_num*range_elements,(range_num+1)*range_elements))
+            return frozenset(random.sample(total_elements_set, num_goal))
 
     def generate_dataset(self):
-        random.seed(0)
-        np.random.seed(0)
 
-        num_leaves = self.max_leaves
-        max_branch = self.max_branch
+        goal = self.generate_random_goal()
+        goal = goal.union([f"C({self.unique})"])  # 创建一个新的 frozenset，包含原有的元素和新的元素
+        self.unique -= 1
 
-        leaves = [frozenset() for _ in range(num_leaves)]  # 随机生成 num_leafs 个空集作为叶子节点
-        nodes = {i: leaves[i] for i in range(num_leaves)}
+        start = set()
+        actions = []
+        leaves = [(goal, 0, -1)]
+        node_index = 0
+        nodes = {node_index: goal}
         edges = []
-        action_index = 1
-        node_index = num_leaves
-        all_actions = []
+        node_index += 1
+        action_index = 0
 
-        while len(leaves) > 1:
+        while leaves:
             current_leaves = []
+            for leaf, depth, parent_nuique in leaves:
+                if depth >= self.max_depth:
+                    continue
 
-            # 随机挑选不大于 max_branch 个叶子节点
-            branch_size = min(max_branch, len(leaves))
-            selected_leaves = random.sample(leaves, branch_size)
-            new_state = set()
+                if leaf != set():
+                    parts = self.get_parts_from_state(leaf)
+                else:
+                    parts=[]
+                for part in parts:
+                    # if random.random()>0.5 or len(actions)<=1:
+                    new_state, action, state_unique = self.generate_start_and_action(leaf, part, goal, parent_nuique)
+                    # range_num+=1
 
-            actions = []
-            for leaf in selected_leaves:
-                new_state |= leaf
+                    action.name = self.generate_action_name(depth, action_index, action.pre, action.add, action.del_set)
+                    action_index += 1
 
-            for i, leaf in enumerate(selected_leaves):
-                action = PlanningAction(pre=leaf, add={f"C({self.unique})"}, del_set=set())
-                action.name = self.generate_action_name(0, action_index, action.pre, action.add, action.del_set)
-                action_index += 1
-                self.unique += 1
-                actions.append(action)
-                edges.append(
-                    (list(nodes.keys())[list(nodes.values()).index(leaf)], node_index, f"{action.name}\npre_{leaf}"))
+                    action.add_part = part
+                    actions.append(action)
+                    current_leaves.append((new_state, depth + 1, state_unique))
 
-            all_actions.extend(actions)
+                    nodes[node_index] = new_state
+                    edges.append((list(nodes.keys())[list(nodes.values()).index(leaf)], node_index,
+                                  action.name + "_" + str(action.add_part) + "\n pre_" + str(set(action.pre))))
+                    node_index += 1
 
-            for action in actions:
-                new_state |= action.add
-            new_state = frozenset(new_state)
-            nodes[node_index] = new_state
-            current_leaves.append(new_state)
-            leaves = [leaf for leaf in leaves if leaf not in selected_leaves]  # 移除已处理的叶子节点
-            leaves.append(new_state)  # 添加新的聚合节点
-            node_index += 1
+            if not current_leaves:
+                for leaf, _ ,_ in leaves:
+                    start |= leaf
+            leaves = current_leaves
 
-        goal = frozenset(leaves[0])  # 最终聚合的结点作为goal
-        start = frozenset()
+        for leaf, _ in leaves:
+            start |= leaf
 
+        start = frozenset(start)
         dataset = {
             'goal': goal,
             'goal_num': convert_cstr_set_to_num_set(goal),
@@ -81,16 +121,17 @@ class DataGenerator:
             'nodes': nodes,
             'edges': edges,
             'comp_actions_BTML_dic': {},
-            'actions_with_cmp': [],
-            'actions_without_cmp': [],
-            "CABTP_expanded_num": 0
+            'actions_with_cmp':[],
+            'actions_without_cmp':[],
+
+            "CABTP_expanded_num":0
         }
 
         # cut composition to sub actions
         if self.need_split_action:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
-             dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num']) = \
-                self.split_actions_and_plan_sub_btml(all_actions)
+             dataset['comp_actions_BTML_dic'],dataset['CABTP_expanded_num']) = \
+                self.split_actions_and_plan_sub_btml(actions)
 
         return dataset
 
@@ -123,19 +164,21 @@ class DataGenerator:
         new_actions_with_cmp = list(actions)
         new_actions_without_cmp = list(actions)
         for action in actions:
-            if random.random() < self.cmp_ratio:
-                split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=6)
-                print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
+            # print_colored(f"act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}",color='blue')
+            if len(action.add) >= 3:
+                if random.random() < 0.8:
+                    split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=6)
+                    print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
-                # without_cmp
-                new_actions_without_cmp.remove(action)
-                new_actions_without_cmp.extend(split_action_ls)
+                    # without_cmp
+                    new_actions_without_cmp.remove(action)
+                    new_actions_without_cmp.extend(split_action_ls)
 
-                # with_cmp
-                new_actions_with_cmp.extend(split_action_ls)
-                split_actions_dict[action] = split_action_ls
-                action.name = generate_composition_action_name(action.name)
-                action.cost = 0
+                    # with_cmp
+                    new_actions_with_cmp.extend(split_action_ls)
+                    split_actions_dict[action] = split_action_ls
+                    action.name = generate_composition_action_name(action.name)
+                    action.cost = 0
 
         # 将每个组合动作的 btml 保存起来
         # 得到一个 comp_act_BTML_dic[action.name] = sub_btml
@@ -159,6 +202,28 @@ class DataGenerator:
             comp_actions_BTML_dic[comp_act.name] = sub_btml
         return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num
 
+    def generate_start_and_action(self, parent_leaf, part, goal, parent_unique):
+        action = PlanningAction()
+        action.add = part
+        action.add.add(f"C({parent_unique})")
+
+        pre_size = random.randint(0, len(self.total_elements_set) - len(goal))
+        action.pre = set(random.sample(self.total_elements_set - goal, pre_size))
+        action.pre.add(f"C({self.unique})")  # 创建一个新的 frozenset，包含原有的元素和新的元素
+        self.unique -= 1
+
+        del_size = random.randint(0, len(self.total_elements_set) - len(parent_leaf))
+        action.del_set = set(random.sample(self.total_elements_set - parent_leaf, del_size))
+
+        start = (parent_leaf - action.add) | action.pre
+
+
+        action.pre = frozenset(action.pre - action.add)
+        action.add = frozenset(action.add)
+        action.del_set = frozenset(action.del_set - part)
+
+
+        return frozenset(start), action, self.unique+1
 
     def save_tree_as_dot(self, dataset, filename):
         G = nx.DiGraph()
@@ -193,7 +258,7 @@ class DataGenerator:
 
         return f"A({index}_{depth},{pre_str},{add_str},{del_set_str})"
 
-    def split_action_to_sub_actions(self, action, min_splits=2, max_splits=5):
+    def split_action_to_sub_actions(self, action, min_splits=2, max_splits=4):
         def generate_split_action_name(parent_name, index,pre,add, del_set):
             import re
             # input_string = "A(12,34,56,78,90)"
@@ -209,28 +274,37 @@ class DataGenerator:
             del_set_str = frozenset_to_str(del_set)
             return f"A({first_value}_{index},{pre_str},{add_str},{del_set_str})"
 
-        split_actions = []
-        num_splits = random.randint(min_splits, max_splits)
+        add_elements = list(action.add)
+        num_splits = random.randint(min_splits, min(len(add_elements), max_splits))
+        random.shuffle(add_elements)
 
+        split_actions = []
         current_pre = action.pre
+        remaining_add = set(action.add)
+        remaining_del = set(action.del_set)
 
         # Ensure the last split gets whatever remains
         for i in range(num_splits):
-
-            if i==num_splits-1:
-                new_add = action.add
+            if i == num_splits - 1:
+                new_add = remaining_add
+                new_del = remaining_del
             else:
-                new_add = frozenset({f"C({self.unique})"})
-                self.unique += 1
+                num_add_to_take = max(1, len(remaining_add) // (num_splits - i))
+                new_add = set(random.sample(list(remaining_add), num_add_to_take))
+                remaining_add -= new_add
 
-            new_pre = current_pre
-            current_pre = new_add
+                num_del_to_take = max(1, len(remaining_del) // (num_splits - i))
+                if len(remaining_del) == 0:
+                    new_del = set()
+                else:
+                    new_del = set(random.sample(list(remaining_del), num_del_to_take))
+                remaining_del -= new_del
 
-
-            new_name = generate_split_action_name(action.name, i,frozenset(new_pre), frozenset(new_add), frozenset())
+            new_name = generate_split_action_name(action.name, i,frozenset(current_pre), frozenset(new_add), frozenset(new_del))
 
             # new_action = PlanningAction(new_name, current_pre, new_add, new_del,cost=0)
-            new_action = PlanningAction(new_name, frozenset(new_pre), frozenset(new_add), frozenset())
+            new_action = PlanningAction(new_name, frozenset(current_pre), frozenset(new_add), frozenset(new_del))
+            current_pre = new_add
 
             split_actions.append(new_action)
 
@@ -286,7 +360,7 @@ num_data = 1
 num_elements = 10
 max_depth = 3
 
-data_generator = DataGenerator(max_depth=max_depth)
+data_generator = DataGenerator(num_elements=num_elements, max_depth=max_depth)
 datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
 for i, dataset in enumerate(datasets):
