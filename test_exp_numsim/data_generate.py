@@ -11,12 +11,13 @@ np.random.seed(0)
 
 
 class DataGenerator:
-    def __init__(self, max_depth=2, max_leaves=5, max_branch=5,cmp_ratio=0.5,need_split_action=False, num_agent=2):
+    def __init__(self, max_depth=2, max_leaves=5, max_branch=5,cmp_ratio=0.5,max_cmp_act_split=5,need_split_action=False, num_agent=2):
 
         self.max_depth = max_depth
         self.max_leaves = max_leaves
         self.max_branch = max_branch
         self.cmp_ratio = cmp_ratio
+        self.max_cmp_act_split = max_cmp_act_split
         self.need_split_action = need_split_action
 
         self.num_agent = num_agent
@@ -124,7 +125,7 @@ class DataGenerator:
         new_actions_without_cmp = list(actions)
         for action in actions:
             if random.random() < self.cmp_ratio:
-                split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=6)
+                split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=self.max_cmp_act_split)
                 print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
                 # without_cmp

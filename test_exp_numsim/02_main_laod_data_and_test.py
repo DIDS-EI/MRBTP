@@ -28,6 +28,7 @@ def simulation():
     done = False
     max_env_step=20
     env_steps = 0
+    new_env_step = 0
     agents_steps=0
     obs = set()
     while not done:
@@ -37,26 +38,36 @@ def simulation():
         agents_steps += agents_one_step
         print_colored(f"state: {obs}","blue")
         if obs>=goal:
+            done = True
             break
         if env_steps>=max_env_step:
             break
     print(f"\ntask finished!")
     print_colored(f"goal:{goal}", "blue")
     print("obs>=goal:",obs>=goal)
+    if obs>=goal:
+        done = True
 
-    return obs>=goal,env_steps,agents_steps
+    return done,env_steps,agents_steps
 
 
 
 
+max_depth = 1
 
-num_elements = 10
-max_depth = 5
-num_agent = 5
+
+max_branch = 5
+max_leaves = 20
+
+cmp_ratio = 0.5
+max_cmp_act_split = 5
+
+
+num_agent = 2
 
 # Define the directory name based on the input parameters
-dir_name = f"vaild_data_elements={num_elements}_depth={max_depth}_agent={num_agent}"
-data_generator = DataGenerator(num_elements=num_elements,  max_depth=max_depth, need_split_action=True)
+dir_name = f"vaild_data_leaf={max_leaves}_branch={max_branch}_cmpr={cmp_ratio}_cmpn={max_cmp_act_split}_agent={num_agent}"
+data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch,max_leaves=max_leaves,cmp_ratio=cmp_ratio,max_cmp_act_split=max_cmp_act_split,need_split_action=True)
 # Load data from the directory
 loaded_data = load_data_from_directory(dir_name)
 print(f"Loaded {len(loaded_data)} data files.")
@@ -72,12 +83,12 @@ total_agents_step = 0
 total_entries = 0
 
 results = []
-
+with_comp_action = True
 
 for data_id,dataset in enumerate(loaded_data[:]):
 
     print("data_id:", data_id)
-    with_comp_action = True
+
 
     # 每个数据，再根据给定的智能体数量，得到 agents_actions
     agents_actions = data_generator.assign_actions_to_agents(dataset,num_agent,with_comp_action=with_comp_action)
@@ -155,7 +166,7 @@ print(f"Average env_steps: {average_env_steps}")
 print(f"Average agents_step: {average_agents_step}")
 
 # Save results to CSV
-csv_file_name = f"{dir_name}.csv"
+csv_file_name = f"{dir_name}_cmp={with_comp_action}.csv"
 with open(csv_file_name, 'w', newline='') as csvfile:
     fieldnames = ['CABTP_expanded_num','record_expanded_num', 'expanded_time', 'success', 'env_steps', 'agents_step']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)

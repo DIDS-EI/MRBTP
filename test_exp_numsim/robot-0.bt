@@ -1,24 +1,149 @@
 fallback
-    condition 1 & 2
+    condition 496 & 497 & 498 & 499 & 500
     fallback
         sequence
-            condition IsSelfTask(1) id=0 act=CMP_A1_D0
+            condition IsSelfTask(496) id=0 act=CMP_A1_D0
             action CMP_A1_D0()
             action FinishTask()
         sequence
             fallback
-                condition 2
+                condition 497 & 498 & 499 & 500
                 sequence
-                    condition 10
-                    action A2_D0_Sub3 pre: (10) add: (2)  del: ()
-            action SelfAcceptTask(1) id=0 act=CMP_A1_D0
+                    condition 498 & 499 & 500
+                    action A2_D0 pre: () add: (497)  del: ()
+                fallback
+                    sequence
+                        condition IsSelfTask(498) id=7 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        condition 497 & 499 & 500
+                        action SelfAcceptTask(498) id=7 act=CMP_A3_D0
+                sequence
+                    condition 497 & 498 & 499 & 506
+                    action A5_D0_Sub1 pre: (506) add: (500)  del: ()
+            action SelfAcceptTask(496) id=0 act=CMP_A1_D0
     sequence
-        condition 1 & 10
-        action A2_D0_Sub3 pre: (10) add: (2)  del: ()
+        condition 496 & 498 & 499 & 500
+        action A2_D0 pre: () add: (497)  del: ()
     fallback
         sequence
-            condition IsSelfTask(1) id=1 act=CMP_A1_D0
+            condition IsSelfTask(498) id=1 act=CMP_A3_D0
+            action CMP_A3_D0()
+            action FinishTask()
+        sequence
+            fallback
+                condition 496 & 497 & 499 & 500
+                sequence
+                    fallback
+                        condition 496 & 499 & 500
+                        fallback
+                            sequence
+                                condition IsSelfTask(496) id=10 act=CMP_A1_D0
+                                action CMP_A1_D0()
+                                action FinishTask()
+                            sequence
+                                fallback
+                                    condition 499 & 500
+                                    sequence
+                                        condition 499 & 506
+                                        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
+                                action SelfAcceptTask(496) id=10 act=CMP_A1_D0
+                    action A2_D0 pre: () add: (497)  del: ()
+                sequence
+                    condition 496 & 497 & 499 & 506
+                    action A5_D0_Sub1 pre: (506) add: (500)  del: ()
+            action SelfAcceptTask(498) id=1 act=CMP_A3_D0
+    sequence
+        condition 496 & 497 & 498 & 499 & 506
+        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
+    fallback
+        sequence
+            condition IsSelfTask(496) id=2 act=CMP_A1_D0
             action CMP_A1_D0()
             action FinishTask()
         sequence
-            action SelfAcceptTask(1) id=1 act=CMP_A1_D0
+            fallback
+                condition 497 & 498 & 499
+                sequence
+                    condition 498 & 499
+                    action A2_D0 pre: () add: (497)  del: ()
+                fallback
+                    sequence
+                        condition IsSelfTask(498) id=8 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        condition 497 & 499
+                        action SelfAcceptTask(498) id=8 act=CMP_A3_D0
+            action SelfAcceptTask(496) id=2 act=CMP_A1_D0
+    sequence
+        condition 496 & 498 & 499
+        action A2_D0 pre: () add: (497)  del: ()
+    fallback
+        sequence
+            condition IsSelfTask(498) id=3 act=CMP_A3_D0
+            action CMP_A3_D0()
+            action FinishTask()
+        sequence
+            fallback
+                condition 496 & 497 & 499
+                sequence
+                    condition 496 & 499
+                    action A2_D0 pre: () add: (497)  del: ()
+            action SelfAcceptTask(498) id=3 act=CMP_A3_D0
+    fallback
+        sequence
+            condition IsSelfTask(496) id=4 act=CMP_A1_D0
+            action CMP_A1_D0()
+            action FinishTask()
+        sequence
+            fallback
+                condition 497 & 500
+                sequence
+                    condition 500
+                    action A2_D0 pre: () add: (497)  del: ()
+            action SelfAcceptTask(496) id=4 act=CMP_A1_D0
+    sequence
+        condition 496 & 500
+        action A2_D0 pre: () add: (497)  del: ()
+    sequence
+        condition 496 & 497 & 506
+        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
+    fallback
+        sequence
+            condition IsSelfTask(496) id=5 act=CMP_A1_D0
+            action CMP_A1_D0()
+            action FinishTask()
+        sequence
+            fallback
+                condition 497 & 498
+                sequence
+                    condition 498
+                    action A2_D0 pre: () add: (497)  del: ()
+                fallback
+                    sequence
+                        condition IsSelfTask(498) id=9 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 497
+                            action A2_D0 pre: () add: (497)  del: ()
+                        action SelfAcceptTask(498) id=9 act=CMP_A3_D0
+            action SelfAcceptTask(496) id=5 act=CMP_A1_D0
+    sequence
+        condition 496 & 498
+        action A2_D0 pre: () add: (497)  del: ()
+    fallback
+        sequence
+            condition IsSelfTask(498) id=6 act=CMP_A3_D0
+            action CMP_A3_D0()
+            action FinishTask()
+        sequence
+            fallback
+                condition 496 & 497
+                sequence
+                    condition 496
+                    action A2_D0 pre: () add: (497)  del: ()
+            action SelfAcceptTask(498) id=6 act=CMP_A3_D0
