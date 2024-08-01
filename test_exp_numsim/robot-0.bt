@@ -1,7 +1,18 @@
 fallback
-    condition 3
-    sequence
-        fallback
-            condition 1
-            action A(1) pre: () add: (1)  del: (2)
-        action A(2) pre: (1) add: (3)  del: ()
+    condition 0 & 4 & 6 & 7 & 8
+    fallback
+        sequence
+            condition IsSelfTask(4, 7, 8)
+            action CMP_A4_D1()
+            action FinishTask()
+        sequence
+            fallback
+                condition 0 & 6
+                fallback
+                    sequence
+                        condition IsSelfTask(0, 6)
+                        action CMP_A2_D1()
+                        action FinishTask()
+                    sequence
+                        action SelfAcceptTask(0, 6) id:1 act:CMP_A2_D1
+            action SelfAcceptTask(4, 7, 8) id:0 act:CMP_A4_D1

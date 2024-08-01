@@ -1,16 +1,11 @@
-
-from mabtpg.behavior_tree.behavior_tree import BehaviorTree
-from mabtpg.utils import parse_predicate_logic
 from mabtpg.utils.any_tree_node import AnyTreeNode
 from mabtpg.behavior_tree.constants import NODE_TYPE
-import re
-import mabtpg
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import BTML
 from mabtpg.btp.base.planning_agent import PlanningAgent
 from mabtpg.btp.base.planning_condition import PlanningCondition
 from mabtpg.btp.mabtp import MABTP
-from default_bt_tools import *
+
 
 class PlanningAgentTest(PlanningAgent):
     def __init__(self, action_list, goal, id=None, verbose=False, start=None):
@@ -129,7 +124,7 @@ class PlanningAgentTest(PlanningAgent):
                 # add condition
                 self.add_conditions(current_condition,condition_parent)
                 # add action
-                args = [current_condition.action]
+                args = current_condition.action
                 action_node = AnyTreeNode(NODE_TYPE.action,"NumAction",[args],has_args=False)
 
                 # add the sequence node into its parent
@@ -150,7 +145,8 @@ class PlanningAgentTest(PlanningAgent):
                 action_name = current_condition.action.name
                 task_flag_condition = AnyTreeNode(NODE_TYPE.condition,"IsSelfTask",([task_num,action_name,current_condition.sub_goal,current_condition.sub_del]))
                 args = [current_condition.action]
-                task_comp_action = AnyTreeNode(NODE_TYPE.action,"NumAction",[args],has_args=False)
+                task_comp_action = AnyTreeNode(NODE_TYPE.action, action_name, (), has_args=False)
+                # task_comp_action = AnyTreeNode(NODE_TYPE.action,"NumAction",[args],has_args=False)
 
                 # 再来一个 fallback ，连接 subgoal 和 task_comp_action
                 # subgoal_parent = AnyTreeNode(NODE_TYPE.selector)
@@ -210,6 +206,7 @@ class MABTP_test(MABTP):
         explored_condition_list = [goal]
 
         while explored_condition_list != []:
+            self.record_expanded_num+=1
             condition = explored_condition_list.pop(0)
             if self.verbose: print_colored(f"C:{condition}","green")
             for agent in planning_agent_list:

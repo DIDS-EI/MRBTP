@@ -158,8 +158,6 @@ class BehaviorTree(ptree.trees.BehaviourTree):
                 return bt_node
             else:
                 # print("cls_name:",cls_name,"node.args:",node.args)
-                # if cls_name=="IsSelfTask":
-                #     a=1
                 return self.behavior_lib[node_type][cls_name](*node.args)
         else:
             node_type = composite_node_map[node.node_type]

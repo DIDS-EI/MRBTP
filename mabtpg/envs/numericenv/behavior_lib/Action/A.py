@@ -1,29 +1,39 @@
+from audioop import add
+
 from mabtpg.behavior_tree.base_nodes import Action
 from mabtpg.utils.tools import print_colored
 from mabtpg.behavior_tree import Status
+from mabtpg.envs.numericenv.numsim_tools import str_to_frozenset,get_action_name,NumAction
 
 
 class A(Action):
     can_be_expanded = True
     num_args = 4
 
-    def __init__(self,args):
-        self.action = args[0]
-        self.name = self.action.name
-        self.pre = self.action.pre
-        self.add = self.action.add
-        self.del_set = self.action.del_set
+    def __init__(self,*args):
+        self.name = get_action_name(args[0])
+
+        self.pre_str = args[1]
+        self.add_str = args[2]
+        self.del_set_str = args[3]
+
+        self.pre = str_to_frozenset(self.pre_str)
+        self.add = str_to_frozenset(self.add_str)
+        self.del_set = str_to_frozenset(self.del_set_str)
 
         self.get_info_name()
         self.ins_name = self.get_info_name()
         super().__init__(args)
-        self.name = self.action.name
+        self.name = get_action_name(args[0])
+
+        self.action = NumAction(name=self.name, pre=self.pre, add=self.add, del_set=self.del_set)
+
 
     def get_info_name(self):
         # Convert frozensets to sorted lists, then join elements with ', '
-        self.pre_str = ', '.join(str(x) for x in sorted(set(self.pre)))
-        self.add_str = ', '.join(str(x) for x in sorted(set(self.add)))
-        self.del_set_str = ', '.join(str(x) for x in sorted(set(self.del_set)))
+        self.pre_str = self.pre_str.replace('_', ', ')
+        self.add_str = self.add_str.replace('_', ', ')
+        self.del_set_str = self.del_set_str.replace('_', ', ')
 
         # Build the name string with formatted attributes
         self.info_name = (f"{self.name}  \n  pre: ({self.pre_str}) \n "

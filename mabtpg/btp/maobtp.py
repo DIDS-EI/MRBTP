@@ -25,7 +25,7 @@ class CondCostPair:
         return self.cost < other.cost
 
 class BfsPlanningAgent(PlanningAgent):
-    def __init__(self,action_list,goal,id=None,verbose=False,start = None):
+    def __init__(self,action_list,goal,id=None,verbose=False,start = None,env=None):
         self.id = id
         self.action_list = action_list
         self.expanded_condition_dict = {}
@@ -36,6 +36,7 @@ class BfsPlanningAgent(PlanningAgent):
         self.verbose = verbose
 
         self.start = start # ???delete
+        self.env = env
 
     def one_step_expand(self, condition_cost):
 
@@ -52,8 +53,9 @@ class BfsPlanningAgent(PlanningAgent):
                 if self.has_no_subset(premise_condition):
 
                     # conflict check
-                    if self.check_conflict(premise_condition):
-                        continue
+                    if self.env != None:
+                        if self.env.check_conflict(premise_condition):
+                            continue
 
                     # record if it is composition action
                     composition_action_flag = False
@@ -62,28 +64,14 @@ class BfsPlanningAgent(PlanningAgent):
                     if action.cost==0:
                         composition_action_flag = True
 
-                        # it's wrong, it shold be condition_cost
-                        # sub_goal = frozenset((action.pre | action.add) - action.del_set)
-                        # sub_goal = [",".join(sorted(premise_condition))]
-                        # sub_goal = [premise_condition]
-
-                        # sub_goal = frozenset(
-                        #     condition & (frozenset((action.pre | action.add) - action.del_set))
-                        # )
-                        # sub_goal = condition
-
                         sub_goal = frozenset(
                             condition & frozenset(action.add)
                         )
-
-                        # subgoal改成 当前状态+add(A)-del(A)
-                        # 相当于是根据组合动作做预测
-                        # sub_goal = frozenset((condition | action.add) -action.del_set)
-
-                        # dependency = frozenset(premise_condition)
+                        sub_del = action.del_set
+                        # sub_del = set()
 
                     # planning_condition = PlanningCondition(premise_condition,action.name,composition_action_flag,sub_goal,dependency)
-                    planning_condition = PlanningCondition(premise_condition, action.name, composition_action_flag,sub_goal)
+                    planning_condition = PlanningCondition(premise_condition, action.name, composition_action_flag,sub_goal,sub_del)
                     premise_condition_list.append(planning_condition)
                     self.expanded_condition_dict[premise_condition] = planning_condition
 
@@ -108,15 +96,18 @@ class BfsPlanningAgent(PlanningAgent):
         return premise_condition_cost_list
 
 class MAOBTP(MABTP):
-    def __init__(self,verbose=False,start = None):
+    def __init__(self,verbose=False,start = None,env=None):
         self.planned_agent_list = None
         self.verbose = verbose
         self.start = start
 
+        self.record_expanded_num=0
+        self.env = env
+
     def bfs_planning(self, goal, action_lists):
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(BfsPlanningAgent(action_list,goal,id,self.verbose,start=self.start))
+            planning_agent_list.append(BfsPlanningAgent(action_list,goal,id,self.verbose,start=self.start,env=self.env))
 
         goal_cost = CondCostPair(goal,0)
         explored_condition_list=[]
