@@ -109,7 +109,9 @@ class DataGenerator:
             'comp_actions_BTML_dic': {},
             'actions_with_cmp': [],
             'actions_without_cmp': [],
-            "CABTP_expanded_num": 0
+            "CABTP_expanded_num": 0,
+
+            "action_num": 0
         }
 
         # cut composition to sub actions
@@ -117,6 +119,7 @@ class DataGenerator:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
              dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num']) = \
                 self.split_actions_and_plan_sub_btml(total_actions_ls)
+            dataset["action_num"]= len(dataset['actions_without_cmp'])
 
         return dataset
 
