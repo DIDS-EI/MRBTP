@@ -1,0 +1,3 @@
+max_depth,max_branch,num_agent,with_comp_action,CABTP_expanded_num,record_expanded_num,expanded_time,success,env_steps,agents_step,action_num
+2,2,2,True,6,52,0.0010478496551513672,True,23,7,7
+2,2,2,False,0,129,0.0019941329956054688,True,29,16,7

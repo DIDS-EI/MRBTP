@@ -6,7 +6,7 @@ from simulation import simulation
 from mabtpg.utils.tools import *
 import numpy as np
 import pandas as pd
-from mabtpg.envs.numericenv.numsim_tools import load_data_from_directory
+
 random.seed(0)
 np.random.seed(0)
 
@@ -18,12 +18,12 @@ num_data = 1
 # max_branch_ls  = [2,3,5]
 # num_agent_ls = [2,3,5]
 
-max_depth_ls = [2]
-max_branch_ls  = [3]
+max_depth_ls = [3]
+max_branch_ls  = [2]
 num_agent_ls = [2]
 
 
-cmp_ratio = 0.3  # 组合动作占比
+cmp_ratio = 0.5  # 组合动作占比
 max_cmp_act_split = 3 # 每个组合被切成多少个原子动作
 max_action_steps = 5 # 每个原子动作的最大步数
 
@@ -36,16 +36,14 @@ for max_depth in max_depth_ls:
         for num_agent in num_agent_ls:
             print_colored(f"Processing: max_depth={max_depth}, max_branch={max_branch}, num_agent={num_agent}", "blue")
 
-            # Define the directory name based on the input parameters
-            dir_name = f"valid_data_depth={max_depth}_branch={max_branch}_agent={num_agent}_cmpr={cmp_ratio}_cmpn={max_cmp_act_split}_cmpstp={max_action_steps}"
-            loaded_data = load_data_from_directory(dir_name)
+
             data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch, cmp_ratio=cmp_ratio,
                                            max_action_steps=max_action_steps,
                                            max_cmp_act_split=max_cmp_act_split, need_split_action=True)
-            print(f"Loaded {len(loaded_data)} data files.")
+            datasets = [data_generator.generate_data() for _ in range(num_data)]
             print("====== Data Generated Finished! =========")
 
-            for with_comp_action in [False,True]:
+            for with_comp_action in [False]:
 
                 print_colored(f"Algorithm: with_comp_action={with_comp_action}","blue")
 
@@ -60,7 +58,7 @@ for max_depth in max_depth_ls:
                 }
                 total_entries = 0
 
-                for data_id, dataset in enumerate(loaded_data[:]):
+                for data_id, dataset in enumerate(datasets[:]):
                     print("data_id:", data_id, "actions num:",dataset["action_num"])
                     if with_comp_action==True:
                         print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
@@ -97,7 +95,6 @@ for max_depth in max_depth_ls:
                         success,env_steps,agents_step = simulation(dataset,num_agent,agents_actions,dmr)
                     else:
                         success, env_steps, agents_step = False, 50, 50 #???
-                        print_colored(f"-------- Time Out ---------", "red")
 
 
 

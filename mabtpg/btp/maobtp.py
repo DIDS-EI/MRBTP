@@ -132,7 +132,7 @@ class MAOBTP(MABTP):
             if self.start!=None and self.start>=condition:
                 break
 
-            if time.time() - start_time > 5:
+            if time.time() - start_time > 10:
                 self.expanded_time = time.time() - start_time
                 break
 

@@ -1,5 +1,5 @@
-
-
+import pandas as pd
+import numpy as np
 def print_colored(text, color):
     """
     Prints the provided text in the specified color in the terminal.
@@ -48,3 +48,42 @@ def extract_agent_id_from_action_name(action_str):
     if match:
         return match.group()
     return None
+
+
+# experience
+def save_results_to_csv(results, filename):
+    df = pd.DataFrame(results)
+    df.to_csv(filename, index=False)
+
+def print_summary_table(summary_results, formatted=True):
+    df = pd.DataFrame(summary_results)
+    if formatted:
+        print(df.to_string(index=False))
+    else:
+        print(df.to_csv(index=False, sep='\t'))
+
+
+def calculate_variance(results, key, max_depth, max_branch, num_agent, with_comp_action):
+    return np.var([res[key] for res in results if
+                   res['max_depth'] == max_depth and res['max_branch'] == max_branch and res[
+                       'num_agent'] == num_agent and res['with_comp_action'] == with_comp_action])
+
+
+def append_summary_results(results, summary_results, max_depth, max_branch, num_agent, with_comp_action, total_entries,
+                           totals):
+    avg_values = {k: v / total_entries for k, v in totals.items()}
+    variances = {k: calculate_variance(results, k, max_depth, max_branch, num_agent, with_comp_action) for k in
+                 totals.keys()}
+
+    summary = {
+        'depth': max_depth,
+        'branch': max_branch,
+        'num_agent': num_agent,
+        'with_comp_action': with_comp_action,
+        **{f'avg_{k}': v for k, v in avg_values.items()},
+        **{f'variance_{k}': v for k, v in variances.items()}
+    }
+    summary['success_rate'] = avg_values['success']
+    del summary['avg_success']
+
+    summary_results.append(summary)

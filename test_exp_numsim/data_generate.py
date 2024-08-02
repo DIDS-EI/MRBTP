@@ -91,6 +91,7 @@ class DataGenerator:
 
 
     def generate_data(self):
+        self.unique=1
         graph = self.generate_tree_struct()
         node_states, updated_graph,goal,total_actions_ls = self.propagate_states(graph)
         # nx.drawing.nx_pydot.write_dot(updated_graph, "updated_network_graph.dot")
