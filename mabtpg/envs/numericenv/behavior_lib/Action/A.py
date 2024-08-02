@@ -17,6 +17,9 @@ class A(Action):
         self.add_str = args[2]
         self.del_set_str = args[3]
 
+        self.act_max_step = int(args[4])
+        self.act_cur_step = 0
+
         self.pre = str_to_frozenset(self.pre_str)
         self.add = str_to_frozenset(self.add_str)
         self.del_set = str_to_frozenset(self.del_set_str)
@@ -26,7 +29,7 @@ class A(Action):
         super().__init__(args)
         self.name = get_action_name(args[0])
 
-        self.action = NumAction(name=self.name, pre=self.pre, add=self.add, del_set=self.del_set)
+        self.action = NumAction(name=self.name, pre=self.pre, add=self.add, del_set=self.del_set,act_step = self.act_max_step)
 
 
     def get_info_name(self):
@@ -58,8 +61,14 @@ class A(Action):
         if self.check_if_pre_in_predict_condition():
             return Status.RUNNING
 
+        if self.agent.last_action==self.action:
+            self.act_cur_step += 1
+            if self.act_cur_step>=self.act_max_step:
+                self.action.is_finish = True
+
         self.agent.action = self.action
-        # self.env.state = (self.env.state | self.add) - self.del_set
+        self.agent.last_action = self.action
+
         return Status.RUNNING
 
 

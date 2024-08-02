@@ -11,7 +11,7 @@ np.random.seed(0)
 
 
 class NumAction:
-    def __init__(self, name, pre, add, del_set):
+    def __init__(self, name, pre, add, del_set, act_step):
         """
         Initialize the Action object.
 
@@ -25,6 +25,8 @@ class NumAction:
         self.pre = pre
         self.add = add
         self.del_set = del_set
+        self.act_step=act_step
+        self.is_finish = False
 
     def to_dict(self):
         """

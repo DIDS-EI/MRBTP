@@ -9,46 +9,46 @@ random.seed(0)
 np.random.seed(0)
 
 
-def simulation():
-    start = dataset["start_num"]
-    goal = dataset["goal_num"]
-    from mabtpg.envs.numericenv.numeric_env import NumericEnv
-    env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
-    env.set_agent_actions(agents_actions)
-
-    behavior_lib = [agent.behavior_lib for agent in env.agents]
-    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
-
-    for i,agent in enumerate(env.agents):
-        agent.bind_bt(dmr.bt_ls[i])
-
-
-    print_colored(f"start: {start}", "blue")
-    env.print_ticks = True
-    done = False
-    max_env_step=20
-    env_steps = 0
-    new_env_step = 0
-    agents_steps=0
-    obs = set()
-    while not done:
-        print_colored("======================================================================================","blue")
-        obs,done,_,_,agents_one_step = env.step()
-        env_steps += 1
-        agents_steps += agents_one_step
-        print_colored(f"state: {obs}","blue")
-        if obs>=goal:
-            done = True
-            break
-        if env_steps>=max_env_step:
-            break
-    print(f"\ntask finished!")
-    print_colored(f"goal:{goal}", "blue")
-    print("obs>=goal:",obs>=goal)
-    if obs>=goal:
-        done = True
-
-    return done,env_steps,agents_steps
+# def simulation():
+#     start = dataset["start_num"]
+#     goal = dataset["goal_num"]
+#     from mabtpg.envs.numericenv.numeric_env import NumericEnv
+#     env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
+#     env.set_agent_actions(agents_actions)
+#
+#     behavior_lib = [agent.behavior_lib for agent in env.agents]
+#     dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
+#
+#     for i,agent in enumerate(env.agents):
+#         agent.bind_bt(dmr.bt_ls[i])
+#
+#
+#     print_colored(f"start: {start}", "blue")
+#     env.print_ticks = True
+#     done = False
+#     max_env_step=500
+#     env_steps = 0
+#     new_env_step = 0
+#     agents_steps=0
+#     obs = set()
+#     while not done:
+#         print_colored("======================================================================================","blue")
+#         obs,done,_,_,agents_one_step = env.step()
+#         env_steps += 1
+#         agents_steps += agents_one_step
+#         print_colored(f"state: {obs}","blue")
+#         if obs>=goal:
+#             done = True
+#             break
+#         if env_steps>=max_env_step:
+#             break
+#     print(f"\ntask finished!")
+#     print_colored(f"goal:{goal}", "blue")
+#     print("obs>=goal:",obs>=goal)
+#     if obs>=goal:
+#         done = True
+#
+#     return done,env_steps,agents_steps
 
 
 
@@ -56,19 +56,24 @@ def simulation():
 max_depth = 1
 
 
-max_branch = 5
-max_leaves = 20
-
-cmp_ratio = 0.5
-max_cmp_act_split = 5
+num_data = 30
 
 
-num_agent = 2
+max_branch = 5 # 选多少个分支聚合
+max_leaves = 20 # 初始生成多少个状态结点
+
+cmp_ratio = 0.5  # 组合动作占比
+max_cmp_act_split = 2 # 每个组合被切成多少个原子动作
+max_action_steps = 10 # 每个原子动作的最大步数
+
+num_agent = 20
+
 
 # Define the directory name based on the input parameters
 dir_name = f"vaild_data_leaf={max_leaves}_branch={max_branch}_cmpr={cmp_ratio}_cmpn={max_cmp_act_split}_agent={num_agent}"
-data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch,max_leaves=max_leaves,cmp_ratio=cmp_ratio,max_cmp_act_split=max_cmp_act_split,need_split_action=True)
-# Load data from the directory
+data_generator = DataGenerator(max_branch=max_branch, max_leaves=max_leaves, cmp_ratio=cmp_ratio,
+                               max_action_steps = max_action_steps,
+                               max_cmp_act_split=max_cmp_act_split, need_split_action=True)# Load data from the directory
 loaded_data = load_data_from_directory(dir_name)
 print(f"Loaded {len(loaded_data)} data files.")
 
@@ -83,7 +88,7 @@ total_agents_step = 0
 total_entries = 0
 
 results = []
-with_comp_action = True
+with_comp_action = False
 
 for data_id,dataset in enumerate(loaded_data[:]):
 

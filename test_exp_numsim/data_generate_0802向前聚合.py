@@ -11,9 +11,10 @@ np.random.seed(0)
 
 
 class DataGenerator:
-    def __init__(self, max_depth=3, max_branch=5,cmp_ratio=0.5,max_cmp_act_split=5,max_action_steps=5,need_split_action=False, num_agent=2):
+    def __init__(self, max_depth=3,max_leaves=5, max_branch=5,cmp_ratio=0.5,max_cmp_act_split=5,max_action_steps=5,need_split_action=False, num_agent=2):
 
         self.max_depth=max_depth
+        self.max_leaves = max_leaves
         self.max_branch = max_branch
         self.cmp_ratio = cmp_ratio
         self.max_cmp_act_split = max_cmp_act_split
@@ -24,88 +25,95 @@ class DataGenerator:
 
         self.unique = 1
 
-    def generate_tree_struct(self):
+
+    def generate_dataset(self):
         random.seed(0)
         np.random.seed(0)
 
-        G = nx.DiGraph()  # 创建一个有向图
+        num_leaves = self.max_leaves
+        max_branch = self.max_branch
 
+        leaves = [(frozenset(),0,i) for i in range(num_leaves)]  # 随机生成 num_leafs 个空集作为叶子节点
+        leaf_num = num_leaves
+        nodes = {}
+        edges = []
         action_index = 1
-        node_index = 0  # 节点索引开始
+        all_actions = []
+        new_state = set()
+        new_depth = -1
 
-        goal_state = frozenset({"C(0)"})
-        G.add_node(node_index, label=str(goal_state), depth=0)
+        # while new_depth < self.max_depth:
+        while len(leaves)>1 and new_depth < self.max_depth:
 
-        frontier = [(goal_state, 0, node_index)]  # (状态, 深度, 节点索引)
+            # 随机挑选不大于 max_branch 个叶子节点
+            branch_size = random.randint(1,min(max_branch, len(leaves)))
+            selected_leaves = random.sample(leaves, branch_size)
 
-        while frontier:
-            new_frontier = []
-            for state, depth, parent_index in frontier:
-                if depth < self.max_depth:
-                    num_children = random.randint(1, self.max_branch)
-                    for _ in range(num_children):
-                        new_state = frozenset()
-                        action = PlanningAction(pre=state, add=new_state, del_set=set())
-                        action.name = self.generate_action_name(depth + 1, action_index, state, new_state, set(), 1)
-                        action_index += 1
+            new_state = set()
+            new_depth=-1
 
-                        node_index += 1
-                        G.add_node(node_index, label=str(new_state), depth=depth + 1)
-                        G.add_edge(node_index,parent_index, label=action.name)
+            actions = []
+            for leaf,depth,index in selected_leaves:
+                new_state |= leaf
+                # 更新 new_depth 为 selected_leaves 中的最大深度
+                if depth > new_depth:
+                    new_depth = depth
+            # new_depth 加 1
+            new_depth += 1
 
-                        new_frontier.append((new_state, depth + 1, node_index))
+            cur_node_index_ls = [] # (index,action)
 
-            frontier = new_frontier
-
-        # 使用 pydot 保存为 DOT 文件
-        # nx.drawing.nx_pydot.write_dot(G, "network_graph.dot")
-
-        return G
-
-
-    def propagate_states(self, graph):
-        total_actions_ls = []
-
-        node_states = {n: frozenset() for n in graph.nodes}  # 初始化所有节点的状态为空集
-        topo_sorted_nodes = list(nx.topological_sort(graph))  # 拓扑排序，确定遍历顺序
-
-        for node in topo_sorted_nodes:
-            current_state = node_states[node]
-            for successor in graph.successors(node):
-                new_elements = frozenset({f"C({self.unique})"})
-
-                action = PlanningAction(pre=current_state, add={f"C({self.unique})"}, del_set=set())
+            for i, (leaf,depth,index) in enumerate(selected_leaves):
+                action = PlanningAction(pre=leaf, add={f"C({self.unique})"}, del_set=set())
                 act_step = random.randint(1,self.max_action_steps)
-                action.name = self.generate_action_name(0, self.unique, action.pre, action.add, action.del_set, act_step)
-                total_actions_ls.append(action)
+                action.name = self.generate_action_name(0, action_index, action.pre, action.add, action.del_set, act_step)
+                action_index += 1
                 self.unique += 1
+                actions.append(action)
 
-                node_states[successor] = frozenset.union(node_states[successor], current_state, new_elements)
+                if leaf == frozenset():
+                    cur_node_index_ls.append((len(nodes),action))
+                    nodes[len(nodes)] =  frozenset()
+                elif leaf not in nodes.values():
+                    nodes[len(nodes)] = leaf
+                    leaf_index = list(nodes.keys())[list(nodes.values()).index(leaf)]
+                    cur_node_index_ls.append((leaf_index,action))
 
-                # 更新边的属性，包括动作名称作为边的标签
-                graph.edges[node, successor]['label'] = action.name
-                graph.nodes[successor]['label'] = frozenset_to_str(node_states[successor])  # 更新节点的标签
+            all_actions.extend(actions)
 
-        goal = node_states[topo_sorted_nodes[-1]]
-        return node_states, graph, goal, total_actions_ls
-
-
-    def generate_data(self):
-        graph = self.generate_tree_struct()
-        node_states, updated_graph,goal,total_actions_ls = self.propagate_states(graph)
-        # nx.drawing.nx_pydot.write_dot(updated_graph, "updated_network_graph.dot")
+            for action in actions:
+                new_state |= action.add
+            new_state = frozenset(new_state)
+            leaves = [leaf for leaf in leaves if leaf not in selected_leaves]
+            leaves.append((new_state, new_depth,leaf_num))
+            leaf_num+=1
 
 
-        goal = frozenset(goal)
+            if new_state not in nodes.values():
+                node_index = len(nodes)
+                nodes[node_index] = new_state
+            else:
+                node_index = list(nodes.keys())[list(nodes.values()).index(new_state)]
+            for leaf_index,action in cur_node_index_ls:
+                edges.append((node_index,leaf_index, f"{action.name}"))
+
+
+            if new_depth >= self.max_depth:
+                break
+
+
+        # goal = frozenset(leaves[0])  # 最终聚合的结点作为goal
+        goal = frozenset(new_state)
         start = frozenset()
 
         dataset = {
             'goal': goal,
+            "goal_depth":new_depth,
             'goal_num': convert_cstr_set_to_num_set(goal),
             'start': start,
             'start_num': convert_cstr_set_to_num_set(start),
-            'nodes': {n: graph.nodes[n]['label'] for n in graph.nodes()},  # 提取节点标签作为状态
-            'edges': [(u, v, d['label']) for u, v, d in graph.edges(data=True)], # 提取边和动作名
+            'nodes': nodes,
+            'edges': edges,
             'comp_actions_BTML_dic': {},
             'actions_with_cmp': [],
             'actions_without_cmp': [],
@@ -116,11 +124,9 @@ class DataGenerator:
         if self.need_split_action:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
              dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num']) = \
-                self.split_actions_and_plan_sub_btml(total_actions_ls)
+                self.split_actions_and_plan_sub_btml(all_actions)
 
         return dataset
-
-
 
     def split_actions_and_plan_sub_btml(self, actions):
         """
@@ -188,6 +194,32 @@ class DataGenerator:
         return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num
 
 
+    def save_tree_as_dot(self, dataset, filename):
+        G = nx.DiGraph()
+        nodes = dataset['nodes']
+        edges = dataset['edges']
+
+        for node, state in nodes.items():
+            G.add_node(node, label=str(state))
+
+        for edge in edges:
+            parent, child, action_name = edge
+            G.add_edge(child, parent, label=action_name)
+
+        nx.drawing.nx_pydot.write_dot(G, filename)
+
+    @staticmethod
+    def generate_predicates(num_pred):
+        predicates = []
+        for i in range(num_pred):
+            if i < 26:
+                predicates.append(string.ascii_lowercase[i])
+            else:
+                first = (i // 26) - 1
+                second = i % 26
+                predicates.append(string.ascii_lowercase[first] + string.ascii_lowercase[second])
+        return predicates
+
     def generate_action_name(self, depth, index, pre,add, del_set,act_step):
         pre_str = frozenset_to_str(pre)
         add_str = frozenset_to_str(add)
@@ -207,6 +239,10 @@ class DataGenerator:
                 content = match.group(1)
                 first_value = content.split(',')[0]
             return self.generate_action_name(index,first_value,pre,add, del_set,act_step)
+            # pre_str = frozenset_to_str(pre)
+            # add_str = frozenset_to_str(add)
+            # del_set_str = frozenset_to_str(del_set)
+            # return f"A({first_value}_{index},{pre_str},{add_str},{del_set_str},{act_step})"
 
         split_actions = []
         num_splits = random.randint(min_splits, max_splits)
@@ -279,19 +315,6 @@ class DataGenerator:
 
         return agents_actions
 
-    def save_tree_as_dot(self, dataset, filename):
-        G = nx.DiGraph()
-        nodes = dataset['nodes']
-        edges = dataset['edges']
-
-        for node, state in nodes.items():
-            G.add_node(node, label=str(state))
-
-        for parent, child, action_name in edges:
-            G.add_edge(child, parent, label=action_name)
-
-        nx.drawing.nx_pydot.write_dot(G, filename)
-
 
 # Usage example
 num_data = 1
@@ -299,7 +322,7 @@ num_elements = 10
 max_depth = 3
 
 data_generator = DataGenerator()
-datasets = [data_generator.generate_data() for _ in range(num_data)]
+datasets = [data_generator.generate_dataset() for _ in range(num_data)]
 
 for i, dataset in enumerate(datasets):
     data_generator.save_tree_as_dot(dataset, f'{i}_generated_tree.dot')

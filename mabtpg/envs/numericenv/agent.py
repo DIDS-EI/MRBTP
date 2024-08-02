@@ -38,6 +38,8 @@ class Agent(object):
             "fail":set(),
         }
 
+        self.last_action = None
+
 
     def init_statistics(self):
         self.step_num = 1
@@ -66,7 +68,7 @@ class Agent(object):
         if action is None:
             if self.bt:
 
-                # while self.dong_accept_task or tick_time==0:
+                while self.dong_accept_task or tick_time==0:
                     tick_time += 1
                     self.dong_accept_task = False
 
@@ -81,6 +83,10 @@ class Agent(object):
                     if self.current_task != self.last_accept_task:
                         self.finish_current_task()
                         self.update_current_task()
+
+                        if self.current_task != None:
+                            self.dong_accept_task = True
+
 
                         # if self.current_task!=None:
                         #     self.bt.tick(verbose=True, bt_name=f'Twice {self.agent_id} bt')

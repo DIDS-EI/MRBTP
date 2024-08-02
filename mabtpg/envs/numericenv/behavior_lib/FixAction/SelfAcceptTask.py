@@ -31,7 +31,7 @@ class SelfAcceptTask(Action):
 
     def update(self) -> Status:
 
-        self.agent.dong_accept_task = True
+        # self.agent.dong_accept_task = True
 
         self.agent.current_task = {"task_id": self.task_id,
                                   "sub_goal": self.sub_goal,
