@@ -1,12 +1,12 @@
 import random
 import pickle
-from data_generate import DataGenerator
+# from data_generate import DataGenerator
 from mabtpg.envs.numericenv.numsim_tools import create_directory_if_not_exists, print_action_data_table
 from simulation import simulation
 from mabtpg.utils.tools import *
 import numpy as np
 import pandas as pd
-from mabtpg.envs.numericenv.numsim_tools import load_data_from_directory
+from mabtpg.envs.numericenv.numsim_tools import load_data_from_directory,save_tree_as_dot
 random.seed(0)
 np.random.seed(0)
 
@@ -39,9 +39,9 @@ for max_depth in max_depth_ls:
             # Define the directory name based on the input parameters
             dir_name = f"valid_data_depth={max_depth}_branch={max_branch}_agent={num_agent}_cmpr={cmp_ratio}_cmpn={max_cmp_act_split}_cmpstp={max_action_steps}"
             loaded_data = load_data_from_directory(dir_name)
-            data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch, cmp_ratio=cmp_ratio,
-                                           max_action_steps=max_action_steps,
-                                           max_cmp_act_split=max_cmp_act_split, need_split_action=True)
+            # data_generator = DataGenerator(max_depth=max_depth, max_branch=max_branch, cmp_ratio=cmp_ratio,
+            #                                max_action_steps=max_action_steps,
+            #                                max_cmp_act_split=max_cmp_act_split, need_split_action=True)
             print(f"Loaded {len(loaded_data)} data files.")
             print("====== Data Generated Finished! =========")
 
@@ -60,11 +60,11 @@ for max_depth in max_depth_ls:
                 }
                 total_entries = 0
 
-                for data_id, dataset in enumerate(loaded_data[5:6]):
+                for data_id, dataset in enumerate(loaded_data[:]):
                     print("data_id:", data_id, "actions num:",dataset["action_num"])
                     if with_comp_action==True:
-                        print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
-                        data_generator.save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
+                        print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_cmp'])
+                        save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
 
                     # agents_actions = data_generator.assign_actions_to_agents(dataset, num_agent)
                     if with_comp_action:

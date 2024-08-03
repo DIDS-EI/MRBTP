@@ -52,11 +52,11 @@ class NumericEnv(Env):
             "action_pre": {}
         }
 
-    def set_agent_actions(self,agent_actions):
-        self.actions_lists = agent_actions
-        for act_ls in agent_actions:
-            for act in act_ls:
-                self.blackboard["action_pre"][get_action_name(act.name)] = frozenset(act.pre)
+    def set_agent_actions(self,total_actions,agent_actions):
+        self.total_actions = total_actions
+        self.agents_actions = agent_actions
+        for act in total_actions:
+            self.blackboard["action_pre"][get_action_name(act.name)] = frozenset(act.pre)
 
 
     def print_agent_action_tabulate(self,agent_id,action):

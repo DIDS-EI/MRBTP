@@ -110,12 +110,16 @@ class DataGenerator:
             'start_num': convert_cstr_set_to_num_set(start),
             'nodes': {n: graph.nodes[n]['label'] for n in graph.nodes()},  # 提取节点标签作为状态
             'edges': [(u, v, d['label']) for u, v, d in graph.edges(data=True)], # 提取边和动作名
-            'comp_actions_BTML_dic': {},
-            'actions_with_cmp': [],
-            'actions_without_cmp': [],
+
             "CABTP_expanded_num": 0,
 
+
+            'comp_actions_BTML_dic': {},
+            'actions_cmp': [],# 原来的动作，组合动作只是名字变了
+
+            'total_actions': [], #所有动作包括组合动作，包括split后的动作
             "action_num": 0,
+
             "split_actions_dict":{},
             "agent_actions_with_cmp":[],
             "agent_actions_without_cmp":[]
@@ -123,12 +127,12 @@ class DataGenerator:
 
         # cut composition to sub actions
         if self.need_split_action:
-            (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
+            (dataset['actions_cmp'], dataset['total_actions'],
              dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num'],\
                 dataset["split_actions_dict"] ) = \
                 self.split_actions_and_plan_sub_btml(total_actions_ls)
 
-            dataset["action_num"]= len(dataset['actions_without_cmp'])
+            dataset["action_num"]= len(dataset['total_actions'])
 
         self.assign_actions_to_agents(dataset,num_agent=self.num_agent)
 
@@ -162,22 +166,31 @@ class DataGenerator:
             return f"CMP_A{index}_D{depth}"
 
         split_actions_dict = {}
-        new_actions_with_cmp = list(actions)
-        new_actions_without_cmp = list(actions)
-        for action in actions:
+        new_actions_cmp = [] # 和原来动作数一样，只是改变组合动作的名字
+        new_total_actions = []
+        for act_id,action in enumerate(actions):
             if random.random() < self.cmp_ratio:
                 split_action_ls = self.split_action_to_sub_actions(action, min_splits=2, max_splits=self.max_cmp_act_split)
                 print_colored(f"Act Split :{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}", color='blue')
 
-                # without_cmp
-                new_actions_without_cmp.remove(action)
-                new_actions_without_cmp.extend(split_action_ls)
-
-                # with_cmp
-                new_actions_with_cmp.extend(split_action_ls)
                 action.name = generate_composition_action_name(action.name)
                 action.cost = 0
                 split_actions_dict[action] = split_action_ls
+
+                new_total_actions.extend(split_action_ls)
+
+            new_actions_cmp.append(action)
+            new_total_actions.append(action)
+
+                # without_cmp
+                # new_actions_without_cmp.remove(action)
+                # new_actions_without_cmp.extend(split_action_ls)
+
+                # with_cmp
+                # new_actions_with_cmp.extend(split_action_ls)
+                # action.name = generate_composition_action_name(action.name)
+                # action.cost = 0
+                # split_actions_dict[action] = split_action_ls
 
         # 将每个组合动作的 btml 保存起来
         # 得到一个 comp_act_BTML_dic[action.name] = sub_btml
@@ -199,7 +212,7 @@ class DataGenerator:
             sub_btml.anytree_root = planning_algorithm.anytree_root
 
             comp_actions_BTML_dic[comp_act.name] = sub_btml
-        return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num,split_actions_dict
+        return new_actions_cmp, new_total_actions, comp_actions_BTML_dic,CABTP_expanded_num,split_actions_dict
 
 
     def generate_action_name(self, depth, index, pre,add, del_set,act_step):
@@ -265,6 +278,7 @@ class DataGenerator:
         def assign_an_act_to_agent_ls(assigned_agents,action):
             if action in dataset["split_actions_dict"]:
                 for agent_index in assigned_agents:
+                    # print("agent_index:",agent_index)
                     agents_actions[agent_index].append(action)
                     agents_without_cmp[agent_index].extend(dataset["split_actions_dict"][action])
             else:
@@ -285,7 +299,7 @@ class DataGenerator:
         agents_actions = [[] for _ in range(self.num_agent)]
         agents_without_cmp = [[] for _ in range(self.num_agent)]
 
-        for action in dataset["actions_with_cmp"]:
+        for action in dataset["actions_cmp"]:
             # Randomly choose at least one agent
             num_assignments = random.randint(1, num_agent)
             assigned_agents = random.sample(range(num_agent), num_assignments)
@@ -297,8 +311,8 @@ class DataGenerator:
         for i in range(num_agent):
             if not agents_actions[i]:  # If the agent has no actions assigned
                 # Randomly choose an action to assign to this agent
-                action_to_assign = random.choice(dataset["actions_with_cmp"])
-                assign_an_act_to_agent_ls([agents_actions[i]],action_to_assign)
+                action_to_assign = random.choice(dataset["actions_cmp"])
+                assign_an_act_to_agent_ls([i],action_to_assign)
 
         # Print the allocation result to see the action list of each agent
         for i, actions in enumerate(agents_actions):
@@ -326,12 +340,12 @@ class DataGenerator:
 
 
 # Usage example
-num_data = 1
-num_elements = 10
-max_depth = 3
-
-data_generator = DataGenerator()
-datasets = [data_generator.generate_data() for _ in range(num_data)]
-
-for i, dataset in enumerate(datasets):
-    data_generator.save_tree_as_dot(dataset, f'{i}_generated_tree.dot')
+# num_data = 1
+# num_elements = 10
+# max_depth = 3
+#
+# data_generator = DataGenerator()
+# datasets = [data_generator.generate_data() for _ in range(num_data)]
+#
+# for i, dataset in enumerate(datasets):
+#     data_generator.save_tree_as_dot(dataset, f'{i}_generated_tree.dot')

@@ -5,7 +5,7 @@ def simulation(dataset,num_agent,agents_actions,dmr):
     goal = dataset["goal_num"]
     from mabtpg.envs.numericenv.numeric_env import NumericEnv
     env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
-    env.set_agent_actions(agents_actions)
+    env.set_agent_actions(dataset["total_actions"],agents_actions)
 
     behavior_lib = [agent.behavior_lib for agent in env.agents]
     dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
@@ -23,7 +23,7 @@ def simulation(dataset,num_agent,agents_actions,dmr):
     agents_steps=0
     obs = set()
     while not done:
-        print_colored("======================================================================================","blue")
+        print_colored(f"==================================== {env_steps} ==============================================","blue")
         obs,done,_,_,agents_one_step = env.step()
         env_steps += 1
         agents_steps += agents_one_step

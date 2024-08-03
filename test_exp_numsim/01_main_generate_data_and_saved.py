@@ -21,7 +21,7 @@ max_action_steps = 2 # 每个原子动作的最大步数
 
 
 #  get data
-max_num_data = 20
+max_num_data = 200
 data_generator = DataGenerator(max_depth=max_depth,max_branch=max_branch, cmp_ratio=cmp_ratio,
                                max_action_steps = max_action_steps,
                                max_cmp_act_split=max_cmp_act_split, need_split_action=True,max_num_data=max_num_data)
@@ -30,19 +30,21 @@ data_generator = DataGenerator(max_depth=max_depth,max_branch=max_branch, cmp_ra
 print("======================")
 
 valid_data = 0
-max_valid_data = 10
+max_valid_data = 100
 
 data_id = 0
 # with_comp_action = True
 
 for dataset in data_generator.datasets:
-    print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
+    print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_cmp'])
     data_generator.save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
     print("data_id:", data_id)
+    if data_id==5:
+        xx=1
     data_id+=1
 
     all_success = True
-    for with_comp_action in [True]: #False,
+    for with_comp_action in [True,False]: #False,
         # 每个数据，再根据给定的智能体数量，得到 agents_actions
         # agents_actions = data_generator.assign_actions_to_agents(dataset, num_agent)
         if with_comp_action:

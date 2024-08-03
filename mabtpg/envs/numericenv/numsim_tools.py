@@ -203,3 +203,18 @@ def convert_to_num_frozenset(fs):
         if match:
             numbers.append(int(match.group()))
     return frozenset(numbers)
+
+
+def save_tree_as_dot( dataset, filename):
+    import networkx as nx
+    G = nx.DiGraph()
+    nodes = dataset['nodes']
+    edges = dataset['edges']
+
+    for node, state in nodes.items():
+        G.add_node(node, label=str(state))
+
+    for parent, child, action_name in edges:
+        G.add_edge(child, parent, label=action_name)
+
+    nx.drawing.nx_pydot.write_dot(G, filename)
