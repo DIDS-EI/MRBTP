@@ -25,7 +25,7 @@ num_agent_ls = [2]
 
 cmp_ratio = 0.5  # 组合动作占比
 max_cmp_act_split = 3 # 每个组合被切成多少个原子动作
-max_action_steps = 5 # 每个原子动作的最大步数
+max_action_steps = 2 # 每个原子动作的最大步数
 
 
 results = []
@@ -60,7 +60,7 @@ for max_depth in max_depth_ls:
                 }
                 total_entries = 0
 
-                for data_id, dataset in enumerate(loaded_data[1:2]):
+                for data_id, dataset in enumerate(loaded_data[5:6]):
                     print("data_id:", data_id, "actions num:",dataset["action_num"])
                     if with_comp_action==True:
                         print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
@@ -87,7 +87,7 @@ for max_depth in max_depth_ls:
                     # Run Decentralized multi-agent BT algorithm
                     # #########################
                     from DMR import DMR
-                    dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=True)  # False 也还需要再调试
+                    dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=False)  # False 也还需要再调试
                     dmr.planning()
 
                     # dmr.expanded_time?

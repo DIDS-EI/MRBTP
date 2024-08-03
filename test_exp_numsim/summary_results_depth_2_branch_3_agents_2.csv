@@ -1,3 +1,3 @@
 depth,branch,num_agent,with_comp_action,avg_action_num,avg_CABTP_expanded_num,avg_record_expanded_num,avg_expanded_time,avg_env_steps,avg_agents_step,variance_action_num,variance_CABTP_expanded_num,variance_record_expanded_num,variance_expanded_time,variance_success,variance_env_steps,variance_agents_step,success_rate
-2,3,2,False,10.0,0.0,1010.0,0.11902689933776855,25.0,11.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
-2,3,2,True,10.0,4.0,66.0,0.0020003318786621094,33.0,28.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+2,3,2,False,4.0,0.0,13.0,0.0,8.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+2,3,2,True,4.0,4.0,9.0,0.0,10.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0

@@ -17,7 +17,7 @@ num_agent = 2
 
 cmp_ratio = 0.5  # 组合动作占比
 max_cmp_act_split = 3 # 每个组合被切成多少个原子动作
-max_action_steps = 5 # 每个原子动作的最大步数
+max_action_steps = 2 # 每个原子动作的最大步数
 
 
 #  get data
