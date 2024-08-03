@@ -1,149 +1,1025 @@
 fallback
-    condition 496 & 497 & 498 & 499 & 500
+    condition 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8
     fallback
         sequence
-            condition IsSelfTask(496) id=0 act=CMP_A1_D0
-            action CMP_A1_D0()
+            condition IsSelfTask(1) id=0 act=A1_D0
+            action A1_D0 pre: () add: (1)  del: ()
             action FinishTask()
         sequence
             fallback
-                condition 497 & 498 & 499 & 500
-                sequence
-                    condition 498 & 499 & 500
-                    action A2_D0 pre: () add: (497)  del: ()
+                condition 2 & 3 & 4 & 5 & 6 & 7 & 8
                 fallback
                     sequence
-                        condition IsSelfTask(498) id=7 act=CMP_A3_D0
+                        condition IsSelfTask(2) id=16 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 3 & 4 & 5 & 6 & 7 & 8
+                        action SelfAcceptTask(2) id=16 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(3) id=17 act=CMP_A3_D0
                         action CMP_A3_D0()
                         action FinishTask()
                     sequence
-                        condition 497 & 499 & 500
-                        action SelfAcceptTask(498) id=7 act=CMP_A3_D0
-                sequence
-                    condition 497 & 498 & 499 & 506
-                    action A5_D0_Sub1 pre: (506) add: (500)  del: ()
-            action SelfAcceptTask(496) id=0 act=CMP_A1_D0
-    sequence
-        condition 496 & 498 & 499 & 500
-        action A2_D0 pre: () add: (497)  del: ()
-    fallback
-        sequence
-            condition IsSelfTask(498) id=1 act=CMP_A3_D0
-            action CMP_A3_D0()
-            action FinishTask()
-        sequence
-            fallback
-                condition 496 & 497 & 499 & 500
-                sequence
-                    fallback
-                        condition 496 & 499 & 500
-                        fallback
-                            sequence
-                                condition IsSelfTask(496) id=10 act=CMP_A1_D0
-                                action CMP_A1_D0()
-                                action FinishTask()
-                            sequence
-                                fallback
-                                    condition 499 & 500
-                                    sequence
-                                        condition 499 & 506
-                                        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
-                                action SelfAcceptTask(496) id=10 act=CMP_A1_D0
-                    action A2_D0 pre: () add: (497)  del: ()
-                sequence
-                    condition 496 & 497 & 499 & 506
-                    action A5_D0_Sub1 pre: (506) add: (500)  del: ()
-            action SelfAcceptTask(498) id=1 act=CMP_A3_D0
-    sequence
-        condition 496 & 497 & 498 & 499 & 506
-        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
-    fallback
-        sequence
-            condition IsSelfTask(496) id=2 act=CMP_A1_D0
-            action CMP_A1_D0()
-            action FinishTask()
-        sequence
-            fallback
-                condition 497 & 498 & 499
-                sequence
-                    condition 498 & 499
-                    action A2_D0 pre: () add: (497)  del: ()
+                        condition 2 & 4 & 5 & 6 & 7 & 8
+                        action SelfAcceptTask(3) id=17 act=CMP_A3_D0
                 fallback
                     sequence
-                        condition IsSelfTask(498) id=8 act=CMP_A3_D0
-                        action CMP_A3_D0()
+                        condition IsSelfTask(4) id=18 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
                         action FinishTask()
                     sequence
-                        condition 497 & 499
-                        action SelfAcceptTask(498) id=8 act=CMP_A3_D0
-            action SelfAcceptTask(496) id=2 act=CMP_A1_D0
-    sequence
-        condition 496 & 498 & 499
-        action A2_D0 pre: () add: (497)  del: ()
-    fallback
-        sequence
-            condition IsSelfTask(498) id=3 act=CMP_A3_D0
-            action CMP_A3_D0()
-            action FinishTask()
-        sequence
-            fallback
-                condition 496 & 497 & 499
-                sequence
-                    condition 496 & 499
-                    action A2_D0 pre: () add: (497)  del: ()
-            action SelfAcceptTask(498) id=3 act=CMP_A3_D0
-    fallback
-        sequence
-            condition IsSelfTask(496) id=4 act=CMP_A1_D0
-            action CMP_A1_D0()
-            action FinishTask()
-        sequence
-            fallback
-                condition 497 & 500
-                sequence
-                    condition 500
-                    action A2_D0 pre: () add: (497)  del: ()
-            action SelfAcceptTask(496) id=4 act=CMP_A1_D0
-    sequence
-        condition 496 & 500
-        action A2_D0 pre: () add: (497)  del: ()
-    sequence
-        condition 496 & 497 & 506
-        action A5_D0_Sub1 pre: (506) add: (500)  del: ()
-    fallback
-        sequence
-            condition IsSelfTask(496) id=5 act=CMP_A1_D0
-            action CMP_A1_D0()
-            action FinishTask()
-        sequence
-            fallback
-                condition 497 & 498
-                sequence
-                    condition 498
-                    action A2_D0 pre: () add: (497)  del: ()
+                        condition 2 & 3 & 5 & 6 & 7 & 8
+                        action SelfAcceptTask(4) id=18 act=A4_D0
                 fallback
                     sequence
-                        condition IsSelfTask(498) id=9 act=CMP_A3_D0
-                        action CMP_A3_D0()
+                        condition IsSelfTask(5) id=19 act=A5_D0
+                        action A5_D0 pre: () add: (5)  del: ()
                         action FinishTask()
                     sequence
                         fallback
-                            condition 497
-                            action A2_D0 pre: () add: (497)  del: ()
-                        action SelfAcceptTask(498) id=9 act=CMP_A3_D0
-            action SelfAcceptTask(496) id=5 act=CMP_A1_D0
-    sequence
-        condition 496 & 498
-        action A2_D0 pre: () add: (497)  del: ()
+                            condition 2 & 3 & 4 & 6 & 7 & 8
+                            fallback
+                                sequence
+                                    condition IsSelfTask(2) id=46 act=A2_D0
+                                    action A2_D0 pre: () add: (2)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 3 & 4 & 6 & 7 & 8
+                                    action SelfAcceptTask(2) id=46 act=A2_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(3) id=47 act=CMP_A3_D0
+                                    action CMP_A3_D0()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 2 & 4 & 6 & 7 & 8
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(2) id=75 act=A2_D0
+                                                action A2_D0 pre: () add: (2)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 4 & 6 & 7 & 8
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=95 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            fallback
+                                                                condition 6 & 7 & 8
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(7) id=109 act=A7_D0
+                                                                        action A7_D0 pre: (2) add: (7)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        fallback
+                                                                            condition 2 & 6 & 8
+                                                                            fallback
+                                                                                sequence
+                                                                                    condition IsSelfTask(6) id=115 act=A6_D0
+                                                                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                                                                    action FinishTask()
+                                                                                sequence
+                                                                                    fallback
+                                                                                        condition 1 & 2 & 8
+                                                                                        fallback
+                                                                                            sequence
+                                                                                                condition IsSelfTask(1) id=120 act=A1_D0
+                                                                                                action A1_D0 pre: () add: (1)  del: ()
+                                                                                                action FinishTask()
+                                                                                            sequence
+                                                                                                condition 2 & 8
+                                                                                                action SelfAcceptTask(1) id=120 act=A1_D0
+                                                                                    action SelfAcceptTask(6) id=115 act=A6_D0
+                                                                        action SelfAcceptTask(7) id=109 act=A7_D0
+                                                            action SelfAcceptTask(4) id=95 act=A4_D0
+                                                action SelfAcceptTask(2) id=75 act=A2_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=76 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 2 & 6 & 7 & 8
+                                                action SelfAcceptTask(4) id=76 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(7) id=77 act=A7_D0
+                                                action A7_D0 pre: (2) add: (7)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 2 & 4 & 6 & 8
+                                                action SelfAcceptTask(7) id=77 act=A7_D0
+                                    action SelfAcceptTask(3) id=47 act=CMP_A3_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=48 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 2 & 3 & 6 & 7 & 8
+                                    action SelfAcceptTask(4) id=48 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=49 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 3 & 4 & 7 & 8
+                                    action SelfAcceptTask(6) id=49 act=A6_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(7) id=50 act=A7_D0
+                                    action A7_D0 pre: (2) add: (7)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 2 & 3 & 4 & 6 & 8
+                                    action SelfAcceptTask(7) id=50 act=A7_D0
+                        action SelfAcceptTask(5) id=19 act=A5_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(7) id=20 act=A7_D0
+                        action A7_D0 pre: (2) add: (7)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 2 & 3 & 4 & 5 & 6 & 8
+                        action SelfAcceptTask(7) id=20 act=A7_D0
+            action SelfAcceptTask(1) id=0 act=A1_D0
     fallback
         sequence
-            condition IsSelfTask(498) id=6 act=CMP_A3_D0
+            condition IsSelfTask(2) id=1 act=A2_D0
+            action A2_D0 pre: () add: (2)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 3 & 4 & 5 & 6 & 7 & 8
+            action SelfAcceptTask(2) id=1 act=A2_D0
+    fallback
+        sequence
+            condition IsSelfTask(3) id=2 act=CMP_A3_D0
             action CMP_A3_D0()
             action FinishTask()
         sequence
             fallback
-                condition 496 & 497
-                sequence
-                    condition 496
-                    action A2_D0 pre: () add: (497)  del: ()
-            action SelfAcceptTask(498) id=6 act=CMP_A3_D0
+                condition 1 & 2 & 4 & 5 & 6 & 7 & 8
+                fallback
+                    sequence
+                        condition IsSelfTask(2) id=21 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 4 & 5 & 6 & 7 & 8
+                        action SelfAcceptTask(2) id=21 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(4) id=22 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 5 & 6 & 7 & 8
+                        action SelfAcceptTask(4) id=22 act=A4_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(5) id=23 act=A5_D0
+                        action A5_D0 pre: () add: (5)  del: ()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 1 & 2 & 4 & 6 & 7 & 8
+                            fallback
+                                sequence
+                                    condition IsSelfTask(2) id=51 act=A2_D0
+                                    action A2_D0 pre: () add: (2)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 1 & 4 & 6 & 7 & 8
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=78 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 6 & 7 & 8
+                                                action SelfAcceptTask(4) id=78 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(6) id=79 act=A6_D0
+                                                action A6_D0 pre: (1) add: (6)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 1 & 4 & 7 & 8
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(1) id=96 act=A1_D0
+                                                            action A1_D0 pre: () add: (1)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 4 & 7 & 8
+                                                            action SelfAcceptTask(1) id=96 act=A1_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=97 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 7 & 8
+                                                            action SelfAcceptTask(4) id=97 act=A4_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(7) id=98 act=A7_D0
+                                                            action A7_D0 pre: (2) add: (7)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 2 & 4 & 8
+                                                            action SelfAcceptTask(7) id=98 act=A7_D0
+                                                action SelfAcceptTask(6) id=79 act=A6_D0
+                                    action SelfAcceptTask(2) id=51 act=A2_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=52 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 6 & 7 & 8
+                                    action SelfAcceptTask(4) id=52 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=53 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 4 & 7 & 8
+                                    action SelfAcceptTask(6) id=53 act=A6_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(7) id=54 act=A7_D0
+                                    action A7_D0 pre: (2) add: (7)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 4 & 6 & 8
+                                    action SelfAcceptTask(7) id=54 act=A7_D0
+                        action SelfAcceptTask(5) id=23 act=A5_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(6) id=24 act=A6_D0
+                        action A6_D0 pre: (1) add: (6)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 4 & 5 & 7 & 8
+                        action SelfAcceptTask(6) id=24 act=A6_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(7) id=25 act=A7_D0
+                        action A7_D0 pre: (2) add: (7)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 4 & 5 & 6 & 8
+                        action SelfAcceptTask(7) id=25 act=A7_D0
+            action SelfAcceptTask(3) id=2 act=CMP_A3_D0
+    fallback
+        sequence
+            condition IsSelfTask(4) id=3 act=A4_D0
+            action A4_D0 pre: () add: (4)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 3 & 5 & 6 & 7 & 8
+            action SelfAcceptTask(4) id=3 act=A4_D0
+    fallback
+        sequence
+            condition IsSelfTask(5) id=4 act=A5_D0
+            action A5_D0 pre: () add: (5)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 3 & 4 & 6 & 7 & 8
+            action SelfAcceptTask(5) id=4 act=A5_D0
+    fallback
+        sequence
+            condition IsSelfTask(6) id=5 act=A6_D0
+            action A6_D0 pre: (1) add: (6)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 3 & 4 & 5 & 7 & 8
+            action SelfAcceptTask(6) id=5 act=A6_D0
+    fallback
+        sequence
+            condition IsSelfTask(7) id=6 act=A7_D0
+            action A7_D0 pre: (2) add: (7)  del: ()
+            action FinishTask()
+        sequence
+            fallback
+                condition 1 & 2 & 3 & 4 & 5 & 6 & 8
+                fallback
+                    sequence
+                        condition IsSelfTask(2) id=26 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 1 & 3 & 4 & 5 & 6 & 8
+                            fallback
+                                sequence
+                                    condition IsSelfTask(1) id=55 act=A1_D0
+                                    action A1_D0 pre: () add: (1)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 3 & 4 & 5 & 6 & 8
+                                    action SelfAcceptTask(1) id=55 act=A1_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(3) id=56 act=CMP_A3_D0
+                                    action CMP_A3_D0()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 4 & 5 & 6 & 8
+                                    action SelfAcceptTask(3) id=56 act=CMP_A3_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=57 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 3 & 5 & 6 & 8
+                                    action SelfAcceptTask(4) id=57 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(5) id=58 act=A5_D0
+                                    action A5_D0 pre: () add: (5)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 1 & 3 & 4 & 6 & 8
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(1) id=80 act=A1_D0
+                                                action A1_D0 pre: () add: (1)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 3 & 4 & 6 & 8
+                                                action SelfAcceptTask(1) id=80 act=A1_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(3) id=81 act=CMP_A3_D0
+                                                action CMP_A3_D0()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 1 & 4 & 6 & 8
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(1) id=99 act=A1_D0
+                                                            action A1_D0 pre: () add: (1)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            fallback
+                                                                condition 4 & 6 & 8
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(4) id=110 act=A4_D0
+                                                                        action A4_D0 pre: () add: (4)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        fallback
+                                                                            condition 6 & 8
+                                                                            fallback
+                                                                                sequence
+                                                                                    condition IsSelfTask(6) id=116 act=A6_D0
+                                                                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                                                                    action FinishTask()
+                                                                                sequence
+                                                                                    fallback
+                                                                                        condition 1 & 8
+                                                                                        fallback
+                                                                                            sequence
+                                                                                                condition IsSelfTask(1) id=121 act=A1_D0
+                                                                                                action A1_D0 pre: () add: (1)  del: ()
+                                                                                                action FinishTask()
+                                                                                            sequence
+                                                                                                condition 8
+                                                                                                action SelfAcceptTask(1) id=121 act=A1_D0
+                                                                                    action SelfAcceptTask(6) id=116 act=A6_D0
+                                                                        action SelfAcceptTask(4) id=110 act=A4_D0
+                                                            action SelfAcceptTask(1) id=99 act=A1_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=100 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 6 & 8
+                                                            action SelfAcceptTask(4) id=100 act=A4_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(6) id=101 act=A6_D0
+                                                            action A6_D0 pre: (1) add: (6)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 4 & 8
+                                                            action SelfAcceptTask(6) id=101 act=A6_D0
+                                                action SelfAcceptTask(3) id=81 act=CMP_A3_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=82 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 3 & 6 & 8
+                                                action SelfAcceptTask(4) id=82 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(6) id=83 act=A6_D0
+                                                action A6_D0 pre: (1) add: (6)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 3 & 4 & 8
+                                                action SelfAcceptTask(6) id=83 act=A6_D0
+                                    action SelfAcceptTask(5) id=58 act=A5_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=59 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 3 & 4 & 5 & 8
+                                    action SelfAcceptTask(6) id=59 act=A6_D0
+                        action SelfAcceptTask(2) id=26 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(4) id=27 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 5 & 6 & 8
+                        action SelfAcceptTask(4) id=27 act=A4_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(5) id=28 act=A5_D0
+                        action A5_D0 pre: () add: (5)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 4 & 6 & 8
+                        action SelfAcceptTask(5) id=28 act=A5_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(6) id=29 act=A6_D0
+                        action A6_D0 pre: (1) add: (6)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 4 & 5 & 8
+                        action SelfAcceptTask(6) id=29 act=A6_D0
+            action SelfAcceptTask(7) id=6 act=A7_D0
+    fallback
+        sequence
+            condition IsSelfTask(1) id=7 act=A1_D0
+            action A1_D0 pre: () add: (1)  del: ()
+            action FinishTask()
+        sequence
+            fallback
+                condition 2 & 3 & 4 & 5 & 6 & 7
+                fallback
+                    sequence
+                        condition IsSelfTask(2) id=30 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 3 & 4 & 5 & 6 & 7
+                        action SelfAcceptTask(2) id=30 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(3) id=31 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        condition 2 & 4 & 5 & 6 & 7
+                        action SelfAcceptTask(3) id=31 act=CMP_A3_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(4) id=32 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 2 & 3 & 5 & 6 & 7
+                        action SelfAcceptTask(4) id=32 act=A4_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(5) id=33 act=A5_D0
+                        action A5_D0 pre: () add: (5)  del: ()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 2 & 3 & 4 & 6 & 7
+                            fallback
+                                sequence
+                                    condition IsSelfTask(2) id=60 act=A2_D0
+                                    action A2_D0 pre: () add: (2)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 3 & 4 & 6 & 7
+                                    action SelfAcceptTask(2) id=60 act=A2_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(3) id=61 act=CMP_A3_D0
+                                    action CMP_A3_D0()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 2 & 4 & 6 & 7
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(2) id=84 act=A2_D0
+                                                action A2_D0 pre: () add: (2)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 4 & 6 & 7
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=102 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 6 & 7
+                                                            action SelfAcceptTask(4) id=102 act=A4_D0
+                                                action SelfAcceptTask(2) id=84 act=A2_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=85 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 2 & 6 & 7
+                                                action SelfAcceptTask(4) id=85 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(7) id=86 act=A7_D0
+                                                action A7_D0 pre: (2) add: (7)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 2 & 4 & 6
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=103 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            fallback
+                                                                condition 2 & 6
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(6) id=111 act=A6_D0
+                                                                        action A6_D0 pre: (1) add: (6)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        condition 1 & 2
+                                                                        action SelfAcceptTask(6) id=111 act=A6_D0
+                                                            action SelfAcceptTask(4) id=103 act=A4_D0
+                                                action SelfAcceptTask(7) id=86 act=A7_D0
+                                    action SelfAcceptTask(3) id=61 act=CMP_A3_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=62 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 2 & 3 & 6 & 7
+                                    action SelfAcceptTask(4) id=62 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(7) id=63 act=A7_D0
+                                    action A7_D0 pre: (2) add: (7)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 2 & 3 & 4 & 6
+                                    action SelfAcceptTask(7) id=63 act=A7_D0
+                        action SelfAcceptTask(5) id=33 act=A5_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(7) id=34 act=A7_D0
+                        action A7_D0 pre: (2) add: (7)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 2 & 3 & 4 & 5 & 6
+                        action SelfAcceptTask(7) id=34 act=A7_D0
+            action SelfAcceptTask(1) id=7 act=A1_D0
+    fallback
+        sequence
+            condition IsSelfTask(2) id=8 act=A2_D0
+            action A2_D0 pre: () add: (2)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 3 & 4 & 5 & 6 & 7
+            action SelfAcceptTask(2) id=8 act=A2_D0
+    fallback
+        sequence
+            condition IsSelfTask(3) id=9 act=CMP_A3_D0
+            action CMP_A3_D0()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 4 & 5 & 6 & 7
+            action SelfAcceptTask(3) id=9 act=CMP_A3_D0
+    fallback
+        sequence
+            condition IsSelfTask(4) id=10 act=A4_D0
+            action A4_D0 pre: () add: (4)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 3 & 5 & 6 & 7
+            action SelfAcceptTask(4) id=10 act=A4_D0
+    fallback
+        sequence
+            condition IsSelfTask(5) id=11 act=A5_D0
+            action A5_D0 pre: () add: (5)  del: ()
+            action FinishTask()
+        sequence
+            fallback
+                condition 1 & 2 & 3 & 4 & 6 & 7
+                fallback
+                    sequence
+                        condition IsSelfTask(2) id=35 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 3 & 4 & 6 & 7
+                        action SelfAcceptTask(2) id=35 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(3) id=36 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 1 & 2 & 4 & 6 & 7
+                            fallback
+                                sequence
+                                    condition IsSelfTask(2) id=64 act=A2_D0
+                                    action A2_D0 pre: () add: (2)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 1 & 4 & 6 & 7
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=87 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 6 & 7
+                                                action SelfAcceptTask(4) id=87 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(6) id=88 act=A6_D0
+                                                action A6_D0 pre: (1) add: (6)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 1 & 4 & 7
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(1) id=104 act=A1_D0
+                                                            action A1_D0 pre: () add: (1)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            fallback
+                                                                condition 4 & 7
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(4) id=112 act=A4_D0
+                                                                        action A4_D0 pre: () add: (4)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        condition 7
+                                                                        action SelfAcceptTask(4) id=112 act=A4_D0
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(7) id=113 act=A7_D0
+                                                                        action A7_D0 pre: (2) add: (7)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        fallback
+                                                                            condition 2 & 4
+                                                                            fallback
+                                                                                sequence
+                                                                                    condition IsSelfTask(2) id=117 act=A2_D0
+                                                                                    action A2_D0 pre: () add: (2)  del: ()
+                                                                                    action FinishTask()
+                                                                                sequence
+                                                                                    condition 4
+                                                                                    action SelfAcceptTask(2) id=117 act=A2_D0
+                                                                            fallback
+                                                                                sequence
+                                                                                    condition IsSelfTask(4) id=118 act=A4_D0
+                                                                                    action A4_D0 pre: () add: (4)  del: ()
+                                                                                    action FinishTask()
+                                                                                sequence
+                                                                                    condition 2
+                                                                                    action SelfAcceptTask(4) id=118 act=A4_D0
+                                                                        action SelfAcceptTask(7) id=113 act=A7_D0
+                                                            action SelfAcceptTask(1) id=104 act=A1_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=105 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 7
+                                                            action SelfAcceptTask(4) id=105 act=A4_D0
+                                                action SelfAcceptTask(6) id=88 act=A6_D0
+                                    action SelfAcceptTask(2) id=64 act=A2_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=65 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 6 & 7
+                                    action SelfAcceptTask(4) id=65 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=66 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 4 & 7
+                                    action SelfAcceptTask(6) id=66 act=A6_D0
+                        action SelfAcceptTask(3) id=36 act=CMP_A3_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(4) id=37 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 6 & 7
+                        action SelfAcceptTask(4) id=37 act=A4_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(6) id=38 act=A6_D0
+                        action A6_D0 pre: (1) add: (6)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 4 & 7
+                        action SelfAcceptTask(6) id=38 act=A6_D0
+            action SelfAcceptTask(5) id=11 act=A5_D0
+    fallback
+        sequence
+            condition IsSelfTask(6) id=12 act=A6_D0
+            action A6_D0 pre: (1) add: (6)  del: ()
+            action FinishTask()
+        sequence
+            condition 1 & 2 & 3 & 4 & 5 & 7
+            action SelfAcceptTask(6) id=12 act=A6_D0
+    fallback
+        sequence
+            condition IsSelfTask(7) id=13 act=A7_D0
+            action A7_D0 pre: (2) add: (7)  del: ()
+            action FinishTask()
+        sequence
+            fallback
+                condition 1 & 2 & 3 & 4 & 5 & 6
+                fallback
+                    sequence
+                        condition IsSelfTask(2) id=39 act=A2_D0
+                        action A2_D0 pre: () add: (2)  del: ()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 1 & 3 & 4 & 5 & 6
+                            fallback
+                                sequence
+                                    condition IsSelfTask(1) id=67 act=A1_D0
+                                    action A1_D0 pre: () add: (1)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 3 & 4 & 5 & 6
+                                    action SelfAcceptTask(1) id=67 act=A1_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(3) id=68 act=CMP_A3_D0
+                                    action CMP_A3_D0()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 4 & 5 & 6
+                                    action SelfAcceptTask(3) id=68 act=CMP_A3_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=69 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 3 & 5 & 6
+                                    action SelfAcceptTask(4) id=69 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(5) id=70 act=A5_D0
+                                    action A5_D0 pre: () add: (5)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 1 & 3 & 4 & 6
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(1) id=89 act=A1_D0
+                                                action A1_D0 pre: () add: (1)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 3 & 4 & 6
+                                                action SelfAcceptTask(1) id=89 act=A1_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(3) id=90 act=CMP_A3_D0
+                                                action CMP_A3_D0()
+                                                action FinishTask()
+                                            sequence
+                                                fallback
+                                                    condition 1 & 4 & 6
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(1) id=106 act=A1_D0
+                                                            action A1_D0 pre: () add: (1)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            fallback
+                                                                condition 4 & 6
+                                                                fallback
+                                                                    sequence
+                                                                        condition IsSelfTask(4) id=114 act=A4_D0
+                                                                        action A4_D0 pre: () add: (4)  del: ()
+                                                                        action FinishTask()
+                                                                    sequence
+                                                                        fallback
+                                                                            condition 6
+                                                                            fallback
+                                                                                sequence
+                                                                                    condition IsSelfTask(6) id=119 act=A6_D0
+                                                                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                                                                    action FinishTask()
+                                                                                sequence
+                                                                                    fallback
+                                                                                        condition 1
+                                                                                        fallback
+                                                                                            sequence
+                                                                                                condition IsSelfTask(1) id=122 act=A1_D0
+                                                                                                action A1_D0 pre: () add: (1)  del: ()
+                                                                                                action FinishTask()
+                                                                                            sequence
+                                                                                                action SelfAcceptTask(1) id=122 act=A1_D0
+                                                                                    action SelfAcceptTask(6) id=119 act=A6_D0
+                                                                        action SelfAcceptTask(4) id=114 act=A4_D0
+                                                            action SelfAcceptTask(1) id=106 act=A1_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(4) id=107 act=A4_D0
+                                                            action A4_D0 pre: () add: (4)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 6
+                                                            action SelfAcceptTask(4) id=107 act=A4_D0
+                                                    fallback
+                                                        sequence
+                                                            condition IsSelfTask(6) id=108 act=A6_D0
+                                                            action A6_D0 pre: (1) add: (6)  del: ()
+                                                            action FinishTask()
+                                                        sequence
+                                                            condition 1 & 4
+                                                            action SelfAcceptTask(6) id=108 act=A6_D0
+                                                action SelfAcceptTask(3) id=90 act=CMP_A3_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=91 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 3 & 6
+                                                action SelfAcceptTask(4) id=91 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(6) id=92 act=A6_D0
+                                                action A6_D0 pre: (1) add: (6)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 3 & 4
+                                                action SelfAcceptTask(6) id=92 act=A6_D0
+                                    action SelfAcceptTask(5) id=70 act=A5_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=71 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 3 & 4 & 5
+                                    action SelfAcceptTask(6) id=71 act=A6_D0
+                        action SelfAcceptTask(2) id=39 act=A2_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(3) id=40 act=CMP_A3_D0
+                        action CMP_A3_D0()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 4 & 5 & 6
+                        action SelfAcceptTask(3) id=40 act=CMP_A3_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(4) id=41 act=A4_D0
+                        action A4_D0 pre: () add: (4)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 5 & 6
+                        action SelfAcceptTask(4) id=41 act=A4_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(5) id=42 act=A5_D0
+                        action A5_D0 pre: () add: (5)  del: ()
+                        action FinishTask()
+                    sequence
+                        fallback
+                            condition 1 & 2 & 3 & 4 & 6
+                            fallback
+                                sequence
+                                    condition IsSelfTask(3) id=72 act=CMP_A3_D0
+                                    action CMP_A3_D0()
+                                    action FinishTask()
+                                sequence
+                                    fallback
+                                        condition 1 & 2 & 4 & 6
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(4) id=93 act=A4_D0
+                                                action A4_D0 pre: () add: (4)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 2 & 6
+                                                action SelfAcceptTask(4) id=93 act=A4_D0
+                                        fallback
+                                            sequence
+                                                condition IsSelfTask(6) id=94 act=A6_D0
+                                                action A6_D0 pre: (1) add: (6)  del: ()
+                                                action FinishTask()
+                                            sequence
+                                                condition 1 & 2 & 4
+                                                action SelfAcceptTask(6) id=94 act=A6_D0
+                                    action SelfAcceptTask(3) id=72 act=CMP_A3_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(4) id=73 act=A4_D0
+                                    action A4_D0 pre: () add: (4)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 3 & 6
+                                    action SelfAcceptTask(4) id=73 act=A4_D0
+                            fallback
+                                sequence
+                                    condition IsSelfTask(6) id=74 act=A6_D0
+                                    action A6_D0 pre: (1) add: (6)  del: ()
+                                    action FinishTask()
+                                sequence
+                                    condition 1 & 2 & 3 & 4
+                                    action SelfAcceptTask(6) id=74 act=A6_D0
+                        action SelfAcceptTask(5) id=42 act=A5_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(6) id=43 act=A6_D0
+                        action A6_D0 pre: (1) add: (6)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 4 & 5
+                        action SelfAcceptTask(6) id=43 act=A6_D0
+            action SelfAcceptTask(7) id=13 act=A7_D0
+    fallback
+        sequence
+            condition IsSelfTask(1) id=14 act=A1_D0
+            action A1_D0 pre: () add: (1)  del: ()
+            action FinishTask()
+        sequence
+            condition 3 & 4 & 5 & 7
+            action SelfAcceptTask(1) id=14 act=A1_D0
+    fallback
+        sequence
+            condition IsSelfTask(4) id=15 act=A4_D0
+            action A4_D0 pre: () add: (4)  del: ()
+            action FinishTask()
+        sequence
+            fallback
+                condition 1 & 3 & 5 & 7
+                fallback
+                    sequence
+                        condition IsSelfTask(1) id=44 act=A1_D0
+                        action A1_D0 pre: () add: (1)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 3 & 5 & 7
+                        action SelfAcceptTask(1) id=44 act=A1_D0
+                fallback
+                    sequence
+                        condition IsSelfTask(7) id=45 act=A7_D0
+                        action A7_D0 pre: (2) add: (7)  del: ()
+                        action FinishTask()
+                    sequence
+                        condition 1 & 2 & 3 & 5
+                        action SelfAcceptTask(7) id=45 act=A7_D0
+            action SelfAcceptTask(4) id=15 act=A4_D0

@@ -10,21 +10,22 @@ np.random.seed(0)
 
 
 
-max_branch = 3 # 选多少个分支聚合
+
 max_depth= 2
+max_branch = 3 # 选多少个分支聚合
 num_agent = 2
 
-cmp_ratio = 0.3  # 组合动作占比
+cmp_ratio = 0.5  # 组合动作占比
 max_cmp_act_split = 3 # 每个组合被切成多少个原子动作
 max_action_steps = 5 # 每个原子动作的最大步数
 
 
 #  get data
-num_data = 1
+max_num_data = 20
 data_generator = DataGenerator(max_depth=max_depth,max_branch=max_branch, cmp_ratio=cmp_ratio,
                                max_action_steps = max_action_steps,
-                               max_cmp_act_split=max_cmp_act_split, need_split_action=True)
-datasets = [data_generator.generate_data() for _ in range(num_data)]
+                               max_cmp_act_split=max_cmp_act_split, need_split_action=True,max_num_data=max_num_data)
+# datasets = [data_generator.generate_data() for _ in range(num_data)]
 
 print("======================")
 
@@ -34,17 +35,25 @@ max_valid_data = 10
 data_id = 0
 # with_comp_action = True
 
-while valid_data < max_valid_data:
-    dataset = data_generator.generate_data()
+for dataset in data_generator.datasets:
     print_action_data_table(dataset['goal'], dataset['start'], dataset['actions_with_cmp'])
     data_generator.save_tree_as_dot(dataset, f'data/{data_id}_generated_tree.dot')
     print("data_id:", data_id)
     data_id+=1
 
     all_success = True
-    for with_comp_action in [False,True]:
+    for with_comp_action in [True]: #False,
         # 每个数据，再根据给定的智能体数量，得到 agents_actions
-        agents_actions = data_generator.assign_actions_to_agents(dataset, num_agent, with_comp_action=with_comp_action)
+        # agents_actions = data_generator.assign_actions_to_agents(dataset, num_agent)
+        if with_comp_action:
+            agents_actions = dataset["agent_actions_with_cmp"]
+        else:
+            agents_actions = dataset["agent_actions_without_cmp"]
+
+        # for act_ls in  agents_actions:
+        #     for act in act_ls:
+        #         act.cost = 0
+
         goal = dataset['goal']
         start = dataset['start']
 
@@ -82,3 +91,7 @@ while valid_data < max_valid_data:
 
     if valid_data >= max_valid_data:
         break
+
+print("valid_data < max_valid_data:",valid_data < max_valid_data)
+print("max_valid_data:",max_valid_data)
+print("valid_data:",valid_data)

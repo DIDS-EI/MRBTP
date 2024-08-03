@@ -11,7 +11,7 @@ np.random.seed(0)
 
 
 class DataGenerator:
-    def __init__(self, max_depth=3, max_branch=5,cmp_ratio=0.5,max_cmp_act_split=5,max_action_steps=5,need_split_action=False, num_agent=2):
+    def __init__(self, max_depth=3, max_branch=5,cmp_ratio=0.5,max_cmp_act_split=5,max_action_steps=5,need_split_action=True, num_agent=2, max_num_data=100):
 
         self.max_depth=max_depth
         self.max_branch = max_branch
@@ -24,9 +24,9 @@ class DataGenerator:
 
         self.unique = 1
 
+        self.datasets=[self.generate_data() for _ in range(max_num_data)]
+
     def generate_tree_struct(self):
-        random.seed(0)
-        np.random.seed(0)
 
         G = nx.DiGraph()  # 创建一个有向图
 
@@ -90,7 +90,10 @@ class DataGenerator:
         return node_states, graph, goal, total_actions_ls
 
 
-    def generate_data(self):
+    def generate_data(self,seed=0):
+
+
+
         self.unique=1
         graph = self.generate_tree_struct()
         node_states, updated_graph,goal,total_actions_ls = self.propagate_states(graph)
@@ -112,15 +115,22 @@ class DataGenerator:
             'actions_without_cmp': [],
             "CABTP_expanded_num": 0,
 
-            "action_num": 0
+            "action_num": 0,
+            "split_actions_dict":{},
+            "agent_actions_with_cmp":[],
+            "agent_actions_without_cmp":[]
         }
 
         # cut composition to sub actions
         if self.need_split_action:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
-             dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num']) = \
+             dataset['comp_actions_BTML_dic'], dataset['CABTP_expanded_num'],\
+                dataset["split_actions_dict"] ) = \
                 self.split_actions_and_plan_sub_btml(total_actions_ls)
+
             dataset["action_num"]= len(dataset['actions_without_cmp'])
+
+        self.assign_actions_to_agents(dataset,num_agent=self.num_agent)
 
         return dataset
 
@@ -165,9 +175,9 @@ class DataGenerator:
 
                 # with_cmp
                 new_actions_with_cmp.extend(split_action_ls)
-                split_actions_dict[action] = split_action_ls
                 action.name = generate_composition_action_name(action.name)
                 action.cost = 0
+                split_actions_dict[action] = split_action_ls
 
         # 将每个组合动作的 btml 保存起来
         # 得到一个 comp_act_BTML_dic[action.name] = sub_btml
@@ -189,7 +199,7 @@ class DataGenerator:
             sub_btml.anytree_root = planning_algorithm.anytree_root
 
             comp_actions_BTML_dic[comp_act.name] = sub_btml
-        return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num
+        return new_actions_with_cmp, new_actions_without_cmp, comp_actions_BTML_dic,CABTP_expanded_num,split_actions_dict
 
 
     def generate_action_name(self, depth, index, pre,add, del_set,act_step):
@@ -239,7 +249,7 @@ class DataGenerator:
 
         return split_actions
 
-    def assign_actions_to_agents(self, dataset, num_agent=None,with_comp_action=True):
+    def assign_actions_to_agents(self, dataset, num_agent=None):
         """
         Assign actions to agents.
 
@@ -249,29 +259,46 @@ class DataGenerator:
 
         Returns:
         - agent_actions: A list of lists, where each sublist contains actions assigned to an agent.
+        - dataset["agent_actions_with_cmp"]
+        - dataset["agent_actions_without_cmp"]
         """
+        def assign_an_act_to_agent_ls(assigned_agents,action):
+            if action in dataset["split_actions_dict"]:
+                for agent_index in assigned_agents:
+                    agents_actions[agent_index].append(action)
+                    agents_without_cmp[agent_index].extend(dataset["split_actions_dict"][action])
+            else:
+                for agent_index in assigned_agents:
+                    agents_actions[agent_index].append(action)
+                    agents_without_cmp[agent_index].append(action)
+
+
         if num_agent != None:
             self.num_agent = num_agent
-        if with_comp_action==True:
-            datasets_actions = dataset["actions_with_cmp"]
-        else:
-            datasets_actions = dataset["actions_without_cmp"]
+
+        # if with_comp_action==True:
+        #     datasets_actions = dataset["actions_with_cmp"]
+        # else:
+        #     datasets_actions = dataset["actions_without_cmp"]
 
         # Allocate actions to each agent
         agents_actions = [[] for _ in range(self.num_agent)]
-        for action in datasets_actions:
+        agents_without_cmp = [[] for _ in range(self.num_agent)]
+
+        for action in dataset["actions_with_cmp"]:
             # Randomly choose at least one agent
             num_assignments = random.randint(1, num_agent)
             assigned_agents = random.sample(range(num_agent), num_assignments)
-            for agent_index in assigned_agents:
-                agents_actions[agent_index].append(action)
+
+            # if is composition action
+            assign_an_act_to_agent_ls(assigned_agents,action)
 
         # Check if each agent has at least one action; if not, randomly assign one
         for i in range(num_agent):
             if not agents_actions[i]:  # If the agent has no actions assigned
                 # Randomly choose an action to assign to this agent
-                action_to_assign = random.choice(datasets_actions)
-                agents_actions[i].append(action_to_assign)
+                action_to_assign = random.choice(dataset["actions_with_cmp"])
+                assign_an_act_to_agent_ls([agents_actions[i]],action_to_assign)
 
         # Print the allocation result to see the action list of each agent
         for i, actions in enumerate(agents_actions):
@@ -279,9 +306,10 @@ class DataGenerator:
             for action in actions:
                 print(f"  act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}")
 
-        dataset["agents_actions"] = agents_actions
+        dataset["agent_actions_with_cmp"] = agents_actions
+        dataset["agent_actions_without_cmp"] = agents_without_cmp
 
-        return agents_actions
+        # return agents_actions,agents_without_cmp
 
     def save_tree_as_dot(self, dataset, filename):
         G = nx.DiGraph()
