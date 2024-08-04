@@ -3,7 +3,7 @@ from mabtpg.envs.virtualhome.base.vh_env import VHEnv
 from mabtpg.envs.base.env import Env
 
 class VHEnvTest(VHEnv):
-    agent_num = 1
+    num_agent = 1
     print_ticks = True
 
     def __init__(self):

@@ -31,17 +31,17 @@ class GoToInRoom(Action):
         for obj_id in can_goto:
             if "door" not in obj_id:
                 room_index = env.get_room_index(env.id2obj[obj_id].cur_pos)
-                planning_action_list.append(cls.create_action(agent.id, obj_id, room_index, can_goto, room_num))
+                planning_action_list.append(cls.create_planning_action(agent.id, obj_id, room_index, can_goto, room_num))
 
         for door_id, (room1_id, room2_id) in env.doors_to_adj_rooms.items():
             for room_index in [room1_id, room2_id]:
-                planning_action_list.append(cls.create_action(agent.id, door_id, room_index, can_goto, room_num))
+                planning_action_list.append(cls.create_planning_action(agent.id, door_id, room_index, can_goto, room_num))
 
 
         return planning_action_list
 
     @classmethod
-    def create_action(cls, agent_id, target_id, room_index, can_goto, room_num):
+    def create_planning_action(cls, agent_id, target_id, room_index, can_goto, room_num):
         action_model = {
             "pre": {f"CanGoTo({target_id})", f"IsInRoom(agent-{agent_id},room-{room_index})"},
             "add": {f"IsNear(agent-{agent_id},{target_id})"},

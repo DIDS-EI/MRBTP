@@ -52,7 +52,18 @@ class VHAction(Action):
     def change_condition_set(self):
         pass
 
-    def update(self) -> Status:
+
+    def update(self):
+        if self.env.simulation_mode == self.env.SimulationMode.computing:
+            self.computing_update()
+        if self.env.simulation_mode == self.env.SimulationMode.simulator:
+            self.simulator_update()
+
+
+    def computing_update(self):
+        pass
+
+    def simulator_update(self) -> Status:
         # script = [f'<char0> [{self.__class__.__name__.lower()}] <{self.args[0].lower()}> (1)']
 
         # if self.num_args==1:

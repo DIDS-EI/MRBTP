@@ -337,6 +337,10 @@ class MiniGridToMAGridEnv(MAGridEnv):
         # Initialize dictionaries for counting object types and mapping names to IDs
         self.initialize_objects_name_id()
 
+        self.doors_to_adj_rooms,self.adj_rooms_to_doors = self.get_adjacent_rooms_and_doors()
+        # obj cache
+        can_goto, can_pickup, can_toggle = self.initialize_cache()
+
     def initialize_object_list(self, key, valid_types):
         """
         Initialize and cache a list of objects of specified types in the environment.

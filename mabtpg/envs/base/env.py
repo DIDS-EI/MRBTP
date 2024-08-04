@@ -11,11 +11,20 @@ import subprocess
 
 from mabtpg.behavior_tree.behavior_library import BehaviorLibrary
 
+from enum import Enum, auto
+
+class SimulationMode(Enum):
+    computing = auto()
+    grid = auto()
+    simulator = auto()
+
 
 class Env(gym.Env):
-    agent_num = 1
+    num_agent = 1
     behavior_lib_path = None
     print_ticks = False
+    SimulationMode = SimulationMode
+
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
 
@@ -25,7 +34,7 @@ class Env(gym.Env):
         self.create_behavior_lib()
         self.create_agents()
 
-        self.simulation_mode = "simulation" # "computation"
+        self.simulation_mode = SimulationMode.computing
 
         self.step_count=0
         self.blackboard = {
@@ -55,6 +64,66 @@ class Env(gym.Env):
             "action_pre": {}
         }
 
+    def load(self,json):
+        self.num_agent = None
+        self.action_lists = []
+        self.goal = None
+        self.init_state = None
+
+        pass
+
+    def get_objects_lists(self):
+        pass
+
+    def create_action_model(self,verbose=False,centralize=False):
+
+        # def collect_action_nodes(behavior_lib):
+        #     action_list = []
+        #     can_expand_ored = 0
+        #     for cls in behavior_lib["Action"].values():
+        #         if cls.can_be_expanded:
+        #             can_expand_ored += 1
+        #             # print(f"Expandable action: {cls.__name__}, with {len(cls.valid_args)} valid argument combinations")
+        #             # print({cls.__name__})
+        #             if cls.num_args == 0:
+        #                 action_list.append(Action(name=cls.get_ins_name(), **cls.get_info()))
+        #             if cls.num_args == 1:
+        #                 for arg in cls.valid_args:
+        #                     action_list.append(Action(name=cls.get_ins_name(arg), **cls.get_info(arg)))
+        #             if cls.num_args > 1:
+        #                 for args in cls.valid_args:
+        #                     action_list.append(Action(name=cls.get_ins_name(*args), **cls.get_info(*args)))
+
+        self.get_objects_lists()
+
+        # generate action list for all Agents
+        action_list = []
+        for i in range(self.num_agent):
+            if verbose: print("\n" + "-"*10 + f" getting action list for agent_{i} " + "-"*10)
+            action_list.append([])
+            for cls in self.agents[i].behavior_lib["Action"].values():
+                if cls.can_be_expanded:
+                    agent_action_list = cls.get_planning_action_list(self.agents[i], self)
+                    action_list[i] += agent_action_list
+                    if verbose:print(f"action: {cls.__name__}, got {len(agent_action_list)} instances.")
+
+            if verbose:
+                print(f"full action list ({len(action_list[i])} in total):")
+                for a in action_list[i]:
+                    print(a.name)
+                # print(a.name,"pre:",a.pre)
+
+        # if centralize:
+        #     self.action_list = list(itertools.chain(*action_list)) #flattened_list
+        # else:
+        #     self.action_list = action_list
+
+        # write it into blackboard
+        # for act_ls in action_list:
+        #     for act in act_ls:
+        #         self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+
+        return action_list
 
 
     def step(self):

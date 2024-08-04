@@ -9,7 +9,7 @@ import atexit
 
 
 class VHEnv(Env):
-    agent_num = 1
+    num_agent = 1
     # launch simulator
     simulator_path = f'{ROOT_PATH}/../simulators/virtualhome/windows/VirtualHome.exe'
 
