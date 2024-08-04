@@ -1,6 +1,6 @@
 from mabtpg.behavior_tree.base_nodes import Condition
 from mabtpg.behavior_tree import Status
-from mabtpg.envs.numericenv.numsim_tools import convert_to_num_frozenset,get_action_name
+from mabtpg.envs.computation_env.numerical_env.numsim_tools import convert_to_num_frozenset,get_action_name
 
 class IsSelfTask(Condition):
     num_args = 1

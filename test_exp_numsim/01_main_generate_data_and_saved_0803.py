@@ -1,7 +1,7 @@
 import random
 import pickle
 from data_generate import DataGenerator
-from mabtpg.envs.numericenv.numsim_tools import create_directory_if_not_exists, print_action_data_table
+from mabtpg.envs.computation_env.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table
 from mabtpg.utils.tools import print_colored
 import numpy as np
 
@@ -62,9 +62,9 @@ for data_id, dataset in enumerate(datasets[:1]):
         # #########################
         # 要tick进行测试，能否从 start 到 goal。
         # 要几步
-        from mabtpg.envs.numericenv.numeric_env import NumericEnv
+        from mabtpg.envs.computation_env.computation_env import ComputationEnv
 
-        env = NumericEnv(num_agent=num_agent, start=dataset['start_num'], goal=dataset['goal_num'])
+        env = ComputationEnv(num_agent=num_agent, start=dataset['start_num'], goal=dataset['goal_num'])
         env.set_agent_actions(agents_actions)
 
         behavior_lib = [agent.behavior_lib for agent in env.agents]

@@ -116,8 +116,8 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     #         return node_type(*condition_list)
 
     def new_node(self, node):
-        # from mabtpg.envs.numericenv.behavior_lib.Action.NumAction import NumAction
-        # from mabtpg.envs.numericenv.behavior_lib.Condition.NumCondition import NumCondition
+        # from mabtpg.envs.computation_env.behavior_lib.Action.NumAction import NumAction
+        # from mabtpg.envs.computation_env.behavior_lib.Condition.NumCondition import NumCondition
         # base_node_map["NumAction"] = NumAction
         # base_node_map["NumCondition"] = NumCondition
 

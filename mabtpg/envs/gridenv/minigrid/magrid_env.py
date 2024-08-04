@@ -24,14 +24,6 @@ class MAGridEnv(MiniGridEnv):
         self.agent_pos = (-1, -1)
         self.agent_dir = -1
         self.num_agent = num_agent
-        self.blackboard ={
-           "predict_condition":{
-                "success":set(),
-                "fail":set(),
-             },
-            "task_agents_queue":[], # 在执行任务的智能体的列表，里面存正在做任务的 agent 的列表
-            "action_pre": {}
-        }
         self.agents = [Agent(self,i) for i in range(num_agent)]
 
 
