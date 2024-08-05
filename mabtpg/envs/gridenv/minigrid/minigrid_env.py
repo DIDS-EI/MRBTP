@@ -359,48 +359,48 @@ class MiniGridToMAGridEnv(MAGridEnv):
         return can_goto, can_pickup, can_toggle
 
 
-    def get_action_lists(self,verbose=False,centralize=False):
-
-        self.get_objects_lists()
-        self.doors_to_adj_rooms,self.adj_rooms_to_doors = self.get_adjacent_rooms_and_doors()
-
-        # obj cache
-        can_goto, can_pickup, can_toggle = self.initialize_cache()
-
-        # generate action list for all Agents
-        action_list = []
-        for i in range(self.num_agent):
-            if verbose: print("\n" + "-"*10 + f" getting action list for agent_{i} " + "-"*10)
-            action_list.append([])
-            for cls in self.agents[i].behavior_lib["Action"].values():
-                if cls.can_be_expanded:
-                    agent_action_list = cls.get_planning_action_list(self.agents[i], self)
-                    action_list[i] += agent_action_list
-                    if verbose:print(f"action: {cls.__name__}, got {len(agent_action_list)} instances.")
-
-            if verbose:
-                print(f"full action list ({len(action_list[i])} in total):")
-                for a in action_list[i]:
-                    print(a.name)
-                # print(a.name,"pre:",a.pre)
-
-        if centralize:
-            self.action_list = list(itertools.chain(*action_list)) #flattened_list
-        else:
-            self.action_list = action_list
-
-        # write it into blackboard
-        for act_ls in action_list:
-            for act in act_ls:
-                self.blackboard["action_pre"][act.name] = frozenset(act.pre)
-
-        return action_list
+    # def get_action_lists(self,verbose=False,centralize=False):
+    #
+    #     self.get_objects_lists()
+    #     self.doors_to_adj_rooms,self.adj_rooms_to_doors = self.get_adjacent_rooms_and_doors()
+    #
+    #     # obj cache
+    #     can_goto, can_pickup, can_toggle = self.initialize_cache()
+    #
+    #     # generate action list for all Agents
+    #     action_list = []
+    #     for i in range(self.num_agent):
+    #         if verbose: print("\n" + "-"*10 + f" getting action list for agent_{i} " + "-"*10)
+    #         action_list.append([])
+    #         for cls in self.agents[i].behavior_lib["Action"].values():
+    #             if cls.can_be_expanded:
+    #                 agent_action_list = cls.get_planning_action_list(self.agents[i], self)
+    #                 action_list[i] += agent_action_list
+    #                 if verbose:print(f"action: {cls.__name__}, got {len(agent_action_list)} instances.")
+    #
+    #         if verbose:
+    #             print(f"full action list ({len(action_list[i])} in total):")
+    #             for a in action_list[i]:
+    #                 print(a.name)
+    #             # print(a.name,"pre:",a.pre)
+    #
+    #     if centralize:
+    #         self.action_list = list(itertools.chain(*action_list)) #flattened_list
+    #     else:
+    #         self.action_list = action_list
+    #
+    #     # write it into blackboard
+    #     for act_ls in action_list:
+    #         for act in act_ls:
+    #             self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+    #
+    #     return action_list
 
     def get_initial_state(self):
         agent = self.agents[0]
 
         states_ls = set()
-        for act_ls in self.action_list:
+        for act_ls in self.action_model:
             for act in act_ls:
                 states_ls |= act.pre
                 states_ls |= act.add

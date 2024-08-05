@@ -1,6 +1,6 @@
 from mabtpg.behavior_tree.base_nodes import Action
 from mabtpg.behavior_tree import Status
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import str_to_frozenset,get_action_name,NumAction
+from mabtpg.envs.numerical_env.numsim_tools import str_to_frozenset,get_action_name,NumAction
 
 
 class A(Action):

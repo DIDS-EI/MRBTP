@@ -217,8 +217,8 @@ dmr.planning()
 
 # 要tick进行测试，能否从 start 到 goal。
 # 要几步
-from mabtpg.envs.computation_env.computation_env import ComputationEnv
-env = ComputationEnv(num_agent=num_agent, start=start, goal=goal)
+from mabtpg.envs.numerical_env.numerical_env import NumEnv
+env = NumEnv(num_agent=num_agent, start=start, goal=goal)
 env.actions_lists = dataset["agent_actions"]
 
 behavior_lib = [agent.behavior_lib for agent in env.agents]

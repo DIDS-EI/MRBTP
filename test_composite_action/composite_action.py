@@ -53,7 +53,7 @@ env.reset(seed=0)
 
 # goal = "IsNear(ball-0,ball-1)"
 # goal = "IsInRoom(ball-0,room-1)"
-action_lists = env.get_action_lists()
+action_lists = env.create_action_model()
 start = env.get_initial_state()
 print(start)
 

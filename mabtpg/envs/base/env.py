@@ -5,7 +5,7 @@ from mabtpg.envs.virtualhome.simulation.unity_simulator import UnityCommunicatio
 import gymnasium as gym
 
 from mabtpg.utils import ROOT_PATH
-
+import json
 from mabtpg.envs.base.agent import Agent
 import subprocess
 
@@ -35,6 +35,12 @@ class Env(gym.Env):
         self.create_agents()
 
         self.simulation_mode = SimulationMode.computing
+        self.action_model = None
+        self.goal = None
+        self.init_state =None
+        self.objects = None
+        self.action_space = None
+        self.num_agent =None
 
         self.step_count=0
         self.blackboard = {
@@ -64,11 +70,15 @@ class Env(gym.Env):
             "action_pre": {}
         }
 
-    def load(self,json):
-        self.num_agent = None
-        self.action_lists = []
-        self.goal = None
-        self.init_state = None
+    def load(self,json_path):
+        with open(json_path, 'r') as json_file:
+            env_info = json.load(json_file)
+
+        self.goal = env_info["goal"]
+        self.init_state = env_info["init_state"]
+        self.objects = env_info["objects"]
+        self.action_space = env_info["action_space"]
+        self.num_agent = len(env_info["action_space"])
 
         pass
 
@@ -97,19 +107,19 @@ class Env(gym.Env):
         self.get_objects_lists()
 
         # generate action list for all Agents
-        action_list = []
+        action_model = []
         for i in range(self.num_agent):
             if verbose: print("\n" + "-"*10 + f" getting action list for agent_{i} " + "-"*10)
-            action_list.append([])
+            action_model.append([])
             for cls in self.agents[i].behavior_lib["Action"].values():
                 if cls.can_be_expanded:
                     agent_action_list = cls.get_planning_action_list(self.agents[i], self)
-                    action_list[i] += agent_action_list
+                    action_model[i] += agent_action_list
                     if verbose:print(f"action: {cls.__name__}, got {len(agent_action_list)} instances.")
 
             if verbose:
-                print(f"full action list ({len(action_list[i])} in total):")
-                for a in action_list[i]:
+                print(f"full action list ({len(action_model[i])} in total):")
+                for a in action_model[i]:
                     print(a.name)
                 # print(a.name,"pre:",a.pre)
 
@@ -119,11 +129,12 @@ class Env(gym.Env):
         #     self.action_list = action_list
 
         # write it into blackboard
-        # for act_ls in action_list:
-        #     for act in act_ls:
-        #         self.blackboard["action_pre"][act.name] = frozenset(act.pre)
+        for act_ls in action_model:
+            for act in act_ls:
+                self.blackboard["action_pre"][act.name] = frozenset(act.pre)
 
-        return action_list
+        self.action_model = action_model
+        return action_model
 
 
     def step(self):

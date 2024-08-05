@@ -1,5 +1,6 @@
 from mabtpg.behavior_tree.base_nodes.BehaviorNode import BahaviorNode
 from mabtpg.utils.tools import print_colored
+from mabtpg.behavior_tree import Status
 class Action(BahaviorNode):
     print_name_prefix = "action "
     type = 'Action'
@@ -14,6 +15,31 @@ class Action(BahaviorNode):
     @classmethod
     def get_info(self,*arg):
         return None
+
+
+    def update(self):
+        if self.env.simulation_mode == self.env.SimulationMode.computing:
+            self.computing_update()
+        if self.env.simulation_mode == self.env.SimulationMode.simulator:
+            self.simulator_update()
+
+
+    def computing_update(self)-> Status:
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
+        if self.agent.last_action==self.action:
+            self.act_cur_step += 1
+            if self.act_cur_step>=self.act_max_step:
+                self.action.is_finish = True
+
+        self.agent.action = self.action
+        self.agent.last_action = self.action
+
+        pass
+
+    def simulator_update(self):
+        pass
 
 
     def check_if_pre_in_predict_condition(self):

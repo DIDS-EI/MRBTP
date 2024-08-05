@@ -1,6 +1,6 @@
 import random
 from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import load_data_from_directory
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import load_data_from_directory
 import numpy as np
 import csv
 
@@ -11,7 +11,7 @@ np.random.seed(0)
 # def simulation():
 #     start = dataset["start_num"]
 #     goal = dataset["goal_num"]
-#     from mabtpg.envs.computation_env.numeric_env import NumericEnv
+#     from mabtpg.envs.numerical_env.numeric_env import NumericEnv
 #     env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
 #     env.set_agent_actions(agents_actions)
 #

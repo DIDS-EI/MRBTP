@@ -13,14 +13,17 @@ from gymnasium.core import ActType, ObsType
 from mabtpg.utils.tools import print_colored
 from mabtpg.envs.gridenv.minigrid.agent import Agent
 from minigrid.core.world_object import Point, WorldObj
+from mabtpg.envs.base.env import Env
 
-class MAGridEnv(MiniGridEnv):
+class MAGridEnv(MiniGridEnv,Env):
     def __init__(
         self,
         num_agent: int = 1,
         **kwargs
     ):
-        super().__init__(**kwargs)
+        MiniGridEnv.__init__(self,**kwargs)
+        Env.__init__(self)
+        # super().__init__(**kwargs)
         self.agent_pos = (-1, -1)
         self.agent_dir = -1
         self.num_agent = num_agent

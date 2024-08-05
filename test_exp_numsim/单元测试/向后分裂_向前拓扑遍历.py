@@ -1,7 +1,7 @@
 import random
 import networkx as nx
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import frozenset_to_str
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import frozenset_to_str
 import numpy as np
 
 random.seed(0)

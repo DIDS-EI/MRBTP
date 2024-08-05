@@ -2,9 +2,9 @@ from tabulate import tabulate
 from mabtpg.envs.base.env import Env
 from mabtpg.utils.tools import print_colored
 from mabtpg import BehaviorLibrary
-from mabtpg.envs.computation_env.agent import Agent
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import get_action_name
-class ComputationEnv(Env):
+from mabtpg.envs.numerical_env.agent import Agent
+from mabtpg.envs.numerical_env.numsim_tools import get_action_name
+class NumEnv(Env):
     def __init__(self,
         num_agent: int = 1,
         start: frozenset=(),
@@ -95,7 +95,7 @@ class ComputationEnv(Env):
         root_path = get_root_path()
 
 
-        behavior_lib_path = f"{root_path}/envs/numericenv/behavior_lib"
+        behavior_lib_path = f"{root_path}/envs/numerical_env/behavior_lib"
         behavior_lib = BehaviorLibrary(behavior_lib_path)
         for agent in self.agents:
             agent.behavior_lib = behavior_lib
