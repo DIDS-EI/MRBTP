@@ -1,0 +1,236 @@
+fallback
+    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)
+    sequence
+        condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
+        action OpenRoom_2(agent-0)

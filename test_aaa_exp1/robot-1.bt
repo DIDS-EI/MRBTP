@@ -1,0 +1,2 @@
+fallback
+    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)

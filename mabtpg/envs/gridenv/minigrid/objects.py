@@ -16,7 +16,7 @@
 
 ALL = ["wall","floor","ball","key","box","door","goal","lava"]
 
-CAN_GOTO = ["ball","key","box","door"]
+CAN_GOTO = ["ball","key","box","door","goal"]
 
 CAN_PICKUP = ["ball","key","box"]
 

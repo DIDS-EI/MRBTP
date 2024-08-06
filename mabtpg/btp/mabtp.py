@@ -82,6 +82,15 @@ class MABTP:
             bt_list.append(bt)
         return bt_list
 
+
+    def new_output_pruned_bt_list(self,behavior_libs):
+        bt_list = []
+        for i,agent in enumerate(self.planned_agent_list):
+            bt = agent.new_output_pruned_bt(behavior_libs[i])
+            bt_list.append(bt)
+        return bt_list
+
+
     def get_btml_list(self):
         btml_list = []
         for i,agent in enumerate(self.planned_agent_list):

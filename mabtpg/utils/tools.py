@@ -50,6 +50,20 @@ def extract_agent_id_from_action_name(action_str):
     return None
 
 
+def filter_action_lists(action_lists, agents_actions):
+    num_agents = len(action_lists)
+    filtered_action_lists = [[] for _ in range(num_agents)]
+
+    for i, action_list in enumerate(action_lists):
+        for action in action_list:
+            predicate = extract_predicate_from_action_name(action.name)
+            if predicate in agents_actions[i]:
+                filtered_action_lists[i].append(action)
+
+    return filtered_action_lists
+
+
+
 # experience
 def save_results_to_csv(results, filename):
     df = pd.DataFrame(results)

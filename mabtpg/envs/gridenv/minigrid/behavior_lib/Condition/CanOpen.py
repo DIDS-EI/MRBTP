@@ -34,7 +34,7 @@ class CanOpen(Condition):
             if self.target_agent.carrying == None:
                 return Status.FAILURE
             else:
-                if self.target_agent.carrying.id != self.env.door_key_map[self.obj_id]:
+                if self.target_agent.carrying.id not in self.env.door_key_map[self.obj_id]:
                     return Status.FAILURE
                 else:
                     return Status.SUCCESS

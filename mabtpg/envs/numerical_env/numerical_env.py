@@ -61,6 +61,7 @@ class NumEnv(Env):
                 print(f"Agent {i} has no action")
             else:
                 # cur_agent_actions[i] = action
+
                 self.print_agent_action_tabulate(i,action)
 
                 # execute

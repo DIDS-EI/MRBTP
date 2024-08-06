@@ -9,6 +9,11 @@ class Action(BahaviorNode):
         super().__init__(*args)
         self.info = self.get_info(*args)
 
+        self.action=None
+        self.act_cur_step=None
+        self.act_max_step=None
+
+
     # def update(self):
     #     self.agent =
 

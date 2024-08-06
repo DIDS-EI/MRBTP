@@ -303,6 +303,8 @@ class PlanningAgent:
     #
     #     self.anytree_root = anytree_root
 
+
+
     def create_btml(self):
         self.create_anytree()
         btml = BTML()
@@ -316,6 +318,17 @@ class PlanningAgent:
         bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
 
         return bt
+
+    def new_output_pruned_bt(self, behavior_lib=None):
+        self.create_anytree()
+        btml = BTML()
+        btml.anytree_root = self.anytree_root
+
+        self.btml = btml
+        bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
+        return bt
+
+
 
     def add_conditions(self, planning_condition, parent):
         condition_set = planning_condition.condition_set

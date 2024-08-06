@@ -221,12 +221,26 @@ class MiniGridToMAGridEnv(MAGridEnv):
                 locked_doors[obj.id] = obj.color
             elif obj.type == 'key':
                 keys[obj.color] = obj.id
+                # if obj.color not in keys:
+                #     keys[obj.color] = []
+                # keys[obj.color].append(obj.id)
+
 
         # Bind locked doors to their corresponding keys
         for door_id, door_color in locked_doors.items():
             if door_color in keys:
                 self.door_key_map[door_id] = keys[door_color]
         self.key_door_map = {key_id: door_id for door_id, key_id in self.door_key_map.items()}
+
+        # for door_id, door_color in locked_doors.items():
+        #     if door_color in keys:
+        #         if door_id not in self.door_key_map:
+        #             self.door_key_map[door_id] = []
+        #         self.door_key_map[door_id].append(keys[door_color])
+        #
+        #         key_id_ls  = keys[door_color]
+        #         for key_id in key_id_ls:
+        #             self.key_door_map[key_id]=door_id
 
 
         self.obj_id2name = {id_: name for name, id_ in self.obj_name2id.items()}
