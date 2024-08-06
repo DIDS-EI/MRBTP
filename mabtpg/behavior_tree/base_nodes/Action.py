@@ -52,7 +52,7 @@ class Action(BahaviorNode):
         act_pre = self.env.blackboard["action_pre"][self.name]
 
         if act_pre & self.agent.predict_condition['success'] !=set():
-            print_colored(f"{self.name}  Total Wait:{act_pre & self.agent.predict_condition['success']}",color="purple")
+            if self.env.verbose: print_colored(f"{self.name}  Total Wait:{act_pre & self.agent.predict_condition['success']}",color="purple")
             return True
 
         # if self.agent.accept_task == None:

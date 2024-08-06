@@ -47,7 +47,7 @@ class MABTP:
             if self.start!=None and self.start>=condition:
                 break
 
-            if time.time() - start_time>10:
+            if time.time() - start_time> 20:
                 self.expanded_time = time.time() - start_time
                 break
 

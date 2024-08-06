@@ -8,7 +8,7 @@ import pickle
 from tabulate import tabulate
 random.seed(0)
 np.random.seed(0)
-
+import pandas as pd
 
 class NumAction:
     def __init__(self, name, pre, add, del_set, act_step):
@@ -218,3 +218,10 @@ def save_tree_as_dot( dataset, filename):
         G.add_edge(child, parent, label=action_name)
 
     nx.drawing.nx_pydot.write_dot(G, filename)
+
+def print_summary_table(summary_results, formatted=True):
+    df = pd.DataFrame(summary_results)
+    if formatted:
+        print(df.to_string(index=False))
+    else:
+        print(df.to_csv(index=False, sep='\t'))

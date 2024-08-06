@@ -47,7 +47,7 @@ for data_id, dataset in enumerate(datasets[:1]):
         # Run Decentralized multi-agent BT algorithm
         # #########################
         # 运行多智能体算法
-        from DMR import DMR
+        from mabtpg.btp.DMR import DMR
 
         dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,
                   save_dot=False)  # False 也还需要再调试

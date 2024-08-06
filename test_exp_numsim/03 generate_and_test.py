@@ -84,7 +84,7 @@ for max_depth in max_depth_ls:
                     # #########################
                     # Run Decentralized multi-agent BT algorithm
                     # #########################
-                    from DMR import DMR
+                    from mabtpg.btp.DMR import DMR
                     dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=False)  # False 也还需要再调试
                     dmr.planning()
 

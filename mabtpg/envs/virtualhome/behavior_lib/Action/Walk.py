@@ -15,7 +15,7 @@ class Walk(VHAction):
     @classmethod
     def get_info(cls,*arg):
         info = {}
-        info["pre"]={"IsStanding(self)"}
+        info["pre"]=set()
         info["add"]={f"IsNear(self,{arg[0]})"}
         info["del_set"] = {f'IsNear(self,{place})' for place in cls.valid_args if place != arg[0]}
         info["cost"] = 15

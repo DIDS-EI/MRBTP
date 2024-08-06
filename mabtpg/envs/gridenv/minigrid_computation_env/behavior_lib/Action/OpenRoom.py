@@ -18,10 +18,12 @@ class OpenRoom(WareHouseAction):
     def __init__(self, *args):
         super().__init__(*args)
         self.agent_id = args[0]
-        self.pre = set()
+        # self.pre = set()
+        self.pre = {f"IsClose(room-{self.room_id})"}
         self.add = {f"IsOpen(room-{self.room_id})"}
-        self.del_set = set()
-        self.act_max_step = int(self.room_id)
+        self.del_set = {f"IsClose(room-{self.room_id})"}
+        # self.del_set = set()
+        self.act_max_step = int(self.room_id)*2
 
         self.act_cur_step = 0
 
@@ -31,10 +33,11 @@ class OpenRoom(WareHouseAction):
         planning_action_list = []
         obj_id = f"room-{cls.room_id}"
         action_model = {}
-        # action_model["pre"] = {f"IsClose({obj_id})"}
-        action_model["pre"] = set()
+        # action_model["pre"] = set()
+        action_model["pre"] = {f"IsClose({obj_id})"}
         action_model["add"]={f"IsOpen({obj_id})"}
-        action_model["del_set"] = set()
+        action_model["del_set"] = {f"IsClose({obj_id})"}
+        # action_model["del_set"] = set()
         action_model["cost"] = 1
         planning_action_list.append(PlanningAction(f"{cls.__name__}(agent-{agent.id})",**action_model))
         return planning_action_list

@@ -1,6 +1,6 @@
 {
     "goal": [
-        "IsIn(milk,fridge) ",
+        "IsIn(milk,fridge)",
         "IsIn(apple,fridge)"
     ],
     "init_state": [

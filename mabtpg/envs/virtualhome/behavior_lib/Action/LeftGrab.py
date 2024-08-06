@@ -1,5 +1,6 @@
 from mabtpg.envs.virtualhome.behavior_lib._base.VHAction import VHAction
 from mabtpg.envs.virtualhome.behavior_lib.Action.Grab import Grab
+from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 
 class LeftGrab(Grab):
     can_be_expanded = True
@@ -7,25 +8,36 @@ class LeftGrab(Grab):
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.target_obj = self.args[0]
+        self.agent_id = self.args[0]
+        self.target_obj = self.args[1]
 
-    @property
-    def action_class_name(self):
-        return Grab.__name__
+
+        self.pre = {f"IsLeftHandEmpty(self)", f"IsNear({self.agent_id},{self.target_obj})"}
+        self.add = {f"IsLeftHolding(self,{self.target_obj})", "IsLeftHandFull(self)"}
+        self.del_set = {f"IsLeftHandEmpty(self)"}
+        self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
+        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
+
+        self.act_max_step = 3
+        self.act_cur_step = 0
+
+    # @property
+    # def action_class_name(self):
+    #     return Grab.__name__
 
     @classmethod
-    def get_info(cls,*arg):
-        info = {}
-        info["pre"]={"IsLeftHandEmpty(self)",f"IsNear(self,{arg[0]})"} # 至少有一只手是空闲的
-        info["add"]={f"IsLeftHolding(self,{arg[0]})","IsLeftHandFull(self)"}
-        info["del_set"] = {f"IsLeftHandEmpty(self)"}
-        info["del_set"] |= {f'IsOn({arg[0]},{place})' for place in cls.SurfacePlaces}
-        info["del_set"] |= {f'IsIn({arg[0]},{place})' for place in cls.CanOpenPlaces}
-        info["cost"] = 5
-        return info
+    def get_planning_action_list(cls, agent, env):
+        planning_action_list = []
 
+        obj_ls = env.category_to_objects["GRABBABLE"]
+        for obj in obj_ls:
+            action_model = {}
 
-
-    def change_condition_set(self):
-        self.agent.condition_set |= (self.info["add"])
-        self.agent.condition_set -= self.info["del_set"]
+            action_model["pre"] = {f"IsLeftHandEmpty(agent-{agent.id})", f"IsNear(agent-{agent.id},{obj})"}
+            action_model["add"] = {f"IsLeftHolding(agent-{agent.id},{obj})", f"IsLeftHandFull(agent-{agent.id})"}
+            action_model["del_set"] = {f"IsLeftHandEmpty(agent-{agent.id})"}
+            action_model["del_set"] |= {f'IsOn({obj},{place})' for place in env.category_to_objects["SURFACES"]}
+            action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CAN_OPEN"]}
+            action_model["cost"] = 3
+            planning_action_list.append(PlanningAction(f"LeftGrab(agent-{agent.id},{obj})", **action_model))
+        return planning_action_list

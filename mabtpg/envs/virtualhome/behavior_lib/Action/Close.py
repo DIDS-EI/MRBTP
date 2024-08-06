@@ -1,4 +1,5 @@
 from mabtpg.envs.virtualhome.behavior_lib._base.VHAction import VHAction
+from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 
 class Close(VHAction):
     can_be_expanded = True
@@ -7,19 +8,29 @@ class Close(VHAction):
 
     def __init__(self, *args):
         super().__init__(*args)
+        self.agent_id = args[0]
+        self.obj = args[1]
+
+        self.pre = {f"IsOpen({self.obj})",f"IsNear(agent-{self.agent_id},{self.obj})",f"IsLeftHandEmpty(agent-{self.agent_id})"}
+        self.add = {f"IsClose({self.obj})"}
+        self.del_set = {f"IsOpen({self.obj})"}
+
+        self.act_max_step = 2
+        self.act_cur_step = 0
 
     @classmethod
-    def get_info(cls,*arg):
-        info = {}
-        info["pre"]={f"IsOpen({arg[0]})",f"IsNear(self,{arg[0]})","IsLeftHandEmpty(self)"} # IsLeftHandEmpty()至少有一只手是空闲的
-        info["add"]={f"IsClose({arg[0]})"}
-        info["del_set"] = {f"IsOpen({arg[0]})"}
-        info["cost"] = 3
-        return info
+    def get_planning_action_list(cls, agent, env):
+        planning_action_list = []
+
+        obj_ls = env.category_to_objects["CAN_OPEN"]
+        for obj in obj_ls:
+            action_model = {}
+
+            action_model["pre"] =  {f"IsOpen({obj})",f"IsNear(agent-{agent.id},{obj})",f"IsLeftHandEmpty(agent-{agent.id})"}
+            action_model["add"] = {f"IsClose({obj})"}
+            action_model["del_set"] = {f"IsOpen({obj})"}
+            action_model["cost"] = 3
+            planning_action_list.append(PlanningAction(f"Close(agent-{agent.id})",**action_model))
+        return planning_action_list
 
 
-    def change_condition_set(self):
-        self.agent.condition_set |= (self.info["add"])
-        self.agent.condition_set -= self.info["del_set"]
-
-        # self.agent.condition_set.add(f"IsSwitchedOn({self.args[0]})")

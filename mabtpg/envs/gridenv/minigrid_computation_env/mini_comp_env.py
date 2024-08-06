@@ -20,6 +20,7 @@ class MiniCompEnv(NumEnv):
         self.action_fail_p = None
 
         self.agents = [Agent(self, i) for i in range(self.num_agent)]
+        self.verbose=True
 
     def reset(self):
         for agent in self.agents:
@@ -49,21 +50,21 @@ class MiniCompEnv(NumEnv):
         finish_and_fail=False
 
         for i in range(num_agent):
-            print_colored(f"---AGENT - {i}---",color="yellow")
+            if self.verbose: print_colored(f"---AGENT - {i}---",color="yellow")
 
             if self.agents[i].is_fail:
-                print_colored(f"is_fail", color="yellow")
+                if self.verbose:print_colored(f"is_fail", color="yellow")
                 continue
 
             action = self.agents[i].step()
             # print(f"agent {i}, {action.name}")
             if action is None:
-                print(f"Agent {i} has no action")
+                if self.verbose: print(f"Agent {i} has no action")
                 agent_action_every_step[i] = None
             else:
                 # cur_agent_actions[i] = action
                 agent_action_every_step[i] = action.name
-                # self.print_agent_action_tabulate(i,action)
+                if self.verbose:  self.print_agent_action_tabulate(i,action)
 
             if not self.agents[i].bt_success:
                 done = False

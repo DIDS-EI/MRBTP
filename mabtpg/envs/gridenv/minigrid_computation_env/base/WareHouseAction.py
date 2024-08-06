@@ -49,6 +49,10 @@ class WareHouseAction(Action):
             if self.check_if_pre_in_predict_condition():
                 return Status.RUNNING
 
+            self.agent.current_task = {"task_id": self.name,
+                                       "sub_goal": self.add,
+                                       "sub_del": self.del_set}
+
 
         if self.agent.last_action==self:
             self.act_cur_step += 1
@@ -58,16 +62,16 @@ class WareHouseAction(Action):
                 # execute
                 if self.env.state >= self.pre:
                     if self.env.action_fail_p!=None and random.random()<self.env.action_fail_p:
-                        print_colored(f"AGENT-{self.agent.id} {self.name} FAILURE!", color="red")
+                        if self.env.verbose: print_colored(f"AGENT-{self.agent.id} {self.name} FAILURE!", color="red")
                         self.agent.is_fail = True
                         return Status.FAILURE
                     else:
                         self.env.state = (self.env.state | self.add) - self.del_set
                         self.env.agents_step += 1
                 elif self.env.state < self.pre and self.is_finish:
-                    print_colored(f"AGENT-{self.agent.id} cannot do it!", color="red")
+                    if self.env.verbose: print_colored(f"AGENT-{self.agent.id} cannot do it!", color="red")
                 else:
-                    print_colored(f"AGENT-{self.agent.id} is doing {self.name}", color="green")
+                    if self.env.verbose: print_colored(f"AGENT-{self.agent.id} is doing {self.name}", color="green")
 
 
         self.agent.action = self

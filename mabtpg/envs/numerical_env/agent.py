@@ -39,6 +39,7 @@ class Agent(object):
         }
 
         self.last_action = None
+        self.verbose = True
 
 
     def init_statistics(self):
@@ -59,7 +60,8 @@ class Agent(object):
         bt.bind_agent(self)
 
 
-    def step(self, action=None):
+    def step(self, action=None,verbose=True):
+        self.verbose=verbose
         self.action = None
 
         self.dong_accept_task=False
@@ -100,7 +102,7 @@ class Agent(object):
     def finish_current_task(self):
         # 上次有任务完成了
         if self.last_accept_task != None:
-            print_colored(f"Have Finish Last Task! last_accept_task = {self.last_accept_task}", color='orange')
+            if self.env.verbose: print_colored(f"Have Finish Last Task! last_accept_task = {self.last_accept_task}", color='orange')
 
             try:
                 # self.env.blackboard["task_agents_queue"].remove(self)  # 直接移除对象
@@ -127,8 +129,12 @@ class Agent(object):
                                                                "fail"] | last_sub_del) - last_sub_goal
 
                     last_predict_condition = agent.predict_condition
-                    last_sub_goal = agent.current_task["sub_goal"]
-                    last_sub_del = agent.current_task["sub_del"]
+                    if agent.current_task!=None: #new 0806
+                        last_sub_goal = agent.current_task["sub_goal"]
+                        last_sub_del = agent.current_task["sub_del"]
+                    else:
+                        last_sub_goal=set()
+                        last_sub_del=set()
 
                 # 更新队列外面的智能体的假设空间
                 self.env.blackboard["predict_condition"]["success"] = (last_predict_condition[
@@ -140,12 +146,12 @@ class Agent(object):
                         agent.predict_condition = self.env.blackboard["predict_condition"]
 
             except ValueError:
-                print("The agent is not in the queue.")  # self 不在队列中
+                if self.env.verbose: print("The agent is not in the queue.")  # self 不在队列中
                 for agent in self.env.agents:
                     if agent not in self.env.blackboard["task_agents_queue"]:
                         agent.predict_condition = self.env.blackboard["predict_condition"]
             except IndexError:
-                print("Index out of range.")  # 索引超出范围，理论上不会发生，因为索引是从 list.index 获取的
+                if self.env.verbose: print("Index out of range.")  # 索引超出范围，理论上不会发生，因为索引是从 list.index 获取的
 
 
 

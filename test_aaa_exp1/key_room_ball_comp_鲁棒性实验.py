@@ -18,12 +18,13 @@ from mabtpg.envs.gridenv.minigrid_computation_env.mini_comp_env import MiniCompE
 from mabtpg.envs.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table,print_summary_table
 
 
-
 behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
 
 random.seed(0)
 np.random.seed(0)
+
+
 
 # 11 22 33 44
 # def generate_agents_actions(num_cls_ls, num_agent, homogeneity_probability):
@@ -42,6 +43,7 @@ np.random.seed(0)
 #             agent_index = (agent_index+1) % num_agent
 #     return agents_actions
 
+# 1234 空 1234
 # def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
 #     agents_actions = [[] for _ in range(num_agent)]
 #
@@ -56,7 +58,6 @@ np.random.seed(0)
 #             agents_actions[agent_index].append(cls_index)
 #             agent_index = (agent_index + 1) % num_agent
 #     return agents_actions
-
 
 # 第一个按照顺序分，其它的随机分
 def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
@@ -81,6 +82,8 @@ def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability
             agents_actions[agent_index].append(cls_index)
 
     return agents_actions
+
+
 
 
 def assign_action_cls_to_agents():
@@ -130,7 +133,7 @@ def bind_bt(bt_list):
 
 
 
-num_agent = 8
+num_agent = 4
 num_rooms = 4
 # num_objs = 2
 action_fail_p = 0
@@ -140,14 +143,15 @@ if num_agent == 8:
     homogeneity_probability_ls = [i / 8 for i in range(1, 9)]
 else:
     homogeneity_probability_ls = [0.25, 0.5, 0.75, 1]
+# homogeneity_probability_ls = [0,1]
 homogeneity_probability = 1
-use_subtask_chain = True
+use_subtask_chain = False
 
 # 创建一个空的字典用于存储数据
 data = {'homogeneity_probability': homogeneity_probability_ls}
 
-for use_subtask_chain in [False, True]:
-    col_name = f'use_subtask_chain={use_subtask_chain}'
+for action_fail_p in [0.1, 0.3, 0.5]:
+    col_name = f'FP={action_fail_p}'
     data[col_name] = []
     for homogeneity_probability in homogeneity_probability_ls:
 
@@ -222,7 +226,7 @@ for use_subtask_chain in [False, True]:
 
 
 
-        total_time = 1000
+        total_time = 100
         success_time = 0
         total_env_step_ls = []
         # #########################
@@ -236,7 +240,7 @@ for use_subtask_chain in [False, True]:
             env.verbose = False
             env.reset()
             done = False
-            max_env_step = 500
+            max_env_step = 50
             env_steps = 0
             new_env_step = 0
             agents_steps = 0
@@ -247,7 +251,7 @@ for use_subtask_chain in [False, True]:
                 obs, done, _, _, agents_one_step,finish_and_fail = env.step()
                 env_steps += 1
                 agents_steps += agents_one_step
-                if env_steps%50==0:
+                if env_steps%20==0:
                     print_colored(f"========= env_steps: {env_steps} ===============",
                               "blue")
                     print_colored(f"state: {obs}", "blue")
@@ -272,7 +276,7 @@ for use_subtask_chain in [False, True]:
         avg_env_step = sum(total_env_step_ls) / len(total_env_step_ls)
 
 
-        data[col_name].append(avg_env_step)
+        data[col_name].append(success_time/total_time*100)
 
 # 创建数据框
 df = pd.DataFrame(data)
