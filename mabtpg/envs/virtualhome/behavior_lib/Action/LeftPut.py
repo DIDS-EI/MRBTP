@@ -14,12 +14,16 @@ class LeftPut(Put):
         self.target_obj = args[1]
         self.target_place = args[2]
 
-        self.pre = {f'IsLeftHolding(agent-{self.agent_id},{self.target_obj})', f'IsNear(agent-{self.agent_id},{self.target_place})'}
-        self.add = {f'IsLeftHandEmpty(agent-{self.agent_id})', f'IsOn({self.target_obj},{self.target_place})'}
-        self.del_set = {f'IsLeftHolding(agent-{self.agent_id},{self.target_obj})'}
-
-        self.act_max_step = 3
+        self.act_max_step = 2
         self.act_cur_step = 0
+
+
+    def get_action_model(self):
+        self.pre = {f'IsLeftHolding({self.agent_id},{self.target_obj})', f'IsNear({self.agent_id},{self.target_place})'}
+        self.add = {f'IsLeftHandEmpty({self.agent_id})', f'IsOn({self.target_obj},{self.target_place})'}
+        self.del_set = {f'IsLeftHolding({self.agent_id},{self.target_obj})'}
+
+
 
 
 

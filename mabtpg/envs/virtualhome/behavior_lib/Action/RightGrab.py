@@ -12,13 +12,7 @@ class RightGrab(Grab):
         self.agent_id = args[0]
         self.target_obj = args[1]
 
-        self.pre = {f"IsRightHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})"}
-        self.add = {f"IsRightHolding({self.agent_id},{self.target_obj})", f"IsRightHandFull({self.agent_id})"}
-        self.del_set = {f"IsRightHandEmpty({self.agent_id})"}
-        self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
-        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
-
-        self.act_max_step = 3
+        self.act_max_step = 2
         self.act_cur_step = 0
 
     # @property
@@ -26,6 +20,14 @@ class RightGrab(Grab):
     #     # 根据需要，这里可以返回当前类名或父类名
     #     # 例如，直接返回父类的名字
     #     return Grab.__name__
+    def get_action_model(self):
+        self.pre = {f"IsRightHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})"}
+        self.add = {f"IsRightHolding({self.agent_id},{self.target_obj})", f"IsRightHandFull({self.agent_id})"}
+        self.del_set = {f"IsRightHandEmpty({self.agent_id})"}
+        self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
+        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
+
+
 
     @classmethod
     def get_planning_action_list(cls, agent, env):

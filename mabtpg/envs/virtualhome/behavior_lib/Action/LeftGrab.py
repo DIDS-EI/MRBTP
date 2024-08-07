@@ -11,15 +11,17 @@ class LeftGrab(Grab):
         self.agent_id = self.args[0]
         self.target_obj = self.args[1]
 
+        self.act_max_step = 2
+        self.act_cur_step = 0
 
-        self.pre = {f"IsLeftHandEmpty(self)", f"IsNear({self.agent_id},{self.target_obj})"}
-        self.add = {f"IsLeftHolding(self,{self.target_obj})", "IsLeftHandFull(self)"}
-        self.del_set = {f"IsLeftHandEmpty(self)"}
+    def get_action_model(self):
+        self.pre = {f"IsLeftHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})"}
+        self.add = {f"IsLeftHolding({self.agent_id},{self.target_obj})", "IsLeftHandFull({self.agent_id})"}
+        self.del_set = {f"IsLeftHandEmpty({self.agent_id})"}
         self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
         self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
 
-        self.act_max_step = 3
-        self.act_cur_step = 0
+
 
     # @property
     # def action_class_name(self):

@@ -10,12 +10,13 @@ class SwitchOff(VHAction):
         self.agent_id = args[0]
         self.target_obj = args[1]
 
+        self.act_max_step = 2
+        self.act_cur_step = 0
+
+    def get_action_model(self):
         self.pre = {f"IsLeftHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})", f"IsSwitchedOn({self.target_obj})"}
         self.add = {f"IsSwitchedOff({self.target_obj})"}
         self.del_set = {f"IsSwitchedOn({self.target_obj})"}
-
-        self.act_max_step = 2
-        self.act_cur_step = 0
 
 
     @classmethod

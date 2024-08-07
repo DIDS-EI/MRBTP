@@ -14,13 +14,15 @@ class LeftGrabFrom(Grab):
         self.obj = args[1]
         self.container = args[2]
 
+        self.act_max_step = 2
+        self.act_cur_step = 0
+
+    def get_action_model(self):
         self.pre = {f"IsLeftHandEmpty({self.agent_id})",f"IsIn({self.obj},{self.container})",f"IsNear({self.agent_id},{self.container})",f"IsOpen({self.container})"}
         self.add = {f"IsLeftHolding({self.agent_id},{self.obj})",f"IsLeftHandFull({self.agent_id})"}
         self.del_set = {f"IsLeftHandEmpty({self.agent_id})"}
         self.del_set |= {f'IsIn({self.obj},{place})' for place in self.env.category_to_objects["CONTAINERS"]}
 
-        self.act_max_step = 4
-        self.act_cur_step = 0
 
     @classmethod
     def get_planning_action_list(cls, agent, env):

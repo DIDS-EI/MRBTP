@@ -13,13 +13,14 @@ class RightPutIn(PutIn):
         self.target_obj = args[1]
         self.target_place = args[2]
 
-
-        self.pre = {f'IsRightHolding(agent-{self.agent_id},{self.target_obj})', f'IsNear(agent-{self.agent_id},{self.target_place})', f'IsOpen({self.target_place})'}
-        self.add = {f'IsRightHandEmpty(agent-{self.agent_id})', f'IsIn({self.target_obj},{self.target_place})'}
-        self.del_set = {f'IsRightHolding(agent-{self.agent_id},{self.target_obj})'}
-
-        self.act_max_step = 4
+        self.act_max_step = 2
         self.act_cur_step = 0
+
+    def get_action_model(self):
+        self.pre = {f'IsRightHolding({self.agent_id},{self.target_obj})', f'IsNear({self.agent_id},{self.target_place})', f'IsOpen({self.target_place})'}
+        self.add = {f'IsRightHandEmpty({self.agent_id})', f'IsIn({self.target_obj},{self.target_place})'}
+        self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})'}
+
 
 
     @classmethod

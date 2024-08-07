@@ -11,12 +11,15 @@ class Open(VHAction):
         self.agent_id = args[0]
         self.target_obj = args[1]
 
+        self.act_max_step = 2
+        self.act_cur_step = 0
+
+    def get_action_model(self):
+
         self.pre = {f"IsClose({self.target_obj})", f"IsNear({self.agent_id},{self.target_obj})", f"IsLeftHandEmpty({self.agent_id})"}
         self.add = {f"IsOpen({self.target_obj})"}
         self.del_set = {f"IsClose({self.target_obj})"}
 
-        self.act_max_step = 2
-        self.act_cur_step = 0
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
@@ -26,7 +29,7 @@ class Open(VHAction):
         for obj in obj_ls:
             action_model = {}
 
-            action_model["pre"] = {f"IsClose(agent-{agent.id},{obj})", f"IsNear(agent-{agent.id},{obj})", f"IsLeftHandEmpty(agent-{agent.id})"}
+            action_model["pre"] = {f"IsClose({obj})", f"IsNear(agent-{agent.id},{obj})", f"IsLeftHandEmpty(agent-{agent.id})"}
             action_model["add"] = {f"IsOpen({obj})"}
             action_model["del_set"] = {f"IsClose({obj})"}
             action_model["cost"] = 2

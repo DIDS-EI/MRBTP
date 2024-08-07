@@ -55,7 +55,11 @@ class VHAction(WareHouseAction):
         pass
 
 
+    def bind_agent(self, agent):
+        self.agent = agent
+        self.env = agent.env
 
+        self.get_action_model()
 
 
     # def update(self):
