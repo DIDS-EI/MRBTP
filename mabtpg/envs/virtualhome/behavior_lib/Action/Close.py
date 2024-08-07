@@ -31,7 +31,7 @@ class Close(VHAction):
             action_model["pre"] =  {f"IsOpen({obj})",f"IsNear(agent-{agent.id},{obj})",f"IsLeftHandEmpty(agent-{agent.id})"}
             action_model["add"] = {f"IsClose({obj})"}
             action_model["del_set"] = {f"IsOpen({obj})"}
-            action_model["cost"] = 3
+            action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"Close(agent-{agent.id},{obj})",**action_model))
         return planning_action_list
 

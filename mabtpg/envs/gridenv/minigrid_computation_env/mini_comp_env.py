@@ -16,7 +16,7 @@ class MiniCompEnv(NumEnv):
         self.objects_rooms_dic = None
         self.target_room_ls = None
 
-        self.use_subtask_chain = False
+        self.use_atom_subtask_chain = False
         self.action_fail_p = None
 
         self.agents = [Agent(self, i) for i in range(self.num_agent)]
@@ -69,8 +69,8 @@ class MiniCompEnv(NumEnv):
             if not self.agents[i].bt_success:
                 done = False
 
-        if agent_action_every_step == [None for _ in range(num_agent)]:
-            finish_and_fail = True
+        # if agent_action_every_step == [None for _ in range(num_agent)]:
+        #     finish_and_fail = True
 
         # execute
         # for agent_id,action in cur_agent_actions.items():

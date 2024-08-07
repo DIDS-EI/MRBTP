@@ -5,11 +5,15 @@ from mabtpg.utils.tools import extract_parameters_from_action_name,extract_predi
 from mabtpg.behavior_tree.btml.BTML import BTML
 
 class CompositeActionPlanner:
-    def __init__(self, action_lists, action_sequences):
+    def __init__(self, action_lists, action_sequences,env=None):
+        self.env = env
         self.action_lists = action_lists
         self.action_sequences = action_sequences
         self.comp_actions_dic = {}
         self.comp_actions_BTML_dic = {}
+
+        # 获取每个 comp_act_name 对应的 agent_id 列表
+        self.comp_agents_ls_dic = {}
 
     def plan_sub_bt_from_filtered_actions(self,filtered_actions,sequence,comp_actions_name):
         """
@@ -31,7 +35,7 @@ class CompositeActionPlanner:
             if sequence[-1] in act.name:
                 sub_goal = (act.pre | act.add) - act.del_set
 
-                planning_algorithm = CABTP(verbose=False, goal=frozenset(sub_goal), action_list=filtered_actions,
+                planning_algorithm = CABTP(env=self.env,verbose=True, goal=frozenset(sub_goal), action_list=filtered_actions,
                                            sequence=sequence)
                 planning_algorithm.planning()
 
@@ -74,7 +78,7 @@ class CompositeActionPlanner:
                     "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
                     "add": set(),
                     "del_set": set(),
-                    "cost": 1
+                    "cost": 0
                 }
                 sum_add = set()
                 for i, a in enumerate(cond_act_ls):
@@ -167,9 +171,13 @@ class CompositeActionPlanner:
                     self.comp_actions_dic[agent_id] = []
                 self.comp_actions_dic[agent_id].extend(agent_comp_pa_ls)
 
+                if comp_actions_name not in self.comp_agents_ls_dic:
+                    self.comp_agents_ls_dic[comp_actions_name] = []
+                self.comp_agents_ls_dic[comp_actions_name].append(i)
+
                 # new btml
                 # if agent_id not in self.comp_actions_BTML_dic:
                 #     self.comp_actions_BTML_dic[agent_id] = {}
                 # self.comp_actions_BTML_dic[agent_id].update(agent_comp_btml_dic)
 
-        return self.comp_actions_dic,self.comp_actions_BTML_dic
+        return self.comp_actions_dic,self.comp_actions_BTML_dic, self.comp_agents_ls_dic

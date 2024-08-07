@@ -1,4 +1,5 @@
 import json
+import sys
 import time
 import random
 import math
@@ -35,16 +36,12 @@ def bind_bt(bt_list):
         agent.bind_bt(bt_list[i])
 
 
-
 json_path = "vh1.json"
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 
-for _,json_data in enumerate(json_datasets[:]):
 
-    # json_path = "vh1_example.json"
-    # with open(json_path, 'r') as file:
-    #     json_data = json.load(file)
+for _,json_data in enumerate(json_datasets[:1]):
 
     data_id = json_data['id']
     print_colored(f"========= data_id: {data_id} ===============","blue")
@@ -60,17 +57,18 @@ for _,json_data in enumerate(json_datasets[:]):
     start = frozenset(start)
 
 
-
     # #########################
     # Initialize Environment
     # #########################
     env = VHCompEnv(num_agent=num_agent, goal=goal, start=start)
     env.objects = objects
     env.filter_objects_to_get_category(objects)
-    env.use_subtask_chain = False
-    env.with_comp_action = False
-    bt_draw = True
 
+    env.with_comp_action = True # 是否有組合動作
+    env.use_atom_subtask_chain = False # 是否使用任務鏈
+    env.use_comp_subtask_chain = True  # 是否使用任務鏈
+
+    bt_draw = True
 
 
     # #####################
@@ -87,40 +85,76 @@ for _,json_data in enumerate(json_datasets[:]):
 
     for i, agent in enumerate(env.agents):
         agent.behavior_dict = {
-            "Action": agents_act_cls_ls[i],
-            "Condition": behavior_lib["Condition"].values()
+            "Action": agents_act_cls_ls[i]+[behavior_lib["Action"]['SelfAcceptTask'],behavior_lib["Action"]['FinishTask']],
+            "Condition": behavior_lib["Condition"].values(),
         }
         agent.create_behavior_lib()
     agent_actions_model = env.create_action_model()
+
+
+    # #########################
+    # Composition Action
+    # Pre-plan get BTML and PlanningAction
+    # #########################
+    composition_action = []
+    comp_actions_BTML_dic=None
+    comp_agents_ls_dic = None
+    if "composition_action" in json_data:
+        composition_action = json_data["composition_action"]
+
+        composition_action_flattened_dict = {}
+        for sublist in composition_action:
+            for item in sublist:
+                composition_action_flattened_dict.update(item)
+
+        if env.with_comp_action:
+            cap = CompositeActionPlanner(agent_actions_model, composition_action_flattened_dict,env=env)
+            cap.get_composite_action()
+            # {'agent-0': [WalkToOpen(agent-0,fridge), WalkToOpen(agent-0,milk)], 'agent-1': []}
+            comp_planning_act_dic = cap.comp_actions_dic
+            # {'WalkToOpen': <mabtpg.behavior_tree.btml.BTML.BTML object at 0x000002156A9FECB0>}
+            comp_actions_BTML_dic = cap.comp_actions_BTML_dic
+            #
+            comp_agents_ls_dic = cap.comp_agents_ls_dic
+
+            for i in range(env.num_agent):
+                agent_id = "agent-"+str(i)
+                # agent_actions_model[i]=[] # if only composition action
+                if agent_id in comp_planning_act_dic:
+                    agent_actions_model[i].extend(comp_planning_act_dic["agent-"+str(i)])
+                # sorted by cost
+                agent_actions_model[i] = sorted(agent_actions_model[i], key=lambda x: x.cost)
 
 
 
     # #########################
     # Run Decentralized multi-agent BT algorithm
     # #########################
-    print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
+    # print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
     start_time = time.time()
-    from mabtpg.btp.mabtp import MABTP
-    planning_algorithm = MABTP(verbose=False, start=start, env=env)
-    planning_algorithm.planning(frozenset(goal), action_lists=agent_actions_model)
 
-    print_colored(f"Finish Multi-Robot Behavior Tree Planning!", color="green")
-    planning_time = time.time() - start_time
-    print_colored(f"Time: {planning_time}", color="green")
+    from mabtpg.btp.DMR import DMR
+    dmr = DMR(env, goal, start, agent_actions_model, num_agent, with_comp_action=env.with_comp_action,
+              save_dot=True)  # False 也还需要再调试
+    dmr.planning()
+
+    # print_colored(f"Finish Multi-Robot Behavior Tree Planning!", color="green")
+    # print_colored(f"Time: {time.time() - start_time}", color="green")
 
     # Convert to BT and bind the BT to the agent
     behavior_lib = [agent.behavior_lib for agent in env.agents]
-    bt_list = planning_algorithm.output_bt_list(behavior_libs=behavior_lib)
-    bind_bt(bt_list)
+    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=comp_actions_BTML_dic,comp_agents_ls_dic=comp_agents_ls_dic)
+    bind_bt(dmr.bt_ls)
+
 
     # calculate time and expanded num
-    # if env.with_comp_action:
-    #     CABTP_expanded_num = 0
-    #     record_expanded_num = CABTP_expanded_num + dmr.record_expanded_num
-    # else:
-    #     CABTP_expanded_num = 0
-    #     record_expanded_num = dmr.record_expanded_num
-    # expanded_time = dmr.expanded_time
+    if env.with_comp_action:
+        CABTP_expanded_num = 0
+        record_expanded_num = CABTP_expanded_num + dmr.record_expanded_num
+    else:
+        CABTP_expanded_num = 0
+        record_expanded_num = dmr.record_expanded_num
+    expanded_time = dmr.expanded_time
 
 
 
@@ -139,7 +173,7 @@ for _,json_data in enumerate(json_datasets[:]):
     obs = set(start)
     env.state = obs
     while not done:
-        obs, done, _, _, agents_one_step, finish_and_fail = env.step()
+        obs, done, _, _, agents_one_step, _ = env.step()
         env_steps += 1
         agents_steps += agents_one_step
         if env_steps % 50 == 0:
@@ -149,9 +183,6 @@ for _,json_data in enumerate(json_datasets[:]):
         if obs >= goal:
             done = True
             break
-        if finish_and_fail:
-            done = False
-            break
         if env_steps >= max_env_step:
             break
     print(f"\ntask finished!")
@@ -160,6 +191,7 @@ for _,json_data in enumerate(json_datasets[:]):
         print_colored(f"obs>=goal: {obs >= goal}",color="green")
     else:
         print_colored(f"obs>=goal: {obs >= goal}", color="red")
-    print("env_steps:",env_steps, "expanded num:",planning_algorithm.record_expanded_num)
-    print("expanded time:",planning_time)
+        sys.exit()
+    print("env_steps:",env_steps, "expanded num:",record_expanded_num)
+    print("expanded time:",dmr.expanded_time)
 

@@ -11,7 +11,7 @@ class Open(VHAction):
         self.agent_id = args[0]
         self.target_obj = args[1]
 
-        self.act_max_step = 2
+        self.act_max_step = 20
         self.act_cur_step = 0
 
     def get_action_model(self):
@@ -32,6 +32,6 @@ class Open(VHAction):
             action_model["pre"] = {f"IsClose({obj})", f"IsNear(agent-{agent.id},{obj})", f"IsLeftHandEmpty(agent-{agent.id})"}
             action_model["add"] = {f"IsOpen({obj})"}
             action_model["del_set"] = {f"IsClose({obj})"}
-            action_model["cost"] = 2
+            action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"Open(agent-{agent.id},{obj})", **action_model))
         return planning_action_list

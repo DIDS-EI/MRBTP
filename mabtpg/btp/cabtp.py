@@ -16,7 +16,7 @@ from mabtpg.btp.base import PlanningCondition, PlanningAgent
 
 class CABTP(PlanningAgent):
     '''Composition Action Behavior Tree Planning '''
-    def __init__(self,action_list,goal,sequence,id=None,verbose=False):
+    def __init__(self,action_list,goal,sequence,id=None,verbose=False,env=None):
         super().__init__(action_list,goal,id,verbose)
 
         self.sequence = copy.deepcopy(sequence)
@@ -25,6 +25,8 @@ class CABTP(PlanningAgent):
         self.sequence_index = 0
 
         self.collect_explored_cond_act = []
+
+        self.env=env
 
     def one_step_expand(self, condition,seq_index):
 
@@ -37,9 +39,6 @@ class CABTP(PlanningAgent):
 
         for action in self.action_list:
 
-            # if seq_index==2:
-            #     xxx=1
-
             if seq_index+1 >= len(self.sequence):
                 break
 
@@ -48,13 +47,14 @@ class CABTP(PlanningAgent):
                 continue
 
             if self.is_consequence(condition,action):
-            # if True:
+
                 premise_condition = frozenset((action.pre | condition) - action.add)
                 if self.has_no_subset(premise_condition):
-                # if True:
+
                     # conflict check
-                    if self.check_conflict(premise_condition):
-                        continue
+                    if self.env!=None:
+                        if self.env.check_conflict(premise_condition):
+                            continue
 
 
                     planning_condition = PlanningCondition(premise_condition,action.name)

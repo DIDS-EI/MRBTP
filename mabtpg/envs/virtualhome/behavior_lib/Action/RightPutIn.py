@@ -36,7 +36,7 @@ class RightPutIn(PutIn):
                 action_model["pre"] = {f'IsRightHolding(agent-{agent.id},{obj})', f'IsNear(agent-{agent.id},{place})', f'IsOpen({place})'}
                 action_model["add"] = {f'IsRightHandEmpty(agent-{agent.id})', f'IsIn({obj},{place})'}
                 action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})'}
-                action_model["cost"] = 10
+                action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"RightPutIn(agent-{agent.id},{obj},{place})", **action_model))
         return planning_action_list
 

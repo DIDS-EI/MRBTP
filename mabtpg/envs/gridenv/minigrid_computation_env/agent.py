@@ -36,7 +36,7 @@ class Agent(NumAgent):
                     # print_colored(f"cur: {self.current_task}", color='orange')
                     # print_colored(f"accp: {self.last_accept_task} ", color='orange')
 
-                    if self.env.use_subtask_chain:
+                    if self.env.use_atom_subtask_chain:
 
                         if self.last_action != None and self.last_action.is_finish:
 
@@ -51,15 +51,8 @@ class Agent(NumAgent):
                         if self.current_task != self.last_accept_task:
                             self.update_current_task()
 
+
                     # if self.current_task != self.last_accept_task:
-                    #     self.finish_current_task()
-                    #     self.update_current_task()
-
-                        # if self.last_action!=None:
-                        #     self.last_action.is_finish = False
-                        # self.last_action = None
-
-                    # if self.current_task != self.last_accept_task or (self.last_action!=None and self.last_action.is_finish):
                     #     self.finish_current_task()
                     #     self.update_current_task()
                     #

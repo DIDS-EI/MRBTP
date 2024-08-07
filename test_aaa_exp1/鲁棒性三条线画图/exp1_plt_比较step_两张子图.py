@@ -38,8 +38,8 @@ ax1.set_title('4 Robots', fontdict=font2)
 ax2.set_title('8 Robots', fontdict=font2)
 
 # Plot 2
-line4, = ax2.plot(homogeneity_2, success_0_1_2, marker='o', color='#9467bd', label='use_subtask_chain=False', linewidth=4, markersize=15)
-line5, = ax2.plot(homogeneity_2, success_0_3_2, marker='s', color='#d62728', label='use_subtask_chain=True', linewidth=4, markersize=15)
+line4, = ax2.plot(homogeneity_2, success_0_1_2, marker='o', color='#9467bd', label='use_atom_subtask_chain=False', linewidth=4, markersize=15)
+line5, = ax2.plot(homogeneity_2, success_0_3_2, marker='s', color='#d62728', label='use_atom_subtask_chain=True', linewidth=4, markersize=15)
 
 ax2.set_xlabel('Homogeneity', fontdict=font2)
 ax2.set_xticks(homogeneity_2[1::2])

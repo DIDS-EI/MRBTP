@@ -45,7 +45,7 @@ class MoveHeavyInRoom(Action):
 
     def update(self) -> Status:
 
-        if self.env.use_subtask_chain:
+        if self.env.use_atom_subtask_chain:
             if self.check_if_pre_in_predict_condition():
                 return Status.RUNNING
 

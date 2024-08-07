@@ -38,7 +38,7 @@ class LeftGrabFrom(Grab):
                 action_model["add"] = {f"IsLeftHolding(agent-{agent.id},{obj})", f"IsLeftHandFull(agent-{agent.id})"}
                 action_model["del_set"] = {f"IsLeftHandEmpty(agent-{agent.id})"}
                 action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CONTAINERS"]}
-                action_model["cost"] = 4
+                action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"LeftGrabFrom(agent-{agent.id},{obj},{container})", **action_model))
         return planning_action_list
 

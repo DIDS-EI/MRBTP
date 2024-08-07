@@ -17,7 +17,7 @@ class IsHolding(WareHouseCondition):
 
     def update(self) -> Status:
 
-        if self.env.use_subtask_chain:
+        if self.env.use_atom_subtask_chain:
             is_in_predict, is_true = self.check_if_in_predict_condition()
             if is_in_predict:
                 if is_true:

@@ -123,7 +123,7 @@ env.num_rooms = num_rooms
 env.target_room_ls = target_room_ls
 # env.num_objs = num_objs
 env.objects_rooms_dic = start_objects_rooms_dic
-env.use_subtask_chain = use_subtask_chain
+env.use_atom_subtask_chain = use_subtask_chain
 
 
 

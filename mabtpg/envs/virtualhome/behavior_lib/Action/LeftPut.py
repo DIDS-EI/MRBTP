@@ -40,7 +40,7 @@ class LeftPut(Put):
                 action_model["pre"] = {f'IsLeftHolding(agent-{agent.id},{obj})', f'IsNear(agent-{agent.id},{place})'}
                 action_model["add"] = {f'IsLeftHandEmpty(agent-{agent.id})', f'IsOn({obj},{place})'}
                 action_model["del_set"] = {f'IsLeftHolding(agent-{agent.id},{obj})'}
-                action_model["cost"] = 3
+                action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"LeftPut(agent-{agent.id},{obj},{place})", **action_model))
         return planning_action_list
 

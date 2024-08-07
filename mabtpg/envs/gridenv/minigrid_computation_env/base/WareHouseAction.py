@@ -45,18 +45,18 @@ class WareHouseAction(Action):
 
     def update(self) -> Status:
 
-        if self.env.use_subtask_chain:
-            if self.check_if_pre_in_predict_condition():
-                return Status.RUNNING
 
-            self.agent.current_task = {"task_id": self.name,
-                                       "sub_goal": self.add,
-                                       "sub_del": self.del_set}
+        if self.check_if_pre_in_predict_condition():
+            return Status.RUNNING
+
+        self.agent.current_task = {"task_id": self.name,
+                                   "sub_goal": self.add,
+                                   "sub_del": self.del_set}
 
 
-        if self.agent.last_action==self:
-            self.act_cur_step += 1
-            if self.act_cur_step>=self.act_max_step:
+        if self.agent.last_action and self.agent.last_action.name==self.name:
+            self.agent.act_cur_step += 1
+            if self.agent.act_cur_step>=self.act_max_step-1:
                 self.is_finish = True
 
                 # execute
@@ -72,7 +72,8 @@ class WareHouseAction(Action):
                     if self.env.verbose: print_colored(f"AGENT-{self.agent.id} cannot do it!", color="red")
                 else:
                     if self.env.verbose: print_colored(f"AGENT-{self.agent.id} is doing {self.name}", color="green")
-
+        else:
+            self.agent.act_cur_step = 0
 
         self.agent.action = self
         self.agent.last_action = self

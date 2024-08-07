@@ -180,7 +180,7 @@ for action_fail_p in [0.1, 0.3, 0.5]:
         env.target_room_ls = target_room_ls
         # env.num_objs = num_objs
         env.objects_rooms_dic = start_objects_rooms_dic
-        env.use_subtask_chain = use_subtask_chain
+        env.use_atom_subtask_chain = use_subtask_chain
         env.action_fail_p = action_fail_p
 
 

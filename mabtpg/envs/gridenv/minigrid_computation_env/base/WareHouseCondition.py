@@ -16,13 +16,13 @@ class WareHouseCondition(Condition):
 
     def update(self) -> Status:
 
-        if self.env.use_subtask_chain:
-            is_in_predict, is_true = self.check_if_in_predict_condition()
-            if is_in_predict:
-                if is_true:
-                    return Status.SUCCESS
-                else:
-                    return Status.FAILURE
+
+        is_in_predict, is_true = self.check_if_in_predict_condition()
+        if is_in_predict:
+            if is_true or (self.name in self.env.state):
+                return Status.SUCCESS
+            elif not is_true or (self.name not in self.env.state):
+                return Status.FAILURE
 
         if self.name in self.env.state:
             return Status.SUCCESS

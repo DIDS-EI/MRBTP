@@ -32,7 +32,9 @@ class Agent(object):
         self.last_tick_output = None
 
         self.last_accept_task = None
+        self.last_accept_composite_task = None
         self.current_task = None
+        self.current_composite_task = None
         self.predict_condition = {
             "success":set(),
             "fail":set(),
