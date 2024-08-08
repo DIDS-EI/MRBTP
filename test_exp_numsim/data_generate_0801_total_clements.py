@@ -105,7 +105,7 @@ class DataGenerator:
             'start_num': convert_cstr_set_to_num_set(start),
             'nodes': nodes,
             'edges': edges,
-            'comp_actions_BTML_dic': {},
+            'comp_btml_ls': {},
             'actions_with_cmp':[],
             'actions_without_cmp':[],
 
@@ -115,7 +115,7 @@ class DataGenerator:
         # cut composition to sub actions
         if self.need_split_action:
             (dataset['actions_with_cmp'], dataset['actions_without_cmp'],
-             dataset['comp_actions_BTML_dic'],dataset['CABTP_expanded_num']) = \
+             dataset['comp_btml_ls'],dataset['CABTP_expanded_num']) = \
                 self.split_actions_and_plan_sub_btml(actions)
 
         return dataset
@@ -130,7 +130,7 @@ class DataGenerator:
 
         Returns:
         - new_actions: The list of new actions after splitting.
-        - comp_actions_BTML_dic: A dictionary of BTML structures for each composite action.
+        - comp_btml_ls: A dictionary of BTML structures for each composite action.
         """
         def generate_composition_action_name(original_name):
             import re

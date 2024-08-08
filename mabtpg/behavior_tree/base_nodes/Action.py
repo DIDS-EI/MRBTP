@@ -51,7 +51,25 @@ class Action(BahaviorNode):
 
         act_pre = self.env.blackboard["action_pre"][self.name]
 
-        if act_pre & self.agent.predict_condition['success'] !=set():
+        # wait pre
+        wait_cond = (act_pre & self.agent.predict_condition['success'])
+        if  wait_cond!=set() and ( wait_cond & self.env.state) != wait_cond:
             if self.env.verbose: print_colored(f"{self.name}  Total Wait:{act_pre & self.agent.predict_condition['success']}",color="purple")
             return True
+
+        # wait not to del
+        # if  (self.del_set & self.agent.predict_condition['success']) != set() \
+        #     or\
+        #     (self.add & self.agent.predict_condition['fail']) != set():\
+        #     return True
+
+
+
+
+
+
+
+        # if act_pre & self.agent.predict_condition['success'] !=set():
+        #     if self.env.verbose: print_colored(f"{self.name}  Total Wait:{act_pre & self.agent.predict_condition['success']}",color="purple")
+        #     return True
 

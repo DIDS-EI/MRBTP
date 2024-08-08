@@ -32,6 +32,8 @@ class SwitchOn(VHAction):
             action_model["pre"] = {f"IsLeftHandEmpty(agent-{agent.id})", f"IsNear(agent-{agent.id},{obj})", f"IsSwitchedOff({obj})"}
             action_model["add"] = {f"IsSwitchedOn({obj})"}
             action_model["del_set"] = {f"IsSwitchedOff({obj})"}
+
+            # action_model["del_set"] |= {f'IsNear(agent-{agent.id},{place})' for place in obj_ls if place != obj}
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"SwitchOn(agent-{agent.id},{obj})", **action_model))
         return planning_action_list

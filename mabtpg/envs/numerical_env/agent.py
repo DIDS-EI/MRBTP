@@ -147,6 +147,8 @@ class Agent(object):
                     if agent not in self.env.blackboard["task_agents_queue"]:
                         agent.predict_condition = self.env.blackboard["predict_condition"]
 
+                self.env.communication_times += 1
+
             except ValueError:
                 if self.env.verbose: print("The agent is not in the queue.")  # self 不在队列中
                 for agent in self.env.agents:
@@ -174,5 +176,6 @@ class Agent(object):
             for agent in self.env.agents:
                 if agent != self and agent not in self.env.blackboard["task_agents_queue"]:
                     agent.predict_condition = copy.deepcopy(self.env.blackboard["predict_condition"])
+            self.env.communication_times += 1
 
         self.last_accept_task = copy.deepcopy(self.current_task)

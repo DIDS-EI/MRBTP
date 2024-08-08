@@ -58,6 +58,14 @@
                 "RightGrab",
                 "RightPut"
             ]
+        ],
+        "composition_action": [
+            [
+                {"WalkToPutOn": ["Walk","RightGrab","Walk","RightPut"]}
+            ],
+            [
+                {"WalkToPutOn": ["Walk","RightGrab","Walk","RightPutIn"]}
+            ]
         ]
     },
     {
@@ -78,12 +86,23 @@
             [
                 "Walk",
                 "SwitchOn",
-                "Open"
+                "Open",
+                "SwitchOff"
             ],
             [
                 "Walk",
                 "RightGrab",
-                "RightPutIn"
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "composition_action": [
+            [
+                {"WalkToOpen": ["Walk","Open"]},
+                {"WalkToSwitch": ["Walk","SwitchOn"]}
+            ],
+            [
+                {"WalkToPutIn": ["Walk","RightGrab","Walk","RightPutIn"]}
             ]
         ]
     },
@@ -104,12 +123,22 @@
             [
                 "Walk",
                 "RightGrab",
-                "RightPutIn"
+                "RightPutIn",
+                "Open"
             ],
             [
                 "Walk",
                 "Close",
                 "Open"
+            ]
+        ],
+        "composition_action": [
+            [
+                {"WalkToPutIn": ["Walk","RightGrab","Walk","RightPutIn"]}
+            ],
+            [
+                {"WalkToOpen": ["Walk","Open"]},
+                {"WalkToClose": ["Walk","Close"]}
             ]
         ]
     },
@@ -117,29 +146,36 @@
         "id": 5,
         "goal": [
             "IsOn(toy,bookshelf)",
-            "IsIn(book,bookshelf)"
+            "IsOn(book,bookshelf)"
         ],
         "init_state": [
-            "IsOpen(bookshelf)"
         ],
         "objects": [
             "toy",
-            "bookshelf",
-            "book"
+            "book",
+            "bookshelf"
         ],
         "action_space": [
             [
                 "Walk",
                 "RightGrab",
-                "RightPut",
-                "Open"
+                "RightPut"
             ],
             [
                 "Walk",
                 "RightGrab",
-                "RightPutIn",
-                "SwitchOn"
+                "RightPut"
             ]
+        ],
+        "composition_action": [
+            {
+                "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"],
+                "WalkToPutBookBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPut(self,book,bookshelf)"]
+            },
+            {
+                "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"],
+                "WalkToPutBookBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPut(self,book,bookshelf)"]
+            }
         ]
     }
 ]

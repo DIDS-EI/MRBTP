@@ -1,0 +1,2 @@
+fallback
+    condition IsOn(book,bookshelf) & IsOn(toy,bookshelf)

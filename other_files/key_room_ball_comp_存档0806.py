@@ -146,7 +146,7 @@ start_time = time.time()
 
 # start = None
 # planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
-# # planning_algorithm.planning(frozenset(goal),action_lists=agent_actions_model)
+# # planning_algorithm.planning(frozenset(goal),action_lists=action_model)
 # planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
 # behavior_lib = [agent.behavior_lib for agent in env.agents]
 # btml_list = planning_algorithm.get_btml_list()

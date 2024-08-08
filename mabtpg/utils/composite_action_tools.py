@@ -1,21 +1,31 @@
+import time
 
+from mabtpg.btp.base.planning_agent import PlanningAgent
 from mabtpg.btp.cabtp import CABTP
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.utils.tools import extract_parameters_from_action_name,extract_predicate_from_action_name,extract_agent_id_from_action_name
 from mabtpg.behavior_tree.btml.BTML import BTML
+from mabtpg.utils import parse_predicate_logic
+from mabtpg.utils.any_tree_node import AnyTreeNode
+from mabtpg.behavior_tree.constants import NODE_TYPE
+from mabtpg.btp.base.planning_condition import PlanningCondition
 
 class CompositeActionPlanner:
-    def __init__(self, action_lists, action_sequences,env=None):
+    def __init__(self, action_model, composition_action,env=None):
         self.env = env
-        self.action_lists = action_lists
-        self.action_sequences = action_sequences
-        self.comp_actions_dic = {}
-        self.comp_actions_BTML_dic = {}
+        self.action_model = action_model
+        self.action_sequences = composition_action
 
+        self.planning_ls = []
+        self.btml_ls = []
+
+        self.btml_dic={}
+        self.expanded_num = 0
+        self.expanded_time = 0
         # 获取每个 comp_act_name 对应的 agent_id 列表
-        self.comp_agents_ls_dic = {}
+        # self.comp_agents_ls_dic = {}
 
-    def plan_sub_bt_from_filtered_actions(self,filtered_actions,sequence,comp_actions_name):
+    def plan_sub_bt_from_filtered_actions(self,agent_comp_sequence,comp_act_name):
         """
         Plan sub-behavior trees based on filtered actions and given sequence.
 
@@ -27,106 +37,86 @@ class CompositeActionPlanner:
         Returns:
             list: List of planned composite actions.
         """
-        composite_planning_action = []
-        comp_actions_BTML = {}
-        composite_BTML = None
 
-        for act in filtered_actions:
-            if sequence[-1] in act.name:
-                sub_goal = (act.pre | act.add) - act.del_set
+        # cond = agent_comp_sequence[0].pre
+        # for planning_action in agent_comp_sequence:
+        #     sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+        #
+        #     planning_condition = PlanningCondition(cond,planning_action)
+        #     PlanningAgent.add_conditions(planning_condition,sequence_node)
+        #
+        #     cond = planning_action.pre | cond - planning_action.del_set
 
-                planning_algorithm = CABTP(env=self.env,verbose=True, goal=frozenset(sub_goal), action_list=filtered_actions,
-                                           sequence=sequence)
-                planning_algorithm.planning()
+        sub_goal = (agent_comp_sequence[-1].pre | agent_comp_sequence[-1].add) - agent_comp_sequence[-1].del_set
+        planning_algorithm = CABTP(env=self.env, verbose=False, goal=frozenset(sub_goal), action_list=agent_comp_sequence)
+        result = planning_algorithm.planning()
 
-
-                # Collect all parameters
-                args_ls = []
-                # cond_act_ls = planning_algorithm.collect_explored_cond_act
-                seq_planning_cond = planning_algorithm.collect_explored_cond_act
-
-                if len(seq_planning_cond) < len(sequence):
-                    continue
-                # 可选的组合动作
-                opt_composition_act_ls = []
-                cond_act_ls =[]
-                for spc in seq_planning_cond:
-                    seq_index,pla_cond,act = spc
-                    if seq_index == len(sequence)-1: # find on path
-                        cond_act_ls = [act]
-
-                        tmp_seq = seq_index
-                        # 把对应的几个拼在一起
-                        while tmp_seq!=0:
-                            for spc_j in seq_planning_cond:
-                                seq_index_j,pla_cond_j,act_j = spc_j
-                                if pla_cond_j.condition_set==pla_cond.parent_cond:
-                                    cond_act_ls.append(act_j)
-                                    tmp_seq = seq_index_j
-                                    pla_cond = pla_cond_j
-                        break
-                if len(cond_act_ls) !=len(sequence):
-                    print("No matching combination of actions found!!!")
-                    continue
+        if result is None: return [],[]
 
 
-                # cond_act_ls = list(reversed(seq_planning_cond))
-                # Calculate pre, add, and del for composite actions to construct PlanningAgent
+        composite_action_model = {
+            "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
+            "add": set(),
+            "del_set": set(),
+            "cost": 0
+        }
+        sum_add = set()
+        for i, a in enumerate(agent_comp_sequence):
+            composite_action_model["pre"] |= a.pre - sum_add
 
-                # print("cond_act_ls",cond_act_ls)
-                composite_action_model = {
-                    "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
-                    "add": set(),
-                    "del_set": set(),
-                    "cost": 0
-                }
-                sum_add = set()
-                for i, a in enumerate(cond_act_ls):
-                    composite_action_model["pre"] |= a.pre - sum_add
+            composite_action_model["add"] |= a.add
+            composite_action_model["add"] -= a.del_set
 
-                    composite_action_model["add"] |= a.add
-                    composite_action_model["add"] -= a.del_set
+            composite_action_model["del_set"] |= a.del_set
+            composite_action_model["del_set"] -= a.add
 
-                    composite_action_model["del_set"] |= a.del_set
-                    composite_action_model["del_set"] -= a.add
+            sum_add |= a.add
 
-                    sum_add |= a.add
-                    args_ls.extend(extract_parameters_from_action_name(a.name))
+        # add里总是有 IsHandEmpty
+        composite_action_model["del_set"] = composite_action_model["del_set"] - composite_action_model["add"]
+        composite_action_model["add"] = composite_action_model["add"]-composite_action_model["pre"]
 
-                # add里总是有 IsHandEmpty
-                composite_action_model["del_set"] = composite_action_model["del_set"] - composite_action_model["add"]
-                composite_action_model["add"] = composite_action_model["add"]-composite_action_model["pre"]
+        planning_action = PlanningAction(f"{comp_act_name}()", **composite_action_model)
 
 
-                # # Preserve order and remove duplicates
-                # gobetween(room-0,room-1), gobetween(room-01,room-0)
-                args_ls = list(dict.fromkeys(args_ls))
-                planning_action = PlanningAction(f"{comp_actions_name}({','.join(args_ls)})", **composite_action_model)
-
-                composite_planning_action.append(planning_action)
-
-                # get btml
-                if composite_BTML==None:
-                    planning_algorithm.create_anytree()
+        # get btml
+        planning_algorithm.create_anytree()
+        sub_btml = BTML()
+        sub_btml.cls_name = comp_act_name
+        sub_btml.anytree_root = planning_algorithm.anytree_root
 
 
-                    sub_btml = BTML()
-                    sub_btml.cls_name = comp_actions_name
-                    sub_btml.var_args = args_ls
-                    sub_btml.anytree_root = planning_algorithm.anytree_root
+        return planning_action,sub_btml
 
-                    self.comp_actions_BTML_dic[comp_actions_name] = sub_btml
 
-                # planning_algorithm.create_anytree()
-                # from mabtpg.behavior_tree.btml.BTML import BTML
-                # sub_btml = BTML()
-                # sub_btml.cls_name = comp_actions_name
-                # sub_btml.var_args = args_ls
-                # sub_btml.anytree_root = planning_algorithm.anytree_root
-                #
-                # comp_actions_BTML.update({comp_actions_name:sub_btml})
 
-        return composite_planning_action,comp_actions_BTML
+
+    def get_single_agent_composite_action(self,comp_act_name,comp_sequence,agent_id,action_model):
+        agent_name = f"agent-{agent_id}"
+
+        agent_comp_name_sequence = []
+        for action_name in comp_sequence:
+            cls_name, args = parse_predicate_logic(action_name)
+            new_args = [agent_name if arg=="self" else arg for arg in args]
+            new_name = f'{cls_name}({",".join(new_args)})'
+            agent_comp_name_sequence.append(new_name)
+
+        action_model_dic={}
+        for action in action_model:
+            action_model_dic[action.name] = action
+
+        # get planning action
+        agent_comp_sequence = []
+        for action_name in agent_comp_name_sequence:
+            if action_name in action_model_dic:
+                agent_comp_sequence.append(action_model_dic[action_name])
+            else:
+                return [],[]
+
+        planning_action, sub_btml = self.plan_sub_bt_from_filtered_actions(agent_comp_sequence,comp_act_name)
+        return planning_action,sub_btml
+
+
 
     def get_composite_action(self):
         """
@@ -135,49 +125,32 @@ class CompositeActionPlanner:
             None
         Returns:
             tuple: A tuple containing two dictionaries:
-                - comp_actions_dic: Dictionary with agent IDs as keys and lists of composite PlanningActions as values.
+                - planning_ls: Dictionary with agent IDs as keys and lists of composite PlanningActions as values.
                 - comp_btml_dic: Dictionary with comp_actions_name as keys and  BTMLs as values.
         """
 
-        for comp_actions_name,sequence in self.action_sequences.items():
-            # last_agent_id = -1
-            # planning_action = None
+        for agent_id, agent_composition_action_dic in enumerate(self.action_sequences):
+
+            btml = BTML()
+            planning_action_ls = []
 
             # Iterate through each action list for each agent
-            for i, action_list in enumerate(self.action_lists):
-                agent_id = "agent-{}".format(i)
+            for comp_act_name,comp_sequence in agent_composition_action_dic.items():
 
-                # Filter out actions that match the sub-action list
-                filtered_actions =[]
-                filtered_actions_predicates = set()
-                for plan_act in action_list:
-                    predicates = extract_predicate_from_action_name(plan_act.name)
-                    if predicates in sequence:
-                        filtered_actions.append(plan_act)
-                        filtered_actions_predicates.add(predicates)
+                start_time = time.time()
+                planning_action,sub_btml = self.get_single_agent_composite_action(comp_act_name,comp_sequence,agent_id,self.action_model[agent_id])
+                end_time = time.time()
 
-                # Check if filtered_actions contains all the predicates from the sequence
-                if filtered_actions_predicates != set(sequence):
-                    continue
+                planning_action_ls.append(planning_action)
+                btml.sub_btml_dict[comp_act_name] = sub_btml
 
-                # if planning_action != None:
-                #     planning_action = modify_planning_agent(planning_action,last_agent_id,agent_id)
-                #     last_agent_id = agent_id
-                # else:
+                # record expanded num
+                if comp_act_name not in self.btml_dic:
+                    self.btml_dic[comp_act_name] = sub_btml
+                    self.expanded_num += len(comp_sequence)
+                    self.expanded_time += (end_time - start_time)
 
-                # Plan sub-behavior tree from filtered actions
-                agent_comp_pa_ls,agent_comp_btml_dic = self.plan_sub_bt_from_filtered_actions(filtered_actions,sequence,comp_actions_name)
-                if agent_id not in self.comp_actions_dic:
-                    self.comp_actions_dic[agent_id] = []
-                self.comp_actions_dic[agent_id].extend(agent_comp_pa_ls)
+            self.planning_ls.append(planning_action_ls)
+            self.btml_ls.append(btml)
 
-                if comp_actions_name not in self.comp_agents_ls_dic:
-                    self.comp_agents_ls_dic[comp_actions_name] = []
-                self.comp_agents_ls_dic[comp_actions_name].append(i)
-
-                # new btml
-                # if agent_id not in self.comp_actions_BTML_dic:
-                #     self.comp_actions_BTML_dic[agent_id] = {}
-                # self.comp_actions_BTML_dic[agent_id].update(agent_comp_btml_dic)
-
-        return self.comp_actions_dic,self.comp_actions_BTML_dic, self.comp_agents_ls_dic
+        return self.planning_ls,self.btml_ls

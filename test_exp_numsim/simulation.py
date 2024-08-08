@@ -8,7 +8,7 @@ def simulation(dataset,num_agent,agents_actions,dmr):
     env.set_agent_actions(dataset["total_actions"],agents_actions)
 
     behavior_lib = [agent.behavior_lib for agent in env.agents]
-    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
+    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_btml_ls'])
 
     for i,agent in enumerate(env.agents):
         agent.bind_bt(dmr.bt_ls[i])

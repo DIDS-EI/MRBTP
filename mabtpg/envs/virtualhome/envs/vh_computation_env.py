@@ -21,6 +21,7 @@ class VHCompEnv(MiniCompEnv):
         self.object_to_category =None
 
         self.agents = [Agent(self, i) for i in range(self.num_agent)]
+        self.communication_times = 0
 
     def get_all_classify_objects_dic(self):
         self.all_category_to_objects, self.all_object_to_category = get_classify_objects_dic()

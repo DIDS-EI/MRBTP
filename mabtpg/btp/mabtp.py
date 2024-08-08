@@ -29,7 +29,7 @@ class MABTP:
 
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start))
+            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start,env=self.env))
 
         explored_condition_list = [goal]
 

@@ -102,7 +102,7 @@ agents_actions_predicates = generate_agents_actions(total_actions_predicates,num
 print("agents_actions_predicates:",agents_actions_predicates)
 agent_actions_model = filter_action_lists(total_actions_model,agents_actions_predicates)
 
-# agent_actions_model = total_actions_model
+# action_model = total_actions_model
 
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
@@ -114,7 +114,7 @@ print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="green")
 start_time = time.time()
 # start = None
 # planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
-# # planning_algorithm.planning(frozenset(goal),action_lists=agent_actions_model)
+# # planning_algorithm.planning(frozenset(goal),action_lists=action_model)
 # planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
 # behavior_lib = [agent.behavior_lib for agent in env.agents]
 # btml_list = planning_algorithm.get_btml_list()

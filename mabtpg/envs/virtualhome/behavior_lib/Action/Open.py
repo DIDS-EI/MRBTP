@@ -11,7 +11,7 @@ class Open(VHAction):
         self.agent_id = args[0]
         self.target_obj = args[1]
 
-        self.act_max_step = 20
+        self.act_max_step = 2
         self.act_cur_step = 0
 
     def get_action_model(self):

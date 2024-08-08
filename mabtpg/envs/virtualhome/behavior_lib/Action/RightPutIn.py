@@ -17,7 +17,10 @@ class RightPutIn(PutIn):
         self.act_cur_step = 0
 
     def get_action_model(self):
-        self.pre = {f'IsRightHolding({self.agent_id},{self.target_obj})', f'IsNear({self.agent_id},{self.target_place})', f'IsOpen({self.target_place})'}
+        self.pre = {f'IsRightHolding({self.agent_id},{self.target_obj})', f'IsNear({self.agent_id},{self.target_place})'}
+        if self.target_place in self.env.category_to_objects["CAN_OPEN"]:
+            self.pre  |= {f'IsOpen({self.target_place})'}
+
         self.add = {f'IsRightHandEmpty({self.agent_id})', f'IsIn({self.target_obj},{self.target_place})'}
         self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})'}
 
@@ -33,9 +36,15 @@ class RightPutIn(PutIn):
             for place in place_ls:
                 action_model = {}
 
-                action_model["pre"] = {f'IsRightHolding(agent-{agent.id},{obj})', f'IsNear(agent-{agent.id},{place})', f'IsOpen({place})'}
+                action_model["pre"] = {f'IsRightHolding(agent-{agent.id},{obj})', f'IsNear(agent-{agent.id},{place})'}
+                if place in env.category_to_objects["CAN_OPEN"]:
+                    action_model["pre"] |= {f'IsOpen({place})'}
+
                 action_model["add"] = {f'IsRightHandEmpty(agent-{agent.id})', f'IsIn({obj},{place})'}
                 action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})'}
+
+                # action_model["del_set"] |= {f'IsNear(agent-{agent.id},{place})' for place in obj_ls if place != obj}
+                # action_model["del_set"] |= {f"IsClose({place})"}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"RightPutIn(agent-{agent.id},{obj},{place})", **action_model))
         return planning_action_list

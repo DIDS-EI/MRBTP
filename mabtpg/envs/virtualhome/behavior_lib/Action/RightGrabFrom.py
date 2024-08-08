@@ -18,7 +18,10 @@ class RightGrabFrom(Grab):
         self.act_cur_step = 0
 
     def get_action_model(self):
-        self.pre = {f"IsRightHandEmpty({self.agent_id})", f"IsIn({self.obj},{self.container})", f"IsNear({self.agent_id},{self.container})", f"IsOpen({self.container})"}
+        self.pre = {f"IsRightHandEmpty({self.agent_id})", f"IsIn({self.obj},{self.container})", f"IsNear({self.agent_id},{self.container})"}
+        if self.container in self.env.category_to_objects["CAN_OPEN"]:
+            self.pre  |= {f'IsOpen({self.container})'}
+
         self.add = {f"IsRightHolding({self.agent_id},{self.obj})", f"IsRightHandFull({self.agent_id})"}
         self.del_set = {f"IsRightHandEmpty({self.agent_id})"}
         self.del_set |= {f'IsIn({self.obj},{place})' for place in self.env.category_to_objects["CONTAINERS"]}
@@ -37,7 +40,11 @@ class RightGrabFrom(Grab):
             for container in container_ls:
                 action_model = {}
 
-                action_model["pre"] = {f"IsRightHandEmpty(agent-{agent.id})", f"IsIn({obj},{container})", f"IsNear(agent-{agent.id},{container})", f"IsOpen({container})"}
+                action_model["pre"] = {f"IsRightHandEmpty(agent-{agent.id})", f"IsIn({obj},{container})", f"IsNear(agent-{agent.id},{container})"}
+
+                if container in env.category_to_objects["CAN_OPEN"]:
+                    action_model["pre"] |= {f'IsOpen({container})'}
+
                 action_model["add"] = {f"IsRightHolding(agent-{agent.id},{obj})", f"IsRightHandFull(agent-{agent.id})"}
                 action_model["del_set"] = {f"IsRightHandEmpty(agent-{agent.id})"}
                 action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CONTAINERS"]}

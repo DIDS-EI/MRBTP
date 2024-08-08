@@ -21,10 +21,12 @@ class MiniCompEnv(NumEnv):
 
         self.agents = [Agent(self, i) for i in range(self.num_agent)]
         self.verbose=True
+        self.communication_times = 0
 
     def reset(self):
         for agent in self.agents:
             agent.is_fail = False
+        self.communication_times = 0
 
 
     def create_behavior_libs(self):
@@ -57,6 +59,7 @@ class MiniCompEnv(NumEnv):
                 continue
 
             action = self.agents[i].step()
+
             # print(f"agent {i}, {action.name}")
             if action is None:
                 if self.verbose: print(f"Agent {i} has no action")

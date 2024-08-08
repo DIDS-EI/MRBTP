@@ -1,0 +1,206 @@
+[
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "milk",
+            "fridge"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "composition_action": [
+            {
+                "WalkToOpenFridge": ["Walk(self,fridge)", "Open(self,fridge)"]
+            },
+            {
+                "WalkToPutInMilkFridge": ["Walk(self,milk)","RightGrab(self,milk)","Walk(self,fridge)","RightPutIn(self,milk,fridge)"]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsOn(cupcake,kitchentable)",
+            "IsSwitchedOn(coffeemaker)"
+        ],
+        "init_state": ["IsSwitchedOff(coffeemaker)"],
+        "objects": [
+            "cupcake",
+            "coffeemaker",
+            "kitchentable"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "SwitchOn",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "composition_action": [
+            {
+                "WalkToSwitchOn": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "goal": [
+            "IsSwitchedOn(microwave)",
+            "IsIn(cutlets,microwave)"
+        ],
+        "init_state": [
+            "IsSwitchedOff(microwave)",
+            "IsClose(microwave)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "composition_action": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ]
+            },
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "goal": [
+            "IsIn(box,closet)"
+        ],
+        "init_state": [
+            "IsClose(closet)"
+        ],
+        "objects": [
+            "box",
+            "closet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Close",
+                "Open"
+            ]
+        ],
+        "composition_action": [
+            {
+                "WalkToPutInBoxCloset": [
+                    "Walk(self,box)",
+                    "RightGrab(self,box)",
+                    "Walk(self,closet)",
+                    "RightPutIn(self,box,closet)"
+                ]
+            },
+            {
+                "WalkToOpenCloset": [
+                    "Walk(self,closet)",
+                    "Open(self,closet)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "goal": [
+            "IsOn(toy,bookshelf)",
+            "IsIn(book,bookshelf)"
+        ],
+        "init_state": [
+        ],
+        "objects": [
+            "toy",
+            "book",
+            "bookshelf"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "composition_action": [
+            {
+                "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"]
+            },
+            {
+                "WalkToPutBookInBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPutIn(self,book,bookshelf)"]
+            }
+        ]
+    }
+]

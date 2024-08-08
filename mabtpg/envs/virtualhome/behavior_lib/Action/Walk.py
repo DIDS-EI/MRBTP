@@ -40,7 +40,7 @@ class Walk(VHAction):
 
             action_model["pre"] = set()
             action_model["add"] = {f"IsNear(agent-{agent.id},{obj})"}
-            action_model["del_set"] = {f'IsNear(agent-{agent.id},{place})' for place in cls.valid_args if place != obj}
-            action_model["cost"] = 5
+            action_model["del_set"] = {f'IsNear(agent-{agent.id},{place})' for place in obj_ls if place != obj}
+            action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"Walk(agent-{agent.id},{obj})", **action_model))
         return planning_action_list

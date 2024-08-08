@@ -22,6 +22,8 @@ class Agent(NumAgent):
         self.dong_accept_task=False
         tick_time = 0
 
+
+
         if action is None:
             if self.bt:
 
@@ -44,12 +46,15 @@ class Agent(NumAgent):
                             # print("current_task:", self.current_task)
 
                             self.finish_current_task()
+                            self.env.communication_times += 1
+
                             if self.last_action!=None:
                                 self.last_action.is_finish = False
                             self.last_action = None
 
                         if self.current_task != self.last_accept_task:
                             self.update_current_task()
+                            self.env.communication_times += 1
 
 
                     # if self.current_task != self.last_accept_task:
@@ -62,6 +67,7 @@ class Agent(NumAgent):
 
         else:
             self.action = action
+
         return self.action
 
 

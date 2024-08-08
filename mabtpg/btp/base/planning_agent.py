@@ -62,6 +62,7 @@ class PlanningAgent:
 
     # check if `condition` is the consequence of `action`
     def is_consequence(self, condition, action):
+        # print("action:",action)
         if condition & ((action.pre | action.add) - action.del_set) <= set():
             return False
         if (condition - action.del_set) != condition:
@@ -371,7 +372,8 @@ class PlanningAgent:
 
 
 
-    def add_conditions(self, planning_condition, parent):
+    @classmethod
+    def add_conditions(cls, planning_condition, parent):
         condition_set = planning_condition.condition_set
         if len(condition_set) == 0: return
 

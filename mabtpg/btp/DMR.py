@@ -48,28 +48,37 @@ class DMR:
         self.expanded_time = time.time() - start_time
 
 
-    def get_btml_and_bt_ls(self,behavior_lib=None,comp_actions_BTML_dic=None,comp_agents_ls_dic=None):
+    def get_btml_and_bt_ls(self,behavior_lib=None,comp_btml_ls=None, comp_planning_act_ls=None):
         # get btml and bt
         self.btml_ls = self.planning_algorithm.get_btml_list()
         self.bt_ls = []
 
 
         # add composition action
-        if comp_actions_BTML_dic is not None:
-            if comp_agents_ls_dic!=None:
+        if comp_planning_act_ls is not None:
+            for agent_id in range(self.num_agent):
+                self.btml_ls[agent_id].sub_btml_dict = comp_btml_ls[agent_id].sub_btml_dict
 
-                for cmp_act_name, agent_id_ls in comp_agents_ls_dic.items():
-                    agent_id_ls = comp_agents_ls_dic[cmp_act_name]
+                if self.save_dot:
+                    for name,sub_btml in self.btml_ls[agent_id].sub_btml_dict.items():
+                        tmp_bt = BehaviorTree(btml=sub_btml, behavior_lib=behavior_lib[agent_id])
+                        tmp_bt.draw(file_name = f"data/{agent_id}-{name}")
 
-                    for agent_id in agent_id_ls:
-                        agent = self.planning_algorithm.planned_agent_list[agent_id]
-                        btml = comp_actions_BTML_dic[cmp_act_name]
-                        self.btml_ls[agent_id].anytree_root = agent.anytree_root
-                        self.btml_ls[agent_id].sub_btml_dict[cmp_act_name] = btml
 
-                        tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[agent_id])
-                        if self.save_dot:
-                            tmp_bt.draw(file_name = f"data/{cmp_act_name}")
+            # if comp_agents_ls_dic!=None:
+            #
+            #     for cmp_act_name, agent_id_ls in comp_agents_ls_dic.items():
+            #         agent_id_ls = comp_agents_ls_dic[cmp_act_name]
+            #
+            #         for agent_id in agent_id_ls:
+            #             agent = self.planning_algorithm.planned_agent_list[agent_id]
+            #             btml = comp_actions_BTML_dic[cmp_act_name]
+            #             self.btml_ls[agent_id].anytree_root = agent.anytree_root
+            #             self.btml_ls[agent_id].sub_btml_dict[cmp_act_name] = btml
+            #
+            #             tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[agent_id])
+            #             if self.save_dot:
+            #                 tmp_bt.draw(file_name = f"data/{cmp_act_name}")
 
 
         for i in range(self.num_agent):
