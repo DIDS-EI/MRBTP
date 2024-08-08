@@ -17,6 +17,10 @@ class SwitchOn(VHAction):
 
     def get_action_model(self):
         self.pre = {f"IsLeftHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})", f"IsSwitchedOff({self.target_obj})"}
+
+        # if self.target_obj in self.env.category_to_objects["CAN_OPEN"]:
+        #     self.pre |= {f'IsClose({self.target_obj})'}
+
         self.add = {f"IsSwitchedOn({self.target_obj})"}
         self.del_set = {f"IsSwitchedOff({self.target_obj})"}
 
@@ -30,6 +34,10 @@ class SwitchOn(VHAction):
             action_model = {}
 
             action_model["pre"] = {f"IsLeftHandEmpty(agent-{agent.id})", f"IsNear(agent-{agent.id},{obj})", f"IsSwitchedOff({obj})"}
+
+            # if obj in env.category_to_objects["CAN_OPEN"]:
+            #     action_model["pre"] |= {f'IsClose({obj})'}
+
             action_model["add"] = {f"IsSwitchedOn({obj})"}
             action_model["del_set"] = {f"IsSwitchedOff({obj})"}
 

@@ -23,7 +23,7 @@ class LeftPutIn(PutIn):
             self.pre |= {f'IsOpen({self.target_place})'}
 
         self.add = {f'IsLeftHandEmpty({self.agent_id})', f'IsIn({self.target_obj},{self.target_place})'}
-        self.del_set = {f'IsLeftHolding({self.agent_id},{self.target_obj})'}
+        self.del_set = {f'IsLeftHolding({self.agent_id},{self.target_obj})',f"IsLeftHandFull({self.agent_id})"}
 
     @classmethod
     def get_planning_action_list(cls, agent, env):
@@ -41,7 +41,7 @@ class LeftPutIn(PutIn):
                     action_model["pre"] |= {f'IsOpen({place})'}
 
                 action_model["add"] = {f'IsLeftHandEmpty(agent-{agent.id})', f'IsIn({obj},{place})'}
-                action_model["del_set"] = {f'IsLeftHolding(agent-{agent.id},{obj})'}
+                action_model["del_set"] = {f'IsLeftHolding(agent-{agent.id},{obj})',f"IsLeftHandFull(agent-{agent.id})"}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"LeftPutIn(agent-{agent.id},{obj},{place})", **action_model))
         return planning_action_list

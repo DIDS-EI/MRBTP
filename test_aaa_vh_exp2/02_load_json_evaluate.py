@@ -37,10 +37,11 @@ def bind_bt(bt_list):
 
 
 # 定义记录和计算平均值的函数
-def record_data(with_comp_action, use_comp_subtask_chain, use_atom_subtask_chain,
+def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subtask_chain,
                 done, env_steps, agents_steps, communication_times,CABTP_expanded_num, dmr_record_expanded_num, CABTP_expanded_time, dmr_expanded_time):
 
     details = {
+        'data_id':data_id,
         'with_comp_action': with_comp_action,
         'use_comp_subtask_chain': use_comp_subtask_chain,
         'use_atom_subtask_chain': use_atom_subtask_chain,
@@ -61,8 +62,10 @@ def record_data(with_comp_action, use_comp_subtask_chain, use_atom_subtask_chain
 
 
 # json_path = "vh1.json"
+
 # json_type = "homo"
-json_type = "hete"
+# json_type = "hete"
+json_type = "half"
 
 
 json_path = f"vh_{json_type}.json"
@@ -80,15 +83,16 @@ verbose = False
 all_details = []
 average_details = []
 
-for with_comp_action in [True]:
-    for use_comp_subtask_chain in [True]:
-        for use_atom_subtask_chain in [False]:
+# comp = False
+# for with_comp_action in [comp]:
+#     for use_comp_subtask_chain in [comp]:
+#         for use_atom_subtask_chain in [False]:
 
-# for with_comp_action in [False, True]:
-#     for use_comp_subtask_chain in [False, True]:
-#         if with_comp_action==False and use_comp_subtask_chain==True:
-#             continue
-#         for use_atom_subtask_chain in [False, True]:
+for with_comp_action in [False, True]:
+    for use_comp_subtask_chain in [False, True]:
+        if with_comp_action==False and use_comp_subtask_chain==True:
+            continue
+        for use_atom_subtask_chain in [False, True]:
 
             print_colored(f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",color="purple")
 
@@ -239,7 +243,7 @@ for with_comp_action in [True]:
                 print("CABTP time:", CABTP_expanded_time, "expanded time:",dmr.expanded_time,"total time",CABTP_expanded_time+dmr.expanded_time)
                 print("expanded time:",dmr.expanded_time)
 
-                details = record_data(with_comp_action, use_comp_subtask_chain, use_atom_subtask_chain, done,
+                details = record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subtask_chain, done,
                                       env_steps, agents_steps, communication_times,
                                       CABTP_expanded_num, dmr.record_expanded_num, CABTP_expanded_time, dmr.expanded_time)
 
@@ -263,11 +267,11 @@ for with_comp_action in [True]:
 
 # 保存所有详细数据到CSV
 df_all_details = pd.DataFrame(all_details)
-df_all_details.to_csv('details_data.csv', index=False)
+df_all_details.to_csv(f'{json_type}_details_data.csv', index=False)
 
 # 保存所有平均值数据到新的CSV
 df_avg_details = pd.DataFrame(average_details)
-df_avg_details.to_csv('average_data.csv', index=False)
+df_avg_details.to_csv(f'{json_type}_average_data.csv', index=False)
 
 # 定义并打印总结表格的函数
 

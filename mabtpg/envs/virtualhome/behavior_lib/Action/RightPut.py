@@ -20,7 +20,7 @@ class RightPut(Put):
     def get_action_model(self):
         self.pre = {f'IsRightHolding({self.agent_id},{self.target_obj})', f'IsNear({self.agent_id},{self.target_place})'}
         self.add = {f'IsRightHandEmpty({self.agent_id})', f'IsOn({self.target_obj},{self.target_place})'}
-        self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})'}
+        self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})', f"IsRightHandFull({self.agent_id})"}
 
 
     @classmethod
@@ -35,7 +35,7 @@ class RightPut(Put):
 
                 action_model["pre"] = {f'IsRightHolding(agent-{agent.id},{obj})', f'IsNear(agent-{agent.id},{place})'}
                 action_model["add"] = {f'IsRightHandEmpty(agent-{agent.id})', f'IsOn({obj},{place})'}
-                action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})'}
+                action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})',f"IsRightHandFull(agent-{agent.id})"}
                 action_model["cost"] = 1
                 planning_action_list.append(PlanningAction(f"RightPut(agent-{agent.id},{obj},{place})", **action_model))
         return planning_action_list

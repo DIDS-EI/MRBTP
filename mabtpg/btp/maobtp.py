@@ -129,8 +129,8 @@ class MAOBTP(MABTP):
                 premise_condition_cost_list = agent.one_step_expand(condition_cost)
                 # explored_condition_list += [condition_cost for condition_cost in premise_condition_cost_list]
                 # 使用 heappush 添加元素来维护堆结构
-                for condition_cost in premise_condition_cost_list:
-                    heapq.heappush(explored_condition_list, condition_cost)
+                for cond_cost in premise_condition_cost_list:
+                    heapq.heappush(explored_condition_list, cond_cost)
 
             if self.start!=None and self.start>=condition:
                 break

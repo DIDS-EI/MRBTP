@@ -1,13 +1,32 @@
 fallback
-    condition IsIn(cutlets,microwave) & IsSwitchedOn(microwave)
+    condition IsIn(book,bookshelf) & IsOn(toy,bookshelf)
     fallback
         sequence
-            condition IsSelfTask(frozenset({'IsIn(cutlets,microwave)'}))
-            action WalkToPutCutletsInMicrowave()
+            condition IsSelfTask(frozenset({'IsIn(book,bookshelf)'}))
+            action WalkToPutBookInBookshelf()
             action FinishTask()
         sequence
-            condition IsLeftHandEmpty(agent-1) & IsOpen(microwave) & IsRightHandEmpty(agent-2) & IsSwitchedOff(microwave)
-            action SelfAcceptTask(frozenset({'IsIn(cutlets,microwave)'}))
+            fallback
+                condition IsOn(toy,bookshelf) & IsRightHandEmpty(agent-2)
+                sequence
+                    condition IsNear(agent-2,bookshelf) & IsOn(toy,bookshelf) & IsRightHolding(agent-2,toy)
+                    action RightPutIn(agent-2,toy,bookshelf)
+            action SelfAcceptTask(frozenset({'IsIn(book,bookshelf)'}))
     sequence
-        condition IsLeftHandEmpty(agent-1) & IsNear(agent-2,microwave) & IsOpen(microwave) & IsRightHolding(agent-2,cutlets) & IsSwitchedOff(microwave)
-        action RightPutIn(agent-2,cutlets,microwave)
+        condition IsNear(agent-2,bookshelf) & IsOn(toy,bookshelf) & IsRightHolding(agent-2,book)
+        action RightPutIn(agent-2,book,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsIn(book,bookshelf)'}))
+            action WalkToPutBookInBookshelf()
+            action FinishTask()
+        sequence
+            fallback
+                condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                sequence
+                    condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+                    action RightPutIn(agent-2,toy,bookshelf)
+            action SelfAcceptTask(frozenset({'IsIn(book,bookshelf)'}))
+    sequence
+        condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,book)
+        action RightPutIn(agent-2,book,bookshelf)

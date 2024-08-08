@@ -22,7 +22,7 @@ class RightPutIn(PutIn):
             self.pre  |= {f'IsOpen({self.target_place})'}
 
         self.add = {f'IsRightHandEmpty({self.agent_id})', f'IsIn({self.target_obj},{self.target_place})'}
-        self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})'}
+        self.del_set = {f'IsRightHolding({self.agent_id},{self.target_obj})', f"IsRightHandFull({self.agent_id})"}
 
 
 
@@ -41,7 +41,7 @@ class RightPutIn(PutIn):
                     action_model["pre"] |= {f'IsOpen({place})'}
 
                 action_model["add"] = {f'IsRightHandEmpty(agent-{agent.id})', f'IsIn({obj},{place})'}
-                action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})'}
+                action_model["del_set"] = {f'IsRightHolding(agent-{agent.id},{obj})', f"IsRightHandFull(agent-{agent.id})"}
 
                 # action_model["del_set"] |= {f'IsNear(agent-{agent.id},{place})' for place in obj_ls if place != obj}
                 # action_model["del_set"] |= {f"IsClose({place})"}

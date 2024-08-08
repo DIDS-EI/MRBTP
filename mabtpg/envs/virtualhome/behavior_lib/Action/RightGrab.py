@@ -25,7 +25,7 @@ class RightGrab(Grab):
         self.add = {f"IsRightHolding({self.agent_id},{self.target_obj})", f"IsRightHandFull({self.agent_id})"}
         self.del_set = {f"IsRightHandEmpty({self.agent_id})"}
         self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
-        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
+        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CONTAINERS"]}
 
 
 
@@ -41,7 +41,7 @@ class RightGrab(Grab):
             action_model["add"] = {f"IsRightHolding(agent-{agent.id},{obj})", f"IsRightHandFull(agent-{agent.id})"}
             action_model["del_set"] = {f"IsRightHandEmpty(agent-{agent.id})"}
             action_model["del_set"] |= {f'IsOn({obj},{place})' for place in env.category_to_objects["SURFACES"]}
-            action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CAN_OPEN"]}
+            action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CONTAINERS"]}
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"RightGrab(agent-{agent.id},{obj})", **action_model))
         return planning_action_list

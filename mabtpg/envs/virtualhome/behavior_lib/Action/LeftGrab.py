@@ -16,10 +16,10 @@ class LeftGrab(Grab):
 
     def get_action_model(self):
         self.pre = {f"IsLeftHandEmpty({self.agent_id})", f"IsNear({self.agent_id},{self.target_obj})"}
-        self.add = {f"IsLeftHolding({self.agent_id},{self.target_obj})", "IsLeftHandFull({self.agent_id})"}
+        self.add = {f"IsLeftHolding({self.agent_id},{self.target_obj})"}
         self.del_set = {f"IsLeftHandEmpty({self.agent_id})"}
         self.del_set |= {f'IsOn({self.target_obj},{place})' for place in self.env.category_to_objects["SURFACES"]}
-        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CAN_OPEN"]}
+        self.del_set |= {f'IsIn({self.target_obj},{place})' for place in self.env.category_to_objects["CONTAINERS"]}
 
 
 
@@ -39,7 +39,7 @@ class LeftGrab(Grab):
             action_model["add"] = {f"IsLeftHolding(agent-{agent.id},{obj})", f"IsLeftHandFull(agent-{agent.id})"}
             action_model["del_set"] = {f"IsLeftHandEmpty(agent-{agent.id})"}
             action_model["del_set"] |= {f'IsOn({obj},{place})' for place in env.category_to_objects["SURFACES"]}
-            action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CAN_OPEN"]}
+            action_model["del_set"] |= {f'IsIn({obj},{place})' for place in env.category_to_objects["CONTAINERS"]}
             action_model["cost"] = 1
             planning_action_list.append(PlanningAction(f"LeftGrab(agent-{agent.id},{obj})", **action_model))
         return planning_action_list
