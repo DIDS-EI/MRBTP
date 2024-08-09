@@ -42,25 +42,25 @@ class MAGridEnv(MiniGridEnv,Env):
         self._gen_grid(self.width, self.height)
 
         # 设置智能体初始位置和方向
-        self.agents[0].position = (6, 2)
-        self.agents[0].direction = 0
-        self.agents[1].position = (9, 2)
-        self.agents[1].direction = 0
-
-        self.agents[2].position = (7, 4)
-        self.agents[2].direction = 1
-        self.agents[3].position = (8, 4)
-        self.agents[3].direction = 1
-
-        self.agents[4].position = (6, 8)
-        self.agents[4].direction = 3  # 朝向东方
-        self.agents[5].position = (9, 8)
-        self.agents[5].direction = 3  # 朝向南方
-
-        self.agents[6].position = (7, 7)
-        self.agents[6].direction = 3  # 朝向北方
-        self.agents[7].position = (8, 7)
-        self.agents[7].direction = 3  # 朝向东方
+        # self.agents[0].position = (6, 2)
+        # self.agents[0].direction = 0
+        # self.agents[1].position = (9, 2)
+        # self.agents[1].direction = 0
+        #
+        # self.agents[2].position = (7, 4)
+        # self.agents[2].direction = 1
+        # self.agents[3].position = (8, 4)
+        # self.agents[3].direction = 1
+        #
+        # self.agents[4].position = (6, 8)
+        # self.agents[4].direction = 3  # 朝向东方
+        # self.agents[5].position = (9, 8)
+        # self.agents[5].direction = 3  # 朝向南方
+        #
+        # self.agents[6].position = (7, 7)
+        # self.agents[6].direction = 3  # 朝向北方
+        # self.agents[7].position = (8, 7)
+        # self.agents[7].direction = 3  # 朝向东方
 
 
 
