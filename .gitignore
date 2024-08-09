@@ -20,6 +20,7 @@ MANIFEST
 pytorch_model.bin
 *.dot
 *.svg
+*.png
 test_gridworld/Output/
 simulators/virtualhome/windows/*
 !simulators/virtualhome/windows/.gitkeep
