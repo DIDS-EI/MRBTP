@@ -1,6 +1,6 @@
 import random
 from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import print_action_data_table
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import print_action_data_table
 from simulation import simulation
 from mabtpg.utils.tools import *
 import numpy as np

@@ -77,8 +77,8 @@ comp_act_BTML_dic = cap.comp_actions_BTML_dic
 # set agent's planning agent
 # for i in range(env.num_agent):
 #     agent_id = "agent-"+str(i)
-#     if agent_id in comp_planning_act_dic:
-#         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
+#     if agent_id in comp_planning_act_ls:
+#         action_lists[i].extend(comp_planning_act_ls["agent-"+str(i)])
 #     # sorted by cost
 #     action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)
 

@@ -1,0 +1,25 @@
+{
+    "goal": [
+        "IsIn(milk,fridge)",
+        "IsIn(apple,fridge)"
+    ],
+    "init_state": [
+        "IsClose(fridge)"
+    ],
+    "objects": [
+        "milk",
+        "apple",
+        "fridge"
+    ],
+    "action_space": [
+        [
+            "Walk",
+            "Open"
+        ],
+        [
+            "Walk",
+            "RightGrab",
+            "RightPutIn"
+        ]
+    ]
+}

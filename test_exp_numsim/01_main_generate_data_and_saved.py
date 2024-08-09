@@ -1,7 +1,7 @@
 import random
 import pickle
 from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table
+from mabtpg.envs.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table
 import numpy as np
 from simulation import simulation
 random.seed(0)
@@ -20,7 +20,7 @@ max_action_steps = 2 # 每个原子动作的最大步数
 
 
 #  get data
-max_num_data = 200
+max_num_data = 1
 data_generator = DataGenerator(max_depth=max_depth,max_branch=max_branch, cmp_ratio=cmp_ratio,
                                max_action_steps = max_action_steps,
                                max_cmp_act_split=max_cmp_act_split, need_split_action=True,max_num_data=max_num_data)
@@ -29,7 +29,7 @@ data_generator = DataGenerator(max_depth=max_depth,max_branch=max_branch, cmp_ra
 print("======================")
 
 valid_data = 0
-max_valid_data = 100
+max_valid_data = 1
 
 data_id = 0
 # with_comp_action = True
@@ -62,7 +62,7 @@ for dataset in data_generator.datasets:
         # Run Decentralized multi-agent BT algorithm
         # #########################
         # 运行多智能体算法
-        from DMR import DMR
+        from mabtpg.btp.DMR import DMR
 
         dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,
                   save_dot=False)  # False 也还需要再调试

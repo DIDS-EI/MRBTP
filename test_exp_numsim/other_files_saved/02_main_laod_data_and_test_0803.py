@@ -1,6 +1,6 @@
 import random
 from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import load_data_from_directory
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import load_data_from_directory
 import numpy as np
 import csv
 
@@ -11,12 +11,12 @@ np.random.seed(0)
 # def simulation():
 #     start = dataset["start_num"]
 #     goal = dataset["goal_num"]
-#     from mabtpg.envs.computation_env.numeric_env import NumericEnv
+#     from mabtpg.envs.numerical_env.numeric_env import NumericEnv
 #     env = NumericEnv(num_agent=num_agent,start=start,goal=goal)
 #     env.set_agent_actions(agents_actions)
 #
 #     behavior_lib = [agent.behavior_lib for agent in env.agents]
-#     dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
+#     dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_btml_ls=dataset['comp_btml_ls'])
 #
 #     for i,agent in enumerate(env.agents):
 #         agent.bind_bt(dmr.bt_ls[i])

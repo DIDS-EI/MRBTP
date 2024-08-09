@@ -125,7 +125,7 @@ class CompositeActionPlanner:
                 # sub_btml.var_args = args_ls
                 # sub_btml.anytree_root = planning_algorithm.anytree_root
                 #
-                # comp_actions_BTML.update({comp_actions_name:sub_btml})
+                # btml_ls.update({comp_actions_name:sub_btml})
 
         return composite_planning_action,comp_actions_BTML
 
@@ -136,7 +136,7 @@ class CompositeActionPlanner:
             None
         Returns:
             tuple: A tuple containing two dictionaries:
-                - comp_actions_dic: Dictionary with agent IDs as keys and lists of composite PlanningActions as values.
+                - planning_ls: Dictionary with agent IDs as keys and lists of composite PlanningActions as values.
                 - comp_btml_dic: Dictionary with comp_actions_name as keys and  BTMLs as values.
         """
 
@@ -173,8 +173,8 @@ class CompositeActionPlanner:
                 self.comp_actions_dic[agent_id].extend(agent_comp_pa_ls)
 
                 # new btml
-                # if agent_id not in self.comp_actions_BTML_dic:
-                #     self.comp_actions_BTML_dic[agent_id] = {}
-                # self.comp_actions_BTML_dic[agent_id].update(agent_comp_btml_dic)
+                # if agent_id not in self.comp_btml_ls:
+                #     self.comp_btml_ls[agent_id] = {}
+                # self.comp_btml_ls[agent_id].update(agent_comp_btml_dic)
 
         return self.comp_actions_dic,self.comp_actions_BTML_dic

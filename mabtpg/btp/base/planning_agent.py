@@ -62,6 +62,7 @@ class PlanningAgent:
 
     # check if `condition` is the consequence of `action`
     def is_consequence(self, condition, action):
+        # print("action:",action)
         if condition & ((action.pre | action.add) - action.del_set) <= set():
             return False
         if (condition - action.del_set) != condition:
@@ -303,6 +304,49 @@ class PlanningAgent:
     #
     #     self.anytree_root = anytree_root
 
+    def new_create_pruned_anytree(self):
+
+        task_num = 0
+
+        anytree_root = AnyTreeNode(NODE_TYPE.selector)
+        stack = []
+        # add goal conditions into root
+        self.add_conditions(self.goal_condition, anytree_root)
+        for children in self.goal_condition.children:
+            children.parent = anytree_root
+            stack.append(children)
+
+        while stack != []:
+            current_condition = stack.pop(0)
+
+            if current_condition.composition_action_flag == False:
+                # create a sequence node and its condition-action pair
+                sequence_node = AnyTreeNode(NODE_TYPE.sequence)
+                if current_condition.children == []:
+                    condition_parent = sequence_node
+                else:
+                    condition_parent = AnyTreeNode(NODE_TYPE.selector)
+                    sequence_node.add_child(condition_parent)
+                    # add children into stack
+                    for children in current_condition.children:
+                        children.parent = condition_parent
+                        stack.append(children)
+                # add condition
+                self.add_conditions(current_condition, condition_parent)
+                # add action
+                cls_name, args = parse_predicate_logic(current_condition.action)
+                # args = tuple(list(args) + [current_condition.action_pre])
+                action_node = AnyTreeNode(NODE_TYPE.action, cls_name, args)
+
+                # add the sequence node into its parent
+                if current_condition.children == [] and len(current_condition.condition_set) == 0:
+                    current_condition.parent.add_child(action_node)
+                else:
+                    sequence_node.add_child(action_node)
+                    current_condition.parent.add_child(sequence_node)
+
+        self.anytree_root = anytree_root
+
     def create_btml(self):
         self.create_anytree()
         btml = BTML()
@@ -317,7 +361,19 @@ class PlanningAgent:
 
         return bt
 
-    def add_conditions(self, planning_condition, parent):
+    def new_output_pruned_bt(self, behavior_lib=None):
+        self.new_create_pruned_anytree()
+        btml = BTML()
+        btml.anytree_root = self.anytree_root
+
+        self.btml = btml
+        bt = BehaviorTree(btml=self.btml, behavior_lib=behavior_lib)
+        return bt
+
+
+
+    @classmethod
+    def add_conditions(cls, planning_condition, parent):
         condition_set = planning_condition.condition_set
         if len(condition_set) == 0: return
 

@@ -40,7 +40,7 @@ comp_actions_BTML_dic = {}
 # sequence.add_child(AnyTreeNode('action','A','x'))
 # sub_btml.anytree_root=sequence
 
-# comp_actions_BTML_dic = {'CA':sub_btml}
+# comp_btml_ls = {'CA':sub_btml}
 
 
 for i, actions in enumerate(agent_actions):
@@ -77,7 +77,7 @@ start = data['start']
 # from num_cabtp import Num_CABTP
 # from mabtpg.behavior_tree.btml.BTML import BTML
 # from mabtpg.behavior_tree.behavior_tree import BehaviorTree
-# comp_actions_BTML_dic = {}
+# comp_btml_ls = {}
 # for comp_act, split_action_ls in split_actions_dict.items():
 #     sub_goal = frozenset((comp_act.pre | comp_act.add) - comp_act.del_set)
 #     planning_algorithm = Num_CABTP(verbose=False, goal=sub_goal, sequence=split_action_ls,action_list=split_action_ls)
@@ -90,7 +90,7 @@ start = data['start']
 #     sub_btml.var_args = None
 #     sub_btml.anytree_root = planning_algorithm.anytree_root
 #
-#     comp_actions_BTML_dic[comp_act.name] = sub_btml
+#     comp_btml_ls[comp_act.name] = sub_btml
 
 # 运行多智能体算法
 from DMR import DMR
@@ -103,8 +103,8 @@ dmr.planning()
 # #########################
 # 要tick进行测试，能否从 start 到 goal。
 # 要几步
-from mabtpg.envs.computation_env.computation_env import ComputationEnv
-env = ComputationEnv(num_agent=num_agent, start=start, goal=goal)
+from mabtpg.envs.numerical_env.numerical_env import NumEnv
+env = NumEnv(num_agent=num_agent, start=start, goal=goal)
 env.set_agent_actions(agent_actions)
 
 behavior_lib = [agent.behavior_lib for agent in env.agents]

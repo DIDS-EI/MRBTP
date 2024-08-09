@@ -17,7 +17,7 @@ class PutNearInRoom(Action):
         self.path = None
         self.source_obj_id = args[1]
         self.target_obj_id = args[2]
-        self.room_index = args[3]
+        self.room_index = int(args[3].split('-')[1])
 
         self.target_position = None
         self.target_obj_pos = None
@@ -68,7 +68,7 @@ class PutNearInRoom(Action):
         if self.check_if_pre_in_predict_condition():
             return Status.RUNNING
 
-        if self.room_index not in self.env.room_cells:
+        if self.room_index not in self.env.room_cells.keys():
             raise ValueError(f"Room index {self.room_index} does not exist.")
 
         if self.target_position is None:

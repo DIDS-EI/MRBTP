@@ -1,19 +1,15 @@
-import time
-
-from mabtpg.algo.llm_client.llms.gpt3 import LLMGPT3
 import gymnasium as gym
 from mabtpg import MiniGridToMAGridEnv
-from minigrid.core.world_object import Ball, Box,Door
+from minigrid.core.world_object import Ball
 from mabtpg.utils import get_root_path
-from mabtpg import BehaviorLibrary
+
 root_path = get_root_path()
-from itertools import permutations
 import time
-from composite_action_tools import CompositeActionPlanner
+from mabtpg.utils.composite_action_tools import CompositeActionPlanner
 
-from mabtpg.utils.tools import print_colored
+from mabtpg.utils.tools import print_colored,filter_action_lists
 
-num_agent = 3
+num_agent = 1
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
 tile_size = 32
@@ -37,8 +33,8 @@ ball = Ball('red')
 env.place_object_in_room(ball,0)
 ball = Ball('yellow')
 env.place_object_in_room(ball,0)
-ball = Ball('grey')
-env.place_object_in_room(ball,0)
+# ball = Ball('grey')
+# env.place_object_in_room(ball,0)
 # ball = Ball('red')
 # env.place_object_in_room(ball,0)
 # ball = Ball('red')
@@ -53,65 +49,80 @@ env.reset(seed=0)
 
 # goal = "IsNear(ball-0,ball-1)"
 # goal = "IsInRoom(ball-0,room-1)"
-action_lists = env.get_action_lists()
+action_lists = env.create_action_model()
 start = env.get_initial_state()
 print(start)
 
-action_sequences = {
-    # "GetObj": ['GoToInRoom', 'PickUp'],
-    # "ToggleDoor":['GoToInRoom','Toggle']
-    # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',"PutInRoom"],
-    # "PutDown":['']
-    # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
+# action_sequences = {
+#     # "GetObj": ['GoToInRoom', 'PickUp'],
+#     # "ToggleDoor":['GoToInRoom','Toggle']
+#     # "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',"PutInRoom"],
+#     # "PutDown":['']
+#     # "PickUpItemAndMove":['GoToInRoom', 'PickUp', 'GoToInRoom']
+#
+#     # ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle','PutInRoom'], 怎么搜出来，现在的 CABTP 还是有问题。PutInRoom 后面规划不出 Toggle，不满足增加而不删除
+#
+#     "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
+#     # "PutObjInRoom":["PutInRoom"],
+#      "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
+#     # "GoBtwRoom":["GoBtwRoom"]
+#
+#     # "GoAndPickUp": ['GoToInRoom', 'PickUp'],
+#     # "GoToInRoom": ["GoToInRoom"],
+#     # "Toggle": ["Toggle"],
+#     # "MoveItemBetweenRooms": ['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
+# }
 
-    # ['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle','PutInRoom'], 怎么搜出来，现在的 CABTP 还是有问题。PutInRoom 后面规划不出 Toggle，不满足增加而不删除
+# agents_actions=[["GetKeyAndOpenDoor"],
+#                 ["MoveItemBetweenRooms"]]
 
-    "GetKeyAndOpenDoor":['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle'],
-    # "PutObjInRoom":["PutInRoom"],
-     "MoveItemBetweenRooms":['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
-    # "GoBtwRoom":["GoBtwRoom"]
+# agents_actions = [['GoToInRoom', 'PickUp', 'GoToInRoom', 'Toggle',],
+#                   ['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom']]
 
-    # "GoAndPickUp": ['GoToInRoom', 'PickUp'],
-    # "GoToInRoom": ["GoToInRoom"],
-    # "Toggle": ["Toggle"],
-    # "MoveItemBetweenRooms": ['GoToInRoom', 'PickUp', 'GoBtwRoom', 'PutInRoom'],
-}
+# action_lists = filter_action_lists(action_lists,agents_actions)
+
+action_sequences = [
+    {
+        "GetKeyAndOpenDoor":['GoToInRoom(self,key-0,room-0)', 'PickUp(self,key-0)', 'GoToInRoom(self,door-0,room-0)', 'Toggle(self,door-0)']
+    }
+]
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
 cap.get_composite_action()
-comp_planning_act_dic = cap.comp_actions_dic
-comp_act_BTML_dic = cap.comp_actions_BTML_dic
+comp_planning_act_dic = cap.planning_ls
+comp_act_BTML_dic = cap.btml_ls
 
 
 # set agent's planning agent
 # for i in range(env.num_agent):
 #     agent_id = "agent-"+str(i)
-#     if agent_id in comp_planning_act_dic:
-#         action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
+#     if agent_id in comp_planning_act_ls:
+#         action_lists[i].extend(comp_planning_act_ls["agent-"+str(i)])
 #     # sorted by cost
 #     action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)
 
 
-for i in range(env.num_agent):
-    agent_id = "agent-"+str(i)
-    # action_lists[i]=[] # if only composition action
-    if agent_id in comp_planning_act_dic:
-        action_lists[i].extend(comp_planning_act_dic["agent-"+str(i)])
-    # sorted by cost
-    action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)
+# for i in range(env.num_agent):
+#     agent_id = "agent-"+str(i)
+#     action_lists[i]=[] # if only composition action
+#     if agent_id in comp_planning_act_ls:
+#         action_lists[i].extend(comp_planning_act_ls["agent-"+str(i)])
+#     # sorted by cost
+#     action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)
 
 
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
-goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
 # goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsInRoom(ball-0,room-1)"}
+# goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsNear(ball-0,door-0)"}
-# goal = {"IsOpen(door-0)"}
+goal = {"IsOpen(door-0)"}
 
-print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="red")
+print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="green")
 start_time = time.time()
 # start = None
 planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
@@ -127,8 +138,8 @@ btml_list = planning_algorithm.get_btml_list()
 # behavior_lib = [agent.behavior_lib for agent in env.agents]
 # btml_list = planning_algorithm.get_btml_list()
 
-print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="red")
-print_colored(f"Time: {time.time()-start_time}",color="red")
+print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="green")
+print_colored(f"Time: {time.time()-start_time}",color="green")
 
 
 # bt_list = planning_algorithm.output_bt_list([agent.behavior_lib for agent in env.agents])
@@ -140,8 +151,6 @@ print_colored(f"Time: {time.time()-start_time}",color="red")
 
 # 在规划出来的 BTML 里面加上 新的sub_btml_dict
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
-from mabtpg.utils.any_tree_node import AnyTreeNode
-from mabtpg.behavior_tree.constants import NODE_TYPE
 
 # bt_list=[]
 # for i,agent in enumerate(planning_algorithm.planned_agent_list):
@@ -159,18 +168,27 @@ from mabtpg.behavior_tree.constants import NODE_TYPE
 
 # new
 bt_list=[]
-for i,agent in enumerate(planning_algorithm.planned_agent_list):
-    # for name,btml in comp_act_BTML_dic["agent-"+str(i)].items():
-    for j,(name, btml) in enumerate(comp_act_BTML_dic.items()):
-        btml_list[i].anytree_root = agent.anytree_root
-        btml_list[i].sub_btml_dict[name] = btml
-        print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
+for agent_id,agent in enumerate(planning_algorithm.planned_agent_list):
+    btml_list[agent_id].sub_btml_dict = comp_act_BTML_dic[agent_id].sub_btml_dict
 
-        tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
-        # tmp_bt.draw(file_name = name+f"-{j}")
+    for name, sub_btml in comp_act_BTML_dic[agent_id].sub_btml_dict.items():
+        tmp_bt = BehaviorTree(btml=sub_btml, behavior_lib=behavior_lib[agent_id])
+        tmp_bt.draw(file_name=f"data/{agent_id}-{name}")
 
-    bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
-    bt_list.append(bt)
+# bt_list=[]
+# for i,agent in enumerate(planning_algorithm.planned_agent_list):
+#     # for name,btml in comp_act_BTML_dic["agent-"+str(i)].items():
+#     for j,(name, btml) in enumerate(comp_act_BTML_dic.items()):
+#
+#         btml_list[i].anytree_root = agent.anytree_root
+#         btml_list[i].sub_btml_dict[name] = btml
+#         print("\n" + "-" * 10 + f" Planned BT for agent {i} " + "-" * 10)
+#
+#         tmp_bt = BehaviorTree(btml=btml, behavior_lib=behavior_lib[i])
+#         tmp_bt.draw(file_name = name+f"-{j}")
+#
+#     bt = BehaviorTree(btml=btml_list[i], behavior_lib=behavior_lib[i])
+#     bt_list.append(bt)
 
 
 
@@ -178,7 +196,7 @@ for i,agent in enumerate(planning_algorithm.planned_agent_list):
 
 for i in range(env.num_agent):
     bt_list[i].save_btml(f"robot-{i}.bt")
-    # bt_list[i].draw(file_name=f"agent-{i}")
+    bt_list[i].draw(file_name=f"agent-{i}")
 
 # bind the behavior tree to agents
 for i,agent in enumerate(env.agents):

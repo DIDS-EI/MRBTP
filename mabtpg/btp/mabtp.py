@@ -29,7 +29,7 @@ class MABTP:
 
         planning_agent_list = []
         for id,action_list in enumerate(action_lists):
-            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start))
+            planning_agent_list.append(PlanningAgent(action_list,goal,id,self.verbose,start=self.start,env=self.env))
 
         explored_condition_list = [goal]
 
@@ -47,7 +47,7 @@ class MABTP:
             if self.start!=None and self.start>=condition:
                 break
 
-            if time.time() - start_time>10:
+            if time.time() - start_time> 20:
                 self.expanded_time = time.time() - start_time
                 break
 
@@ -81,6 +81,15 @@ class MABTP:
             bt = agent.output_bt(behavior_libs[i])
             bt_list.append(bt)
         return bt_list
+
+
+    def new_output_pruned_bt_list(self,behavior_libs):
+        bt_list = []
+        for i,agent in enumerate(self.planned_agent_list):
+            bt = agent.new_output_pruned_bt(behavior_libs[i])
+            bt_list.append(bt)
+        return bt_list
+
 
     def get_btml_list(self):
         btml_list = []

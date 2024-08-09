@@ -127,7 +127,10 @@ class MAOBTP(MABTP):
             for agent in planning_agent_list:
                 if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
                 premise_condition_cost_list = agent.one_step_expand(condition_cost)
-                explored_condition_list += [condition_cost for condition_cost in premise_condition_cost_list]
+                # explored_condition_list += [condition_cost for condition_cost in premise_condition_cost_list]
+                # 使用 heappush 添加元素来维护堆结构
+                for cond_cost in premise_condition_cost_list:
+                    heapq.heappush(explored_condition_list, cond_cost)
 
             if self.start!=None and self.start>=condition:
                 break

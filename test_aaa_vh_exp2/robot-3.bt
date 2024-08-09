@@ -1,0 +1,57 @@
+fallback
+    condition IsIn(book,bookshelf) & IsOn(toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsIn(book,bookshelf)'}))
+            action WalkToPutBookInBookshelf()
+            action FinishTask()
+        sequence
+            condition IsOn(toy,bookshelf) & IsRightHandEmpty(agent-3)
+            action SelfAcceptTask(frozenset({'IsIn(book,bookshelf)'}))
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            condition IsIn(book,bookshelf) & IsRightHandEmpty(agent-3)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsNear(agent-3,bookshelf) & IsOn(toy,bookshelf) & IsRightHolding(agent-3,book)
+        action RightPutIn(agent-3,book,bookshelf)
+    sequence
+        condition IsIn(book,bookshelf) & IsNear(agent-3,bookshelf) & IsRightHolding(agent-3,toy)
+        action RightPut(agent-3,toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsIn(book,bookshelf)'}))
+            action WalkToPutBookInBookshelf()
+            action FinishTask()
+        sequence
+            condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-3)
+            action SelfAcceptTask(frozenset({'IsIn(book,bookshelf)'}))
+    sequence
+        condition IsNear(agent-3,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-3,book)
+        action RightPutIn(agent-3,book,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            condition IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsNear(agent-3,bookshelf) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-3,toy)
+        action RightPut(agent-3,toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            condition IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsNear(agent-3,bookshelf) & IsRightHandEmpty(agent-2) & IsRightHolding(agent-3,toy)
+        action RightPut(agent-3,toy,bookshelf)

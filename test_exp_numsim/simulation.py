@@ -3,12 +3,12 @@ from mabtpg.utils.tools import print_colored
 def simulation(dataset,num_agent,agents_actions,dmr):
     start = dataset["start_num"]
     goal = dataset["goal_num"]
-    from mabtpg.envs.computation_env.computation_env import ComputationEnv
-    env = ComputationEnv(num_agent=num_agent, start=start, goal=goal)
+    from mabtpg.envs.numerical_env.numerical_env import NumEnv
+    env = NumEnv(num_agent=num_agent, start=start, goal=goal)
     env.set_agent_actions(dataset["total_actions"],agents_actions)
 
     behavior_lib = [agent.behavior_lib for agent in env.agents]
-    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
+    dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib,comp_actions_BTML_dic=dataset['comp_btml_ls'])
 
     for i,agent in enumerate(env.agents):
         agent.bind_bt(dmr.bt_ls[i])

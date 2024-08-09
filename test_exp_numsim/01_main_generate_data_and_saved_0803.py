@@ -1,7 +1,7 @@
 import random
 import pickle
 from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table
 from mabtpg.utils.tools import print_colored
 import numpy as np
 
@@ -47,7 +47,7 @@ for data_id, dataset in enumerate(datasets[:1]):
         # Run Decentralized multi-agent BT algorithm
         # #########################
         # 运行多智能体算法
-        from DMR import DMR
+        from mabtpg.btp.DMR import DMR
 
         dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,
                   save_dot=False)  # False 也还需要再调试
@@ -62,13 +62,13 @@ for data_id, dataset in enumerate(datasets[:1]):
         # #########################
         # 要tick进行测试，能否从 start 到 goal。
         # 要几步
-        from mabtpg.envs.computation_env.computation_env import ComputationEnv
+        from mabtpg.envs.numerical_env.numerical_env import NumEnv
 
-        env = ComputationEnv(num_agent=num_agent, start=dataset['start_num'], goal=dataset['goal_num'])
+        env = NumEnv(num_agent=num_agent, start=dataset['start_num'], goal=dataset['goal_num'])
         env.set_agent_actions(agents_actions)
 
         behavior_lib = [agent.behavior_lib for agent in env.agents]
-        dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib, comp_actions_BTML_dic=dataset['comp_actions_BTML_dic'])
+        dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib, comp_actions_BTML_dic=dataset['comp_btml_ls'])
 
         for i, agent in enumerate(env.agents):
             agent.bind_bt(dmr.bt_ls[i])

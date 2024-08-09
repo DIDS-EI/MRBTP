@@ -116,8 +116,8 @@ class BehaviorTree(ptree.trees.BehaviourTree):
     #         return node_type(*condition_list)
 
     def new_node(self, node):
-        # from mabtpg.envs.computation_env.behavior_lib.Action.NumAction import NumAction
-        # from mabtpg.envs.computation_env.behavior_lib.Condition.NumCondition import NumCondition
+        # from mabtpg.envs.numerical_env.behavior_lib.Action.NumAction import NumAction
+        # from mabtpg.envs.numerical_env.behavior_lib.Condition.NumCondition import NumCondition
         # base_node_map["NumAction"] = NumAction
         # base_node_map["NumCondition"] = NumCondition
 
@@ -157,7 +157,7 @@ class BehaviorTree(ptree.trees.BehaviourTree):
                 bt_node.subtree = BehaviorTree(ins_btml, self.behavior_lib)
                 return bt_node
             else:
-                # print("cls_name:",cls_name,"node.args:",node.args)
+                # print("node_type:",node_type,"cls_name:",cls_name,"node.args:",node.args)
                 return self.behavior_lib[node_type][cls_name](*node.args)
         else:
             node_type = composite_node_map[node.node_type]

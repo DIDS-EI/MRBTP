@@ -1,0 +1,43 @@
+fallback
+    condition IsIn(book,bookshelf) & IsOn(toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            fallback
+                condition IsIn(book,bookshelf) & IsRightHandEmpty(agent-0)
+                sequence
+                    condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,book)
+                    action RightPut(agent-0,book,bookshelf)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,toy)
+        action RightPut(agent-0,toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-0,toy)
+        action RightPut(agent-0,toy,bookshelf)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,bookshelf)'}))
+            action WalkToPutToyBookshelf()
+            action FinishTask()
+        sequence
+            fallback
+                condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                sequence
+                    condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,book)
+                    action RightPut(agent-0,book,bookshelf)
+            action SelfAcceptTask(frozenset({'IsOn(toy,bookshelf)'}))
+    sequence
+        condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,toy)
+        action RightPut(agent-0,toy,bookshelf)

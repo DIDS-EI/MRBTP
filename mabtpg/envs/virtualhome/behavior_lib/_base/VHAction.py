@@ -1,7 +1,9 @@
 from mabtpg.behavior_tree.base_nodes import Action
 from mabtpg.behavior_tree import Status
 
-class VHAction(Action):
+from mabtpg.envs.gridenv.minigrid_computation_env.base.WareHouseAction import WareHouseAction
+
+class VHAction(WareHouseAction):
     can_be_expanded = True
     num_args = 1
 
@@ -53,32 +55,40 @@ class VHAction(Action):
         pass
 
 
-    def update(self):
-        if self.env.simulation_mode == self.env.SimulationMode.computing:
-            self.computing_update()
-        if self.env.simulation_mode == self.env.SimulationMode.simulator:
-            self.simulator_update()
+    def bind_agent(self, agent):
+        self.agent = agent
+        self.env = agent.env
+
+        self.get_action_model()
 
 
-    def computing_update(self):
-        pass
-
-    def simulator_update(self) -> Status:
-        # script = [f'<char0> [{self.__class__.__name__.lower()}] <{self.args[0].lower()}> (1)']
-
-        # if self.num_args==1:
-        #     script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1)']
-        # else:
-        #     script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1) <{self.args[1].lower()}> (1)']
-
-        if self.num_args==1:
-            script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1)']
-        else:
-            script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1) <{self.args[1].lower()}> (1)']
-
-
-        self.env.run_script(script,verbose=True,camera_mode="PERSON_FROM_BACK") # FIRST_PERSON
-        print("script: ",script)
-        self.change_condition_set()
-
-        return Status.RUNNING
+    # def update(self):
+    #     if self.env.simulation_mode == self.env.SimulationMode.computing:
+    #         self.computing_update()
+    #     if self.env.simulation_mode == self.env.SimulationMode.simulator:
+    #         self.simulator_update()
+    #
+    #
+    # def computing_update(self):
+    #
+    #     pass
+    #
+    # def simulator_update(self) -> Status:
+    #     # script = [f'<char0> [{self.__class__.__name__.lower()}] <{self.args[0].lower()}> (1)']
+    #
+    #     # if self.num_args==1:
+    #     #     script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1)']
+    #     # else:
+    #     #     script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1) <{self.args[1].lower()}> (1)']
+    #
+    #     if self.num_args==1:
+    #         script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1)']
+    #     else:
+    #         script = [f'<char0> [{self.action_class_name.lower()}] <{self.args[0].lower()}> (1) <{self.args[1].lower()}> (1)']
+    #
+    #
+    #     self.env.run_script(script,verbose=True,camera_mode="PERSON_FROM_BACK") # FIRST_PERSON
+    #     print("script: ",script)
+    #     self.change_condition_set()
+    #
+    #     return Status.RUNNING

@@ -1,10 +1,10 @@
 import random
 # from data_generate import DataGenerator
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import print_action_data_table
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import print_action_data_table
 from simulation import simulation
 from mabtpg.utils.tools import *
 import numpy as np
-from mabtpg.envs.computation_env.numerical_env.numsim_tools import load_data_from_directory,save_tree_as_dot
+from mabtpg.envs.numerical_env.numerical_env.numsim_tools import load_data_from_directory,save_tree_as_dot
 random.seed(0)
 np.random.seed(0)
 
@@ -84,7 +84,7 @@ for max_depth in max_depth_ls:
                     # #########################
                     # Run Decentralized multi-agent BT algorithm
                     # #########################
-                    from DMR import DMR
+                    from mabtpg.btp.DMR import DMR
                     dmr = DMR(goal, start, agents_actions, num_agent, with_comp_action=with_comp_action,save_dot=False)  # False 也还需要再调试
                     dmr.planning()
 
