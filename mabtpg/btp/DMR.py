@@ -87,4 +87,4 @@ class DMR:
 
             if self.save_dot:
                 self.bt_ls[i].save_btml(f"robot-{i}.bt")
-                self.bt_ls[i].draw(file_name=f"robot-{i}")
+                self.bt_ls[i].draw(file_name=f"robot-{i}",png_only=True)

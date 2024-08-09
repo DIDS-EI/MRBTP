@@ -108,30 +108,11 @@
     },
     {
         "id": 4,
-        "goal": [
-            "IsIn(box,closet)",
-            "IsClose(closet)"
-        ],
-        "init_state": [
-            "IsOpen(closet)"
-        ],
-        "objects": [
-            "box",
-            "closet"
-        ],
-        "action_space": [
-            [
-                "Walk",
-                "RightGrab",
-                "RightPutIn",
-                "Open"
-            ],
-            [
-                "Walk",
-                "Close",
-                "Open"
-            ]
-        ],
+        "goal": ["IsIn(box,closet)", "IsClose(closet)"],
+        "init_state": ["IsOpen(closet)"],
+        "objects": ["box", "closet"],
+        "action_space": [["Walk", "RightGrab", "RightPutIn", "Open" ],
+            ["Walk","Close","Open"]],
         "composition_action": [
             [
                 {"WalkToPutIn": ["Walk","RightGrab","Walk","RightPutIn"]}

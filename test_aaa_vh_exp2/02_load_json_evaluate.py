@@ -64,8 +64,8 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 # json_path = "vh1.json"
 
 # json_type = "homo"
-# json_type = "hete"
-json_type = "half"
+json_type = "hete"
+# json_type = "half"
 
 
 json_path = f"vh_{json_type}.json"
@@ -77,26 +77,26 @@ with open(json_path, 'r') as file:
 #         for use_atom_subtask_chain in [False, True]:
 
 
-verbose = False
+verbose = True
 
 # 用于记录所有数据的列表
 all_details = []
 average_details = []
 
-# comp = False
-# for with_comp_action in [comp]:
-#     for use_comp_subtask_chain in [comp]:
-#         for use_atom_subtask_chain in [False]:
+comp = False
+for with_comp_action in [comp]:
+    for use_comp_subtask_chain in [comp]:
+        for use_atom_subtask_chain in [False]:
 
-for with_comp_action in [False, True]:
-    for use_comp_subtask_chain in [False, True]:
-        if with_comp_action==False and use_comp_subtask_chain==True:
-            continue
-        for use_atom_subtask_chain in [False, True]:
+# for with_comp_action in [False, True]:
+#     for use_comp_subtask_chain in [False, True]:
+#         if with_comp_action==False and use_comp_subtask_chain==True:
+#             continue
+#         for use_atom_subtask_chain in [False, True]:
 
             print_colored(f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",color="purple")
 
-            for _,json_data in enumerate(json_datasets[:]):
+            for _,json_data in enumerate(json_datasets[2:3]):
 
                 data_id = json_data['id']
                 print_colored(f"========= data_id: {data_id} ===============","blue")

@@ -41,6 +41,51 @@ class MAGridEnv(MiniGridEnv,Env):
         # Generate a new random grid at the start of each episode
         self._gen_grid(self.width, self.height)
 
+        # 设置智能体初始位置和方向
+        self.agents[0].position = (6, 2)
+        self.agents[0].direction = 0
+        self.agents[1].position = (9, 2)
+        self.agents[1].direction = 0
+
+        self.agents[2].position = (7, 4)
+        self.agents[2].direction = 1
+        self.agents[3].position = (8, 4)
+        self.agents[3].direction = 1
+
+        self.agents[4].position = (6, 8)
+        self.agents[4].direction = 3  # 朝向东方
+        self.agents[5].position = (9, 8)
+        self.agents[5].direction = 3  # 朝向南方
+
+        self.agents[6].position = (7, 7)
+        self.agents[6].direction = 3  # 朝向北方
+        self.agents[7].position = (8, 7)
+        self.agents[7].direction = 3  # 朝向东方
+
+
+
+
+
+        # 设置智能体初始位置和方向
+        # self.agents[0].position = (3, 3)
+        # self.agents[0].direction = 0  # 朝向北方
+        # self.agents[1].position = (7, 12)
+        # self.agents[1].direction = 1  # 朝向东方
+        # self.agents[2].position = (8, 8)
+        # self.agents[2].direction = 2  # 朝向南方
+        #
+        # self.agents[3].position = (12, 8)
+        # self.agents[3].direction = 3  # 朝向北方
+        # self.agents[4].position = (14, 12)
+        # self.agents[4].direction = 3  # 朝向东方
+        # self.agents[5].position = (8, 8)
+        # self.agents[5].direction = 2  # 朝向南方
+        #
+        # self.agents[6].position = (11, 1)
+        # self.agents[6].direction = 3  # 朝向北方
+        # self.agents[7].position = (1, 12)
+        # self.agents[7].direction = 1  # 朝向东方
+
         # Item picked up, being carried, initially nothing
         self.carrying = None
 

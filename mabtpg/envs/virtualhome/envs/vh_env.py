@@ -11,7 +11,7 @@ class VHEnvTest(VHEnv):
 
 
     def reset(self):
-        self.load_scenario(6) # 18
+        self.load_scenario(18) # 18 6
 
 
 

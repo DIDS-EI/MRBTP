@@ -54,6 +54,7 @@ class VHEnv(Env):
                 print(f"'Successfully.")
             else:
                 print(f"'Failed,{message}'.")
+        return success, message
 
     def close(self):
         time.sleep(1)
