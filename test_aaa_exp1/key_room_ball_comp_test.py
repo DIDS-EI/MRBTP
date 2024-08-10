@@ -18,13 +18,12 @@ from mabtpg.envs.gridenv.minigrid_computation_env.mini_comp_env import MiniCompE
 from mabtpg.envs.numerical_env.numsim_tools import create_directory_if_not_exists, print_action_data_table,print_summary_table
 
 
+
 behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
 behavior_lib = BehaviorLibrary(behavior_lib_path)
 
 random.seed(0)
 np.random.seed(0)
-
-
 
 # 11 22 33 44
 # def generate_agents_actions(num_cls_ls, num_agent, homogeneity_probability):
@@ -43,7 +42,6 @@ np.random.seed(0)
 #             agent_index = (agent_index+1) % num_agent
 #     return agents_actions
 
-# 1234 空 1234
 # def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
 #     agents_actions = [[] for _ in range(num_agent)]
 #
@@ -58,6 +56,7 @@ np.random.seed(0)
 #             agents_actions[agent_index].append(cls_index)
 #             agent_index = (agent_index + 1) % num_agent
 #     return agents_actions
+
 
 # 第一个按照顺序分，其它的随机分
 def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
@@ -84,7 +83,34 @@ def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability
     return agents_actions
 
 
-
+# def assign_action_cls_to_agents():
+#     behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
+#     behavior_lib = BehaviorLibrary(behavior_lib_path)
+#     cls_ls = []
+#     for action_cls_name in ["OpenRoom","MovePackage"]:
+#         for room_id in range(num_rooms):
+#             pkg_id = room_id
+#             cls = type(f"{action_cls_name}_{pkg_id}", (behavior_lib["Action"][action_cls_name],), {})
+#             if action_cls_name=="OpenRoom":
+#                 cls.room_id = pkg_id
+#             elif action_cls_name=="MovePackage":
+#                 cls.pkg_id = pkg_id
+#             cls_ls.append(cls)
+#
+#     agent_action_index_ls = generate_agents_actions(len(cls_ls), num_agent, homogeneity_probability)
+#     print("agent_action_index_ls:",agent_action_index_ls)
+#
+#     for i, agent in enumerate(env.agents):
+#
+#         action_ls = []
+#         for cls_index in agent_action_index_ls[i]:
+#             action_ls.append(cls_ls[cls_index])
+#
+#         agent.behavior_dict = {
+#             "Action": action_ls,
+#             "Condition": behavior_lib["Condition"].values()
+#         }
+#         agent.create_behavior_lib()
 
 def assign_action_cls_to_agents():
     behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
@@ -100,21 +126,20 @@ def assign_action_cls_to_agents():
                 cls.pkg_id = pkg_id
             cls_ls.append(cls)
 
-    agent_action_index_ls = generate_agents_actions(len(cls_ls), num_agent, homogeneity_probability)
-    print("agent_action_index_ls:",agent_action_index_ls)
+    # agent_action_index_ls = generate_agents_actions(len(cls_ls), num_agent, homogeneity_probability)
+    # print("agent_action_index_ls:",agent_action_index_ls)
 
     for i, agent in enumerate(env.agents):
-
-        action_ls = []
-        for cls_index in agent_action_index_ls[i]:
-            action_ls.append(cls_ls[cls_index])
+        if i==0:
+            action_ls = [cls_ls[0],cls_ls[1]]
+        else:
+            action_ls = [cls_ls[2], cls_ls[3]]
 
         agent.behavior_dict = {
             "Action": action_ls,
             "Condition": behavior_lib["Condition"].values()
         }
         agent.create_behavior_lib()
-
 
 def bind_bt(bt_list):
     from mabtpg.behavior_tree.behavior_tree import BehaviorTree
@@ -133,31 +158,26 @@ def bind_bt(bt_list):
 
 
 
-# num_agent = 8
-# num_rooms = 4
-
-num_agent = 5
-num_rooms = 4
-
+num_agent = 2
+num_rooms = 2
 # num_objs = 2
 action_fail_p = 0
-bt_draw = False
+bt_draw = True
 
 if num_agent == 8:
     homogeneity_probability_ls = [i / 8 for i in range(1, 9)]
 else:
     homogeneity_probability_ls = [0.25, 0.5, 0.75, 1]
-# homogeneity_probability_ls = [0,1]
 homogeneity_probability = 1
-use_subtask_chain = False
+use_subtask_chain = True
 
 # 创建一个空的字典用于存储数据
 data = {'homogeneity_probability': homogeneity_probability_ls}
 
-for action_fail_p in [0.1, 0.3, 0.5]:
-    col_name = f'FP={action_fail_p}'
+for use_subtask_chain in [False]:
+    col_name = f'use_subtask_chain={use_subtask_chain}'
     data[col_name] = []
-    for homogeneity_probability in homogeneity_probability_ls:
+    for homogeneity_probability in [0]:
 
         print_colored(
             f"============= use_subtask_chain:{use_subtask_chain} =========== homogeneity_probability: {homogeneity_probability} ========================",
@@ -170,10 +190,11 @@ for action_fail_p in [0.1, 0.3, 0.5]:
         target_room_ls = list(range(num_rooms-1,-1,-1))
         # random.shuffle(target_room_ls)
         for pkg_id,room_id in enumerate(target_room_ls):
-            goal.add(f"IsInRoom(package-{pkg_id},room-{room_id})")
+            # goal.add(f"IsInRoom(package-{pkg_id},room-{room_id})")
             start.add(f"IsInRoom(package-{pkg_id},room-{pkg_id})")
             start.add(f"IsClose(room-{pkg_id})")
             start_objects_rooms_dic[pkg_id] = pkg_id
+        goal.add(f"IsInRoom(package-0,room-1)")
         goal = frozenset(goal)
         start = frozenset(start)
 
@@ -213,9 +234,8 @@ for action_fail_p in [0.1, 0.3, 0.5]:
         # behavior_lib = [agent.behavior_lib for agent in env.agents]
         # btml_list = planning_algorithm.get_btml_list()
 
-
         from mabtpg.btp.mabtp import MABTP
-        planning_algorithm = MABTP(verbose = False,start=start)
+        planning_algorithm = MABTP(verbose = True,start=start)
         planning_algorithm.planning(frozenset(goal),action_lists=agent_actions_model)
 
         print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="green")
@@ -230,7 +250,7 @@ for action_fail_p in [0.1, 0.3, 0.5]:
 
 
 
-        total_time = 100
+        total_time = 1
         success_time = 0
         total_env_step_ls = []
         # #########################
@@ -244,7 +264,7 @@ for action_fail_p in [0.1, 0.3, 0.5]:
             env.verbose = False
             env.reset()
             done = False
-            max_env_step = 50
+            max_env_step = 500
             env_steps = 0
             new_env_step = 0
             agents_steps = 0
@@ -255,7 +275,7 @@ for action_fail_p in [0.1, 0.3, 0.5]:
                 obs, done, _, _, agents_one_step,finish_and_fail = env.step()
                 env_steps += 1
                 agents_steps += agents_one_step
-                if env_steps%20==0:
+                if env_steps%50==0:
                     print_colored(f"========= env_steps: {env_steps} ===============",
                               "blue")
                     print_colored(f"state: {obs}", "blue")
@@ -280,20 +300,20 @@ for action_fail_p in [0.1, 0.3, 0.5]:
         avg_env_step = sum(total_env_step_ls) / len(total_env_step_ls)
 
 
-        data[col_name].append(success_time/total_time*100)
+        data[col_name].append(avg_env_step)
 
 # 创建数据框
-df = pd.DataFrame(data)
-df.set_index('homogeneity_probability', inplace=True)
-
-def print_summary_table(df, formatted=True):
-    if formatted:
-        print(df.to_string(index=True))
-    else:
-        print(df.to_csv(index=True, sep='\t'))
-# Print the summary table in both formats
-print("Formatted table:")
-print_summary_table(df, formatted=True)
-
-print("\nCSV formatted table:")
-print_summary_table(df, formatted=False)
+# df = pd.DataFrame(data)
+# df.set_index('homogeneity_probability', inplace=True)
+#
+# def print_summary_table(df, formatted=True):
+#     if formatted:
+#         print(df.to_string(index=True))
+#     else:
+#         print(df.to_csv(index=True, sep='\t'))
+# # Print the summary table in both formats
+# print("Formatted table:")
+# print_summary_table(df, formatted=True)
+#
+# print("\nCSV formatted table:")
+# print_summary_table(df, formatted=False)

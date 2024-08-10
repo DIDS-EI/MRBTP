@@ -57,6 +57,10 @@ class PlanningAgent:
             self.inside_expand(inside_condition, premise_condition_list)
         else:
             self.outside_expand(premise_condition_list)
+            print("cross-tree expansion")
+            for pc in premise_condition_list:
+                print("c:",pc.condition_set, "a:",pc.action)
+            print(" ")
 
         return premise_condition_list
 

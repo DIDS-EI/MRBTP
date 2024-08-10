@@ -9,7 +9,7 @@ from mabtpg.utils.composite_action_tools import CompositeActionPlanner
 
 from mabtpg.utils.tools import print_colored,filter_action_lists
 
-num_agent = 3
+num_agent = 2
 env_id = "MiniGrid-DoorKey-16x16-v0"
 # register(
 #     id="MiniGrid-KeyCorridorS3R1-v0-custom",
@@ -36,8 +36,8 @@ env.reset(seed=0)
 # add objs
 ball = Ball('red')
 env.place_object_in_room(ball,0)
-ball = Ball('yellow')
-env.place_object_in_room(ball,0)
+# ball = Ball('yellow')
+# env.place_object_in_room(ball,0)
 # ball = Ball('grey')
 # env.place_object_in_room(ball,0)
 # ball = Ball('red')
@@ -109,15 +109,15 @@ print(start)
 
 action_sequences = [
     {
-        "GetKeyAndOpenDoor":['GoToInRoom(self,key-0,room-0)', 'PickUp(self,key-0)', 'GoToInRoom(self,door-0,room-0)', 'Toggle(self,door-0)']
+        "GetKeyAndOpenDoor":['GoToInRoom(self,key-0,room-0)', 'PickUp(self,key-0)', 'GoToInRoom(self,door-0,room-0)', 'Toggle(self,door-0)'],
     },
     {
         "Move0BetweenRooms": ['GoToInRoom(self,ball-0,room-0)', 'PickUp(self,ball-0)', 'GoBtwRoom(self,room-0,room-1)',
                               'PutInRoom(self,ball-0,room-1)']
-    },
-    {
-        "Move1BetweenRooms": ['GoToInRoom(self,ball-1,room-0)', 'PickUp(self,ball-1)', 'GoBtwRoom(self,room-0,room-1)', 'PutInRoom(self,ball-1,room-1)'],
     }
+    # {
+    #     "Move1BetweenRooms": ['GoToInRoom(self,ball-1,room-0)', 'PickUp(self,ball-1)', 'GoBtwRoom(self,room-0,room-1)', 'PutInRoom(self,ball-1,room-1)'],
+    # }
 ]
 
 cap = CompositeActionPlanner(action_lists,action_sequences)
@@ -143,18 +143,18 @@ comp_act_BTML_dic = cap.btml_ls
 #     # sorted by cost
 #     action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)
 
-for i in range(env.num_agent):
-    action_lists[i]=[]
-    action_lists[i].extend(comp_planning_act_dic[i])
-    action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)  # 不加也有问题？完全异构的第一个例子
+# for i in range(env.num_agent):
+#     action_lists[i]=[]
+#     action_lists[i].extend(comp_planning_act_dic[i])
+#     action_lists[i] = sorted(action_lists[i], key=lambda x: x.cost)  # 不加也有问题？完全异构的第一个例子
 
 # 规划新的
 from mabtpg.btp.maobtp import MAOBTP
 # goal = {"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)","IsInRoom(ball-3,room-1)","IsInRoom(ball-4,room-1)"}
 # goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)","IsInRoom(ball-2,room-1)"})
-goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
+# goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
 # goal = {"IsNear(ball-0,door-0)"}
-# goal = {"IsInRoom(ball-0,room-1)"}
+goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsInRoom(ball-0,room-1)"}
 # goal = {"IsNear(ball-0,door-0)"}
 # goal = {"IsOpen(door-0)"}
@@ -162,18 +162,18 @@ goal = frozenset({"IsInRoom(ball-0,room-1)","IsInRoom(ball-1,room-1)"})
 print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="green")
 start_time = time.time()
 # start = None
-planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
-# planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
-planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
-behavior_lib = [agent.behavior_lib for agent in env.agents]
-btml_list = planning_algorithm.get_btml_list()
-
-
-# from mabtpg.btp.mabtp import MABTP
-# planning_algorithm = MABTP(verbose = False,start=start,env=env)
-# planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
+# planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
+# # planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
+# planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
 # behavior_lib = [agent.behavior_lib for agent in env.agents]
 # btml_list = planning_algorithm.get_btml_list()
+
+
+from mabtpg.btp.mabtp import MABTP
+planning_algorithm = MABTP(verbose = False,start=start,env=env)
+planning_algorithm.planning(frozenset(goal),action_lists=action_lists)
+behavior_lib = [agent.behavior_lib for agent in env.agents]
+btml_list = planning_algorithm.get_btml_list()
 
 print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="green")
 print_colored(f"Time: {time.time()-start_time}",color="green")

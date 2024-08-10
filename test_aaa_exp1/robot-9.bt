@@ -1,604 +1,392 @@
 fallback
-    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
+    condition IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0)
     sequence
         fallback
-            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
+            condition IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
             sequence
-                fallback
-                    condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
-                                                action OpenRoom_2(agent-9)
-                                        action OpenRoom_1(agent-9)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                                        action OpenRoom_2(agent-9)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
-                                                        action OpenRoom_2(agent-9)
-                                                action OpenRoom_1(agent-9)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                                                action OpenRoom_2(agent-9)
-                                        action MovePackage_2(agent-9,room-2,room-1)
-                                action MovePackage_1(agent-9,room-1,room-2)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
-                                                action OpenRoom_2(agent-9)
-                                        action OpenRoom_1(agent-9)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                                        action OpenRoom_2(agent-9)
-                                action MovePackage_2(agent-9,room-2,room-1)
-                        action OpenRoom_3(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-3)
-                                        action OpenRoom_2(agent-9)
-                                action OpenRoom_1(agent-9)
-                            sequence
-                                condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-3)
-                                                action OpenRoom_2(agent-9)
-                                        action OpenRoom_1(agent-9)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                        action OpenRoom_2(agent-9)
-                                action MovePackage_2(agent-9,room-2,room-1)
-                        action MovePackage_1(agent-9,room-1,room-2)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-3)
-                                        action OpenRoom_2(agent-9)
-                                action OpenRoom_1(agent-9)
-                            sequence
-                                condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                action OpenRoom_2(agent-9)
-                        action MovePackage_2(agent-9,room-2,room-1)
+                condition IsClose(room-0) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-4)
                 action OpenRoom_0(agent-9)
             sequence
                 fallback
-                    condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0)
+                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
                     sequence
-                        fallback
-                            condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0)
-                                        action OpenRoom_2(agent-9)
-                                action OpenRoom_1(agent-9)
-                            sequence
-                                condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2)
-                                            sequence
-                                                condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0)
-                                                action OpenRoom_2(agent-9)
-                                        action OpenRoom_1(agent-9)
-                                    sequence
-                                        condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
-                                        action OpenRoom_2(agent-9)
-                                action MovePackage_2(agent-9,room-2,room-1)
-                        action MovePackage_1(agent-9,room-1,room-2)
-                    sequence
-                        fallback
-                            condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0)
-                                        action OpenRoom_2(agent-9)
-                                action OpenRoom_1(agent-9)
-                            sequence
-                                condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1)
-                                action OpenRoom_2(agent-9)
-                        action MovePackage_2(agent-9,room-2,room-1)
-                action OpenRoom_3(agent-9)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
-                                                        action OpenRoom_3(agent-9)
-                                                action OpenRoom_0(agent-9)
-                                            sequence
-                                                condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                                action OpenRoom_3(agent-9)
-                                        action MovePackage_3(agent-9,room-3,room-0)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_1(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_2(agent-9)
-                    sequence
-                        fallback
-                            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                                    sequence
-                                                        fallback
-                                                            condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                                            sequence
-                                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
-                                                                action OpenRoom_3(agent-9)
-                                                        action OpenRoom_0(agent-9)
-                                                    sequence
-                                                        condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                                        action OpenRoom_3(agent-9)
-                                                action MovePackage_3(agent-9,room-3,room-0)
-                                        action OpenRoom_2(agent-9)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                                        action OpenRoom_3(agent-9)
-                                                action OpenRoom_0(agent-9)
-                                            sequence
-                                                condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                                action OpenRoom_3(agent-9)
-                                        action MovePackage_3(agent-9,room-3,room-0)
-                                action OpenRoom_1(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                                        action OpenRoom_3(agent-9)
-                                                action OpenRoom_0(agent-9)
-                                            sequence
-                                                condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                                action OpenRoom_3(agent-9)
-                                        action MovePackage_3(agent-9,room-3,room-0)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action MovePackage_2(agent-9,room-2,room-1)
-                    sequence
-                        fallback
-                            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action MovePackage_1(agent-9,room-1,room-2)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
-                                                        action OpenRoom_3(agent-9)
-                                                action OpenRoom_0(agent-9)
-                                            sequence
-                                                condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                                action OpenRoom_3(agent-9)
-                                        action MovePackage_3(agent-9,room-3,room-0)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_1(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_2(agent-9)
-                    sequence
-                        fallback
-                            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action MovePackage_2(agent-9,room-2,room-1)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                            sequence
-                                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
-                                action OpenRoom_3(agent-9)
+                        condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-4)
                         action OpenRoom_0(agent-9)
-                    sequence
-                        condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                        action OpenRoom_3(agent-9)
-                action MovePackage_3(agent-9,room-3,room-0)
-        action MovePackage_0(agent-9,room-0,room-3)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
     sequence
         fallback
-            condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
+            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-4)
             sequence
-                fallback
-                    condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_2(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action OpenRoom_1(agent-9)
-            sequence
-                fallback
-                    condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                    sequence
-                        fallback
-                            condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action OpenRoom_2(agent-9)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                            sequence
-                                                fallback
-                                                    condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                                    sequence
-                                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
-                                                        action OpenRoom_3(agent-9)
-                                                action OpenRoom_0(agent-9)
-                                            sequence
-                                                condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                                action OpenRoom_3(agent-9)
-                                        action MovePackage_3(agent-9,room-3,room-0)
-                                action OpenRoom_2(agent-9)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_1(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                            sequence
-                                fallback
-                                    condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_2(agent-9)
-                    sequence
-                        fallback
-                            condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action MovePackage_2(agent-9,room-2,room-1)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action OpenRoom_0(agent-9)
-                    sequence
-                        condition IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                        action OpenRoom_3(agent-9)
-                action MovePackage_3(agent-9,room-3,room-0)
-        action MovePackage_1(agent-9,room-1,room-2)
+                condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
     sequence
         fallback
-            condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1) & IsOpen(room-2)
+            condition IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
             sequence
-                fallback
-                    condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-2)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0)
-                            sequence
-                                fallback
-                                    condition IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-                                    sequence
-                                        fallback
-                                            condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                                            sequence
-                                                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3)
-                                                action OpenRoom_3(agent-9)
-                                        action OpenRoom_0(agent-9)
-                                    sequence
-                                        condition IsClose(room-1) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                                        action OpenRoom_3(agent-9)
-                                action MovePackage_3(agent-9,room-3,room-0)
-                        action OpenRoom_2(agent-9)
-                    sequence
-                        fallback
-                            condition IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-2)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action OpenRoom_1(agent-9)
-            sequence
-                fallback
-                    condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-0) & IsOpen(room-1)
-                    sequence
-                        fallback
-                            condition IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3)
-                            sequence
-                                fallback
-                                    condition IsClose(room-0) & IsClose(room-2) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-3)
-                                    sequence
-                                        condition IsClose(room-0) & IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1)
-                                        action OpenRoom_3(agent-9)
-                                action OpenRoom_0(agent-9)
-                            sequence
-                                condition IsClose(room-2) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1)
-                                action OpenRoom_3(agent-9)
-                        action MovePackage_3(agent-9,room-3,room-0)
-                action OpenRoom_2(agent-9)
-            sequence
-                fallback
-                    condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                    sequence
-                        fallback
-                            condition IsClose(room-0) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                            sequence
-                                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-1) & IsOpen(room-2)
-                                action OpenRoom_3(agent-9)
-                        action OpenRoom_0(agent-9)
-                    sequence
-                        condition IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                        action OpenRoom_3(agent-9)
-                action MovePackage_3(agent-9,room-3,room-0)
-        action MovePackage_2(agent-9,room-2,room-1)
-    sequence
-        fallback
-            condition IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-3)
-            sequence
-                fallback
-                    condition IsClose(room-0) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-3)
-                    sequence
-                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3)
-                        action OpenRoom_3(agent-9)
+                condition IsClose(room-0) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
                 action OpenRoom_0(agent-9)
             sequence
-                condition IsClose(room-3) & IsInRoom(package-0,room-3) & IsInRoom(package-1,room-2) & IsInRoom(package-2,room-1) & IsInRoom(package-3,room-3) & IsOpen(room-0)
-                action OpenRoom_3(agent-9)
-        action MovePackage_3(agent-9,room-3,room-0)
+                fallback
+                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0)
+        action OpenRoom_0(agent-9)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-3) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-3) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+            sequence
+                fallback
+                    condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-0) & IsOpen(room-4)
+                    sequence
+                        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-4)
+                        action OpenRoom_0(agent-9)
+                action MovePackage_0(agent-9,room-0,room-4)
+        action MovePackage_4(agent-9,room-4,room-0)
+    sequence
+        fallback
+            condition IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-0) & IsOpen(room-4)
+            sequence
+                condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-4)
+                action OpenRoom_0(agent-9)
+        action MovePackage_0(agent-9,room-0,room-4)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-0)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-3) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-4) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-3)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-0)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4) & IsOpen(room-1)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-1) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)
+    sequence
+        condition IsClose(room-0) & IsClose(room-1) & IsClose(room-3) & IsClose(room-4) & IsInRoom(package-0,room-0) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-3) & IsInRoom(package-4,room-4)
+        action OpenRoom_0(agent-9)

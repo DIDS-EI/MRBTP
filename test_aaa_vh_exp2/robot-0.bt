@@ -1,30 +1,68 @@
 fallback
-    condition IsIn(cutlets,microwave) & IsSwitchedOn(microwave)
+    condition IsIn(book,bookshelf) & IsOn(toy,bookshelf)
     sequence
         fallback
-            condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,microwave) & IsRightHolding(agent-2,cutlets) & IsSwitchedOn(microwave)
+            condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,toy)
             sequence
-                condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsRightHolding(agent-2,cutlets) & IsSwitchedOn(microwave)
-                action Walk(agent-0,microwave)
-        action Open(agent-0,microwave)
+                condition IsIn(book,bookshelf) & IsRightHolding(agent-0,toy)
+                action Walk(agent-0,bookshelf)
+        action RightPut(agent-0,toy,bookshelf)
     sequence
         fallback
-            condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsLeftHandEmpty(agent-1) & IsNear(agent-0,microwave) & IsRightHolding(agent-2,cutlets) & IsSwitchedOff(microwave)
+            condition IsIn(book,bookshelf) & IsRightHandEmpty(agent-0)
             sequence
-                condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsLeftHandEmpty(agent-1) & IsRightHolding(agent-2,cutlets) & IsSwitchedOff(microwave)
-                action Walk(agent-0,microwave)
-        action Open(agent-0,microwave)
+                fallback
+                    condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,book)
+                    sequence
+                        condition IsIn(book,bookshelf) & IsRightHolding(agent-0,book)
+                        action Walk(agent-0,bookshelf)
+                action RightPut(agent-0,book,bookshelf)
+        action WalkToPutToyBookshelf()
+    sequence
+        condition IsNear(agent-1,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-1,book)
+        action WalkToPutToyBookshelf()
+    sequence
+        condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,book)
+        action WalkToPutToyBookshelf()
     sequence
         fallback
-            condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,microwave) & IsRightHandEmpty(agent-2) & IsSwitchedOn(microwave)
+            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-0,toy)
             sequence
-                condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsRightHandEmpty(agent-2) & IsSwitchedOn(microwave)
-                action Walk(agent-0,microwave)
-        action Open(agent-0,microwave)
+                condition IsRightHandEmpty(agent-1) & IsRightHolding(agent-0,toy)
+                action Walk(agent-0,bookshelf)
+        action RightPut(agent-0,toy,bookshelf)
+    sequence
+        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+        action WalkToPutToyBookshelf()
     sequence
         fallback
-            condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsLeftHandEmpty(agent-1) & IsNear(agent-0,microwave) & IsRightHandEmpty(agent-2) & IsSwitchedOff(microwave)
+            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-0,toy)
             sequence
-                condition IsClose(microwave) & IsLeftHandEmpty(agent-0) & IsLeftHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsSwitchedOff(microwave)
-                action Walk(agent-0,microwave)
-        action Open(agent-0,microwave)
+                condition IsRightHandEmpty(agent-3) & IsRightHolding(agent-0,toy)
+                action Walk(agent-0,bookshelf)
+        action RightPut(agent-0,toy,bookshelf)
+    sequence
+        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-3)
+        action WalkToPutToyBookshelf()
+    sequence
+        condition IsNear(agent-3,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-3,book)
+        action WalkToPutToyBookshelf()
+    sequence
+        fallback
+            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,toy)
+            sequence
+                condition IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,toy)
+                action Walk(agent-0,bookshelf)
+        action RightPut(agent-0,toy,bookshelf)
+    sequence
+        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+        action WalkToPutToyBookshelf()
+    sequence
+        condition IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,toy) & IsRightHolding(agent-3,book)
+        action RightPut(agent-0,toy,bookshelf)
+    sequence
+        condition IsRightHandEmpty(agent-0) & IsRightHolding(agent-3,book)
+        action WalkToPutToyBookshelf()
+    sequence
+        condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+        action WalkToPutToyBookshelf()

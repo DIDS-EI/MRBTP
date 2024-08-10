@@ -1,18 +1,8 @@
 fallback
     condition IsInRoom(ball-0,room-1) & IsInRoom(ball-1,room-1)
-    fallback
-        sequence
-            condition IsSelfTask(frozenset({'IsInRoom(ball-1,room-1)'}))
-            action Move1BetweenRooms()
-            action FinishTask()
-        sequence
-            condition CanGoTo(ball-1) & IsHandEmpty(agent-2) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
-            action SelfAcceptTask(frozenset({'IsInRoom(ball-1,room-1)'}))
-    fallback
-        sequence
-            condition IsSelfTask(frozenset({'IsInRoom(ball-1,room-1)'}))
-            action Move1BetweenRooms()
-            action FinishTask()
-        sequence
-            condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsOpen(door-0)
-            action SelfAcceptTask(frozenset({'IsInRoom(ball-1,room-1)'}))
+    sequence
+        condition CanGoTo(ball-1) & IsHandEmpty(agent-2) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+        action Move1BetweenRooms()
+    sequence
+        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsOpen(door-0)
+        action Move1BetweenRooms()
