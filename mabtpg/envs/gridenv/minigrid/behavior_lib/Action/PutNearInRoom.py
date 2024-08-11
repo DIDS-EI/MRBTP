@@ -1,11 +1,13 @@
-from mabtpg.behavior_tree.base_nodes import Action
+# from mabtpg.behavior_tree.base_nodes import Action
+from mabtpg.envs.gridenv.minigrid.behavior_lib.base.Action import MinigridAction as Action
 from mabtpg.behavior_tree import Status
 from minigrid.core.actions import Actions
 from mabtpg.envs.gridenv.minigrid.objects import CAN_PICKUP,CAN_GOTO
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import get_direction_index
 import random
-from mabtpg.utils.astar import astar,is_near
+from mabtpg.utils.astar import astar
+
 
 class PutNearInRoom(Action):
     can_be_expanded = True

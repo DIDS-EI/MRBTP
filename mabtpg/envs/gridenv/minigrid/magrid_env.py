@@ -41,6 +41,16 @@ class MAGridEnv(MiniGridEnv,Env):
         # Generate a new random grid at the start of each episode
         self._gen_grid(self.width, self.height)
 
+        # three
+        self.agents[0].position = (1, 3)
+        self.agents[0].direction = 1
+        self.agents[1].position = (2, 4)
+        self.agents[1].direction = 3
+
+        self.agents[2].position = (3, 5)
+        self.agents[2].direction = 0
+
+
         # 设置智能体初始位置和方向
         # self.agents[0].position = (6, 2)
         # self.agents[0].direction = 0

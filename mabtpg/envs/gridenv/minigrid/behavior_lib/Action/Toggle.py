@@ -1,11 +1,9 @@
-from mabtpg.behavior_tree.base_nodes import Action
+# from mabtpg.behavior_tree.base_nodes import Action
+from mabtpg.envs.gridenv.minigrid.behavior_lib.base.Action import MinigridAction as Action
 from mabtpg.behavior_tree import Status
 from minigrid.core.actions import Actions
 from mabtpg.envs.gridenv.minigrid.objects import CAN_TOGGLE
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
-from mabtpg.envs.gridenv.minigrid.utils import obj_to_planning_name, get_direction_index
-import numpy as np
-
 
 
 class Toggle(Action):

@@ -189,6 +189,26 @@ class MiniGridToMAGridEnv(MAGridEnv):
 
         return None
 
+    def place_object_x_y(self, obj, x,y):
+        """
+        Place an object in a random position in the specified room.
+
+        Args:
+            room_index (int): The index of the room.
+            obj (WorldObj): The object to place.
+
+        Returns:
+            tuple: The position where the object was placed, or None if no valid position was found.
+        """
+
+        cell = self.minigrid_env.grid.get(x, y)
+        if cell is None:
+            self.minigrid_env.grid.set(x, y, obj)
+            obj.cur_pos = (x, y)
+            return (x, y)
+
+        return None
+
     def initialize_objects_name_id(self):
         # Initialize dictionaries for counting object types and mapping names to IDs
         self.obj_type_num = {}

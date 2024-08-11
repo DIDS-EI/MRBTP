@@ -1,3 +1,4 @@
+import sys
 import time
 import random
 import math
@@ -58,7 +59,34 @@ np.random.seed(0)
 #     return agents_actions
 
 
+
+
 # 第一个按照顺序分，其它的随机分
+# def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
+#     agents_actions = [[] for _ in range(num_agent)]
+#
+#     # 计算需要分配给的智能体数量
+#     num_agents_to_assign = math.ceil(homogeneity_probability * num_agent)
+#     if num_agents_to_assign < 1:
+#         num_agents_to_assign = 1
+#
+#     agent_index = 0  # 每次从上次结束的后一个开始
+#     for cls_index in range(num_cls_index_ls):
+#         agents_actions[agent_index].append(cls_index)
+#         agent_index = (agent_index + 1) % num_agent
+#
+#     # 剩下的随机分配
+#     num_agents_to_assign -= 1
+#     # 将动作分配给这些智能体
+#     for cls_index in range(num_cls_index_ls):
+#         assigned_agents = random.sample(range(num_agent), num_agents_to_assign)
+#         for agent_index in assigned_agents:
+#             agents_actions[agent_index].append(cls_index)
+#
+#     return agents_actions
+
+
+# 完全随机分配
 def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
     agents_actions = [[] for _ in range(num_agent)]
 
@@ -67,21 +95,12 @@ def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability
     if num_agents_to_assign < 1:
         num_agents_to_assign = 1
 
-    agent_index = 0  # 每次从上次结束的后一个开始
-    for cls_index in range(num_cls_index_ls):
-        agents_actions[agent_index].append(cls_index)
-        agent_index = (agent_index + 1) % num_agent
-
-    # 剩下的随机分配
-    num_agents_to_assign -= 1
-    # 将动作分配给这些智能体
     for cls_index in range(num_cls_index_ls):
         assigned_agents = random.sample(range(num_agent), num_agents_to_assign)
         for agent_index in assigned_agents:
             agents_actions[agent_index].append(cls_index)
 
     return agents_actions
-
 
 def assign_action_cls_to_agents():
     behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
@@ -130,7 +149,7 @@ def bind_bt(bt_list):
 
 
 
-num_agent = 8
+num_agent = 4
 num_rooms = 4
 # num_objs = 2
 action_fail_p = 0
@@ -146,7 +165,7 @@ use_subtask_chain = True
 # 创建一个空的字典用于存储数据
 data = {'homogeneity_probability': homogeneity_probability_ls}
 
-for use_subtask_chain in [False, True]:
+for use_subtask_chain in [False]:
     col_name = f'use_subtask_chain={use_subtask_chain}'
     data[col_name] = []
     for homogeneity_probability in homogeneity_probability_ls:
@@ -181,56 +200,56 @@ for use_subtask_chain in [False, True]:
 
 
 
-        # #########################
-        # 随机分配动作
-        # #########################
-        assign_action_cls_to_agents()
-        agent_actions_model = env.create_action_model()
-        for i, actions in enumerate(agent_actions_model):
-            print(f"Agent {i + 1} actions:")
-            for action in actions:
-                print(f"  act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}")
 
-
-        # #########################
-        # Run Decentralized multi-agent BT algorithm
-        # #########################
-        print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="green")
-        start_time = time.time()
-
-        # start = None
-        # planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
-        # # planning_algorithm.planning(frozenset(goal),action_lists=action_model)
-        # planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
-        # behavior_lib = [agent.behavior_lib for agent in env.agents]
-        # btml_list = planning_algorithm.get_btml_list()
-
-
-        from mabtpg.btp.mabtp import MABTP
-        planning_algorithm = MABTP(verbose = False,start=start,env=env)
-        planning_algorithm.planning(frozenset(goal),action_lists=agent_actions_model)
-
-        print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="green")
-        print_colored(f"Time: {time.time()-start_time}",color="green")
-
-
-        # Convert to BT and bind the BT to the agent
-        behavior_lib = [agent.behavior_lib for agent in env.agents]
-        bt_list = planning_algorithm.output_bt_list(behavior_libs=behavior_lib)
-        # pruned_bt_list = planning_algorithm.new_output_pruned_bt_list(behavior_libs=behavior_lib)
-        bind_bt(bt_list)
-
-
-
-        total_time = 1000
         success_time = 0
         total_env_step_ls = []
-        # #########################
-        # Simulation
-        # #########################
+        total_time = 100
         for time_id in range(total_time):
             print_colored(f"==================================== time_id: {time_id} ==============================================",
                           "green")
+            # #########################
+            # 随机分配动作
+            # #########################
+            assign_action_cls_to_agents()
+            agent_actions_model = env.create_action_model()
+            for i, actions in enumerate(agent_actions_model):
+                print(f"Agent {i + 1} actions:")
+                for action in actions:
+                    print(f"  act:{action.name} pre:{action.pre} add:{action.add} del:{action.del_set}")
+
+
+            # #########################
+            # Run Decentralized multi-agent BT algorithm
+            # #########################
+            print_colored(f"Start Multi-Robot Behavior Tree Planning...",color="green")
+            start_time = time.time()
+
+            # start = None
+            # planning_algorithm = MAOBTP(verbose = False,start=start,env=env)
+            # # planning_algorithm.planning(frozenset(goal),action_lists=action_model)
+            # planning_algorithm.bfs_planning(frozenset(goal),action_lists=action_lists)
+            # behavior_lib = [agent.behavior_lib for agent in env.agents]
+            # btml_list = planning_algorithm.get_btml_list()
+
+
+            from mabtpg.btp.mabtp import MABTP
+            planning_algorithm = MABTP(verbose = False,start=start)
+            planning_algorithm.planning(frozenset(goal),action_lists=agent_actions_model)
+
+            print_colored(f"Finish Multi-Robot Behavior Tree Planning!",color="green")
+            print_colored(f"Time: {time.time()-start_time}",color="green")
+
+
+            # Convert to BT and bind the BT to the agent
+            behavior_lib = [agent.behavior_lib for agent in env.agents]
+            bt_list = planning_algorithm.output_bt_list(behavior_libs=behavior_lib)
+            # pruned_bt_list = planning_algorithm.new_output_pruned_bt_list(behavior_libs=behavior_lib)
+            bind_bt(bt_list)
+
+
+            # #########################
+            # Simulation
+            # #########################
             print_colored(f"start: {start}", "blue")
             env.print_ticks = False
             env.verbose = False
@@ -243,7 +262,6 @@ for use_subtask_chain in [False, True]:
             obs = set(start)
             env.state = obs
             while not done:
-
                 obs, done, _, _, agents_one_step,finish_and_fail = env.step()
                 env_steps += 1
                 agents_steps += agents_one_step
@@ -265,7 +283,10 @@ for use_subtask_chain in [False, True]:
             if obs >= goal:
                 success_time +=1
                 done = True
+            else:
+                sys.exit()
             total_env_step_ls.append(env_steps)
+            print("env_steps:",env_steps)
 
         print(f"success rate:{success_time/total_time*100} %")
         print(f"Avg env_step:{sum(total_env_step_ls) / len(total_env_step_ls)}")

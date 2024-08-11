@@ -1,4 +1,5 @@
-from mabtpg.behavior_tree.base_nodes import Action
+# from mabtpg.behavior_tree.base_nodes import Action
+from mabtpg.envs.gridenv.minigrid.behavior_lib.base.Action import MinigridAction as Action
 from mabtpg.behavior_tree import Status
 from minigrid.core.actions import Actions
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction

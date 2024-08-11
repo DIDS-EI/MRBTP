@@ -1,13 +1,10 @@
 fallback
-    condition IsOn(chicken,kitchentable)
+    condition IsOpen(stove)
     fallback
         sequence
-            condition IsSelfTask(frozenset({'IsOn(chicken,kitchentable)'}))
-            action WalkToPutCakeTable()
+            condition IsSelfTask(frozenset({'IsOpen(stove)'}))
+            action WalkToOpenStove()
             action FinishTask()
         sequence
-            condition IsRightHandEmpty(agent-0)
-            action SelfAcceptTask(frozenset({'IsOn(chicken,kitchentable)'}))
-    sequence
-        condition IsNear(agent-0,kitchentable) & IsRightHolding(agent-0,chicken)
-        action RightPut(agent-0,chicken,kitchentable)
+            condition IsClose(stove) & IsLeftHandEmpty(agent-0)
+            action SelfAcceptTask(frozenset({'IsOpen(stove)'}))

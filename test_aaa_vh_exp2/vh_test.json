@@ -2,30 +2,23 @@
     {
         "id": 1,
         "goal": [
-            "IsOn(chicken,kitchentable)"
+            "IsOpen(stove)"
         ],
         "init_state": [
-            "IsOpen(microwave)",
-            "IsIn(chicken,microwave)"
+             "IsClose(stove)"
         ],
         "objects": [
-            "chicken",
-            "kitchentable",
-            "microwave"
+            "stove"
         ],
         "action_space": [
             [
                 "Walk",
-                "Open",
-                "RightGrab",
-                "RightGrabFrom",
-                "RightPut"
+                "Open"
             ]
         ],
         "composition_action": [
             {
-                "WalkToPutCakeTable": ["Walk(self,chicken)", "RightGrab(self,chicken)","Walk(self,kitchentable)","RightPut(self,chicken,kitchentable)"],
-                "WalkToPutChickenTable": ["Walk(self,chicken)", "RightGrabFrom(self,chicken,microwave)","Walk(self,kitchentable)","RightPut(self,chicken,kitchentable)"]
+                "WalkToOpenStove": ["Walk(self,stove)", "Open(self,stove)"]
             }
         ]
     }

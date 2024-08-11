@@ -12,9 +12,12 @@ font4 = {'family': 'Times New Roman', 'color': 'Black', 'weight': 'bold', 'size'
 # Data 1
 # heterogeneity_1 = [0.75,0.5,0.25,0]
 heterogeneity_1 = [1, 0.67, 0.33,0]
-success_0_1_1 = [42, 77, 97, 98]
-success_0_3_1 = [4, 25, 48, 55]
-success_0_5_1 = [0, 2, 4, 14]
+success_0_1_1 = [42, 66, 91, 97]
+success_0_3_1 = [6, 17, 33, 44]
+success_0_5_1 = [2, 2, 3, 12]
+# success_0_1_1 = [42, 77, 97, 98]
+# success_0_3_1 = [4, 25, 48, 55]
+# success_0_5_1 = [0, 2, 4, 14]
 
 # Data 2
 # heterogeneity_2 = [0.875, 0.75, 0.625, 0.5, 0.375, 0.25, 0.125, 0] # [1 - x for x in original_list]

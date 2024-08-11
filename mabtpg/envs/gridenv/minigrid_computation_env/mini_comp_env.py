@@ -17,6 +17,9 @@ class MiniCompEnv(NumEnv):
         self.target_room_ls = None
 
         self.use_atom_subtask_chain = False
+        self.with_comp_action = False  # 是否有組合動作
+        self.use_comp_subtask_chain = False  # 是否使用任務鏈
+
         self.action_fail_p = None
 
         self.agents = [Agent(self, i) for i in range(self.num_agent)]

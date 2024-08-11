@@ -18,10 +18,10 @@ register(
 )
 
 
-num_agent = 8
-# env_id = "MiniGrid-DoorKey-16x16-v0"
+num_agent = 3
+env_id = "MiniGrid-DoorKey-8x8-v0"
 # env_id = "MiniGrid-RedBlueDoors-8x8-v0"
-env_id = "MiniGrid-KeyCorridorS3R1-v0-custom"
+# env_id = "MiniGrid-KeyCorridorS3R1-v0-custom"
 tile_size = 32
 agent_view_size =7
 screen_size = 1024
@@ -41,12 +41,12 @@ env.reset(seed=0)
 # add objs
 ball = Ball('red')
 env.place_object_in_room(ball,0)
-ball = Ball('yellow')
-env.place_object_in_room(ball,1)
 ball = Ball('green')
-env.place_object_in_room(ball,3)
-ball = Ball('purple')
-env.place_object_in_room(ball,4)
+env.place_object_in_room(ball,0)
+# ball = Ball('green')
+# env.place_object_in_room(ball,3)
+# ball = Ball('purple')
+# env.place_object_in_room(ball,4)
 
 # key = Key('red')
 # env.place_object_in_room(key,1)
