@@ -177,7 +177,7 @@ data = {'homogeneity_probability': homogeneity_probability_ls}
 for use_subtask_chain in [False]:
     col_name = f'use_subtask_chain={use_subtask_chain}'
     data[col_name] = []
-    for homogeneity_probability in [0]:
+    for homogeneity_probability in [1]:
 
         print_colored(
             f"============= use_subtask_chain:{use_subtask_chain} =========== homogeneity_probability: {homogeneity_probability} ========================",

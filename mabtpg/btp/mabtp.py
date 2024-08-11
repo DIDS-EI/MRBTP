@@ -41,7 +41,7 @@ class MABTP:
             if self.verbose: print_colored(f"C:{condition}","green")
             for agent in planning_agent_list:
                 if self.verbose: print_colored(f"Agent:{agent.id}", "purple")
-                print_colored(f"Agent:{agent.id}", "purple")
+                # print_colored(f"Agent:{agent.id}", "purple")
                 premise_condition_list = agent.one_step_expand(condition)
                 explored_condition_list += [planning_condition.condition_set for planning_condition in premise_condition_list]
 

@@ -65,7 +65,9 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 
 # json_type = "homo"
 # json_type = "hete"
-json_type = "half"
+# json_type = "half"
+
+json_type= "test"
 
 
 json_path = f"vh_{json_type}.json"
@@ -96,7 +98,7 @@ for with_comp_action in [comp]:
 
             print_colored(f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",color="purple")
 
-            for _,json_data in enumerate(json_datasets[4:5]):
+            for _,json_data in enumerate(json_datasets[:]):
 
                 data_id = json_data['id']
                 print_colored(f"========= data_id: {data_id} ===============","blue")
@@ -175,7 +177,9 @@ for with_comp_action in [comp]:
                         print("comp_btml_ls:", comp_btml_ls)
 
                         for i in range(env.num_agent):
-                            action_model[i].extend(comp_planning_act_ls[i])
+                            non_empty_acts = [act for act in comp_planning_act_ls[i] if act]
+                            action_model[i].extend(non_empty_acts)
+                            # action_model[i].extend(comp_planning_act_ls[i])
                             action_model[i] = sorted(action_model[i], key=lambda x: x.cost)  # 不加也有问题？完全异构的第一个例子
 
 

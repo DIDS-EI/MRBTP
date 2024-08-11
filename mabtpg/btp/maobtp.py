@@ -87,7 +87,8 @@ class BfsPlanningAgent(PlanningAgent):
         if inside_condition:
             self.inside_expand(inside_condition, premise_condition_list)
         else:
-            self.outside_expand(premise_condition_list)
+            if premise_condition_list!=[]:
+                self.outside_expand(condition, premise_condition_list)
 
         # cost
         return premise_condition_cost_list

@@ -128,7 +128,7 @@
             }
         ]
     },
-    {
+     {
         "id": 4,
         "goal": [
             "IsIn(box,closet)"

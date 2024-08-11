@@ -58,7 +58,7 @@ class CompositeActionPlanner:
             "pre": set(), # 原来那样会出现 有些pre 就没了cangoto door & cangoto key ???
             "add": set(),
             "del_set": set(),
-            "cost": 1
+            "cost": 0
         }
         sum_add = set()
         for i, a in enumerate(agent_comp_sequence):

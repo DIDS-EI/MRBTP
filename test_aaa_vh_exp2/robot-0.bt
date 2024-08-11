@@ -1,68 +1,13 @@
 fallback
-    condition IsIn(book,bookshelf) & IsOn(toy,bookshelf)
+    condition IsOn(chicken,kitchentable)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(chicken,kitchentable)'}))
+            action WalkToPutCakeTable()
+            action FinishTask()
+        sequence
+            condition IsRightHandEmpty(agent-0)
+            action SelfAcceptTask(frozenset({'IsOn(chicken,kitchentable)'}))
     sequence
-        fallback
-            condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,toy)
-            sequence
-                condition IsIn(book,bookshelf) & IsRightHolding(agent-0,toy)
-                action Walk(agent-0,bookshelf)
-        action RightPut(agent-0,toy,bookshelf)
-    sequence
-        fallback
-            condition IsIn(book,bookshelf) & IsRightHandEmpty(agent-0)
-            sequence
-                fallback
-                    condition IsIn(book,bookshelf) & IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,book)
-                    sequence
-                        condition IsIn(book,bookshelf) & IsRightHolding(agent-0,book)
-                        action Walk(agent-0,bookshelf)
-                action RightPut(agent-0,book,bookshelf)
-        action WalkToPutToyBookshelf()
-    sequence
-        condition IsNear(agent-1,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-1,book)
-        action WalkToPutToyBookshelf()
-    sequence
-        condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,book)
-        action WalkToPutToyBookshelf()
-    sequence
-        fallback
-            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-0,toy)
-            sequence
-                condition IsRightHandEmpty(agent-1) & IsRightHolding(agent-0,toy)
-                action Walk(agent-0,bookshelf)
-        action RightPut(agent-0,toy,bookshelf)
-    sequence
-        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
-        action WalkToPutToyBookshelf()
-    sequence
-        fallback
-            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-0,toy)
-            sequence
-                condition IsRightHandEmpty(agent-3) & IsRightHolding(agent-0,toy)
-                action Walk(agent-0,bookshelf)
-        action RightPut(agent-0,toy,bookshelf)
-    sequence
-        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-3)
-        action WalkToPutToyBookshelf()
-    sequence
-        condition IsNear(agent-3,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-3,book)
-        action WalkToPutToyBookshelf()
-    sequence
-        fallback
-            condition IsNear(agent-0,bookshelf) & IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,toy)
-            sequence
-                condition IsRightHandEmpty(agent-2) & IsRightHolding(agent-0,toy)
-                action Walk(agent-0,bookshelf)
-        action RightPut(agent-0,toy,bookshelf)
-    sequence
-        condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
-        action WalkToPutToyBookshelf()
-    sequence
-        condition IsNear(agent-0,bookshelf) & IsRightHolding(agent-0,toy) & IsRightHolding(agent-3,book)
-        action RightPut(agent-0,toy,bookshelf)
-    sequence
-        condition IsRightHandEmpty(agent-0) & IsRightHolding(agent-3,book)
-        action WalkToPutToyBookshelf()
-    sequence
-        condition IsNear(agent-2,bookshelf) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
-        action WalkToPutToyBookshelf()
+        condition IsNear(agent-0,kitchentable) & IsRightHolding(agent-0,chicken)
+        action RightPut(agent-0,chicken,kitchentable)

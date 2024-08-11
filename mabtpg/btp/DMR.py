@@ -61,8 +61,9 @@ class DMR:
 
                 if self.save_dot:
                     for name,sub_btml in self.btml_ls[agent_id].sub_btml_dict.items():
-                        tmp_bt = BehaviorTree(btml=sub_btml, behavior_lib=behavior_lib[agent_id])
-                        tmp_bt.draw(file_name = f"data/{agent_id}-{name}")
+                        if sub_btml!=[]:
+                            tmp_bt = BehaviorTree(btml=sub_btml, behavior_lib=behavior_lib[agent_id])
+                            tmp_bt.draw(file_name = f"data/{agent_id}-{name}")
 
 
             # if comp_agents_ls_dic!=None:

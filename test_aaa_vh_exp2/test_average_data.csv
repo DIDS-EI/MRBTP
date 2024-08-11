@@ -1,2 +1,2 @@
 data_id,with_comp_action,use_comp_subtask_chain,use_atom_subtask_chain,done,env_steps,agents_steps,communication_times,CABTP_expanded_num,dmr_record_expanded_num,total_expanded_num,CABTP_expanded_time,dmr_expanded_time,total_expanded_time
-5,False,False,False,True,8,4.0,0,0,34,34,0,0.0010004043579101562,0.0010004043579101562
+1.0,True,True,False,1.0,8.0,4.0,2.0,8.0,2.0,10.0,0.0,0.0,0.0

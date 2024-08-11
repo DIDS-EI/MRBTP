@@ -1,12 +1,14 @@
 fallback
     condition IsInRoom(package-0,room-1)
-    sequence
-        fallback
-            condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsOpen(room-1)
-            sequence
-                condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0)
-                action OpenRoom_1(agent-0)
-        action OpenRoom_0(agent-0)
-    sequence
-        condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsOpen(room-0)
-        action OpenRoom_1(agent-0)
+    fallback
+        condition IsInRoom(package-0,room-0) & IsOpen(room-0) & IsOpen(room-1)
+        sequence
+            fallback
+                condition IsClose(room-0) & IsInRoom(package-0,room-0) & IsOpen(room-1)
+                sequence
+                    condition IsClose(room-0) & IsClose(room-1) & IsInRoom(package-0,room-0)
+                    action OpenRoom_1(agent-0)
+            action OpenRoom_0(agent-0)
+        sequence
+            condition IsClose(room-1) & IsInRoom(package-0,room-0) & IsOpen(room-0)
+            action OpenRoom_1(agent-0)
