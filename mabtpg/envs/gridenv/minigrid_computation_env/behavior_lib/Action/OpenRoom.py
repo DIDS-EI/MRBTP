@@ -23,7 +23,7 @@ class OpenRoom(WareHouseAction):
         self.add = {f"IsOpen(room-{self.room_id})"}
         self.del_set = {f"IsClose(room-{self.room_id})"}
         # self.del_set = set()
-        self.act_max_step = int(self.room_id)*2
+        self.act_max_step = 2 #int(self.room_id)*2
 
         self.act_cur_step = 0
 

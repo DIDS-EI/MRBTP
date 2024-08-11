@@ -26,7 +26,7 @@ class MovePackage(WareHouseAction):
         self.pre = {f"IsOpen(room-{self.from_room_id})", f"IsOpen(room-{self.to_room_id})", f"IsInRoom(package-{self.pkg_id},room-{self.from_room_id})"}
         self.add = {f"IsInRoom(package-{self.pkg_id},room-{self.to_room_id})"}
         self.del_set =  {f"IsInRoom(package-{self.pkg_id},room-{self.from_room_id})"}
-        self.act_max_step = abs(int(self.from_room_id) - int(self.to_room_id)) * 2
+        self.act_max_step = 3 #abs(int(self.from_room_id) - int(self.to_room_id)) * 2
 
 
     @classmethod

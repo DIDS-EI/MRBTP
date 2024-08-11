@@ -87,6 +87,22 @@ np.random.seed(0)
 
 
 # 完全随机分配
+# def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
+#     agents_actions = [[] for _ in range(num_agent)]
+#
+#     # 计算需要分配给的智能体数量
+#     num_agents_to_assign = math.ceil(homogeneity_probability * num_agent)
+#     if num_agents_to_assign < 1:
+#         num_agents_to_assign = 1
+#
+#     for cls_index in range(num_cls_index_ls):
+#         assigned_agents = random.sample(range(num_agent), num_agents_to_assign)
+#         for agent_index in assigned_agents:
+#             agents_actions[agent_index].append(cls_index)
+#
+#     return agents_actions
+
+# 完全异构 无论何时 都要保证每个机器人至少有一个动作
 def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability):
     agents_actions = [[] for _ in range(num_agent)]
 
@@ -95,12 +111,44 @@ def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability
     if num_agents_to_assign < 1:
         num_agents_to_assign = 1
 
+    num_cls_to_assign_remain =  [num_agents_to_assign for _ in range(num_cls_index_ls)]
+    agents_ls_of_cls_already_assign = [[] for _ in range(num_cls_index_ls)]
+
+    # 确保每个机器人至少分配到一个动作
+    # 初始化一个从0到num_cls_index_ls-1的列表
+    available_indices = list(range(num_cls_index_ls))
+    for agent_index in range(num_agent):
+        if available_indices:
+            # 随机选择一个可用的索引
+            chosen_index = random.choice(available_indices)
+            # 添加到对应的 agent 的行动列表
+            agents_actions[agent_index].append(chosen_index)
+            # 从可用列表中移除这个索引
+            available_indices.remove(chosen_index)
+
+            num_cls_to_assign_remain[chosen_index] -= 1
+            agents_ls_of_cls_already_assign[chosen_index].append(agent_index)
+
+
+
+    # 分配剩余的动作
     for cls_index in range(num_cls_index_ls):
-        assigned_agents = random.sample(range(num_agent), num_agents_to_assign)
+        # assigned_agents = random.sample(set[range(num_agent)]-set(agents_ls_of_cls_already_assign[chosen_index]), num_cls_to_assign_remain[cls_index])
+
+        # Convert both the total agents and the already assigned agents to sets
+        total_agents = set(range(num_agent))
+        already_assigned_agents = set(agents_ls_of_cls_already_assign[cls_index])
+
+        # Perform set difference to get the list of agents not already assigned
+        available_agents = list(total_agents - already_assigned_agents)
+        print("already_assigned_agents:",already_assigned_agents, "available_agents:",available_agents,num_cls_to_assign_remain[cls_index])
+        assigned_agents = random.sample(available_agents, num_cls_to_assign_remain[cls_index])
+
         for agent_index in assigned_agents:
             agents_actions[agent_index].append(cls_index)
 
     return agents_actions
+
 
 def assign_action_cls_to_agents():
     behavior_lib_path = f"{root_path}/envs/gridenv/minigrid_computation_env/behavior_lib"
