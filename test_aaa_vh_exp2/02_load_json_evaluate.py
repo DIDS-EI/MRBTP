@@ -68,8 +68,8 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 # json_type = "half"
 
 # json_type= "test"
-json_type = "homo_30"
-# json_type = "half_30"
+# json_type = "homo_30"
+json_type = "half_30"
 # json_type = "hete_30"
 
 json_path = f"vh_{json_type}.json"
@@ -94,7 +94,7 @@ average_details = []
 #         for use_atom_subtask_chain in [False]:
 
 
-for _,json_data in enumerate(json_datasets[:]):
+for _,json_data in enumerate(json_datasets[12:13]):
     data_id = json_data['id']
     print_colored(f"=============================== data_id: {data_id} =========================================","purple")
 

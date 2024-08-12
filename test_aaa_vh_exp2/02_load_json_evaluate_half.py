@@ -94,7 +94,7 @@ average_details = []
 #         for use_atom_subtask_chain in [False]:
 
 
-for _,json_data in enumerate(json_datasets[:]):
+for _,json_data in enumerate(json_datasets[24:]):
     data_id = json_data['id']
     print_colored(f"=============================== data_id: {data_id} =========================================","purple")
 
