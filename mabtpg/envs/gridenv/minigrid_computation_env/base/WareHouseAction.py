@@ -67,7 +67,6 @@ class WareHouseAction(Action):
                         return Status.FAILURE
                     else:
                         self.env.state = (self.env.state | self.add) - self.del_set
-                        self.env.agents_step += 1
                         if self.env.verbose: print_colored(f"Auto Action {self.name} OK! state: {self.env.state}", "blue")
                 elif self.env.state < self.pre and self.is_finish:
                     if self.env.verbose: print_colored(f"AGENT-{self.agent.id} cannot do it!", color="red")

@@ -27,7 +27,7 @@
                 "SwitchOn"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToOpenFridge": ["Walk(self,fridge)", "Open(self,fridge)"],
                 "WalkToPutInMilkFridge": ["Walk(self,milk)","RightGrab(self,milk)","Walk(self,fridge)","RightPutIn(self,milk,fridge)"]
@@ -67,7 +67,7 @@
                 "LeftPut"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToPutCupcakeOnTable": [
                     "Walk(self,cupcake)",
@@ -130,7 +130,7 @@
                 "Open"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToOpenMicrowave": [
                     "Walk(self,microwave)",
@@ -193,7 +193,7 @@
                 "Close"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToPutInBoxCloset": [
                     "Walk(self,box)",
@@ -255,7 +255,7 @@
                 "RightPut"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"],
                 "WalkToPutBookBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPut(self,book,bookshelf)"]

@@ -23,7 +23,7 @@
                 "RightPutIn"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             [
                 {"WalkToOpen": ["Walk","Open"]}
             ],
@@ -59,7 +59,7 @@
                 "RightPut"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             [
                 {"WalkToPutOn": ["Walk","RightGrab","Walk","RightPut"]}
             ],
@@ -96,7 +96,7 @@
                 "SwitchOn"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             [
                 {"WalkToOpen": ["Walk","Open"]},
                 {"WalkToSwitch": ["Walk","SwitchOn"]}
@@ -113,7 +113,7 @@
         "objects": ["box", "closet"],
         "action_space": [["Walk", "RightGrab", "RightPutIn", "Open" ],
             ["Walk","Close","Open"]],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             [
                 {"WalkToPutIn": ["Walk","RightGrab","Walk","RightPutIn"]}
             ],
@@ -148,7 +148,7 @@
                 "RightPut"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"],
                 "WalkToPutBookBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPut(self,book,bookshelf)"]

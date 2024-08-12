@@ -141,7 +141,7 @@ def generate_agents_actions(num_cls_index_ls, num_agent, homogeneity_probability
 
         # Perform set difference to get the list of agents not already assigned
         available_agents = list(total_agents - already_assigned_agents)
-        print("already_assigned_agents:",already_assigned_agents, "available_agents:",available_agents,num_cls_to_assign_remain[cls_index])
+        # print("already_assigned_agents:",already_assigned_agents, "available_agents:",available_agents,num_cls_to_assign_remain[cls_index])
         assigned_agents = random.sample(available_agents, num_cls_to_assign_remain[cls_index])
 
         for agent_index in assigned_agents:
@@ -213,7 +213,7 @@ use_subtask_chain = True
 # 创建一个空的字典用于存储数据
 data = {'homogeneity_probability': homogeneity_probability_ls}
 
-for use_subtask_chain in [False]:
+for use_subtask_chain in [True,False]:
     col_name = f'use_subtask_chain={use_subtask_chain}'
     data[col_name] = []
     for homogeneity_probability in homogeneity_probability_ls:
@@ -251,10 +251,13 @@ for use_subtask_chain in [False]:
 
         success_time = 0
         total_env_step_ls = []
-        total_time = 100
+        total_time = 500
         for time_id in range(total_time):
             print_colored(f"==================================== time_id: {time_id} ==============================================",
                           "green")
+            if time_id == 9:
+                xx=1
+
             # #########################
             # 随机分配动作
             # #########################
@@ -299,11 +302,11 @@ for use_subtask_chain in [False]:
             # Simulation
             # #########################
             print_colored(f"start: {start}", "blue")
-            env.print_ticks = False
-            env.verbose = False
+            env.print_ticks = bt_draw
+            env.verbose = bt_draw
             env.reset()
             done = False
-            max_env_step = 500
+            max_env_step = 20
             env_steps = 0
             new_env_step = 0
             agents_steps = 0
@@ -313,10 +316,10 @@ for use_subtask_chain in [False]:
                 obs, done, _, _, agents_one_step,finish_and_fail = env.step()
                 env_steps += 1
                 agents_steps += agents_one_step
-                if env_steps%50==0:
-                    print_colored(f"========= env_steps: {env_steps} ===============",
-                              "blue")
-                    print_colored(f"state: {obs}", "blue")
+                # if env_steps%50==0:
+                print_colored(f"========= env_steps: {env_steps} ===============",
+                          "blue")
+                print_colored(f"state: {obs}", "blue")
                 if obs >= goal:
                     done = True
                     break

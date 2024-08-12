@@ -68,8 +68,8 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 # json_type = "half"
 
 # json_type= "test"
-json_type = "homo_30"
-# json_type = "half_30"
+# json_type = "homo_30"
+json_type = "half_30"
 # json_type = "hete_30"
 
 json_path = f"vh_{json_type}.json"

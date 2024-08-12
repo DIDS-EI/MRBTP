@@ -16,7 +16,7 @@
                 "Open"
             ]
         ],
-        "composition_action": [
+        "multi_robot_subtree_ls": [
             {
                 "WalkToOpenStove": ["Walk(self,stove)", "Open(self,stove)"]
             }

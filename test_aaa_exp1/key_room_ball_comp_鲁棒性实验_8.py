@@ -184,7 +184,7 @@ def bind_bt(bt_list):
 # num_agent = 8
 # num_rooms = 4
 
-num_agent = 4
+num_agent = 8
 num_rooms = 4
 
 # num_objs = 2

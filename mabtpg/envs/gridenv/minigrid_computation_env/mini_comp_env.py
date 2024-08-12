@@ -70,6 +70,7 @@ class MiniCompEnv(NumEnv):
             else:
                 # cur_agent_actions[i] = action
                 agent_action_every_step[i] = action.name
+                self.agents_step += 1
                 if self.verbose:  self.print_agent_action_tabulate(i,action)
 
             if not self.agents[i].bt_success:

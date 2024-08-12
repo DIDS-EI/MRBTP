@@ -1,0 +1,875 @@
+[
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "milk",
+            "fridge"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenFridge": ["Walk(self,fridge)", "Open(self,fridge)"]
+            },
+            {
+                "WalkToPutInMilkFridge": ["Walk(self,milk)","RightGrab(self,milk)","Walk(self,fridge)","RightPutIn(self,milk,fridge)"]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsOn(cupcake,kitchentable)",
+            "IsSwitchedOn(coffeemaker)"
+        ],
+        "init_state": ["IsSwitchedOff(coffeemaker)"],
+        "objects": [
+            "cupcake",
+            "coffeemaker",
+            "kitchentable"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "SwitchOn",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOn": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "goal": [
+            "IsSwitchedOn(microwave)",
+            "IsIn(cutlets,microwave)"
+        ],
+        "init_state": [
+            "IsSwitchedOff(microwave)",
+            "IsClose(microwave)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ]
+            },
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "goal": [
+            "IsIn(box,closet)"
+        ],
+        "init_state": [
+            "IsClose(closet)"
+        ],
+        "objects": [
+            "box",
+            "closet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Close",
+                "Open"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutInBoxCloset": [
+                    "Walk(self,box)",
+                    "RightGrab(self,box)",
+                    "Walk(self,closet)",
+                    "RightPutIn(self,box,closet)"
+                ]
+            },
+            {
+                "WalkToOpenCloset": [
+                    "Walk(self,closet)",
+                    "Open(self,closet)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "goal": [
+            "IsOn(toy,bookshelf)",
+            "IsIn(book,bookshelf)"
+        ],
+        "init_state": [
+        ],
+        "objects": [
+            "toy",
+            "book",
+            "bookshelf"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutToyBookshelf": ["Walk(self,toy)","RightGrab(self,toy)","Walk(self,bookshelf)","RightPut(self,toy,bookshelf)"]
+            },
+            {
+                "WalkToPutBookInBookshelf": ["Walk(self,book)","RightGrab(self,book)","Walk(self,bookshelf)","RightPutIn(self,book,bookshelf)"]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "goal": [
+            "IsIn(crackers,box)",
+            "IsOn(book,nightstand)"
+        ],
+        "init_state": [
+            "IsClose(box)"
+        ],
+        "objects": [
+            "crackers",
+            "box",
+            "book",
+            "nightstand"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCrackersInBox": [
+                    "Walk(self,crackers)",
+                    "RightGrab(self,crackers)",
+                    "Walk(self,box)",
+                    "RightPutIn(self,crackers,box)"
+                ],
+                "WalkToPutOpenBox": [
+                    "Walk(self,box)",
+                    "Open(self,box)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,book,nightstand)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "goal": [
+            "IsSwitchedOn(tv)",
+            "IsIn(remotecontrol,nightstand)"
+        ],
+        "init_state": [
+            "IsSwitchedOff(tv)",
+            "IsClose(nightstand)"
+        ],
+        "objects": [
+            "tv",
+            "remotecontrol",
+            "nightstand"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "SwitchOn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+
+            },
+            {
+                "WalkToOpenNightstand": [
+                    "Walk(self,nightstand)",
+                    "Open(self,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "goal": [
+            "IsOn(chair,kitchencounter)",
+            "IsSwitchedOff(radio)"
+        ],
+        "init_state": [
+            "IsOn(radio,kitchencounter)",
+            "IsSwitchedOn(radio)"
+        ],
+        "objects": [
+            "chair",
+            "kitchencounter",
+            "radio"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            },
+            {
+                "WalkToPutChairOnCounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "goal": [
+            "IsIn(apple,fridge)",
+            "IsOn(cuttingboard,kitchencounter)"
+        ],
+        "init_state": [
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "apple",
+            "fridge",
+            "cuttingboard",
+            "kitchencounter"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "Open"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCuttingboardOnCounter": [
+                    "Walk(self,cuttingboard)",
+                    "RightGrab(self,cuttingboard)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,cuttingboard,kitchencounter)"
+                ],
+                "WalkToPutAppleInFridge": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,apple,fridge)"
+                ]
+            },
+            {
+
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "goal": [
+            "IsSwitchedOn(tv)",
+            "IsSwitchedOff(toaster)"
+        ],
+        "init_state": [
+            "IsSwitchedOff(tv)",
+            "IsSwitchedOn(toaster)"
+        ],
+        "objects": [
+            "tv",
+            "toaster"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "SwitchOff"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnTV": ["Walk(self,tv)", "SwitchOn(self,tv)"]
+            },
+            {
+                 "WalkToSwitchOffToaster": ["Walk(self,remotecontrol)",  "SwitchOff(self,toaster)"]
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "goal": [
+            "IsOn(sundae,kitchentable)",
+            "IsSwitchedOff(tv)",
+            "IsOpen(milk)"
+        ],
+        "init_state": [
+            "IsSwitchedOn(tv)",
+            "IsClose(milk)"
+        ],
+        "objects": [
+            "sundae",
+            "kitchentable",
+            "tv",
+            "milk"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "Open"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutSundaeOnTable": [
+                    "Walk(self,sundae)",
+                    "RightGrab(self,sundae)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToSwitchOffTV": [
+                    "Walk(self,tv)",
+                    "SwitchOff(self,tv)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ]
+            }
+
+        ]
+    },
+    {
+        "id": 12,
+        "goal": [
+            "IsOn(mug,nightstand)",
+            "IsSwitchedOn(tablelamp)",
+            "IsOpen(book)"
+        ],
+        "init_state": [
+            "IsSwitchedOff(tablelamp)",
+            "IsClose(book)",
+            "IsClose(nightstand)"
+        ],
+        "objects": [
+            "mug",
+            "nightstand",
+            "tablelamp",
+            "book",
+            "remotecontrol",
+            "drawer"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "SwitchOn",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "Close"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnLamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToOpenNightstand":[
+                    "Walk(self,nightstand)",
+                    "Open(self,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "goal": [
+            "IsIn(dishbowl,washingmachine)",
+            "IsSwitchedOn(washingmachine)"
+        ],
+        "init_state": [
+            "IsClose(washingmachine)",
+            "IsSwitchedOff(washingmachine)"
+        ],
+        "objects": [
+            "dishbowl",
+            "washingmachine",
+            "sponge",
+            "sink"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutOpenWashingmachine": [
+                    "Walk(self,Washingmachine)",
+                    "Open(self,Washingmachine)"
+                ]
+            },
+            {
+                "WalkToPutDishbowlInWashingmachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,Washingmachine)",
+                    "RightPutIn(self,dishbowl,Washingmachine)"
+                ],
+                "WalkToPutSpongeInSink": [
+                    "Walk(self,sponge)",
+                    "RightGrab(self,sponge)",
+                    "Walk(self,sink)",
+                    "RightPutIn(self,sponge,sink)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "goal": [
+            "IsIn(bananas,fridge)",
+            "IsOn(plate,kitchencounter)",
+            "IsSwitchedOff(radio)",
+            "IsOpen(milk)"
+        ],
+        "init_state": [
+            "IsClose(fridge)",
+            "IsSwitchedOn(radio)",
+            "IsClose(milk)"
+        ],
+        "objects": [
+            "bananas",
+            "fridge",
+            "plate",
+            "kitchencounter",
+            "radio",
+            "milk"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutBananasInFridge": [
+                    "Walk(self,bananas)",
+                    "RightGrab(self,bananas)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,bananas,fridge)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            },
+            {
+                "WalkToPutPlateOnCounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "goal": [
+            "IsIn(toothpaste,bathroomcabinet)",
+            "IsSwitchedOn(coffeemaker)",
+            "IsClose(closet)"
+        ],
+        "init_state": [
+            "IsClose(bathroomcabinet)",
+            "IsSwitchedOff(coffeemaker)",
+            "IsOpen(closet)"
+        ],
+        "objects": [
+            "toothpaste",
+            "bathroomcabinet",
+            "cup",
+            "cabinet",
+            "coffeemaker",
+            "closet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "Close"
+            ],
+            [
+                "Walk",
+                "SwitchOn",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutToothpasteInBathroomcabinet": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothpaste,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToPutOpenBathroomcabinet": [
+                    "Walk(self,toothpaste)",
+                    "Open(self,bathroomcabinet)"
+                ],
+                "WalkToCloseCloset": [
+                    "Walk(self,closet)",
+                    "Close(self,closet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutCupOnCabinet": [
+                    "Walk(self,cup)",
+                    "RightGrab(self,cup)",
+                    "Walk(self,cabinet)",
+                    "RightPut(self,cup,cabinet)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "goal": [
+            "IsIn(crayons,cabinet)",
+            "IsIn(mug,cabinet)",
+            "IsIn(book,bookshelf)",
+            "IsSwitchedOn(tv)"
+        ],
+        "init_state": [
+            "IsClose(cabinet)",
+            "IsClose(cabinet)",
+            "IsClose(bookshelf)",
+            "IsSwitchedOff(tv)"
+        ],
+        "objects": [
+            "crayons",
+            "cabinet",
+            "mug",
+            "book",
+            "bookshelf",
+            "tv"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "Close"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(self,cabinet)",
+                    "Open(self,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(self,bookshelf)",
+                    "Open(self,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutMugInCabinet": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,cabinet)",
+                    "RightPutIn(self,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(self,crayons)",
+                    "RightGrab(self,crayons)",
+                    "Walk(self,cabinet)",
+                    "RightPutIn(self,crayons,cabinet)"
+                ]
+            },
+            {
+                "WalkToPutBookInBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPutIn(self,book,bookshelf)"
+                ],
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ]
+            }
+        ]
+    }
+
+]
+
+

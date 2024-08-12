@@ -88,129 +88,125 @@ all_details = []
 average_details = []
 
 
-# comp = True
-# for with_comp_action in [comp]:
-#     for use_comp_subtask_chain in [comp]:
-#         for use_atom_subtask_chain in [False]:
+comp = True
+for with_comp_action in [comp]:
+    for use_comp_subtask_chain in [comp]:
+        for use_atom_subtask_chain in [False]:
+
+# for with_comp_action in [False, True]:
+#     for use_comp_subtask_chain in [False, True]:
+#         if with_comp_action==False and use_comp_subtask_chain==True:
+#             continue
+#         for use_atom_subtask_chain in [False, True]:
+
+            print_colored(f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",color="purple")
+
+            for _,json_data in enumerate(json_datasets[20:]):
+
+                data_id = json_data['id']
+                print_colored(f"========= data_id: {data_id} ===============","blue")
+                goal = frozenset(json_data["goal"])
+                start = set(json_data["init_state"])
+                objects = json_data["objects"]
+                action_space = json_data["action_space"]
+                num_agent = len(action_space)
+
+                for i in range(num_agent):
+                    start.add(f"IsRightHandEmpty(agent-{i})")
+                    start.add(f"IsLeftHandEmpty(agent-{i})")
+                start = frozenset(start)
 
 
-for _,json_data in enumerate(json_datasets[:]):
-    data_id = json_data['id']
-    print_colored(f"=============================== data_id: {data_id} =========================================","purple")
+                # #########################
+                # Initialize Environment
+                # #########################
+                env = VHCompEnv(num_agent=num_agent, goal=goal, start=start)
+                env.objects = objects
+                env.filter_objects_to_get_category(objects)
 
-
-    goal = frozenset(json_data["goal"])
-    start = set(json_data["init_state"])
-    objects = json_data["objects"]
-    action_space = json_data["action_space"]
-    num_agent = len(action_space)
-
-    for i in range(num_agent):
-        start.add(f"IsRightHandEmpty(agent-{i})")
-        start.add(f"IsLeftHandEmpty(agent-{i})")
-    start = frozenset(start)
-
-
-
-    for with_comp_action in [False, True]:
-
-        # #########################
-        # Initialize Environment
-        # #########################
-        env = VHCompEnv(num_agent=num_agent, goal=goal, start=start)
-        env.objects = objects
-        env.filter_objects_to_get_category(objects)
-
-        env.with_comp_action = with_comp_action # 是否有組合動作
-        env.use_comp_subtask_chain = False  # 是否使用任務鏈
-
-        env.use_atom_subtask_chain = False # 是否使用任務鏈
-        bt_draw = verbose
-
-
-        # #####################
-        # get action model
-        # #####################
-        behavior_lib_path = f"{root_path}/envs/virtualhome/behavior_lib"
-        behavior_lib = BehaviorLibrary(behavior_lib_path)
-
-        agents_act_cls_ls = [[] for _ in range(num_agent)]
-        for i,act_cls_name_ls in enumerate(action_space):
-            for act_cls_name in act_cls_name_ls:
-                act_cls = type(f"{act_cls_name}", (behavior_lib["Action"][act_cls_name],), {})
-                agents_act_cls_ls[i].append(act_cls)
-
-        for i, agent in enumerate(env.agents):
-            agent.behavior_dict = {
-                "Action": agents_act_cls_ls[i]+[behavior_lib["Action"]['SelfAcceptTask'],behavior_lib["Action"]['FinishTask']],
-                "Condition": behavior_lib["Condition"].values(),
-            }
-            agent.create_behavior_lib()
-        action_model = env.create_action_model()
-
-
-        # #########################
-        # Composition Action
-        # Pre-plan get BTML and PlanningAction
-        # #########################
-        composition_action = []
-        comp_btml_ls=None
-        comp_planning_act_ls = None
-        CABTP_expanded_num = 0
-        CABTP_expanded_time = 0
-        if "multi_robot_subtree_ls" in json_data:
-            composition_action = json_data["multi_robot_subtree_ls"]
-
-            if env.with_comp_action:
-                cap = CompositeActionPlanner(action_model, composition_action, env=env)
-                cap.get_composite_action()
-                # [[WalkToOpen(agent-0,fridge), WalkToOpen(agent-0,milk)],[]]
-                comp_planning_act_ls = cap.planning_ls
-                # [[],[],[]]
-                comp_btml_ls = cap.btml_ls
-                CABTP_expanded_num = cap.expanded_num
-                CABTP_expanded_time = cap.expanded_time
-
-                print("comp_planning_act_ls:",comp_planning_act_ls)
-                print("comp_btml_ls:", comp_btml_ls)
-
-                for i in range(env.num_agent):
-                    non_empty_acts = [act for act in comp_planning_act_ls[i] if act]
-                    action_model[i].extend(non_empty_acts)
-                    # action_model[i].extend(comp_planning_act_ls[i])
-                    action_model[i] = sorted(action_model[i], key=lambda x: x.cost)  # 不加也有问题？完全异构的第一个例子
-
-
-        # #########################
-        # Run Decentralized multi-agent BT algorithm
-        # #########################
-        # print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
-        start_time = time.time()
-        from mabtpg.btp.DMR import DMR
-        dmr = DMR(env, goal, start, action_model, num_agent, with_comp_action=env.with_comp_action,
-                  save_dot=bt_draw)  # False 也还需要再调试
-        dmr.planning()
-
-        # Convert to BT and bind the BT to the agent
-        behavior_lib = [agent.behavior_lib for agent in env.agents]
-        dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib, comp_btml_ls=comp_btml_ls, comp_planning_act_ls=comp_planning_act_ls)
-        bind_bt(dmr.bt_ls)
-
-
-        # calculate time and expanded num
-        # dmr.record_expanded_num
-        # dmr.expanded_time
-
-        for use_comp_subtask_chain in [False, True]:
-            if with_comp_action == False and use_comp_subtask_chain == True:
-                continue
-            for use_atom_subtask_chain in [False, True]:
-                print_colored(
-                    f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",
-                    color="blue")
-
+                env.with_comp_action = with_comp_action # 是否有組合動作
                 env.use_comp_subtask_chain = use_comp_subtask_chain  # 是否使用任務鏈
+
                 env.use_atom_subtask_chain = use_atom_subtask_chain # 是否使用任務鏈
+
+
+                bt_draw = verbose
+
+
+                # #####################
+                # get action model
+                # #####################
+                behavior_lib_path = f"{root_path}/envs/virtualhome/behavior_lib"
+                behavior_lib = BehaviorLibrary(behavior_lib_path)
+
+                agents_act_cls_ls = [[] for _ in range(num_agent)]
+                for i,act_cls_name_ls in enumerate(action_space):
+                    for act_cls_name in act_cls_name_ls:
+                        act_cls = type(f"{act_cls_name}", (behavior_lib["Action"][act_cls_name],), {})
+                        agents_act_cls_ls[i].append(act_cls)
+
+                for i, agent in enumerate(env.agents):
+                    agent.behavior_dict = {
+                        "Action": agents_act_cls_ls[i]+[behavior_lib["Action"]['SelfAcceptTask'],behavior_lib["Action"]['FinishTask']],
+                        "Condition": behavior_lib["Condition"].values(),
+                    }
+                    agent.create_behavior_lib()
+                action_model = env.create_action_model()
+
+
+                # #########################
+                # Composition Action
+                # Pre-plan get BTML and PlanningAction
+                # #########################
+                composition_action = []
+                comp_btml_ls=None
+                comp_planning_act_ls = None
+                CABTP_expanded_num = 0
+                CABTP_expanded_time = 0
+                if "multi_robot_subtree_ls" in json_data:
+                    composition_action = json_data["multi_robot_subtree_ls"]
+
+                    if env.with_comp_action:
+                        cap = CompositeActionPlanner(action_model, composition_action, env=env)
+                        cap.get_composite_action()
+                        # [[WalkToOpen(agent-0,fridge), WalkToOpen(agent-0,milk)],[]]
+                        comp_planning_act_ls = cap.planning_ls
+                        # [[],[],[]]
+                        comp_btml_ls = cap.btml_ls
+                        CABTP_expanded_num = cap.expanded_num
+                        CABTP_expanded_time = cap.expanded_time
+
+                        print("comp_planning_act_ls:",comp_planning_act_ls)
+                        print("comp_btml_ls:", comp_btml_ls)
+
+                        for i in range(env.num_agent):
+                            non_empty_acts = [act for act in comp_planning_act_ls[i] if act]
+                            action_model[i].extend(non_empty_acts)
+                            # action_model[i].extend(comp_planning_act_ls[i])
+                            action_model[i] = sorted(action_model[i], key=lambda x: x.cost)  # 不加也有问题？完全异构的第一个例子
+
+
+                # #########################
+                # Run Decentralized multi-agent BT algorithm
+                # #########################
+                # print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
+                start_time = time.time()
+                from mabtpg.btp.DMR import DMR
+                dmr = DMR(env, goal, start, action_model, num_agent, with_comp_action=env.with_comp_action,
+                          save_dot=bt_draw)  # False 也还需要再调试
+                dmr.planning()
+
+                # Convert to BT and bind the BT to the agent
+                behavior_lib = [agent.behavior_lib for agent in env.agents]
+                dmr.get_btml_and_bt_ls(behavior_lib=behavior_lib, comp_btml_ls=comp_btml_ls, comp_planning_act_ls=comp_planning_act_ls)
+                bind_bt(dmr.bt_ls)
+
+
+                # calculate time and expanded num
+                # dmr.record_expanded_num
+                # dmr.expanded_time
+
+
 
                 # #########################
                 # Simulation
@@ -259,13 +255,6 @@ for _,json_data in enumerate(json_datasets[:]):
                                       env_steps, agents_steps, communication_times,
                                       CABTP_expanded_num, dmr.record_expanded_num, CABTP_expanded_time, dmr.expanded_time)
 
-
-#  ####################################################################
-for with_comp_action in [False, True]:
-    for use_comp_subtask_chain in [False, True]:
-        if with_comp_action==False and use_comp_subtask_chain==True:
-            continue
-        for use_atom_subtask_chain in [False, True]:
             # 计算每种配置的平均值
             df_details = pd.DataFrame(all_details)
             config_details = df_details[

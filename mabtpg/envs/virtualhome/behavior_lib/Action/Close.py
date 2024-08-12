@@ -11,7 +11,7 @@ class Close(VHAction):
         self.agent_id = args[0]
         self.obj = args[1]
 
-        self.act_max_step = 2
+        self.act_max_step = 5
         self.act_cur_step = 0
 
 
