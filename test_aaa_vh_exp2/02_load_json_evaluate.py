@@ -4,6 +4,7 @@ import time
 import random
 import math
 import numpy as np
+import re
 import pandas as pd
 from mabtpg.algo.llm_client.llms.gpt3 import LLMGPT3
 import gymnasium as gym
@@ -69,8 +70,12 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 
 # json_type= "test"
 # json_type = "homo_30"
-json_type = "half_30"
+# json_type = "half_30"
 # json_type = "hete_30"
+
+# json_type = "llm4_half_30_1"
+# json_type = "llm4_homo_30_1"
+json_type = "llm4_hete_30_1"
 
 json_path = f"vh_{json_type}.json"
 with open(json_path, 'r') as file:
@@ -80,6 +85,10 @@ with open(json_path, 'r') as file:
 #     for use_comp_subtask_chain in [False, True]:
 #         for use_atom_subtask_chain in [False, True]:
 
+
+# json_path = f"vh_llm4_homo_30_1.json"
+# with open(json_path, 'r') as file:
+#     llm_json_datasets = json.load(file)
 
 verbose = False
 
@@ -94,7 +103,7 @@ average_details = []
 #         for use_atom_subtask_chain in [False]:
 
 
-for _,json_data in enumerate(json_datasets[12:13]):
+for json_id,json_data in enumerate(json_datasets[:]):
     data_id = json_data['id']
     print_colored(f"=============================== data_id: {data_id} =========================================","purple")
 
@@ -103,6 +112,13 @@ for _,json_data in enumerate(json_datasets[12:13]):
     start = set(json_data["init_state"])
     objects = json_data["objects"]
     action_space = json_data["action_space"]
+
+    # goal = frozenset(llm_json_datasets[json_id]["goal"])
+    # start = set(llm_json_datasets[json_id]["init_state"])
+    # objects = llm_json_datasets[json_id]["objects"]
+    # action_space = llm_json_datasets[json_id]["action_space"]
+
+
     num_agent = len(action_space)
 
     for i in range(num_agent):
@@ -112,7 +128,7 @@ for _,json_data in enumerate(json_datasets[12:13]):
 
 
 
-    for with_comp_action in [False, True]:
+    for with_comp_action in [False,True]:
 
         # #########################
         # Initialize Environment
@@ -160,6 +176,25 @@ for _,json_data in enumerate(json_datasets[12:13]):
         CABTP_expanded_time = 0
         if "multi_robot_subtree_ls" in json_data:
             composition_action = json_data["multi_robot_subtree_ls"]
+
+            # 如果有 agent-x 都改为 self
+            # 合并到一起，每个智能体都有
+            for ls_i, act_cls_dic in enumerate(composition_action):
+                for key,act_name_ls in act_cls_dic.items():
+                    for act_j,act_name in enumerate(act_name_ls):
+                        if re.search(r'agent-\d+', act_name):
+                            action_modified_str = re.sub(r'agent-\d+', 'self', act_name)
+                            act_cls_dic[key][act_j] = action_modified_str
+
+            # 收集起来一起用
+            total_dic = {}
+            for ls_i, act_cls_dic in enumerate(composition_action):
+                for key, act_name_ls in act_cls_dic.items():
+                    total_dic[key] = act_name_ls
+            composition_action = [[] for i in range(num_agent)]
+            for i in range(num_agent):
+                composition_action[i] = total_dic
+
 
             if env.with_comp_action:
                 cap = CompositeActionPlanner(action_model, composition_action, env=env)

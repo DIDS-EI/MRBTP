@@ -11,8 +11,9 @@ from pydantic import BaseModel
 
 
 class Action(str, Enum):
-    Walk_self_toy = "Walk(self,toy)"
-    RightGrab_self_toy = "RightGrab(self,toy)"
+    # Walk_self_toy = "Walk(self,toy)"
+    # RightGrab_self_toy = "RightGrab(self,toy)"
+    actions_name_str_ls = []
 
 
 class AgentSubtreeList(BaseModel):
@@ -162,14 +163,14 @@ if __name__ == '__main__':
 
     prompt = f"""
     subtree_name is the name of the combined action, and action_list specifies which actions are to be combined.
-    
+
     [example]
     {example}
-    
+
     [task info]
-    {task_info} 
-    
-    The number of agents in this task is 2. That is, `multi_subtree_list` has 2 dictionaries.
+    {task_info}
+
+    The number of agents in this task is 2. That is, `multi_subtree_list` has 2 dictionaries. Each dictionary has 4 key-values.
 """
 
     messages.append({"role": "user", "content": prompt})

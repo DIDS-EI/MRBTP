@@ -1,0 +1,80 @@
+[Condition]
+IsNear_self_<ALL>, IsOn_<GRABBABLE>_<SURFACES>, IsIn_<GRABBABLE>_<CONTAINERS>, IsOpen_<CAN_OPEN>, IsClose_<CAN_OPEN>,
+IsSwitchedOn_<HAS_SWITCH>, IsSwitchedOff_<HAS_SWITCH>
+
+
+[Action]
+Walk_<ALL>, RightGrab_<GRABBABLE>, LeftGrab_<GRABBABLE>, RightPut_<GRABBABLE>_<SURFACES>, LeftPut_<GRABBABLE>_<SURFACES>,
+RightPutIn_<GRABBABLE>_<CONTAINERS>, LeftPutIn_<GRABBABLE>_<CONTAINERS>, RightGrabFrom_<GRABBABLE>_<CONTAINERS>, LeftGrabFrom_<GRABBABLE>_<CONTAINERS>,
+Open_<CAN_OPEN>, Close_<CAN_OPEN>, SwitchOn_<HAS_SWITCH>, SwitchOff_<HAS_SWITCH>
+
+
+[Example]
+[Task Information]
+"id": "example-0",
+"goal": [
+  "IsOn(mug,nightstand)",
+  "IsSwitchedOn(tablelamp)",
+  "IsOpen(book)"
+],
+"init_state": [
+  "IsSwitchedOff(tablelamp)",
+  "IsClose(book)",
+  "IsClose(nightstand)"
+],
+"objects": [
+  "mug",
+  "nightstand",
+  "tablelamp",
+  "book",
+  "remotecontrol",
+  "drawer"
+],
+"action_space": [
+  [
+    "Walk",
+    "SwitchOn",
+    "Open",
+    "Close"
+  ],
+  [
+    "Walk",
+    "RightGrab",
+    "RightPut",
+    "SwitchOn",
+    "RightPutIn"
+  ],
+  [
+    "Walk",
+    "RightGrab",
+    "RightPut",
+    "SwitchOn",
+    "Open",
+    "Close",
+    "RightPutIn"
+  ]
+]
+
+[OutPut]
+"multi_robot_subtree_ls": [
+  {
+    "WalkToSwitchOntablelamp": ["Walk(self,tablelamp)","SwitchOn(self,tablelamp)"],
+    "WalkToOpenBook": ["Walk(self,book)", "Open(self,book)"],
+    "WalkToOpenNightstand": ["Walk(self,nightstand)", "Open(self,nightstand)" ]
+  },
+  {
+    "WalkToPutMugOnNightstand": [ "Walk(self,mug)","RightGrab(self,mug)", "Walk(self,nightstand)", "RightPut(self,mug,nightstand)" ],
+    "WalkToSwitchOntablelamp": ["Walk(self,tablelamp)", "SwitchOn(self,tablelamp)" ],
+    "WalkToPutRemoteInNightstand": ["Walk(self,remotecontrol)",  "RightGrab(self,remotecontrol)", "Walk(self,nightstand)",  "RightPutIn(self,remotecontrol,nightstand)" ],
+  },
+  {
+    "WalkToPutMugOnNightstand": [  "Walk(self,mug)", "RightGrab(self,mug)", "Walk(self,nightstand)",  "RightPut(self,mug,nightstand)" ],
+    "WalkToSwitchOntablelamp": [  "Walk(self,tablelamp)",  "SwitchOn(self,tablelamp)"],
+    "WalkToOpenBook": ["Walk(self,book)", "Open(self,book)" ],
+    "WalkToPutRemoteInNightstand": ["Walk(self,remotecontrol)","RightGrab(self,remotecontrol)","Walk(self,nightstand)", "RightPutIn(self,remotecontrol,nightstand)"],
+    "WalkToOpenNightstand": [ "Walk(self,nightstand)","Open(self,nightstand)"]
+  }
+]
+
+
+

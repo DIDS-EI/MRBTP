@@ -15,10 +15,10 @@
       "sponge",
       "sink",
       "bench",
-"toiletpaper",
-"apple",
-"hanger",
-"cookingpot"
+      "toiletpaper",
+      "apple",
+      "hanger",
+      "cookingpot"
     ],
     "action_space": [
       [
@@ -78,10 +78,10 @@
       "kitchencabinet",
       "washingsponge",
       "tvstand",
-"toy",
-"bananas",
-"radio",
-"box"
+      "toy",
+      "bananas",
+      "radio",
+      "box"
     ],
     "action_space": [
       [
@@ -147,10 +147,10 @@
       "oven",
       "towelrack",
       "bench",
-"toiletpaper",
-"apple",
-"hanger",
-"cookingpot"
+      "toiletpaper",
+      "apple",
+      "hanger",
+      "cookingpot"
     ],
     "action_space": [
       [
@@ -216,9 +216,9 @@
     "objects": [
       "box",
       "closet",
-        "magazine",
-"coffeetable",
-"remotecontrol"
+      "magazine",
+      "coffeetable",
+      "remotecontrol"
     ],
     "action_space": [
       [
@@ -275,14 +275,14 @@
       "toy",
       "book",
       "bookshelf",
-        "kitchencabinet",
-"crayons",
-"clock",
+      "kitchencabinet",
+      "crayons",
+      "clock",
       "bench",
-"toiletpaper",
-"apple",
-"hanger",
-"cookingpot"
+      "toiletpaper",
+      "apple",
+      "hanger",
+      "cookingpot"
     ],
     "action_space": [
       [
@@ -599,9 +599,9 @@
       "fridge",
       "cuttingboard",
       "kitchencounter",
-        "kitchencabinet",
-"crayons",
-"clock"
+      "kitchencabinet",
+      "crayons",
+      "clock"
     ],
     "action_space": [
       [

@@ -1,742 +1,113 @@
 fallback
-    condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher)
+    condition IsIn(hairproduct,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsSwitchedOn(cellphone)
     fallback
         sequence
-            condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-            action WalkToPutAppleOnPlate()
+            condition IsSelfTask(frozenset({'IsIn(hairproduct,cabinet)'}))
+            action WalkToPutHairProductInCabinet()
             action FinishTask()
         sequence
-            condition IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2)
-            action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-    fallback
-        sequence
-            condition IsSelfTask(frozenset({'IsOn(radio,nightstand)'}))
-            action WalkToPutRadioOnNightstand()
-            action FinishTask()
-        sequence
-            condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2)
-            action SelfAcceptTask(frozenset({'IsOn(radio,nightstand)'}))
-    fallback
-        sequence
-            condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-            action WalkToPutBellpepperOnCuttingboard()
-            action FinishTask()
-        sequence
-            condition IsOn(apple,plate) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2)
-            action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+            condition IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-2) & IsSwitchedOn(cellphone)
+            action SelfAcceptTask(frozenset({'IsIn(hairproduct,cabinet)'}))
     sequence
-        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHolding(agent-2,radio)
-        action RightPut(agent-2,radio,nightstand)
-    sequence
-        condition IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHolding(agent-2,apple)
-        action RightPut(agent-2,apple,plate)
-    sequence
-        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHolding(agent-2,bellpepper)
-        action RightPut(agent-2,bellpepper,cuttingboard)
+        condition IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,hairproduct) & IsSwitchedOn(cellphone)
+        action RightPutIn(agent-2,hairproduct,cabinet)
     fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand)
+        condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsSwitchedOff(cellphone)
         fallback
             sequence
-                condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-                action WalkToPutAppleOnPlate()
+                condition IsSelfTask(frozenset({'IsIn(hairproduct,cabinet)'}))
+                action WalkToPutHairProductInCabinet()
+                action FinishTask()
+            sequence
+                condition IsLeftHandEmpty(agent-0) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-2) & IsSwitchedOff(cellphone)
+                action SelfAcceptTask(frozenset({'IsIn(hairproduct,cabinet)'}))
+        sequence
+            condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,hairproduct) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,hairproduct,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,wine) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,wine,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,paper) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,paper,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,radio) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,radio,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,keyboard) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,keyboard,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOn(keyboard,cabinet) & IsOpen(cabinet) & IsRightHolding(agent-2,cellphone) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,cellphone,cabinet)
+    fallback
+        condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsSwitchedOff(cellphone)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsIn(hairproduct,cabinet)'}))
+                action WalkToPutHairProductInCabinet()
                 action FinishTask()
             sequence
                 fallback
-                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-                    fallback
-                        sequence
-                            condition IsSelfTask(frozenset({'IsOn(radio,nightstand)'}))
-                            action WalkToPutRadioOnNightstand()
-                            action FinishTask()
-                        sequence
-                            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2)
-                            action SelfAcceptTask(frozenset({'IsOn(radio,nightstand)'}))
-                    fallback
-                        sequence
-                            condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                            action WalkToPutBellpepperOnCuttingboard()
-                            action FinishTask()
-                        sequence
-                            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-                            action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+                    condition IsLeftHandEmpty(agent-0) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsSwitchedOff(cellphone)
                     sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,plate)
+                        condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,wine) & IsSwitchedOff(cellphone)
+                        action RightPutIn(agent-2,wine,cabinet)
                     sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,coffeetable)
+                        condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,paper) & IsSwitchedOff(cellphone)
+                        action RightPutIn(agent-2,paper,cabinet)
                     sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,nightstand)
+                        condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,radio) & IsSwitchedOff(cellphone)
+                        action RightPutIn(agent-2,radio,cabinet)
                     sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,cuttingboard)
+                        condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,keyboard) & IsSwitchedOff(cellphone)
+                        action RightPutIn(agent-2,keyboard,cabinet)
                     sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,radio)
-                action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(radio,nightstand)'}))
-                action WalkToPutRadioOnNightstand()
-                action FinishTask()
-            sequence
-                fallback
-                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2)
-                    fallback
-                        sequence
-                            condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                            action WalkToPutBellpepperOnCuttingboard()
-                            action FinishTask()
-                        sequence
-                            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsRightHandEmpty(agent-2)
-                            action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,radio)
-                action SelfAcceptTask(frozenset({'IsOn(radio,nightstand)'}))
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+                        condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone) & IsSwitchedOff(cellphone)
+                        action RightPutIn(agent-2,cellphone,cabinet)
+                action SelfAcceptTask(frozenset({'IsIn(hairproduct,cabinet)'}))
         sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHolding(agent-2,radio)
-            action RightPut(agent-2,radio,nightstand)
+            condition IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,hairproduct) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,hairproduct,cabinet)
         sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHolding(agent-2,apple)
-            action RightPut(agent-2,apple,plate)
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,wine) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,wine,cabinet)
         sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOn(radio,nightstand) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,paper) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,paper,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,radio) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,radio,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,keyboard) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,keyboard,cabinet)
+        sequence
+            condition IsIn(hairproduct,cabinet) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone) & IsSwitchedOff(cellphone)
+            action RightPutIn(agent-2,cellphone,cabinet)
     fallback
-        condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1)
+        condition IsIn(hairproduct,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsSwitchedOn(cellphone)
         fallback
             sequence
-                condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-                action WalkToPutAppleOnPlate()
+                condition IsSelfTask(frozenset({'IsIn(hairproduct,cabinet)'}))
+                action WalkToPutHairProductInCabinet()
                 action FinishTask()
             sequence
-                condition IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
-                action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                condition IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+                condition IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsSwitchedOn(cellphone)
+                action SelfAcceptTask(frozenset({'IsIn(hairproduct,cabinet)'}))
         sequence
-            condition IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,apple)
-            action RightPut(agent-2,apple,plate)
+            condition IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,hairproduct) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,hairproduct,cabinet)
         sequence
-            condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
-    fallback
-        condition IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(radio,nightstand)'}))
-                action WalkToPutRadioOnNightstand()
-                action FinishTask()
-            sequence
-                condition IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOn(radio,nightstand)'}))
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                condition IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+            condition IsIn(hairproduct,cabinet) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,wine) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,wine,cabinet)
         sequence
-            condition IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-            action RightPut(agent-2,radio,nightstand)
+            condition IsIn(hairproduct,cabinet) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,paper) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,paper,cabinet)
         sequence
-            condition IsNear(agent-2,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
-    fallback
-        condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                fallback
-                    condition IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                    fallback
-                        sequence
-                            condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-                            action WalkToPutAppleOnPlate()
-                            action FinishTask()
-                        sequence
-                            condition IsOpen(dishwasher) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                            action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,nightstand)
-                    sequence
-                        condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,cuttingboard)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,radio)
-                    sequence
-                        condition IsNear(agent-2,plate) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,plate)
-                    sequence
-                        condition IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,coffeetable)
-                    sequence
-                        condition IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,nightstand)
-                    sequence
-                        condition IsNear(agent-2,radio) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,radio)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
+            condition IsIn(hairproduct,cabinet) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,radio) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,radio,cabinet)
         sequence
-            condition IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-            action RightPut(agent-2,apple,plate)
+            condition IsIn(hairproduct,cabinet) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,keyboard) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,keyboard,cabinet)
         sequence
-            condition IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(radio,nightstand)'}))
-                action WalkToPutRadioOnNightstand()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOn(radio,nightstand)'}))
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-            action RightPut(agent-2,radio,nightstand)
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-                action WalkToPutBellpepperOnCuttingboard()
-                action FinishTask()
-            sequence
-                fallback
-                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                    fallback
-                        sequence
-                            condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-                            action WalkToPutAppleOnPlate()
-                            action FinishTask()
-                        sequence
-                            fallback
-                                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                                    action RightPut(agent-2,plate,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                                    action RightPut(agent-2,plate,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                                    action RightPut(agent-2,plate,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                                    action RightPut(agent-2,plate,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                                    action RightPut(agent-2,plate,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                                    action RightPut(agent-2,breadslice,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                                    action RightPut(agent-2,breadslice,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                                    action RightPut(agent-2,breadslice,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                                    action RightPut(agent-2,breadslice,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                                    action RightPut(agent-2,breadslice,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                                    action RightPut(agent-2,plum,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                                    action RightPut(agent-2,plum,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                                    action RightPut(agent-2,plum,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                                    action RightPut(agent-2,plum,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                                    action RightPut(agent-2,plum,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                                    action RightPut(agent-2,cuttingboard,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                                    action RightPut(agent-2,cuttingboard,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                                    action RightPut(agent-2,cuttingboard,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                                    action RightPut(agent-2,cuttingboard,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                                    action RightPut(agent-2,cuttingboard,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                                    action RightPut(agent-2,radio,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                                    action RightPut(agent-2,radio,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                                    action RightPut(agent-2,radio,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                                    action RightPut(agent-2,radio,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                                    action RightPut(agent-2,radio,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                                    action RightPut(agent-2,apple,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                                    action RightPut(agent-2,apple,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                                    action RightPut(agent-2,apple,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                                    action RightPut(agent-2,apple,radio)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                                    action RightPut(agent-2,bellpepper,plate)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                                    action RightPut(agent-2,bellpepper,coffeetable)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                                    action RightPut(agent-2,bellpepper,nightstand)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                                    action RightPut(agent-2,bellpepper,cuttingboard)
-                                sequence
-                                    condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                                    action RightPut(agent-2,bellpepper,radio)
-                            action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plate)
-                        action RightPut(agent-2,plate,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,breadslice)
-                        action RightPut(agent-2,breadslice,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,plum)
-                        action RightPut(agent-2,plum,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cuttingboard)
-                        action RightPut(agent-2,cuttingboard,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,radio)
-                        action RightPut(agent-2,radio,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,cuttingboard)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-                        action RightPut(agent-2,apple,radio)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,plate)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,coffeetable) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,coffeetable)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,nightstand) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,nightstand)
-                    sequence
-                        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,radio) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-                        action RightPut(agent-2,bellpepper,radio)
-                action SelfAcceptTask(frozenset({'IsOn(bellpepper,cuttingboard)'}))
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-            action RightPut(agent-2,apple,plate)
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,cuttingboard) & IsOn(apple,plate) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,bellpepper)
-            action RightPut(agent-2,bellpepper,cuttingboard)
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOn(apple,plate)'}))
-                action WalkToPutAppleOnPlate()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOn(apple,plate)'}))
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsNear(agent-2,plate) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,apple)
-            action RightPut(agent-2,apple,plate)
+            condition IsIn(hairproduct,cabinet) & IsNear(agent-2,cabinet) & IsOpen(cabinet) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone) & IsSwitchedOn(cellphone)
+            action RightPutIn(agent-2,cellphone,cabinet)

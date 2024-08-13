@@ -1,84 +1,12 @@
 fallback
-    condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher)
+    condition IsIn(milk,box)
     fallback
-        sequence
-            condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-            action WalkToOpenDishwasher()
-            action FinishTask()
-        sequence
-            condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand)
-            action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-1)
+        condition IsOpen(box) & IsRightHandEmpty(agent-1)
         fallback
             sequence
-                condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-                action WalkToOpenDishwasher()
+                condition IsSelfTask(frozenset({'IsOpen(box)'}))
+                action WalkToOpenBox()
                 action FinishTask()
             sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-1)
-                action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-                action WalkToOpenDishwasher()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-                action WalkToOpenDishwasher()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-        sequence
-            condition IsClose(dishwasher) & IsClose(nightstand) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,nightstand) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-            action Open(agent-0,nightstand)
-        sequence
-            condition IsClose(dishwasher) & IsClose(radio) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,radio) & IsOn(bellpepper,cuttingboard) & IsOn(radio,nightstand) & IsRightHandEmpty(agent-2)
-            action Open(agent-0,radio)
-    fallback
-        condition IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-                action WalkToOpenDishwasher()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsOn(apple,plate) & IsOpen(dishwasher) & IsRightHandEmpty(agent-3)
-        fallback
-            sequence
-                condition IsSelfTask(frozenset({'IsOpen(dishwasher)'}))
-                action WalkToOpenDishwasher()
-                action FinishTask()
-            sequence
-                condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsRightHandEmpty(agent-3)
-                action SelfAcceptTask(frozenset({'IsOpen(dishwasher)'}))
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2)
-        sequence
-            condition IsClose(dishwasher) & IsClose(nightstand) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,nightstand) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2)
-            action Open(agent-0,nightstand)
-        sequence
-            condition IsClose(dishwasher) & IsClose(radio) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,radio) & IsOn(apple,plate) & IsOn(bellpepper,cuttingboard) & IsRightHandEmpty(agent-2)
-            action Open(agent-0,radio)
-    fallback
-        condition IsClose(dishwasher) & IsLeftHandEmpty(agent-0) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-        sequence
-            condition IsClose(dishwasher) & IsClose(nightstand) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,nightstand) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-            action Open(agent-0,nightstand)
-        sequence
-            condition IsClose(dishwasher) & IsClose(radio) & IsLeftHandEmpty(agent-0) & IsNear(agent-0,radio) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
-            action Open(agent-0,radio)
+                condition IsClose(box) & IsLeftHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+                action SelfAcceptTask(frozenset({'IsOpen(box)'}))

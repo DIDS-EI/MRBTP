@@ -1,25 +1,42 @@
-[
-    {
-        "id": 1,
-        "goal": [
-            "IsOpen(stove)"
-        ],
-        "init_state": [
-             "IsClose(stove)"
-        ],
-        "objects": [
-            "stove"
-        ],
-        "action_space": [
-            [
-                "Walk",
-                "Open"
-            ]
-        ],
-        "multi_robot_subtree_ls": [
-            {
-                "WalkToOpenStove": ["Walk(self,stove)", "Open(self,stove)"]
-            }
+  {
+    "id": 32,
+    "goal": [
+      "IsIn(rag,cabinet)"
+    ],
+    "init_state": [
+      "IsClose(cabinet)"
+    ],
+    "objects": [
+      "rag",
+      "fridge",
+      "cabinet"
+    ],
+    "action_space": [
+      [
+        "Walk",
+        "Open"
+      ],
+      [
+        "Walk",
+        "RightGrab",
+        "RightPutIn",
+        "SwitchOn"
+      ]
+    ],
+    "multi_robot_subtree_ls": [
+      {
+        "WalkToOpenbox": [
+          "Walk(self,cabinet)",
+          "Open(self,cabinet)"
         ]
-    }
-]
+      },
+      {
+        "WalkToPutInMilkbox": [
+          "Walk(self,rag)",
+          "RightGrab(self,rag)",
+          "Walk(self,cabinet)",
+          "RightPutIn(self,rag,cabinet)"
+        ]
+      }
+    ]
+  }
