@@ -54,7 +54,7 @@ line1, = ax1.plot(heterogeneity_1, success_0_1_1, marker='o', label='FP = 0.1', 
 line2, = ax1.plot(heterogeneity_1, success_0_3_1, marker='s', label='FP = 0.3', linewidth=4, markersize=15)
 line3, = ax1.plot(heterogeneity_1, success_0_5_1, marker='*', label='FP = 0.5', linewidth=4, markersize=25)
 
-ax1.set_xlabel('Homogeneity', fontdict=font2)
+ax1.set_xlabel(r'Homogeneity $\boldsymbol{\alpha}$', fontdict=font2)
 ax1.set_ylabel('Success Rate (%)', fontdict=font2)
 ax1.set_xticks(heterogeneity_1)
 ax1.set_xticklabels(heterogeneity_1, fontsize=40, fontfamily='Times New Roman', fontweight='bold')
@@ -75,7 +75,7 @@ line4, = ax2.plot(heterogeneity_2, success_0_1_2, marker='o', label='FP = 0.1', 
 line5, = ax2.plot(heterogeneity_2, success_0_3_2, marker='s', label='FP = 0.3', linewidth=4, markersize=15)
 line6, = ax2.plot(heterogeneity_2, success_0_5_2, marker='*', label='FP = 0.5', linewidth=4, markersize=25)
 
-ax2.set_xlabel('Homogeneity', fontdict=font2)
+ax2.set_xlabel(r'Homogeneity $\boldsymbol{\alpha}$', fontdict=font2)
 ax2.set_xticks(heterogeneity_2[0:7:2]+[heterogeneity_2[-1]])
 ax2.set_xticklabels(heterogeneity_2[0:7:2]+[heterogeneity_2[-1]], fontsize=40, fontfamily='Times New Roman', fontweight='bold')
 ax2.tick_params(axis='x', labelsize=40)

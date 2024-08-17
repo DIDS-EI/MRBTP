@@ -94,7 +94,7 @@ class BfsPlanningAgent(PlanningAgent):
         return premise_condition_cost_list
 
 class MAOBTP(MABTP):
-    def __init__(self,verbose=False,start = None,env=None):
+    def __init__(self,verbose=False,start = None,env=None,max_time_limit=20):
         self.planned_agent_list = None
         self.verbose = verbose
         self.start = start
@@ -103,6 +103,7 @@ class MAOBTP(MABTP):
         self.env = env
 
         self.expanded_time = 0
+        self.max_time_limit = max_time_limit
 
     def bfs_planning(self, goal, action_lists):
 
@@ -136,7 +137,7 @@ class MAOBTP(MABTP):
             if self.start!=None and self.start>=condition:
                 break
 
-            if time.time() - start_time > 10:
+            if time.time() - start_time > self.max_time_limit:
                 self.expanded_time = time.time() - start_time
                 break
 

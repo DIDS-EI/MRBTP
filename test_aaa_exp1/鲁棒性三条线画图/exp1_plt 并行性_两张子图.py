@@ -47,15 +47,14 @@ success_0_3_2 = [4.972, 5.536, 5.286, 5.252, 5.198, 5.18, 5.168, 5]
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 8), sharey=True)
 
 # Plot 1
-line1, = ax1.plot(heterogeneity_1, success_0_1_1, marker='o', color='#9467bd', label='Subtask Chaining Disabled', linewidth=4, markersize=15)
-line2, = ax1.plot(heterogeneity_1, success_0_3_1, marker='s', color='#d62728', label='Subtask Chaining Enabled', linewidth=4, markersize=15)
+line1, = ax1.plot(heterogeneity_1, success_0_1_1, marker='o', color='#9467bd', label='Intention Sharing Disabled', linewidth=4, markersize=15)
+line2, = ax1.plot(heterogeneity_1, success_0_3_1, marker='s', color='#d62728', label='Intention Sharing Enabled', linewidth=4, markersize=15)
 
-ax1.set_xlabel('Homogeneity', fontdict=font2) #Heterogeneity
-ax1.set_ylabel('Total Steps', fontdict=font2)
+ax1.set_xlabel(r'Homogeneity $\boldsymbol{\alpha}$', fontdict=font2) #Heterogeneity
+ax1.set_ylabel('Team Steps', fontdict=font2)
 ax1.set_xticks(heterogeneity_1)
 ax1.set_xticklabels(heterogeneity_1, fontsize=40, fontfamily='Times New Roman', fontweight='bold')
-ax1.tick_params(axis='x', labelsize=40)
-ax1.tick_params(axis='y', labelsize=40)
+
 ax1.set_yticks(range(4, 18, 2))
 ax1.set_yticklabels(ax1.get_yticks(), fontsize=40, fontfamily='Times New Roman', fontweight='bold')
 ax1.grid(True)
@@ -66,7 +65,7 @@ ax2.set_title('8 Robots', fontdict=font2)
 line4, = ax2.plot(heterogeneity_2, success_0_1_2, marker='o', color='#9467bd', label='use_atom_subtask_chain=False', linewidth=4, markersize=15)
 line5, = ax2.plot(heterogeneity_2, success_0_3_2, marker='s', color='#d62728', label='use_atom_subtask_chain=True', linewidth=4, markersize=15)
 
-ax2.set_xlabel('Homogeneity', fontdict=font2)
+ax2.set_xlabel(r'Homogeneity $\boldsymbol{\alpha}$', fontdict=font2)
 # ax2.set_xticks(heterogeneity_2[1::2])
 # ax2.set_xticklabels(heterogeneity_2[1::2], fontsize=40, fontfamily='Times New Roman', fontweight='bold')
 ax2.set_xticks(heterogeneity_2[0:7:2]+[heterogeneity_2[-1]])

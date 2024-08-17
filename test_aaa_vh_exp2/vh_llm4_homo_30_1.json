@@ -199,15 +199,7 @@
         ],
         "objects": [
             "cutlets",
-            "microwave",
-            "apple",
-            "oven",
-            "towelrack",
-            "bench",
-            "toiletpaper",
-            "apple",
-            "hanger",
-            "cookingpot"
+            "microwave"
         ],
         "action_space": [
             [
@@ -733,7 +725,7 @@
         "llm_time": 4.954501628875732,
         "reflect_times": 2
     },
-      {
+    {
     "id": 9,
     "goal": [
       "IsIn(apple,fridge)",
@@ -1269,15 +1261,8 @@
             "IsLeftHandEmpty(agent-2)"
         ],
         "objects": [
-            "bananas",
-            "fridge",
-            "plate",
             "kitchencounter",
             "radio",
-            "milk",
-            "toothbrush",
-            "bathroomcabinet",
-            "cupcake",
             "kitchencabinet"
         ],
         "action_space": [
@@ -1397,8 +1382,6 @@
         "objects": [
             "toothpaste",
             "bathroomcabinet",
-            "cup",
-            "cabinet",
             "coffeemaker",
             "closet"
         ],
@@ -1859,9 +1842,7 @@
             "bathroomcabinet",
             "cupcake",
             "kitchencabinet",
-            "tablelamp",
-            "desk",
-            "fridge"
+            "tablelamp"
         ],
         "action_space": [
             [
@@ -1985,8 +1966,7 @@
             "cabinet",
             "mug",
             "book",
-            "bookshelf",
-            "kitchencabinet"
+            "bookshelf"
         ],
         "action_space": [
             [

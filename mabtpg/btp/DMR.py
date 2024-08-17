@@ -7,7 +7,7 @@ import time
 from mabtpg.behavior_tree.behavior_tree import BehaviorTree
 
 class DMR:
-    def __init__(self, env,goal, start, action_lists, num_agent=None, with_comp_action=False,save_dot=False):
+    def __init__(self, env,goal, start, action_lists, num_agent=None, with_comp_action=False,save_dot=False,max_time_limit=20):
         self.env = env
         self.goal = goal
         self.start = start
@@ -26,6 +26,7 @@ class DMR:
         self.save_dot=save_dot
         self.record_expanded_num = 0
         self.expanded_time = 0
+        self.max_time_limit = max_time_limit
 
     def planning(self):
         print_colored(f"Start Multi-Robot Behavior Tree Planning...", color="green")
@@ -33,11 +34,11 @@ class DMR:
 
         if not self.with_comp_action:
             # self.planning_algorithm = MABTP_test(verbose = False,start=self.start)
-            self.planning_algorithm = MABTP(env=self.env,verbose=False, start=self.start)
+            self.planning_algorithm = MABTP(env=self.env,verbose=False, start=self.start,max_time_limit = self.max_time_limit)
             self.planning_algorithm.planning(frozenset(self.goal),action_lists=self.action_lists)
         else:
             # self.planning_algorithm = MAOBTP_test(verbose=False, start=self.start)
-            self.planning_algorithm = MAOBTP(env=self.env,verbose=False, start=self.start)
+            self.planning_algorithm = MAOBTP(env=self.env,verbose=False, start=self.start,max_time_limit = self.max_time_limit)
             self.planning_algorithm.bfs_planning(frozenset(self.goal), action_lists=self.action_lists)
 
 

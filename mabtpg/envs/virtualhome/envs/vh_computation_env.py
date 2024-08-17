@@ -26,7 +26,63 @@ class VHCompEnv(MiniCompEnv):
     def get_all_classify_objects_dic(self):
         self.all_category_to_objects, self.all_object_to_category = get_classify_objects_dic()
 
-    def filter_objects_to_get_category(self, objects):
+    def filter_objects_to_get_category(self, objects, add_obj=False):
+        if add_obj:
+            # self.objects = list(set(self.objects) | {
+                # surface
+            #     "bench", "kitchencabinet", "desk", "coffeetable", "fryingpan", \
+            #
+            #     # GRABBABLE
+            #     "sundae", "toothpaste", "clothesshirt", "crackers", "pudding", "alcohol", "boardgame", "wallphone",
+            #     "remotecontrol", \
+            #     "clock", "hanger", "cutlets", "candybar", "wine", "toiletpaper", "slippers", "cereal", "apple",
+            #     "magazine", \
+            #     "wineglass", "milk", "cupcake", "folder", "wallpictureframe", "cellphone", "coffeepot", "crayons",
+            #     "box", \
+            #     "fryingpan", "radio", "chips",
+            #
+            #     # CONTAINERS
+            #     "kitchencabinet", "washingmachine", "printer", "toaster", "closet", "box", "microwave", \
+            #     "dishwasher", "fridge",
+            #
+            #     # can_open
+            #     "coffeemaker", "cookingpot", "toothpaste", "coffeepot", "kitchencabinet",
+            #
+            #     # HAS_SWITCH
+            #      "coffeemaker", "cellphone", "candle", "faucet", "washingmachine",
+            # })
+
+            self.objects = list( set(self.objects) | {
+                # surface
+                "towelrack", "bench", "kitchencabinet", "mousemat", "boardgame", "coffeetable", "fryingpan", \
+                "radio", "cuttingboard", "floor", "tvstand","desk", "stove", "bed", "sofa", "plate", "bathroomcabinet","table"
+
+                # GRABBABLE
+"sundae", "toothpaste", "clothesshirt", "crackers", "pudding", "alcohol", "boardgame", "wallphone","remotecontrol", \
+                 "whippedcream", "hanger", "cutlets", "candybar", "wine", "toiletpaper", "slippers", "cereal", "apple","magazine", \
+                 "wineglass", "milk", "cupcake", "folder", "wallpictureframe", "cellphone", "coffeepot", "crayons","box", \
+                 "fryingpan", "radio", "chips", "cuttingboard", "lime", "mug", "rug", "carrot", "cutleryfork","clothespile", \
+                 "notes", "plum", "cookingpot", "toy", "salmon", "peach", "condimentbottle", "hairproduct", "salad","mouse", \
+
+                # CONTAINERS
+                "kitchencabinet", "washingmachine", "printer", "toaster", "closet", "box", "microwave", \
+                "dishwasher", "fryingpan", "fridge", "toilet",
+
+                # can_open
+                "coffeemaker", "cookingpot", "toothpaste", "coffeepot", "kitchencabinet", "washingmachine", "window",
+                "printer", \
+                "curtains", "closet", "box"
+
+                # HAS_SWITCH
+                 "coffeemaker", "cellphone", "candle", "faucet", "washingmachine", "printer",
+                "wallphone", "remotecontrol", \
+                "computer", "toaster", "microwave", "dishwasher", "clock", "radio", "lightswitch", "fridge",
+                "tablelamp", "stove", "tv", "oven"
+            })
+        objects = self.objects
+
+
+
         self.category_to_objects = {category: set() for category in self.all_category_to_objects.keys()}
         self.object_to_category = {}
 

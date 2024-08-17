@@ -47,7 +47,8 @@ class CompositeActionPlanner:
         #
         #     cond = planning_action.pre | cond - planning_action.del_set
 
-        sub_goal = (agent_comp_sequence[-1].pre | agent_comp_sequence[-1].add) - agent_comp_sequence[-1].del_set
+        # sub_goal = (agent_comp_sequence[-1].pre | agent_comp_sequence[-1].add) - agent_comp_sequence[-1].del_set
+        sub_goal =  agent_comp_sequence[-1].add
         planning_algorithm = CABTP(env=self.env, verbose=False, goal=frozenset(sub_goal), action_list=agent_comp_sequence)
         result = planning_algorithm.planning()
 

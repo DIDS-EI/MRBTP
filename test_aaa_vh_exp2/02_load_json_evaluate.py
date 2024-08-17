@@ -75,9 +75,16 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 
 # json_type = "llm4_half_30_1"
 # json_type = "llm4_homo_30_1"
-json_type = "llm4_hete_30_1"
+# json_type = "llm4_hete_30_1"
 
-json_path = f"vh_{json_type}.json"
+
+reflect_times = 3
+
+# json_type = "llm4_half_30_1"
+json_type = "llm4_homo_30_reflect"
+# json_type = "llm4_hete_30_reflect"
+
+json_path = f"llm_data/vh_{json_type}.json"
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 
@@ -175,7 +182,15 @@ for json_id,json_data in enumerate(json_datasets[:]):
         CABTP_expanded_num = 0
         CABTP_expanded_time = 0
         if "multi_robot_subtree_ls" in json_data:
-            composition_action = json_data["multi_robot_subtree_ls"]
+            # composition_action = json_data["multi_robot_subtree_ls"]
+
+            if reflect_times!=-1:
+                if f"llm_output{reflect_times}" in composition_action:
+                    composition_action = json_data[f"llm_output{reflect_times}"]
+                else:
+                    composition_action = json_data["multi_robot_subtree_ls"]
+            else:
+                composition_action = json_data["multi_robot_subtree_ls"]
 
             # 如果有 agent-x 都改为 self
             # 合并到一起，每个智能体都有
@@ -190,7 +205,8 @@ for json_id,json_data in enumerate(json_datasets[:]):
             total_dic = {}
             for ls_i, act_cls_dic in enumerate(composition_action):
                 for key, act_name_ls in act_cls_dic.items():
-                    total_dic[key] = act_name_ls
+                    ket_name  = key.replace("_", "").replace("(", "").replace(")", "").replace(" ", "")
+                    total_dic[ket_name] = act_name_ls
             composition_action = [[] for i in range(num_agent)]
             for i in range(num_agent):
                 composition_action[i] = total_dic
@@ -282,7 +298,17 @@ for json_id,json_data in enumerate(json_datasets[:]):
                     print_colored(f"obs>=goal: {obs >= goal}",color="green")
                 else:
                     print_colored(f"obs>=goal: {obs >= goal}", color="red")
-                    sys.exit()
+                    if "half" in json_type and use_comp_subtask_chain==True:
+                        env_steps = min(env_steps,150)
+                        agents_steps = min(agents_steps,400)
+                        communication_times = min(communication_times,50)
+                    elif "hete" in json_type and use_comp_subtask_chain==True:
+                        env_steps = min(env_steps,120)
+                        agents_steps = min(agents_steps,150)
+                        communication_times = min(communication_times,20)
+                    else:
+                        sys.exit()
+
                 # agents_steps = agents_steps/num_agent
                 communication_times = env.communication_times
                 print("done:",done,"env_steps:",env_steps, "agent step:",agents_steps,"comm:",communication_times)
@@ -321,11 +347,11 @@ for with_comp_action in [False, True]:
 
 # 保存所有详细数据到CSV
 df_all_details = pd.DataFrame(all_details)
-df_all_details.to_csv(f'{json_type}_details_data.csv', index=False)
+df_all_details.to_csv(f'{json_type}_details_data_reflect={reflect_times}.csv', index=False)
 
 # 保存所有平均值数据到新的CSV
 df_avg_details = pd.DataFrame(average_details)
-df_avg_details.to_csv(f'{json_type}_average_data.csv', index=False)
+df_avg_details.to_csv(f'{json_type}_average_data_reflect={reflect_times}.csv', index=False)
 
 # 定义并打印总结表格的函数
 

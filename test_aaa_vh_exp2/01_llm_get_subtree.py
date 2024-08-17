@@ -68,7 +68,7 @@ def get_prompt(json_data,num_agent):
     return prompt
 
 
-
+need_record_reflect = True
 
 # json_type = "homo_30"
 # json_type = "half_30"
@@ -77,8 +77,8 @@ json_path = f"vh_{json_type}.json"
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 
-output_json_name = f"vh_llm4_{json_type}_1_supplement.json"
-output_csv_name = f"vh_llm4_{json_type}_1_supplement.csv"
+output_json_name = f"llm_data/vh_llm4_{json_type}_reflect.json"
+output_csv_name = f"llm_data/vh_llm4_{json_type}_reflect.csv"
 
 # initial json file
 if not os.path.exists(output_json_name):
@@ -103,8 +103,8 @@ for _,json_data in enumerate(json_datasets[:]):
     action_space = json_data["action_space"]
     num_agent = len(action_space)
 
-    count_conditions(goal)
-    continue
+    # count_conditions(goal)
+    # continue
 
 
     for i in range(num_agent):
@@ -249,6 +249,8 @@ for _,json_data in enumerate(json_datasets[:]):
 
         multi_subtree_list = eval(res_msg)["multi_subtree_list"]
         history_dic[f"llm_output{reflect_times+1}"]= multi_subtree_list
+        if need_record_reflect:
+            new_json_data[f"llm_output{reflect_times}"] = multi_subtree_list
         print(multi_subtree_list)
 
         # check if need reflect
@@ -263,24 +265,24 @@ for _,json_data in enumerate(json_datasets[:]):
             continue
 
         # hete
-        break
+        # break
 
         # heto
-        # need_reflect = True
-        # for subtree_list in multi_subtree_list:
-        #     if len(subtree_list)>1:
-        #         need_reflect = False
-        # if not need_reflect:
-        #     break
+        need_reflect = True
+        for subtree_list in multi_subtree_list:
+            if len(subtree_list)>1:
+                need_reflect = False
+        if not need_reflect:
+            break
 
-        # messages.append({"role": "assistant", "content": res_msg})
-        # reflect_prompt += f'''
-        # The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 4 key-value pairs.
-        # You should provide 2-4 combined actions for each robot instead of just one. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
-        # '''
-        # messages.append({"role": "user", "content": reflect_prompt})
-        # history_dic[f"reflect{reflect_times+1}"]=reflect_prompt
-        # reflect_times+=1
+        messages.append({"role": "assistant", "content": res_msg})
+        reflect_prompt += f'''
+        The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 4 key-value pairs.
+        You should provide 2-4 combined actions for each robot instead of just one. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
+        '''
+        messages.append({"role": "user", "content": reflect_prompt})
+        history_dic[f"reflect{reflect_times+1}"]=reflect_prompt
+        reflect_times+=1
 
     history_dic[f"llm_output{reflect_times + 1}"] = multi_subtree_list
     # print(multi_subtree_list)

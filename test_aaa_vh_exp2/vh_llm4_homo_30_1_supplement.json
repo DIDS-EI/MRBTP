@@ -1,0 +1,84 @@
+[
+    {
+        "id": 3,
+        "goal": [
+            "IsIn(cutlets,microwave)",
+            "IsSwitchedOn(microwave)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsSwitchedOff(microwave)",
+            "IsClose(microwave)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave",
+            "apple",
+            "oven",
+            "towelrack",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ]
+        ],
+        "total_time": 3.378979444503784,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ]
+            }
+        ],
+        "llm_time": 3.3779850006103516,
+        "reflect_times": 2
+    }
+]

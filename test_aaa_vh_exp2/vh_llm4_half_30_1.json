@@ -502,17 +502,7 @@
             "crackers",
             "box",
             "book",
-            "nightstand",
-            "bathroomcounter",
-            "facecream",
-            "towel",
-            "wineglass",
-            "cookingpot",
-            "desk",
-            "pudding",
-            "keyboard",
-            "lime",
-            "fryingpan"
+            "nightstand"
         ],
         "action_space": [
             [
@@ -779,10 +769,7 @@
             "apple",
             "fridge",
             "cuttingboard",
-            "kitchencounter",
-            "kitchencabinet",
-            "crayons",
-            "clock"
+            "kitchencounter"
         ],
         "action_space": [
             [
@@ -1049,9 +1036,7 @@
             "mug",
             "nightstand",
             "tablelamp",
-            "book",
-            "remotecontrol",
-            "drawer"
+            "book"
         ],
         "action_space": [
             [
@@ -1431,12 +1416,8 @@
         "objects": [
             "toothpaste",
             "bathroomcabinet",
-            "cup",
-            "cabinet",
             "coffeemaker",
-            "closet",
-            "bathroomcabinet",
-            "pie"
+            "closet"
         ],
         "action_space": [
             [
@@ -1945,10 +1926,7 @@
             "mug",
             "book",
             "bookshelf",
-            "tv",
-            "bench",
-            "toiletpaper",
-            "apple"
+            "tv"
         ],
         "action_space": [
             [
@@ -2178,12 +2156,7 @@
             "kitchencounter",
             "carrot",
             "fryingpan",
-            "microwave",
-            "bench",
-            "toiletpaper",
-            "apple",
-            "hanger",
-            "cookingpot"
+            "microwave"
         ],
         "action_space": [
             [

@@ -1,0 +1,199 @@
+E:\ProgramData\anaconda3\envs\BTPG\python.exe E:\worktable\MABTPG\test_aaa_vh_exp2\01_llm_get_subtree_half.py 
+=============================== data_id: 1 =========================================
+Times: 13.634106636047363
+[{'WalkToOpenFridge': ['Walk(agent-0,fridge)', 'Open(agent-0,fridge)'], 'WalkToGrabMilkFromFridge': ['Walk(agent-0,fridge)', 'RightGrab(agent-0,milk)'], 'WalkToPutMilkInFridge': ['Walk(agent-0,milk)', 'RightGrab(agent-0,milk)', 'Walk(agent-0,fridge)', 'RightPutIn(agent-0,milk,fridge)']}, {'WalkToGrabMilkFromFridge': ['Walk(agent-1,fridge)', 'RightGrab(agent-1,milk)'], 'WalkToOpenFridge': ['Walk(agent-1,fridge)', 'Open(agent-1,fridge)'], 'WalkToPutMilkInFridge': ['Walk(agent-1,milk)', 'RightGrab(agent-1,milk)', 'Walk(agent-1,fridge)', 'RightPutIn(agent-1,milk,fridge)']}]
+=============================== data_id: 2 =========================================
+Times: 9.573402881622314
+[{'WalkToGrabCupcake': ['Walk(agent-0,cupcake)', 'LeftGrab(agent-0,cupcake)'], 'WalkToPutCupcakeOnKitchenTable': ['Walk(agent-0,cupcake)', 'LeftGrab(agent-0,cupcake)', 'Walk(agent-0,kitchentable)', 'LeftPut(agent-0,cupcake,kitchentable)'], 'WalkToGrabWine': ['Walk(agent-0,wine)', 'LeftGrab(agent-0,wine)'], 'WalkToPutWineOnKitchenTable': ['Walk(agent-0,wine)', 'LeftGrab(agent-0,wine)', 'Walk(agent-0,kitchentable)', 'LeftPut(agent-0,wine,kitchentable)']}, {'WalkToGrabCupcake': ['Walk(agent-1,cupcake)', 'RightGrab(agent-1,cupcake)'], 'WalkToPutCupcakeOnKitchenTable': ['Walk(agent-1,cupcake)', 'RightGrab(agent-1,cupcake)', 'Walk(agent-1,kitchentable)', 'RightPut(agent-1,cupcake,kitchentable)'], 'WalkToGrabWine': ['Walk(agent-1,wine)', 'RightGrab(agent-1,wine)'], 'WalkToPutWineOnKitchenTable': ['Walk(agent-1,wine)', 'RightGrab(agent-1,wine)', 'Walk(agent-1,kitchentable)', 'RightPut(agent-1,wine,kitchentable)']}]
+=============================== data_id: 3 =========================================
+Times: 4.349655389785767
+[{'WalkToOpenMicrowave': ['Walk(self,microwave)', 'Open(self,microwave)'], 'WalkToSwitchOnMicrowave': ['Walk(self,microwave)', 'SwitchOn(self,microwave)']}, {'WalkToRightGrabCutlets': ['Walk(self,cutlets)', 'RightGrab(self,cutlets)', 'Walk(self,microwave)', 'RightPutIn(self,cutlets,microwave)']}]
+=============================== data_id: 4 =========================================
+Times: 5.301330089569092
+[{'WalkToOpenCloset': ['Walk(self,closet)', 'Open(self,closet)']}, {'WalkToPutBoxInCloset': ['Walk(self,box)', 'RightGrab(self,box)', 'Walk(self,closet)', 'RightPutIn(self,box,closet)']}, {'WalkToPutRemoteInCloset': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,closet)', 'RightPutIn(self,remotecontrol,closet)']}, {'WalkToPutAppleInCloset': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,closet)', 'RightPutIn(self,apple,closet)']}, {'WalkToPutMagazineInCloset': ['Walk(self,magazine)', 'RightGrab(self,magazine)', 'Walk(self,closet)', 'RightPutIn(self,magazine,closet)']}]
+ reflect: 1 
+Times: 15.206096410751343
+[{'WalkToOpenCloset': ['Walk(self,closet)', 'Open(self,closet)']}, {'WalkToPutBoxInCloset': ['Walk(self,box)', 'RightGrab(self,box)', 'Walk(self,closet)', 'RightPutIn(self,box,closet)']}, {'WalkToPutRemoteInCloset': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,closet)', 'RightPutIn(self,remotecontrol,closet)']}, {'WalkToPutAppleInCloset': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,closet)', 'RightPutIn(self,apple,closet)']}]
+ reflect: 2 
+Times: 6.276242256164551
+[{'WalkToOpenCloset': ['Walk(self,closet)', 'Open(self,closet)']}, {'WalkToPutBoxInCloset': ['Walk(self,box)', 'RightGrab(self,box)', 'Walk(self,closet)', 'RightPutIn(self,box,closet)']}, {'WalkToPutRemoteInCloset': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,closet)', 'RightPutIn(self,remotecontrol,closet)']}, {'WalkToPutAppleInCloset': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,closet)', 'RightPutIn(self,apple,closet)']}]
+=============================== data_id: 5 =========================================
+Times: 9.649800062179565
+[{'WalkToPutToyOnBookshelf': ['Walk(self,toy)', 'RightGrab(self,toy)', 'Walk(self,bookshelf)', 'RightPut(self,toy,bookshelf)']}, {'WalkToPutBookInBookshelf': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,bookshelf)', 'RightPutIn(self,book,bookshelf)']}, {'WalkToPutToyOnBookshelfAndBookInBookshelf': ['Walk(self,toy)', 'RightGrab(self,toy)', 'Walk(self,bookshelf)', 'RightPut(self,toy,bookshelf)', 'Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,bookshelf)', 'RightPutIn(self,book,bookshelf)']}]
+ reflect: 1 
+Times: 6.487265586853027
+[{'WalkToPutToyOnBookshelf': ['Walk(agent-0,toy)', 'RightGrab(agent-0,toy)', 'Walk(agent-0,bookshelf)', 'RightPut(agent-0,toy,bookshelf)']}, {'WalkToPutBookInBookshelf': ['Walk(agent-0,book)', 'RightGrab(agent-0,book)', 'Walk(agent-0,bookshelf)', 'RightPutIn(agent-0,book,bookshelf)']}, {'WalkToGrabBookFromBookshelf': ['Walk(agent-0,bookshelf)', 'LeftGrabFrom(agent-0,book,bookshelf)']}, {'WalkToPutCrayonsInBookshelf': ['Walk(agent-0,crayons)', 'RightGrab(agent-0,crayons)', 'Walk(agent-0,bookshelf)', 'RightPutIn(agent-0,crayons,bookshelf)']}]
+ reflect: 2 
+Times: 11.581658363342285
+[{'WalkToPutToyOnBookshelf': ['Walk(agent-0,toy)', 'RightGrab(agent-0,toy)', 'Walk(agent-0,bookshelf)', 'RightPut(agent-0,toy,bookshelf)'], 'WalkToPutBookInBookshelf': ['Walk(agent-0,book)', 'RightGrab(agent-0,book)', 'Walk(agent-0,bookshelf)', 'RightPutIn(agent-0,book,bookshelf)'], 'WalkToGrabBookFromBookshelf': ['Walk(agent-0,bookshelf)', 'LeftGrabFrom(agent-0,book,bookshelf)'], 'WalkToPutCrayonsInBookshelf': ['Walk(agent-0,crayons)', 'RightGrab(agent-0,crayons)', 'Walk(agent-0,bookshelf)', 'RightPutIn(agent-0,crayons,bookshelf)']}]
+=============================== data_id: 6 =========================================
+Times: 8.98524785041809
+[{'WalkToGrabBookFromNightstand': ['Walk(self,nightstand)', 'RightGrab(self,book)'], 'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)'], 'WalkToOpenBox': ['Walk(self,box)', 'Open(self,box)'], 'WalkToPutCrackersInBox': ['Walk(self,crackers)', 'RightGrab(self,crackers)', 'Walk(self,box)', 'RightPutIn(self,crackers,box)']}, {'WalkToGrabBookFromNightstand': ['Walk(self,nightstand)', 'RightGrab(self,book)'], 'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)'], 'WalkToPutCrackersInBox': ['Walk(self,crackers)', 'RightGrab(self,crackers)', 'Walk(self,box)', 'RightPutIn(self,crackers,box)']}]
+=============================== data_id: 7 =========================================
+Times: 6.498755931854248
+[{'WalkToTurnOnTV': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)']}, {'WalkToOpenNightstand': ['Walk(agent-0,nightstand)', 'Open(agent-0,nightstand)']}, {'WalkToGrabRemoteFromNightstand': ['Walk(agent-0,nightstand)', 'RightGrabFrom(agent-0,remotecontrol,nightstand)']}, {'WalkToPutRemoteInNightstand': ['Walk(agent-0,remotecontrol)', 'RightGrab(agent-0,remotecontrol)', 'Walk(agent-0,nightstand)', 'RightPutIn(agent-0,remotecontrol,nightstand)']}]
+ reflect: 1 
+Times: 6.372743606567383
+[{'WalkToTurnOnTV': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)'], 'WalkToOpenNightstand': ['Walk(agent-0,nightstand)', 'Open(agent-0,nightstand)'], 'WalkToGrabRemoteFromNightstand': ['Walk(agent-0,nightstand)', 'RightGrabFrom(agent-0,remotecontrol,nightstand)']}, {'WalkToTurnOnTV': ['Walk(agent-1,tv)', 'SwitchOn(agent-1,tv)'], 'WalkToPutRemoteInNightstand': ['Walk(agent-1,remotecontrol)', 'RightGrab(agent-1,remotecontrol)', 'Walk(agent-1,nightstand)', 'RightPutIn(agent-1,remotecontrol,nightstand)'], 'WalkToOpenNightstand': ['Walk(agent-1,nightstand)', 'Open(agent-1,nightstand)']}, {'WalkToGrabRemoteFromNightstand': ['Walk(agent-2,nightstand)', 'RightGrabFrom(agent-2,remotecontrol,nightstand)'], 'WalkToTurnOnTV': ['Walk(agent-2,tv)', 'SwitchOn(agent-2,tv)'], 'WalkToPutRemoteInNightstand': ['Walk(agent-2,remotecontrol)', 'RightGrab(agent-2,remotecontrol)', 'Walk(agent-2,nightstand)', 'RightPutIn(agent-2,remotecontrol,nightstand)']}]
+=============================== data_id: 8 =========================================
+Times: 4.835192441940308
+[{'WalkToSwitchOffRadio': ['Walk(agent-0,radio)', 'SwitchOff(agent-0,radio)']}, {'WalkToPutChairOnKitchenCounter': ['Walk(agent-1,chair)', 'RightGrab(agent-1,chair)', 'Walk(agent-1,kitchencounter)', 'RightPut(agent-1,chair,kitchencounter)']}, {'WalkToPutAppleOnKitchenCounter': ['Walk(agent-1,apple)', 'RightGrab(agent-1,apple)', 'Walk(agent-1,kitchencounter)', 'RightPut(agent-1,apple,kitchencounter)']}, {'WalkToPutHangerOnKitchenCounter': ['Walk(agent-1,hanger)', 'RightGrab(agent-1,hanger)', 'Walk(agent-1,kitchencounter)', 'RightPut(agent-1,hanger,kitchencounter)']}, {'WalkToPutCookingPotOnKitchenCounter': ['Walk(agent-1,cookingpot)', 'RightGrab(agent-1,cookingpot)', 'Walk(agent-1,kitchencounter)', 'RightPut(agent-1,cookingpot,kitchencounter)']}]
+ reflect: 1 
+Times: 5.759423732757568
+[{'WalkToSwitchOffRadio': ['Walk(agent-0,radio)', 'SwitchOff(agent-0,radio)']}, {'WalkToPutChairOnKitchenCounter': ['Walk(agent-0,chair)', 'RightGrab(agent-0,chair)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,chair,kitchencounter)']}, {'WalkToPutAppleOnKitchenCounter': ['Walk(agent-0,apple)', 'RightGrab(agent-0,apple)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,apple,kitchencounter)']}, {'WalkToPutHangerOnKitchenCounter': ['Walk(agent-0,hanger)', 'RightGrab(agent-0,hanger)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,hanger,kitchencounter)']}]
+ reflect: 2 
+Times: 6.587985515594482
+[{'WalkToSwitchOffRadio': ['Walk(agent-0,radio)', 'SwitchOff(agent-0,radio)'], 'WalkToPutChairOnKitchenCounter': ['Walk(agent-0,chair)', 'RightGrab(agent-0,chair)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,chair,kitchencounter)'], 'WalkToPutAppleOnKitchenCounter': ['Walk(agent-0,apple)', 'RightGrab(agent-0,apple)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,apple,kitchencounter)'], 'WalkToPutHangerOnKitchenCounter': ['Walk(agent-0,hanger)', 'RightGrab(agent-0,hanger)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,hanger,kitchencounter)']}]
+=============================== data_id: 9 =========================================
+Times: 15.081446170806885
+[{'WalkToPutAppleInFridge': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,fridge)', 'RightPutIn(self,apple,fridge)']}, {'WalkToPutAppleInFridge': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,fridge)', 'RightPutIn(self,apple,fridge)']}, {'WalkToPutCuttingBoardOnKitchenCounter': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchencounter)', 'RightPut(self,cuttingboard,kitchencounter)']}, {'WalkToPutCuttingBoardOnKitchenCounterAndOpenCabinet': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchencounter)', 'RightPut(self,cuttingboard,kitchencounter)', 'Walk(self,kitchencabinet)', 'Open(self,kitchencabinet)']}, {'WalkToPutCuttingBoardOnKitchenCounterAndCloseCabinet': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchencounter)', 'RightPut(self,cuttingboard,kitchencounter)', 'Walk(self,kitchencabinet)', 'Close(self,kitchencabinet)']}]
+ reflect: 1 
+Times: 5.0697455406188965
+[{'WalkToPutAppleInFridge': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,fridge)', 'RightPutIn(self,apple,fridge)']}, {'WalkToPutCuttingBoardOnKitchenCounter': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchencounter)', 'RightPut(self,cuttingboard,kitchencounter)']}, {'WalkToGrabAppleAndPutInFridge': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,fridge)', 'RightPutIn(self,apple,fridge)']}, {'WalkToGrabCuttingBoardAndPutOnCounter': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchencounter)', 'RightPut(self,cuttingboard,kitchencounter)']}]
+ reflect: 2 
+Times: 6.576458930969238
+[{'WalkToPutAppleInFridge': ['Walk(agent-0,apple)', 'RightGrab(agent-0,apple)', 'Walk(agent-0,fridge)', 'RightPutIn(agent-0,apple,fridge)'], 'WalkToPutCuttingBoardOnKitchenCounter': ['Walk(agent-0,cuttingboard)', 'RightGrab(agent-0,cuttingboard)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,cuttingboard,kitchencounter)'], 'WalkToGrabAndPutAppleInFridge': ['Walk(agent-0,apple)', 'RightGrab(agent-0,apple)', 'Walk(agent-0,fridge)', 'RightPutIn(agent-0,apple,fridge)'], 'WalkToGrabAndPutCuttingBoardInCounter': ['Walk(agent-0,cuttingboard)', 'RightGrab(agent-0,cuttingboard)', 'Walk(agent-0,kitchencounter)', 'RightPut(agent-0,cuttingboard,kitchencounter)']}]
+=============================== data_id: 10 =========================================
+Times: 3.685055732727051
+[{'WalkToSwitchOnTv': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)']}, {'WalkToSwitchOffToaster': ['Walk(agent-1,toaster)', 'SwitchOff(agent-1,toaster)']}, {'WalkToSwitchOnTvAndOffToaster': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)', 'Walk(agent-1,toaster)', 'SwitchOff(agent-1,toaster)']}]
+ reflect: 1 
+Times: 4.721664905548096
+[{'WalkToSwitchOnTv': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)']}, {'WalkToSwitchOffToaster': ['Walk(agent-1,toaster)', 'SwitchOff(agent-1,toaster)']}, {'WalkToSwitchOnTvAndOffToaster': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)', 'Walk(agent-1,toaster)', 'SwitchOff(agent-1,toaster)']}, {'WalkToSwitchOnTvAfterSwitchingOffToaster': ['Walk(agent-1,toaster)', 'SwitchOff(agent-1,toaster)', 'Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)']}]
+ reflect: 2 
+Times: 4.4004082679748535
+[{'WalkToSwitchOnTv': ['Walk(agent-0,tv)', 'SwitchOn(agent-0,tv)'], 'WalkToSwitchOffToaster': ['Walk(agent-0,toaster)', 'SwitchOff(agent-0,toaster)'], 'WalkToSwitchOffToasterThenOnTv': ['Walk(agent-0,toaster)', 'SwitchOff(agent-0,toaster)', 'Walk(agent-1,tv)', 'SwitchOn(agent-1,tv)'], 'WalkToSwitchOnTvThenOffToaster': ['Walk(agent-1,tv)', 'SwitchOn(agent-1,tv)', 'Walk(agent-0,toaster)', 'SwitchOff(agent-0,toaster)']}]
+=============================== data_id: 11 =========================================
+Times: 5.891372919082642
+[{'WalkToSwitchOffTv': ['Walk(self,tv)', 'SwitchOff(self,tv)']}, {'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)']}, {'WalkToPutSundaeOnKitchenTable': ['Walk(self,sundae)', 'RightGrab(self,sundae)', 'Walk(self,kitchentable)', 'RightPut(self,sundae,kitchentable)']}]
+ reflect: 1 
+Times: 6.670421600341797
+[{'WalkToTurnOffTV': ['Walk(self,tv)', 'SwitchOff(self,tv)']}, {'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)']}, {'WalkToPutSundaeOnKitchenTable': ['Walk(self,sundae)', 'RightGrab(self,sundae)', 'Walk(self,kitchentable)', 'RightPut(self,sundae,kitchentable)']}]
+ reflect: 2 
+Times: 2.888422727584839
+[{'WalkToSwitchOffTV': ['Walk(self,tv)', 'SwitchOff(self,tv)'], 'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)'], 'WalkToPutSundaeOnKitchenTable': ['Walk(self,sundae)', 'RightGrab(self,sundae)', 'Walk(self,kitchentable)', 'RightPut(self,sundae,kitchentable)']}, {'WalkToSwitchOffTV': ['Walk(self,tv)', 'SwitchOff(self,tv)'], 'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)'], 'WalkToPutSundaeOnKitchenTable': ['Walk(self,sundae)', 'RightGrab(self,sundae)', 'Walk(self,kitchentable)', 'RightPut(self,sundae,kitchentable)']}, {'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)'], 'WalkToSwitchOffTV': ['Walk(self,tv)', 'SwitchOff(self,tv)']}, {'WalkToSwitchOffTV': ['Walk(self,tv)', 'SwitchOff(self,tv)'], 'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)']}]
+=============================== data_id: 12 =========================================
+Times: 6.4429121017456055
+[{'WalkToSwitchOnTableLamp': ['Walk(self,tablelamp)', 'SwitchOn(self,tablelamp)'], 'WalkToOpenBook': ['Walk(self,book)', 'Open(self,book)'], 'WalkToOpenNightstand': ['Walk(self,nightstand)', 'Open(self,nightstand)']}]
+ reflect: 1 
+Times: 10.242107391357422
+[{'WalkToSwitchOnTableLamp': ['Walk(agent-0,tablelamp)', 'SwitchOn(agent-0,tablelamp)'], 'WalkToOpenBook': ['Walk(agent-0,book)', 'Open(agent-0,book)']}, {'WalkToSwitchOnTableLamp': ['Walk(agent-1,tablelamp)', 'SwitchOn(agent-1,tablelamp)'], 'WalkToPutMugOnNightstand': ['Walk(agent-1,mug)', 'RightGrab(agent-1,mug)', 'Walk(agent-1,nightstand)', 'RightPut(agent-1,mug,nightstand)']}, {'WalkToPutMugOnNightstand': ['Walk(agent-2,mug)', 'RightGrab(agent-2,mug)', 'Walk(agent-2,nightstand)', 'RightPut(agent-2,mug,nightstand)'], 'WalkToOpenBook': ['Walk(agent-2,book)', 'Open(agent-2,book)']}, {'WalkToPutMugOnNightstand': ['Walk(agent-3,mug)', 'RightGrab(agent-3,mug)', 'Walk(agent-3,nightstand)', 'RightPut(agent-3,mug,nightstand)'], 'WalkToSwitchOnTableLamp': ['Walk(agent-3,tablelamp)', 'SwitchOn(agent-3,tablelamp)'], 'WalkToOpenBook': ['Walk(agent-3,book)', 'Open(agent-3,book)']}]
+=============================== data_id: 13 =========================================
+Times: 7.925322532653809
+[{'WalkToSwitchOnWashingMachine': ['Walk(agent-0,washingmachine)', 'SwitchOn(agent-0,washingmachine)']}, {'WalkToOpenWashingMachine': ['Walk(agent-1,washingmachine)', 'Open(agent-1,washingmachine)']}, {'WalkToCloseWashingMachine': ['Walk(agent-2,washingmachine)', 'Close(agent-2,washingmachine)']}, {'WalkToPutInDishbowlIntoWashingMachine': ['Walk(agent-3,dishbowl)', 'RightGrab(agent-3,dishbowl)', 'Walk(agent-3,washingmachine)', 'RightPutIn(agent-3,dishbowl,washingmachine)']}]
+ reflect: 1 
+Times: 110.05504179000854
+[{'WalkToSwitchOnWashingMachine': ['Walk(agent-0,washingmachine)', 'SwitchOn(agent-0,washingmachine)'], 'WalkToOpenWashingMachine': ['Walk(agent-0,washingmachine)', 'Open(agent-0,washingmachine)'], 'WalkToCloseWashingMachine': ['Walk(agent-0,washingmachine)', 'Close(agent-0,washingmachine)'], 'WalkToCheckWashingMachine': ['Walk(agent-0,washingmachine)', 'SwitchOn(agent-0,washingmachine)', 'Open(agent-0,washingmachine)']}]
+ reflect: 2 
+Times: 4.89132833480835
+[{'WalkToSwitchOnWashingMachine': ['Walk(agent-0,washingmachine)', 'SwitchOn(agent-0,washingmachine)']}, {'WalkToOpenWashingMachine': ['Walk(agent-0,washingmachine)', 'Open(agent-0,washingmachine)']}, {'WalkToPutDishbowlInWashingMachine': ['Walk(agent-0,dishbowl)', 'RightGrab(agent-0,dishbowl)', 'Walk(agent-0,washingmachine)', 'RightPutIn(agent-0,dishbowl,washingmachine)']}, {'WalkToPutSpongeInWashingMachine': ['Walk(agent-0,sponge)', 'RightGrab(agent-0,sponge)', 'Walk(agent-0,washingmachine)', 'RightPutIn(agent-0,sponge,washingmachine)']}]
+=============================== data_id: 14 =========================================
+Times: 6.3270721435546875
+[{'WalkToSwitchOffRadio': ['Walk(agent-0,radio)', 'SwitchOff(agent-0,radio)']}, {'WalkToOpenMilk': ['Walk(agent-0,milk)', 'Open(agent-0,milk)']}, {'WalkToPutPlateOnKitchencounter': ['Walk(agent-0,plate)', 'RightGrab(agent-0,plate)', 'Walk(agent-0,kitchencounter)', 'RightPutIn(agent-0,plate,kitchencounter)']}]
+ reflect: 1 
+Times: 5.692919969558716
+[{'WalkToPutPlateOnKitchencounter': ['Walk(self,plate)', 'RightGrab(self,plate)', 'Walk(self,kitchencounter)', 'RightPut(self,plate,kitchencounter)']}, {'WalkToSwitchOffRadio': ['Walk(self,radio)', 'SwitchOff(self,radio)']}, {'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)']}]
+ reflect: 2 
+Times: 5.725529193878174
+[{'WalkToTurnOffRadio': ['Walk(self,radio)', 'SwitchOff(self,radio)']}, {'WalkToOpenMilk': ['Walk(self,milk)', 'Open(self,milk)']}, {'WalkToPutPlateOnCounter': ['Walk(self,plate)', 'RightGrab(self,plate)', 'Walk(self,kitchencounter)', 'RightPut(self,plate,kitchencounter)']}]
+=============================== data_id: 15 =========================================
+Times: 7.123311519622803
+[{'WalkToCloseCloset': ['Walk(self,closet)', 'Close(self,closet)']}, {'WalkToSwitchOnCoffeemaker': ['Walk(self,coffeemaker)', 'SwitchOn(self,coffeemaker)']}, {'WalkToOpenBathroomCabinet': ['Walk(self,bathroomcabinet)', 'Open(self,bathroomcabinet)']}]
+ reflect: 1 
+Times: 4.882405042648315
+[{'WalkToCloseCloset': ['Walk(self,closet)', 'Close(self,closet)']}, {'WalkToSwitchOnCoffeemaker': ['Walk(self,coffeemaker)', 'SwitchOn(self,coffeemaker)']}, {'WalkToOpenBathroomCabinet': ['Walk(self,bathroomcabinet)', 'Open(self,bathroomcabinet)']}]
+ reflect: 2 
+Times: 6.476923227310181
+[{'WalkToCloseBathroomCabinet': ['Walk(self,bathroomcabinet)', 'Close(self,bathroomcabinet)'], 'WalkToSwitchOnCoffeeMaker': ['Walk(self,coffeemaker)', 'SwitchOn(self,coffeemaker)']}, {'WalkToOpenBathroomCabinet': ['Walk(self,bathroomcabinet)', 'Open(self,bathroomcabinet)'], 'WalkToPutToothpasteInBathroomCabinet': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,bathroomcabinet)', 'RightPutIn(self,toothpaste,bathroomcabinet)']}, {'WalkToCloseBathroomCabinet': ['Walk(self,bathroomcabinet)', 'Close(self,bathroomcabinet)'], 'WalkToSwitchOnCoffeeMaker': ['Walk(self,coffeemaker)', 'SwitchOn(self,coffeemaker)'], 'WalkToPutToothpasteInBathroomCabinet': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,bathroomcabinet)', 'RightPutIn(self,toothpaste,bathroomcabinet)']}, {'WalkToOpenCloset': ['Walk(self,closet)', 'Open(self,closet)'], 'WalkToSwitchOnCoffeeMaker': ['Walk(self,coffeemaker)', 'SwitchOn(self,coffeemaker)'], 'WalkToPutToothpasteInBathroomCabinet': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,bathroomcabinet)', 'RightPutIn(self,toothpaste,bathroomcabinet)']}]
+=============================== data_id: 16 =========================================
+Times: 6.636995553970337
+[{'WalkToSwitchOnPrinter': ['Walk(agent-0,printer)', 'SwitchOn(agent-0,printer)']}, {'WalkToPutMagazineOnDesk': ['Walk(agent-0,magazine)', 'RightGrab(agent-0,magazine)', 'Walk(agent-0,desk)', 'RightPut(agent-0,magazine,desk)']}, {'WalkToPutWineOnDesk': ['Walk(agent-0,wine)', 'RightGrab(agent-0,wine)', 'Walk(agent-0,desk)', 'RightPut(agent-0,wine,desk)']}]
+ reflect: 1 
+Times: 17.76249861717224
+[{'WalkToSwitchOnPrinter': ['Walk(self,printer)', 'SwitchOn(self,printer)']}, {'WalkToPutMagazineOnDesk': ['Walk(self,magazine)', 'RightGrab(self,magazine)', 'Walk(self,desk)', 'RightPut(self,magazine,desk)']}, {'WalkToPutClockOnDesk': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,desk)', 'RightPut(self,clock,desk)']}, {'WalkToPutWineOnDesk': ['Walk(self,wine)', 'RightGrab(self,wine)', 'Walk(self,desk)', 'RightPut(self,wine,desk)']}]
+ reflect: 2 
+Times: 7.707340478897095
+[{'WalkToSwitchOnPrinter': ['Walk(self,printer)', 'SwitchOn(self,printer)']}, {'WalkToPutClockOnDesk': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,desk)', 'RightPut(self,clock,desk)']}, {'WalkToPutMagazineOnDesk': ['Walk(self,magazine)', 'RightGrab(self,magazine)', 'Walk(self,desk)', 'RightPut(self,magazine,desk)']}, {'WalkToPutWineOnDesk': ['Walk(self,wine)', 'RightGrab(self,wine)', 'Walk(self,desk)', 'RightPut(self,wine,desk)']}]
+=============================== data_id: 17 =========================================
+Times: 8.342048645019531
+[{'WalkToOpenCoffeemaker': ['Walk(self,coffeemaker)', 'Open(self,coffeemaker)']}, {'WalkToPutMugOnKitchencounter': ['Walk(self,mug)', 'RightGrab(self,mug)', 'Walk(self,kitchencounter)', 'RightPut(self,mug,kitchencounter)']}, {'WalkToPutToothpasteOnKitchencounter': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,kitchencounter)', 'RightPut(self,toothpaste,kitchencounter)']}, {'WalkToPutAppleOnKitchencounter': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,kitchencounter)', 'RightPut(self,apple,kitchencounter)']}]
+ reflect: 1 
+Times: 9.814439296722412
+[{'WalkToOpenCoffeemaker': ['Walk(self,coffeemaker)', 'Open(self,coffeemaker)']}, {'WalkToPutMugOnKitchencounter': ['Walk(self,mug)', 'RightGrab(self,mug)', 'Walk(self,kitchencounter)', 'RightPut(self,mug,kitchencounter)']}, {'WalkToPutToothpasteOnKitchencounter': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,kitchencounter)', 'RightPut(self,toothpaste,kitchencounter)']}, {'WalkToPutAppleOnKitchencounter': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,kitchencounter)', 'RightPut(self,apple,kitchencounter)']}]
+ reflect: 2 
+Times: 8.623747110366821
+[{'WalkToOpenCoffeemaker': ['Walk(self,coffeemaker)', 'Open(self,coffeemaker)'], 'WalkToPutMugOnKitchencounter': ['Walk(self,mug)', 'RightGrab(self,mug)', 'Walk(self,kitchencounter)', 'RightPut(self,mug,kitchencounter)'], 'WalkToPutToothpasteOnKitchencounter': ['Walk(self,toothpaste)', 'RightGrab(self,toothpaste)', 'Walk(self,kitchencounter)', 'RightPut(self,toothpaste,kitchencounter)'], 'WalkToPutAppleOnKitchencounter': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,kitchencounter)', 'RightPut(self,apple,kitchencounter)']}]
+=============================== data_id: 18 =========================================
+Times: 9.420882940292358
+[{'WalkToOpenDoor': ['Walk(self,door)', 'Open(self,door)']}, {'WalkToPutPillowOnBed': ['Walk(self,pillow)', 'RightGrab(self,pillow)', 'Walk(self,bed)', 'RightPut(self,pillow,bed)']}, {'WalkToPutClockOnNightstand': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,nightstand)', 'RightPut(self,clock,nightstand)']}, {'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)']}]
+ reflect: 1 
+Times: 6.47478175163269
+[{'WalkToOpenDoor': ['Walk(self,door)', 'Open(self,door)'], 'WalkToPutPillowOnBed': ['Walk(self,pillow)', 'RightGrab(self,pillow)', 'Walk(self,bed)', 'RightPut(self,pillow,bed)'], 'WalkToPutClockOnNightstand': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,nightstand)', 'RightPut(self,clock,nightstand)'], 'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)']}]
+ reflect: 2 
+Times: 8.514637231826782
+[{'WalkToOpenDoor': ['Walk(self,door)', 'Open(self,door)'], 'WalkToPutPillowOnBed': ['Walk(self,pillow)', 'RightGrab(self,pillow)', 'Walk(self,bed)', 'RightPut(self,pillow,bed)']}, {'WalkToPutClockOnNightstand': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,nightstand)', 'RightPut(self,clock,nightstand)'], 'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)']}, {'WalkToOpenDoor': ['Walk(self,door)', 'Open(self,door)'], 'WalkToPutPillowOnBed': ['Walk(self,pillow)', 'RightGrab(self,pillow)', 'Walk(self,bed)', 'RightPut(self,pillow,bed)'], 'WalkToPutBookOnNightstand': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,nightstand)', 'RightPut(self,book,nightstand)']}, {'WalkToPutClockOnNightstand': ['Walk(self,clock)', 'RightGrab(self,clock)', 'Walk(self,nightstand)', 'RightPut(self,clock,nightstand)'], 'WalkToOpenDoor': ['Walk(self,door)', 'Open(self,door)'], 'WalkToPutPillowOnBed': ['Walk(self,pillow)', 'RightGrab(self,pillow)', 'Walk(self,bed)', 'RightPut(self,pillow,bed)']}]
+=============================== data_id: 19 =========================================
+Times: 10.498632669448853
+[{'WalkToOpenKitchencabinet': ['Walk(self,kitchencabinet)', 'Open(self,kitchencabinet)']}, {'WalkToPutCandleOnNightstand': ['Walk(self,candle)', 'RightGrab(self,candle)', 'Walk(self,nightstand)', 'RightPut(self,candle,nightstand)']}, {'WalkToPutRemoteOnNightstand': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,nightstand)', 'RightPut(self,remotecontrol,nightstand)']}, {'WalkToPutRugOnSofa': ['Walk(self,rug)', 'RightGrab(self,rug)', 'Walk(self,sofa)', 'RightPut(self,rug,sofa)']}]
+ reflect: 1 
+Times: 3.067244529724121
+[{'WalkToOpenKitchencabinet': ['Walk(self,kitchencabinet)', 'Open(self,kitchencabinet)']}, {'WalkToPutCandleOnNightstand': ['Walk(self,candle)', 'RightGrab(self,candle)', 'Walk(self,nightstand)', 'RightPut(self,candle,nightstand)']}, {'WalkToPutRemoteOnNightstand': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,nightstand)', 'RightPut(self,remotecontrol,nightstand)']}, {'WalkToPutRugOnSofa': ['Walk(self,rug)', 'RightGrab(self,rug)', 'Walk(self,sofa)', 'RightPut(self,rug,sofa)']}]
+ reflect: 2 
+Times: 7.634106636047363
+[{'WalkToOpenKitchencabinet': ['Walk(self,kitchencabinet)', 'Open(self,kitchencabinet)'], 'WalkToPutRugOnSofa': ['Walk(self,rug)', 'RightGrab(self,rug)', 'Walk(self,sofa)', 'RightPut(self,rug,sofa)'], 'WalkToPutCandleOnNightstand': ['Walk(self,candle)', 'RightGrab(self,candle)', 'Walk(self,nightstand)', 'RightPut(self,candle,nightstand)'], 'WalkToPutRemoteOnNightstand': ['Walk(self,remotecontrol)', 'RightGrab(self,remotecontrol)', 'Walk(self,nightstand)', 'RightPut(self,remotecontrol,nightstand)']}]
+=============================== data_id: 20 =========================================
+Times: 6.489804267883301
+[{'WalkToOpenCabinet': ['Walk(self,cabinet)', 'Open(self,cabinet)']}, {'WalkToSwitchOnTv': ['Walk(self,tv)', 'SwitchOn(self,tv)']}, {'WalkToOpenBookshelf': ['Walk(self,bookshelf)', 'Open(self,bookshelf)']}]
+ reflect: 1 
+Times: 5.136281251907349
+[{'WalkToOpenCabinet': ['Walk(self,cabinet)', 'Open(self,cabinet)']}, {'WalkToOpenBookshelf': ['Walk(self,bookshelf)', 'Open(self,bookshelf)']}, {'WalkToSwitchOnTV': ['Walk(self,tv)', 'SwitchOn(self,tv)']}]
+ reflect: 2 
+Times: 3.9936435222625732
+[{'WalkToOpenCabinet': ['Walk(self,cabinet)', 'Open(self,cabinet)'], 'WalkToSwitchOnTV': ['Walk(self,tv)', 'SwitchOn(self,tv)']}, {'WalkToPutMugInCabinet': ['Walk(self,mug)', 'RightGrab(self,mug)', 'Walk(self,cabinet)', 'RightPutIn(self,mug,cabinet)'], 'WalkToPutCrayonsInCabinet': ['Walk(self,crayons)', 'RightGrab(self,crayons)', 'Walk(self,cabinet)', 'RightPutIn(self,crayons,cabinet)']}, {'WalkToPutBookInBookshelf': ['Walk(self,book)', 'RightGrab(self,book)', 'Walk(self,bookshelf)', 'RightPutIn(self,book,bookshelf)'], 'WalkToSwitchOnTV': ['Walk(self,tv)', 'SwitchOn(self,tv)']}, {'WalkToOpenCabinet': ['Walk(self,cabinet)', 'Open(self,cabinet)'], 'WalkToPutCrayonsInCabinet': ['Walk(self,crayons)', 'RightGrab(self,crayons)', 'Walk(self,cabinet)', 'RightPutIn(self,crayons,cabinet)'], 'WalkToPutMugInCabinet': ['Walk(self,mug)', 'RightGrab(self,mug)', 'Walk(self,cabinet)', 'RightPutIn(self,mug,cabinet)']}]
+=============================== data_id: 21 =========================================
+Times: 6.263668537139893
+[{'WalkToOpenOven': ['Walk(self,oven)', 'Open(self,oven)']}, {'WalkToPutBananasOnTable': ['Walk(self,bananas)', 'RightGrab(self,bananas)', 'Walk(self,table)', 'RightPut(self,bananas,table)']}, {'WalkToPutCuttingBoardOnKitchenTable': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchentable)', 'RightPut(self,cuttingboard,kitchentable)']}, {'WalkToPutCerealOnBench': ['Walk(self,cereal)', 'RightGrab(self,cereal)', 'Walk(self,bench)', 'RightPut(self,cereal,bench)']}]
+ reflect: 1 
+Times: 8.063494443893433
+[{'OpenOven': ['Walk(self,oven)', 'Open(self,oven)']}, {'PutBananasOnTable': ['Walk(self,bananas)', 'RightGrab(self,bananas)', 'Walk(self,table)', 'RightPut(self,bananas,table)']}, {'PutCuttingBoardOnKitchenTable': ['Walk(self,cuttingboard)', 'RightGrab(self,cuttingboard)', 'Walk(self,kitchentable)', 'RightPut(self,cuttingboard,kitchentable)']}, {'PutCerealOnBench': ['Walk(self,cereal)', 'RightGrab(self,cereal)', 'Walk(self,bench)', 'RightPut(self,cereal,bench)']}]
+ reflect: 2 
+Times: 3.0739946365356445
+[{'WalkToOpenOven': ['Walk(agent-0,oven)', 'Open(agent-0,oven)']}, {'WalkToPutBananasOnTable': ['Walk(agent-0,bananas)', 'RightGrab(agent-0,bananas)', 'Walk(agent-0,table)', 'RightPut(agent-0,bananas,table)']}, {'WalkToPutCerealOnBench': ['Walk(agent-0,cereal)', 'RightGrab(agent-0,cereal)', 'Walk(agent-0,bench)', 'RightPut(agent-0,cereal,bench)']}, {'WalkToPutCuttingBoardOnKitchenTable': ['Walk(agent-0,cuttingboard)', 'RightGrab(agent-0,cuttingboard)', 'Walk(agent-0,kitchentable)', 'RightPut(agent-0,cuttingboard,kitchentable)']}]
+=============================== data_id: 22 =========================================
+Times: 9.182357549667358
+[{'WalkToOpenMicrowave': ['Walk(self,microwave)', 'Open(self,microwave)']}, {'WalkToPutBreadOnKitchenCounter': ['Walk(self,breadslice)', 'RightGrab(self,breadslice)', 'Walk(self,kitchencounter)', 'RightPut(self,breadslice,kitchencounter)']}, {'WalkToPutCarrotInFryingPan': ['Walk(self,carrot)', 'RightGrab(self,carrot)', 'Walk(self,fryingpan)', 'RightPut(self,carrot,fryingpan)']}, {'WalkToPutWineglassOnCoffeeTable': ['Walk(self,wineglass)', 'RightGrab(self,wineglass)', 'Walk(self,coffeetable)', 'RightPut(self,wineglass,coffeetable)']}, {'WalkToOpenMicrowaveAgain': ['Walk(self,microwave)', 'Open(self,microwave)']}]
+ reflect: 1 
+Times: 2.6173434257507324
+[{'WalkToOpenMicrowave': ['Walk(self,microwave)', 'Open(self,microwave)']}, {'WalkToPutBreadOnKitchenCounter': ['Walk(self,breadslice)', 'RightGrab(self,breadslice)', 'Walk(self,kitchencounter)', 'RightPut(self,breadslice,kitchencounter)']}, {'WalkToPutCarrotInFryingPan': ['Walk(self,carrot)', 'RightGrab(self,carrot)', 'Walk(self,fryingpan)', 'RightPut(self,carrot,fryingpan)']}, {'WalkToPutWineglassOnCoffeeTable': ['Walk(self,wineglass)', 'RightGrab(self,wineglass)', 'Walk(self,coffeetable)', 'RightPut(self,wineglass,coffeetable)']}]
+ reflect: 2 
+Times: 9.148422479629517
+[{'WalkToOpenMicrowave': ['Walk(self,microwave)', 'Open(self,microwave)']}, {'WalkToPutBreadOnKitchenCounter': ['Walk(self,breadslice)', 'RightGrab(self,breadslice)', 'Walk(self,kitchencounter)', 'RightPut(self,breadslice,kitchencounter)']}, {'WalkToPutCarrotInFryingPan': ['Walk(self,carrot)', 'RightGrab(self,carrot)', 'Walk(self,fryingpan)', 'RightPut(self,carrot,fryingpan)']}, {'WalkToPutWineglassOnCoffeeTable': ['Walk(self,wineglass)', 'RightGrab(self,wineglass)', 'Walk(self,coffeetable)', 'RightPut(self,wineglass,coffeetable)']}]
+=============================== data_id: 23 =========================================
+Times: 10.043086290359497
+[{'WalkToOpenFridge': ['Walk(self,fridge)', 'Open(self,fridge)']}, {'WalkToPutChocolatesyrupOnTvstand': ['Walk(self,chocolatesyrup)', 'RightGrab(self,chocolatesyrup)', 'Walk(self,tvstand)', 'RightPut(self,chocolatesyrup,tvstand)']}, {'WalkToPutFacecreamOnBathroomCounter': ['Walk(self,facecream)', 'RightGrab(self,facecream)', 'Walk(self,bathroomcounter)', 'RightPut(self,facecream,bathroomcounter)']}, {'WalkToPutCreamyBunsOnBench': ['Walk(self,creamybuns)', 'RightGrab(self,creamybuns)', 'Walk(self,bench)', 'RightPut(self,creamybuns,bench)']}, {'WalkToOpenFridgeAgain': ['Walk(self,fridge)', 'Open(self,fridge)']}]
+ reflect: 1 
+Times: 8.762805223464966
+[{'WalkToOpenFridge': ['Walk(self,fridge)', 'Open(self,fridge)']}, {'WalkToPutChocolatesyrupOnTvstand': ['Walk(self,chocolatesyrup)', 'RightGrab(self,chocolatesyrup)', 'Walk(self,tvstand)', 'RightPut(self,chocolatesyrup,tvstand)']}, {'WalkToPutFacecreamOnBathroomCounter': ['Walk(self,facecream)', 'RightGrab(self,facecream)', 'Walk(self,bathroomcounter)', 'RightPut(self,facecream,bathroomcounter)']}, {'WalkToPutCreamyBunsOnBench': ['Walk(self,creamybuns)', 'RightGrab(self,creamybuns)', 'Walk(self,bench)', 'RightPut(self,creamybuns,bench)']}]
+ reflect: 2 
+Times: 9.207076787948608
+[{'WalkToOpenFridge': ['Walk(self,fridge)', 'Open(self,fridge)']}, {'WalkToPutChocolatesyrupOnTvstand': ['Walk(self,chocolatesyrup)', 'RightGrab(self,chocolatesyrup)', 'Walk(self,tvstand)', 'RightPut(self,chocolatesyrup,tvstand)']}, {'WalkToPutFacecreamOnBathroomCounter': ['Walk(self,facecream)', 'RightGrab(self,facecream)', 'Walk(self,bathroomcounter)', 'RightPut(self,facecream,bathroomcounter)']}, {'WalkToPutCreamyBunsOnBench': ['Walk(self,creamybuns)', 'RightGrab(self,creamybuns)', 'Walk(self,bench)', 'RightPut(self,creamybuns,bench)']}]
+=============================== data_id: 24 =========================================
+Times: 7.37737774848938
+[{'WalkToOpenCurtains': ['Walk(self,curtains)', 'Open(self,curtains)']}, {'WalkToPutCondimentOnTvStand': ['Walk(self,condimentshaker)', 'RightGrab(self,condimentshaker)', 'Walk(self,tvstand)', 'RightPut(self,condimentshaker,tvstand)']}, {'WalkToOpenCurtains': ['Walk(self,curtains)', 'Open(self,curtains)']}]
+ reflect: 1 
+Times: 14.546935081481934
+[{'PutCondimentShakerOnTVStand': ['Walk(self,condimentshaker)', 'RightGrab(self,condimentshaker)', 'Walk(self,tvstand)', 'RightPut(self,condimentshaker,tvstand)']}, {'OpenCurtainsAndPutMouseOnDesk': ['Walk(self,curtains)', 'Open(self,curtains)', 'Walk(self,mouse)', 'RightGrab(self,mouse)', 'Walk(self,desk)', 'RightPut(self,mouse,desk)']}, {'PutPoundcakeInKitchencabinet': ['Walk(self,poundcake)', 'RightGrab(self,poundcake)', 'Walk(self,kitchencabinet)', 'RightPutIn(self,poundcake,kitchencabinet)']}, {'PutCondimentShakerOnTVStandAndOpenCurtains': ['Walk(self,condimentshaker)', 'RightGrab(self,condimentshaker)', 'Walk(self,tvstand)', 'RightPut(self,condimentshaker,tvstand)', 'Walk(self,curtains)', 'Open(self,curtains)']}]
+ reflect: 2 
+Times: 10.857657194137573
+[{'PutCondimentShakerOnTVStand': ['Walk(self,condimentshaker)', 'RightGrab(self,condimentshaker)', 'Walk(self,tvstand)', 'RightPut(self,condimentshaker,tvstand)']}, {'OpenCurtainsAndPutMouseOnDesk': ['Walk(self,curtains)', 'Open(self,curtains)', 'Walk(self,mouse)', 'RightGrab(self,mouse)', 'Walk(self,desk)', 'RightPut(self,mouse,desk)']}, {'PutPoundcakeInKitchencabinet': ['Walk(self,poundcake)', 'RightGrab(self,poundcake)', 'Walk(self,kitchencabinet)', 'RightPutIn(self,poundcake,kitchencabinet)']}, {'PutCondimentShakerOnTVStandAndOpenCurtains': ['Walk(self,condimentshaker)', 'RightGrab(self,condimentshaker)', 'Walk(self,tvstand)', 'RightPut(self,condimentshaker,tvstand)', 'Walk(self,curtains)', 'Open(self,curtains)']}]
+=============================== data_id: 25 =========================================
+Times: 7.367750406265259
+[{'WalkToOpenDishwasher': ['Walk(self,dishwasher)', 'Open(self,dishwasher)']}, {'WalkToPutBellpepperOnCuttingboard': ['Walk(self,belpepper)', 'RightGrab(self,belpepper)', 'Walk(self,cuttingboard)', 'RightPut(self,belpepper,cuttingboard)']}, {'WalkToPutAppleOnPlate': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,plate)', 'RightPut(self,apple,plate)']}, {'WalkToPutRadioOnNightstand': ['Walk(self,radio)', 'RightGrab(self,radio)', 'Walk(self,nightstand)', 'RightPut(self,radio,nightstand)']}]
+ reflect: 1 
+Times: 8.750275611877441
+[{'WalkToOpenDishwasher': ['Walk(self,dishwasher)', 'Open(self,dishwasher)']}, {'WalkToPutBellpepperOnCuttingboard': ['Walk(self,belpepper)', 'RightGrab(self,belpepper)', 'Walk(self,cuttingboard)', 'RightPut(self,belpepper,cuttingboard)']}, {'WalkToPutAppleOnPlate': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,plate)', 'RightPut(self,apple,plate)']}, {'WalkToPutRadioOnNightstand': ['Walk(self,radio)', 'RightGrab(self,radio)', 'Walk(self,nightstand)', 'RightPut(self,radio,nightstand)']}]
+ reflect: 2 
+Times: 7.106983661651611
+[{'WalkToOpenDishwasher': ['Walk(self,dishwasher)', 'Open(self,dishwasher)'], 'WalkToPutBellpepperOnCuttingboard': ['Walk(self, bellpepper)', 'RightGrab(self, bellpepper)', 'Walk(self, cuttingboard)', 'RightPut(self, bellpepper, cuttingboard)'], 'WalkToPutAppleOnPlate': ['Walk(self,apple)', 'RightGrab(self,apple)', 'Walk(self,plate)', 'RightPut(self,apple,plate)'], 'WalkToPutRadioOnNightstand': ['Walk(self,radio)', 'RightGrab(self,radio)', 'Walk(self,nightstand)', 'RightPut(self,radio,nightstand)']}]
+{'In(obj, contain)': 0, 'On(obj, surface)': 0, 'IsOpen(obj)': 0, 'IsClose(obj)': 0, 'IsSwitchOn(obj)': 0, 'IsSwitchOff(obj)': 0}
+
+进程已结束，退出代码为 0
