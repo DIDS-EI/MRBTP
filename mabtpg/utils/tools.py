@@ -27,10 +27,8 @@ def print_colored(text, color):
 
 import re
 def extract_parameters_from_action_name(action_str):
-    # 使用正则表达式提取括号内的参数部分
     match = re.search(r'\(([^)]+)\)', action_str)
     if match:
-        # 将参数部分按逗号分割并去掉多余的空格
         parameters = [param.strip() for param in match.group(1).split(',')]
         return parameters
     return []
@@ -43,7 +41,6 @@ def extract_predicate_from_action_name(action_str):
 
 
 def extract_agent_id_from_action_name(action_str):
-    # 使用正则表达式提取 agent 的 ID
     match = re.search(r'agent-\d+', action_str)
     if match:
         return match.group()

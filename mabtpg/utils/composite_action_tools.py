@@ -89,33 +89,62 @@ class CompositeActionPlanner:
 
         return planning_action,sub_btml
 
+    def no_agent_plan_sub_bt_from_filtered_actions(self,agent_comp_sequence,comp_act_name):
+        """
+        Plan sub-behavior trees based on filtered actions and given sequence.
 
+        Args:
+            filtered_actions (list): List of actions that match the sequence predicates.
+            sequence (list): List of action predicates that define the sequence.
+            composite_action_name (str): Name of the composite action.
+
+        Returns:
+            list: List of planned composite actions.
+        """
+
+        #
+        # sub_goal =  agent_comp_sequence[-1].add
+        # planning_algorithm = CABTP(env=self.env, verbose=False, goal=frozenset(sub_goal), action_list=agent_comp_sequence)
+        # result = planning_algorithm.planning()
+
+        return True,""
 
 
     def get_single_agent_composite_action(self,comp_act_name,comp_sequence,agent_id,action_model):
-        agent_name = f"agent-{agent_id}"
 
-        agent_comp_name_sequence = []
-        for action_name in comp_sequence:
-            cls_name, args = parse_predicate_logic(action_name)
-            new_args = [agent_name if arg=="self" else arg for arg in args]
-            new_name = f'{cls_name}({",".join(new_args)})'
-            agent_comp_name_sequence.append(new_name)
+        if agent_id!=-1:
+            agent_name = f"agent-{agent_id}"
 
-        action_model_dic={}
-        for action in action_model:
-            action_model_dic[action.name] = action
+            agent_comp_name_sequence = []
+            for action_name in comp_sequence:
+                cls_name, args = parse_predicate_logic(action_name)
+                new_args = [agent_name if arg=="self" else arg for arg in args]
+                new_name = f'{cls_name}({",".join(new_args)})'
+                agent_comp_name_sequence.append(new_name)
 
-        # get planning action
-        agent_comp_sequence = []
-        for action_name in agent_comp_name_sequence:
-            if action_name in action_model_dic:
-                agent_comp_sequence.append(action_model_dic[action_name])
-            else:
-                return [],[]
+            action_model_dic={}
+            for action in action_model:
+                action_model_dic[action.name] = action
 
-        planning_action, sub_btml = self.plan_sub_bt_from_filtered_actions(agent_comp_sequence,comp_act_name)
-        return planning_action,sub_btml
+            # get planning action
+            agent_comp_sequence = []
+            for action_name in agent_comp_name_sequence:
+                if action_name in action_model_dic:
+                    agent_comp_sequence.append(action_model_dic[action_name])
+                else:
+                    return [],[]
+
+            planning_action, sub_btml = self.plan_sub_bt_from_filtered_actions(agent_comp_sequence,comp_act_name)
+            return planning_action,sub_btml
+
+        else:
+            action_model_dic={}
+            for action in action_model:
+                action_model_dic[action.name] = action
+
+            # get planning action
+            success, msg = self.plan_sub_bt_from_filtered_actions(comp_sequence,comp_act_name)
+            return success, msg
 
 
 

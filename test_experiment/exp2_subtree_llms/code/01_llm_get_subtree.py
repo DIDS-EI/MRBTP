@@ -14,6 +14,7 @@ root_path = get_root_path()
 from itertools import permutations
 import time
 from mabtpg.utils.composite_action_tools import CompositeActionPlanner
+from mabtpg.utils import parse_predicate_logic
 from mabtpg.utils.tools import print_colored,filter_action_lists
 from mabtpg.envs.virtualhome.envs.vh_computation_env import VHCompEnv
 from itertools import chain
@@ -51,7 +52,7 @@ def count_conditions(goal):
     return count_dict
 
 
-default_prompt_file = f"conditions_and_actions.txt"
+default_prompt_file = f"prompt.txt"
 with open(default_prompt_file, 'r', encoding="utf-8") as f:
     default_prompt = f.read().strip()
 
@@ -67,10 +68,10 @@ def get_prompt(json_data,num_agent):
 
 need_record_reflect = True
 
-# json_type = "homo_30"
-json_type = "half_30"
-# json_type = "hete_30"
-json_path = f"vh_{json_type}.json"
+# json_type = "homo_25"
+json_type = "half_25"
+# json_type = "hete_25"
+json_path = f"data/vh_{json_type}.json"
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 
@@ -156,14 +157,21 @@ for _,json_data in enumerate(json_datasets[:1]):
     prompt = get_prompt(new_json_data,num_agent)
     prompt += f'''
     [Systems]
-1. Based on each task's goal, start, and the action spaces of different robots, design all possible task-related composite actions [multi_robot_subtree_ls] for each robot. It's okay if many composite actions are repeated.
-2. [multi_robot_subtree_ls] is a list where each entry contains a dictionary [subtree_dict] of all task-related composite actions a robot can perform. It's okay if many composite actions are repeated.
-3. In [subtree_dict], the keys are composite action names, and the values are the atomic actions that make up each composite action. Atomic actions are formed by combining action predicates with objects. The sequence of atomic actions within each composite action is ordered and related, where the add effect of each atomic action serves as the precondition for the next.
-4. Refer to [Example] and use the current [Task Information] to provide the task-related composite actions [multi_robot_subtree_ls] for each robot. The current number of robots is {num_agent}, meaning [multi_subtree_list] has {num_agent} dictionaries.
-5. For each robot, provide as many task-related composite actions as possible from the actions it can perform. Each [subtree_dict] can contain multiple key-value pairs, typically including 1-5 actions.
-6. The length of multi_subtree_list corresponds to the number of robots, which equals the number of action lists contained in action_space. The current number of robots is {num_agent}.
-7. The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 1-5 key-value pairs.
-'''
+    1. For each task, generate all possible composite actions for each robot based on its goals, initial state, and available action space. Repetition of composite actions is permissible. 
+    2. [multi\_robot\_subtree\_ls] is a list where each entry is a dictionary [subtree\_dict] containing all task-related composite actions for a robot. Keys in [subtree\_dict] are composite action names, and values are sequences of atomic actions, ordered such that each action’s effect serves as the precondition for the next. Using the current [Task Information] and [Example], construct [multi\_robot\_subtree\_ls] for each robot.
+    3. The length of \[multi\_subtree\_list] equals the number of robots and corresponds to the number of action lists in [action\_space]. With  {num_agent} robots, [multi\_subtree\_list] contains {num_agent} dictionaries, each with 1-5 key-value pairs.
+    '''
+
+#     prompt += f'''
+#     [Systems]
+# 1. Based on each task's goal, start, and the action spaces of different robots, design all possible task-related composite actions [multi_robot_subtree_ls] for each robot. It's okay if many composite actions are repeated.
+# 2. [multi_robot_subtree_ls] is a list where each entry contains a dictionary [subtree_dict] of all task-related composite actions a robot can perform. It's okay if many composite actions are repeated.
+# 3. In [subtree_dict], the keys are composite action names, and the values are the atomic actions that make up each composite action. Atomic actions are formed by combining action predicates with objects. The sequence of atomic actions within each composite action is ordered and related, where the add effect of each atomic action serves as the precondition for the next.
+# 4. Refer to [Example] and use the current [Task Information] to provide the task-related composite actions [multi_robot_subtree_ls] for each robot. The current number of robots is {num_agent}, meaning [multi_subtree_list] has {num_agent} dictionaries.
+# 5. For each robot, provide as many task-related composite actions as possible from the actions it can perform. Each [subtree_dict] can contain multiple key-value pairs, typically including 1-5 actions.
+# 6. The length of multi_subtree_list corresponds to the number of robots, which equals the number of action lists contained in action_space. The current number of robots is {num_agent}.
+# 7. The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 1-5 key-value pairs.
+# '''
 
 
     # Extract action names and normalize for model input
@@ -230,35 +238,108 @@ for _,json_data in enumerate(json_datasets[:1]):
         print(multi_subtree_list)
 
         # check if need reflect
-        reflect_prompt = ""
+        num_feedback_items = 1
+        feedback_prompt = ""
+
+        # Check for grammatical errors.
+        # objs、actions
+        llm_objs = set()
+        llm_act = set()
+        for subtree_dic in multi_subtree_list:
+            for atom_act_ls in subtree_dic.values():
+                for act in atom_act_ls:
+                    cls_name, args = parse_predicate_logic(act)
+                    llm_objs |= set(args)
+                    llm_act |= set(act)
+        not_exists_objs = llm_objs & (set(objects)|{"self"})
+        not_exists_act_pred = llm_act & (set(actions_name_str_ls))
+        if not_exists_objs!=set():
+            feedback_prompt += f"{num_feedback_items}. The object(s) {not_exists_objs} do(es) not exist and must be an element(s) of the set {set(objects)}."
+            num_feedback_items += 1
+        if not_exists_act_pred!=set():
+            feedback_prompt += f"{num_feedback_items}. The action predicates {not_exists_act_pred} either do not exist or are incorrectly formatted. They must be part of the {set((actions_name_str_ls))} set."
+            num_feedback_items += 1
+
+        # Check for len(multi_subtree_list) == num_agent.
         if len(multi_subtree_list) < num_agent:
-            reflect_prompt = f'''
-            The number of dictionaries in the [multi_subtree_list] you provided should equal the number of {num_agent}. Please regenerate the composite action dictionaries for each robot. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
-            '''
-            messages.append({"role": "user", "content": reflect_prompt})
-            history_dic[f"reflect{reflect_times+1}"]=reflect_prompt
+            feedback_prompt+= (f"{num_feedback_items}. The number of robots involved in this task is {num_agent}, "
+                               f"which implies that the [multi_subtree_list] should contain {num_agent} dictionaries. "
+                               f"Each of these dictionaries should have 1-4 key-value pairs. Please revise accordingly.")
+            num_feedback_items += 1
+
+        if num_feedback_items !=1:
+            messages.append({"role": "user", "content": feedback_prompt})
+            history_dic[f"reflect{reflect_times+1}"]=feedback_prompt
             reflect_times+=1
             continue
 
-        # hete
-        # break
+        # Check for Subtree Pre-Planning
+        # Subree Pre-Planning
+        # Collect and use together
+        for ls_i, act_cls_dic in enumerate(multi_subtree_list):
+            for key, act_name_ls in act_cls_dic.items():
+                for act_j, act_name in enumerate(act_name_ls):
+                    if re.search(r'agent-\d+', act_name):
+                        action_modified_str = re.sub(r'agent-\d+', 'self', act_name)
+                        act_cls_dic[key][act_j] = action_modified_str
 
-        # heto
-        need_reflect = True
-        for subtree_list in multi_subtree_list:
-            if len(subtree_list)>1:
-                need_reflect = False
-        if not need_reflect:
+        # Collect and use together
+        total_dic = {}
+        for ls_i, act_cls_dic in enumerate(multi_subtree_list):
+            for key, act_name_ls in act_cls_dic.items():
+                ket_name = key.replace("_", "").replace("(", "").replace(")", "").replace(" ", "")
+                total_dic[ket_name] = act_name_ls
+        composition_action = [[] for i in range(num_agent)]
+        for i in range(num_agent):
+            composition_action[i] = total_dic
+
+        for key,value in total_dic.values():
+            cap = CompositeActionPlanner(multi_subtree_list, action_model)
+            success,msg = cap.get_single_agent_composite_action(key,value,-1,action_model)
+
+            if not success:
+                feedback_prompt += (f"{num_feedback_items}. {key} cannot be pre-planned. {msg}")
+                num_feedback_items += 1
+
+
+        if num_feedback_items!=1:
+            messages.append({"role": "user", "content": feedback_prompt})
+            history_dic[f"reflect{reflect_times+1}"] = feedback_prompt
+            reflect_times+=1
+        else:
             break
 
-        messages.append({"role": "assistant", "content": res_msg})
-        reflect_prompt += f'''
-        The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 4 key-value pairs.
-        You should provide 2-4 combined actions for each robot instead of just one. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
-        '''
-        messages.append({"role": "user", "content": reflect_prompt})
-        history_dic[f"reflect{reflect_times+1}"]=reflect_prompt
-        reflect_times+=1
+
+        # if len(multi_subtree_list) < num_agent:
+        #     reflect_prompt = f'''
+        #     The number of dictionaries in the [multi_subtree_list] you provided should equal the number of {num_agent}. Please regenerate the composite action dictionaries for each robot. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
+        #     '''
+        #     messages.append({"role": "user", "content": reflect_prompt})
+        #     history_dic[f"reflect{reflect_times+1}"]=reflect_prompt
+        #     reflect_times+=1
+        #     continue
+        #
+        # # hete
+        # # break
+        #
+        # # heto
+        # need_reflect = True
+        # for subtree_list in multi_subtree_list:
+        #     if len(subtree_list)>1:
+        #         need_reflect = False
+        # if not need_reflect:
+        #     break
+        #
+        # messages.append({"role": "assistant", "content": res_msg})
+        # reflect_prompt += f'''
+        # The number of robots in this task is {num_agent}, meaning multi_subtree_list contains {num_agent} dictionaries. Each dictionary includes 4 key-value pairs.
+        # You should provide 2-4 combined actions for each robot instead of just one. Each of the {num_agent} dictionaries in the list should contain 2-4 key-value pairs. Please revise accordingly.
+        # '''
+        # messages.append({"role": "user", "content": reflect_prompt})
+        # history_dic[f"reflect{reflect_times+1}"] = reflect_prompt
+        # messages.append({"role": "user", "content": feedback_prompt})
+        # history_dic[f"reflect{reflect_times+1}"] = feedback_prompt
+        # reflect_times+=1
 
     history_dic[f"llm_output{reflect_times + 1}"] = multi_subtree_list
     # print(multi_subtree_list)

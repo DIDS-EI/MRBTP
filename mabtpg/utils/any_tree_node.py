@@ -74,9 +74,9 @@ def print_tree_from_root(node, indent=0):
     :param node: The current tree node to print.
     :param indent: The number of '\t' to prefix the line with.
     """
-    # 打印当前节点，增加缩进来表示层级
+    # Print the current node, adding indentation to indicate the level
     print(f"{'    ' * indent}{node.print_name}")
-    # 如果该节点有子节点，递归打印子节点
+    # If the node has child nodes, recursively print the child nodes
     if hasattr(node, "children"):
         for child in node.children:
             print_tree_from_root(child, indent + 1)
