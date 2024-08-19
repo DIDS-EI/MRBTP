@@ -68,14 +68,14 @@ def get_prompt(json_data,num_agent):
 need_record_reflect = True
 
 # json_type = "homo_30"
-# json_type = "half_30"
-json_type = "hete_30"
+json_type = "half_30"
+# json_type = "hete_30"
 json_path = f"vh_{json_type}.json"
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 
-output_json_name = f"llm_data/vh_llm4_{json_type}_reflect.json"
-output_csv_name = f"llm_data/vh_llm4_{json_type}_reflect.csv"
+output_json_name = f"llm_data/vh_llm4_{json_type}_reflect_tmp.json"
+output_csv_name = f"llm_data/vh_llm4_{json_type}_reflectt_tmp.csv"
 
 # initial json file
 if not os.path.exists(output_json_name):
