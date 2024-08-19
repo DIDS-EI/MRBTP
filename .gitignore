@@ -19,8 +19,8 @@ share/python-wheels/
 MANIFEST
 pytorch_model.bin
 *.dot
-*.svg
-*.png
+#*.svg
+#*.png
 test_gridworld/Output/
 simulators/virtualhome/windows/*
 !simulators/virtualhome/windows/.gitkeep
