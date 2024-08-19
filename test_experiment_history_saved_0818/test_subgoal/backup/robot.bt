@@ -1,0 +1,34 @@
+sequence
+    fallback
+        condition IsOpen(door-0)
+        action OpenDoor(agent-0,door-0)
+    fallback
+        condition IsInRoom(ball-0,1)
+        action MoveInRoom(ball-0,1)
+
+def action OpenDoor(agent-0,door-0):
+    fallback
+        sequence
+            condition CanOpen(agent-0,door-0) & IsNear(agent-0,door-0)
+            action Toggle(agent-0,door-0)
+        sequence
+            condition CanOpen(agent-0,door-0)
+            action GoToInRoom(agent-0,door-0,0)
+        sequence
+            condition IsNear(agent-0,key-0)
+            action PickUp(agent-0,key-0)
+        action GoToInRoom(agent-0,key-0,0)
+
+
+def action MoveInRoom(ball-0,1):
+    fallback
+        sequence
+            condition IsInRoom(agent-1,1) & IsHolding(agent-1,ball-0)
+            action PutInRoom(agent-1,ball-0,1)
+        sequence
+            condition CanOpen(agent-0,door-0)
+            action GoToInRoom(agent-0,door-0,0)
+        sequence
+            condition IsNear(agent-0,key-0)
+            action PickUp(agent-0,key-0)
+        action GoToInRoom(agent-0,key-0,0)

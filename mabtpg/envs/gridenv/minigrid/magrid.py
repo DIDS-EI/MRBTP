@@ -33,7 +33,7 @@ class MAGrid(Grid):
         subdivs: int = 3,
     ) -> np.ndarray:
         """
-        Render a tile and cache the result
+        Render a tile and cache the results
         """
 
         # Hash map lookup key for the cache

@@ -1,0 +1,3 @@
+sequence
+    cond IsTrue()
+    act RandomAction()

@@ -1,0 +1,346 @@
+fallback
+    condition IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+    sequence
+        condition IsHolding(agent-2,ball-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+        action PutInRoom(agent-2,ball-0,room-1)
+    sequence
+        condition IsHolding(agent-2,ball-1) & IsInRoom(agent-2,room-1) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+        action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+    sequence
+        condition IsHolding(agent-2,ball-2) & IsInRoom(agent-2,room-1) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+        action PutNearInRoom(agent-2,ball-2,ball-3,room-1)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsNear(ball-1,ball-3)'}))
+            action Move1NearRed()
+            action FinishTask()
+        sequence
+            fallback
+                condition CanGoTo(ball-1) & IsHandEmpty(agent-2) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                sequence
+                    condition CanGoTo(ball-1) & IsHandEmpty(agent-2) & IsInRoom(agent-2,room-1) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action GoBtwRoom(agent-2,room-1,room-0)
+                sequence
+                    condition CanGoTo(ball-1) & IsHolding(agent-2,ball-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action PutInRoom(agent-2,ball-0,room-0)
+                sequence
+                    condition CanGoTo(ball-1) & IsHolding(agent-2,key-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action PutInRoom(agent-2,key-0,room-0)
+                sequence
+                    condition IsHolding(agent-2,ball-1) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action PutInRoom(agent-2,ball-1,room-0)
+                sequence
+                    condition CanGoTo(ball-1) & IsHolding(agent-2,ball-2) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action PutInRoom(agent-2,ball-2,room-0)
+                sequence
+                    condition CanGoTo(ball-1) & IsHolding(agent-2,ball-3) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    action PutInRoom(agent-2,ball-3,room-0)
+                sequence
+                    condition CanGoTo(ball-1) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-2) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(agent-2,door-0) & IsNear(ball-2,ball-3)
+                    action Toggle(agent-2,door-0)
+            action SelfAcceptTask(frozenset({'IsNear(ball-1,ball-3)'}))
+    fallback
+        condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+        sequence
+            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-0,room-1)
+        sequence
+            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-1,room-0)
+        sequence
+            condition IsHandEmpty(agent-1) & IsHolding(agent-2,ball-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+        sequence
+            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action PutNearInRoom(agent-2,ball-2,ball-3,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsInRoom(agent-1,room-0) & IsNear(agent-2,door-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action Toggle(agent-2,door-0)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsNear(ball-1,ball-3)'}))
+                action Move1NearRed()
+                action FinishTask()
+            sequence
+                fallback
+                    condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action GoBtwRoom(agent-2,room-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHolding(agent-2,key-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action PutInRoom(agent-2,key-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-2,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-3,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(agent-2,door-0) & IsNear(ball-2,ball-3)
+                        action Toggle(agent-2,door-0)
+                action SelfAcceptTask(frozenset({'IsNear(ball-1,ball-3)'}))
+    fallback
+        condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+        sequence
+            condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-1,room-0)
+        sequence
+            condition IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action PutInRoom(agent-2,ball-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+        sequence
+            condition CanGoTo(ball-2) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-3) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(agent-2,door-0) & IsNear(ball-1,ball-3)
+            action Toggle(agent-2,door-0)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsNear(ball-1,ball-3)'}))
+                action Move1NearRed()
+                action FinishTask()
+            sequence
+                fallback
+                    condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action GoBtwRoom(agent-2,room-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action PutInRoom(agent-2,key-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-2,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-3) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-3,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(agent-2,door-0)
+                        action Toggle(agent-2,door-0)
+                action SelfAcceptTask(frozenset({'IsNear(ball-1,ball-3)'}))
+    fallback
+        condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+            action GoToInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+            action GoToInRoom(agent-2,door-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,ball-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,key-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+    fallback
+        condition CanGoTo(ball-0) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-0,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action GoBtwRoom(agent-2,room-1,room-0)
+        sequence
+            condition CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3) & IsOpen(door-0)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-3,room-0) & IsNear(agent-2,door-0) & IsNear(ball-1,ball-3)
+            action Toggle(agent-2,door-0)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsNear(ball-1,ball-3)'}))
+                action Move1NearRed()
+                action FinishTask()
+            sequence
+                fallback
+                    condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action GoBtwRoom(agent-2,room-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action PutInRoom(agent-2,key-0,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-1,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-2,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsOpen(door-0)
+                        action PutInRoom(agent-2,ball-3,room-0)
+                    sequence
+                        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanOpen(agent-2,door-0) & IsClose(door-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(agent-2,door-0)
+                        action Toggle(agent-2,door-0)
+                action SelfAcceptTask(frozenset({'IsNear(ball-1,ball-3)'}))
+    fallback
+        condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action GoToInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutInRoom(agent-2,ball-1,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsInRoom(ball-0,room-1)
+            action PutInRoom(agent-2,ball-3,room-0)
+    fallback
+        condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action GoToInRoom(agent-2,door-0,room-1)
+        sequence
+            condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,key-0,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-2,ball-3)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsNear(ball-1,ball-3)
+            action PutNearInRoom(agent-2,ball-2,ball-3,room-1)
+    fallback
+        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-1,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHolding(agent-2,ball-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-3,room-0)
+    fallback
+        condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action GoToInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-1,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHolding(agent-2,ball-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(ball-0,room-1) & IsNear(ball-2,ball-3)
+            action PutInRoom(agent-2,ball-3,room-0)
+    fallback
+        condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action GoToInRoom(agent-2,door-0,room-1)
+        sequence
+            condition CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0) & IsNear(ball-1,ball-3)
+            action PutInRoom(agent-2,key-0,room-1)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-1) & IsInRoom(agent-3,room-0)
+            action PutNearInRoom(agent-2,ball-1,ball-3,room-1)
+    fallback
+        condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-2) & IsHandEmpty(agent-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action GoToInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action PutInRoom(agent-2,ball-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,key-0) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action PutInRoom(agent-2,key-0,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-1) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action PutInRoom(agent-2,ball-1,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-2) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action PutInRoom(agent-2,ball-2,room-0)
+        sequence
+            condition CanGoTo(ball-0) & CanGoTo(ball-1) & CanGoTo(ball-2) & CanGoTo(door-0) & CanGoTo(key-0) & IsClose(door-0) & IsHandEmpty(agent-0) & IsHandEmpty(agent-1) & IsHandEmpty(agent-3) & IsHolding(agent-2,ball-3) & IsInRoom(agent-0,room-0) & IsInRoom(agent-1,room-0) & IsInRoom(agent-2,room-0) & IsInRoom(agent-3,room-0)
+            action PutInRoom(agent-2,ball-3,room-0)
