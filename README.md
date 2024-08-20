@@ -87,6 +87,10 @@ Execute multi-agent behavior tree planning algorithms in our extended MiniGrid e
 python test_multi_minigrid_single_demo/main.py
 ```
 
+<img src="images/4_robots.gif" alt="4 robots" width="300"/>
+
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
