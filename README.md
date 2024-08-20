@@ -1,4 +1,4 @@
-# MABTPG
+# MABTP
 
 MRBTP: Efficient Multi-Robot Behavior Tree Planning and Collaboration.
 
