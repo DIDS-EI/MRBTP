@@ -9,13 +9,17 @@ from mabtpg.utils.composite_action_tools import CompositeActionPlanner
 
 from mabtpg.utils.tools import print_colored,filter_action_lists
 
-num_agent = 4
+num_agent = 2
+from gymnasium.envs.registration import register
+register(
+    id="MiniGrid-KeyCorridorS3R1-v0-custom",
+    entry_point="minigrid.envs:KeyCorridorEnv",
+    kwargs={"room_size": 6, "num_rows": 2}, # 每个房间的格子总数，有几排房间
+)
 
-# #########################
-# Initialize Environment
-# #########################
-# env_id = "MiniGrid-DoorKey-16x16-v0"
-env_id = "MiniGrid-DoorKey-16x16-v0"
+
+# num_agent = 3
+env_id = "MiniGrid-DoorKey-8x8-v0"
 tile_size = 32
 agent_view_size = 7
 screen_size = 1024
