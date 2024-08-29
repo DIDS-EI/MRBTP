@@ -101,7 +101,7 @@ for with_comp_action in [comp]:
 
             print_colored(f"=========  comp_action={with_comp_action} comp_subtask_chain={use_comp_subtask_chain}  atom_subtask_chain={use_atom_subtask_chain}==============",color="purple")
 
-            for _,json_data in enumerate(json_datasets[24:]):
+            for _,json_data in enumerate(json_datasets[0:1]):
 
                 data_id = json_data['id']
                 print_colored(f"========= data_id: {data_id} ===============","blue")
