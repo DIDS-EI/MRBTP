@@ -356,7 +356,7 @@ for _,json_data in enumerate(json_datasets[:1]):
             existing_data = json.load(json_file)
         except json.JSONDecodeError:  # Catch JSON decoding error
             existing_data = []  # If the file is empty or corrupted, initialize it as an empty list
-        # Update data and write back to the file
+        # Update data and write bak to the file
         existing_data.append(new_json_data)
         json_file.seek(0)
         json.dump(existing_data, json_file, indent=4)

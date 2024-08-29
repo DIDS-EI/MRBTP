@@ -266,7 +266,7 @@ class MAGrid:
     # @staticmethod
     # def decode(array: np.ndarray) -> tuple[MAGrid, np.ndarray]:
     #     """
-    #     Decode an array grid encoding back into a grid
+    #     Decode an array grid encoding bak into a grid
     #     """
     #
     #     width, height, channels = array.shape

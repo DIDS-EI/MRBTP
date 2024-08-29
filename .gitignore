@@ -24,6 +24,10 @@ pytorch_model.bin
 test_gridworld/Output/
 simulators/virtualhome/windows/*
 !simulators/virtualhome/windows/.gitkeep
+simulators/RFUniverse/windows/*
+!simulators/RFUniverse/windows/.gitkeep
+
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

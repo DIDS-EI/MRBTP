@@ -42,7 +42,7 @@ class BTMLLexerBase(Lexer):
                 self.emitToken(self.createDedent())
                 self.indents.pop()
 
-            # Put the EOF back on the token stream.
+            # Put the EOF bak on the token stream.
             self.emitToken(self.commonToken(BTMLParser.EOF, '<EOF>'))
 
         next_ = super().nextToken()

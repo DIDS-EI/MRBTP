@@ -24,7 +24,7 @@ class Action(Enum):
     #PUT = ("Put", 2)
     #PUTBACK = PUT
     PUTIN = ("Put in", 2, [['GRABBABLE'], ['CAN_OPEN']])
-    PUTOBJBACK = ("Put back", 1, [[]])
+    PUTOBJBACK = ("Put bak", 1, [[]])
     RUN = ("Run", 1, [[]])
     SIT = ("Sit", 1, [['SITTABLE']])
     STANDUP = ("Stand up", 0)
