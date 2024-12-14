@@ -1,0 +1,5 @@
+fallback
+    condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-2)
+    sequence
+        condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-2) & IsInRoom(package-3,room-2) & IsOpen(room-2) & IsOpen(room-3)
+        action MovePackage_2(agent-0,room-2,room-3)

@@ -1,0 +1,19 @@
+fallback
+    condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-2)
+    sequence
+        fallback
+            condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
+            sequence
+                fallback
+                    condition IsClose(room-3) & IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-2)
+                    sequence
+                        condition IsClose(room-3) & IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
+                        action MovePackage_1(agent-2,room-1,room-0)
+                action OpenRoom_3(agent-2)
+            sequence
+                condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
+                action MovePackage_1(agent-2,room-1,room-0)
+        action MovePackage_3(agent-2,room-3,room-2)
+    sequence
+        condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-2) & IsOpen(room-0) & IsOpen(room-1)
+        action MovePackage_1(agent-2,room-1,room-0)

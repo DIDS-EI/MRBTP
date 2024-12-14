@@ -63,11 +63,13 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 # json_type = "hete_30"
 
 
-reflect_times = 3
+reflect_times = -1 #3
 
 # json_type = "llm4_half_30_1"
-json_type = "llm4_homo_30_reflect"
+# json_type = "llm4_homo_30_reflect"
 # json_type = "llm4_hete_30_reflect"
+
+json_type = "gpt4o_homo_25_reflect"
 
 json_path = f"llm_data/vh_{json_type}.json"
 with open(json_path, 'r') as file:

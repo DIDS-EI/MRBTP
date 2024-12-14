@@ -1,0 +1,818 @@
+[
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "milk",
+            "fridge",
+            "dishbowl",
+            "washingmachine",
+            "sponge",
+            "sink",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkGrabOpenPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkGrabOpenPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0,milk)",
+                    "RightGrab(agent-0,milk)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-1,fridge)",
+                    "Open(agent-1,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-1,milk)",
+                    "RightGrab(agent-1,milk)",
+                    "Walk(agent-1,fridge)",
+                    "RightPutIn(agent-1,milk,fridge)"
+                ]
+            }
+        ],
+        "total_time": 2.7689027786254883,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0,milk)",
+                    "RightGrab(agent-0,milk)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-1,fridge)",
+                    "Open(agent-1,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-1,milk)",
+                    "RightGrab(agent-1,milk)",
+                    "Walk(agent-1,fridge)",
+                    "RightPutIn(agent-1,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_time": 2.763918399810791,
+        "reflect_times": 3
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsOn(cupcake,kitchentable)",
+            "IsOn(wine,kitchentable)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "cupcake",
+            "wine",
+            "kitchentable",
+            "juice",
+            "kitchencabinet",
+            "washingsponge",
+            "tvstand",
+            "toy",
+            "bananas",
+            "radio",
+            "box"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "AlternateWalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "AlternateWalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "LeftGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "AlternateWalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "AlternateWalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "LeftGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "WalkToPutJuiceOnKitchentable": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,juice,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "WalkToPutJuiceOnKitchentable": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,juice,kitchentable)"
+                ]
+            }
+        ],
+        "total_time": 3.4471349716186523,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "WalkToPutJuiceOnKitchentable": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,juice,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ],
+                "WalkToPutJuiceOnKitchentable": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,juice,kitchentable)"
+                ]
+            }
+        ],
+        "llm_time": 3.4456253051757812,
+        "reflect_times": 3
+    },
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "milk",
+            "fridge",
+            "dishbowl",
+            "washingmachine",
+            "sponge",
+            "sink",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "OpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "PutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "OpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "PutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToMilkAndGrab": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)"
+                ],
+                "WalkToFridgeAndOpen": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToFridgeAndPutMilk": [
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToMilkAndGrab": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)"
+                ],
+                "WalkToFridgeAndOpen": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToFridgeAndPutMilk": [
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "total_time": 2.8502001762390137,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToMilkAndGrab": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)"
+                ],
+                "WalkToFridgeAndOpen": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToFridgeAndPutMilk": [
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToMilkAndGrab": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)"
+                ],
+                "WalkToFridgeAndOpen": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToFridgeAndPutMilk": [
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_time": 2.850032091140747,
+        "reflect_times": 3
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsOn(cupcake,kitchentable)",
+            "IsOn(wine,kitchentable)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "cupcake",
+            "wine",
+            "kitchentable",
+            "juice",
+            "kitchencabinet",
+            "washingsponge",
+            "tvstand",
+            "toy",
+            "bananas",
+            "radio",
+            "box"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "LeftGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "LeftGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "total_time": 3.959780216217041,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchentable": [
+                    "Walk(self,wine)",
+                    "LeftGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_time": 3.957786798477173,
+        "reflect_times": 3
+    },
+    {
+        "id": 3,
+        "goal": [
+            "IsSwitchedOn(microwave)",
+            "IsIn(cutlets,microwave)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsClose(microwave)",
+            "IsSwitchedOff(microwave)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave",
+            "apple",
+            "oven",
+            "towelrack",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            },
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "OpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "SwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "PutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            }
+        ],
+        "total_time": 4.444117307662964,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            }
+        ],
+        "llm_time": 2.5170745849609375,
+        "reflect_times": 3
+    }
+]

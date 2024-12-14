@@ -138,12 +138,35 @@ class CompositeActionPlanner:
             return planning_action,sub_btml
 
         else:
+            # 处理可能的二重列表情况
+            if isinstance(action_model, list) and action_model and isinstance(action_model[0], list):
+                # 展平二重列表
+                flattened_actions = [action for sublist in action_model for action in sublist]
+                # 去重,使用action.name作为唯一标识
+                unique_actions = []
+                seen_names = set()
+                for action in flattened_actions:
+                    if action.name not in seen_names:
+                        unique_actions.append(action)
+                        seen_names.add(action.name)
+                action_model = unique_actions
+
+
             action_model_dic={}
             for action in action_model:
                 action_model_dic[action.name] = action
 
+            # # get planning action
+            agent_comp_sequence = []
+            for action_name in comp_sequence:
+                if action_name in action_model_dic:
+                    agent_comp_sequence.append(action_model_dic[action_name])
+                else:
+                    return [],[]
+
             # get planning action
-            success, msg = self.plan_sub_bt_from_filtered_actions(comp_sequence,comp_act_name)
+            success, msg = self.plan_sub_bt_from_filtered_actions(agent_comp_sequence,comp_act_name)
+            # success, msg = self.plan_sub_bt_from_filtered_actions(comp_sequence,comp_act_name)
             return success, msg
 
 
