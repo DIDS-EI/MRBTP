@@ -57,6 +57,7 @@ class Query(BaseModel):
 class LLMGPT4():
     def __init__(self):
         self.client = OpenAI(
+            
             base_url="YOUR_BASE_URL", api_key="YOUR_KEY"
         )
 
