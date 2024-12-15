@@ -1,6 +1,5 @@
 import os
-# os.environ["OPENAI_API_KEY"]="sk-4vD6bVtv67XcfoVS8802AdF75888473296D604D707FbC9Bf"
-# os.environ["OPENAI_BASE_URL"]= "https://gtapi.xiaoerchaoren.com:8932"
+
 
 from openai import OpenAI
 import openai
@@ -18,38 +17,30 @@ class Action(str, Enum):
 
 class AgentSubtreeList(BaseModel):
     """
-    `subtree_dict` 包含多个组合动作对，即包括多个键值对，一般2-4个键值对
+    `subtree_dict` contains multiple combined action pairs, i.e., includes multiple key-value pairs, typically 2-4 key-value pairs
     """
     subtree_dict: dict[str,list[Action]]
 
 
 class Query(BaseModel):
     """
-    `multi_subtree_list`中有n个 dict,n为智能体数量，即为 action_space 中包含的动作列表的数量
+    `multi_subtree_list` contains n dictionaries, where n is the number of agents, which equals the number of action lists in `action_space`
     """
     multi_subtree_list: list[AgentSubtreeList]
 
-
-# class Query(BaseModel):
-#     table_name: Table
-#     columns: list[Column]
-#     conditions: list[Condition]
-#     order_by: OrderBy
 
 
 class LLMGPT3():
     def __init__(self):
         self.client = OpenAI(
-            base_url="https://api.dwyu.top/v1", api_key="sk-CSHOawi329bdxl4nkaHWJDVfp8bj6pDFzM2vfjLFva0F7Msy"
-            # base_url="https://api.xty.app/v1", api_key="sk-0aT67hZ747Jy9XDR2cB6F051A11d41Dc8955633bF5008327"
-            # base_url="https://gtapi.xiaoerchaoren.com:8932/v1",            api_key="sk-OO5BXh9SUMrnWR6q6fC035142aC94352A59f78E8655fE62b"
+            base_url="YOUR_BASE_URL", api_key="YOUR_KEY"
         )
 
     def tool_request(self, messages, tools):
         completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo-0125",
+            # model="gpt-3.5-turbo-0125",
             # model="gpt-3.5-turbo-1106",
-            # model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo",
             # messages=[
             #   {"role": "system", "content": ""},#You are a helpful assistant.
             #   {"role": "user", "content": question}

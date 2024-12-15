@@ -323,6 +323,7 @@ for _,json_data in enumerate(json_datasets[:]):
             for subtree_dict_dict in multi_subtree_list:
                 subtree_dict = subtree_dict_dict.values()
                 first_dict = next(iter(subtree_dict)) # dict_values
+                print("first_dict:",first_dict)
                 for key, act_name_ls in first_dict.items():
                     ket_name = key.replace("_", "").replace("(", "").replace(")", "").replace(" ", "")
                     total_dic[ket_name] = act_name_ls

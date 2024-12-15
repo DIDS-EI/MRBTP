@@ -1,19 +1,412 @@
 fallback
-    condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-2)
+    condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa)
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+            action WalkToPutCerealOnSofa()
+            action FinishTask()
+        sequence
+            condition IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2)
+            action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+            action WalkToPutCellphoneOnSofa()
+            action FinishTask()
+        sequence
+            condition IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2)
+            action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+            action WalkToPutCreamyBunsOnSofa()
+            action FinishTask()
+        sequence
+            condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2)
+            action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+    fallback
+        sequence
+            condition IsSelfTask(frozenset({'IsOn(toy,sofa)'}))
+            action WalkToPutToyOnSofa()
+            action FinishTask()
+        sequence
+            condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-2)
+            action SelfAcceptTask(frozenset({'IsOn(toy,sofa)'}))
     sequence
+        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHolding(agent-2,cereal)
+        action RightPut(agent-2,cereal,sofa)
+    sequence
+        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHolding(agent-2,creamybuns)
+        action RightPut(agent-2,creamybuns,sofa)
+    sequence
+        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHolding(agent-2,cellphone)
+        action RightPut(agent-2,cellphone,sofa)
+    sequence
+        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHolding(agent-2,toy)
+        action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0)
         fallback
-            condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-2) & IsOpen(room-3)
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                action WalkToPutCreamyBunsOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(toy,sofa)'}))
+                action WalkToPutToyOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(toy,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,creamybuns)
+            action RightPut(agent-2,creamybuns,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(toy,sofa)'}))
+                action WalkToPutToyOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(toy,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-3)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                action WalkToPutCreamyBunsOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,creamybuns)
+            action RightPut(agent-2,creamybuns,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
             sequence
                 fallback
-                    condition IsClose(room-3) & IsInRoom(package-0,room-1) & IsInRoom(package-1,room-0) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-2)
+                    condition IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
                     sequence
-                        condition IsClose(room-3) & IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2)
-                        action MovePackage_1(agent-2,room-1,room-0)
-                action OpenRoom_3(agent-2)
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,creamybuns)
+                        action RightPut(agent-2,creamybuns,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone)
+                        action RightPut(agent-2,cellphone,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        fallback
             sequence
-                condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-3) & IsOpen(room-0) & IsOpen(room-1) & IsOpen(room-2) & IsOpen(room-3)
-                action MovePackage_1(agent-2,room-1,room-0)
-        action MovePackage_3(agent-2,room-3,room-2)
-    sequence
-        condition IsInRoom(package-0,room-1) & IsInRoom(package-1,room-1) & IsInRoom(package-2,room-3) & IsInRoom(package-3,room-2) & IsOpen(room-0) & IsOpen(room-1)
-        action MovePackage_1(agent-2,room-1,room-0)
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                fallback
+                    condition IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                    fallback
+                        sequence
+                            condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                            action WalkToPutCerealOnSofa()
+                            action FinishTask()
+                        sequence
+                            condition IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                            action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+                    fallback
+                        sequence
+                            condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                            action WalkToPutCreamyBunsOnSofa()
+                            action FinishTask()
+                        sequence
+                            condition IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                            action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cereal)
+                        action RightPut(agent-2,cereal,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,creamybuns)
+                        action RightPut(agent-2,creamybuns,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                action WalkToPutCreamyBunsOnSofa()
+                action FinishTask()
+            sequence
+                fallback
+                    condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                    fallback
+                        sequence
+                            condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                            action WalkToPutCerealOnSofa()
+                            action FinishTask()
+                        sequence
+                            fallback
+                                condition IsOn(cellphone,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                                fallback
+                                    sequence
+                                        condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                                        action WalkToPutCellphoneOnSofa()
+                                        action FinishTask()
+                                    sequence
+                                        condition IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                                        action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+                                sequence
+                                    condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone)
+                                    action RightPut(agent-2,cellphone,sofa)
+                                sequence
+                                    condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+                                    action RightPut(agent-2,toy,sofa)
+                            action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cereal)
+                        action RightPut(agent-2,cereal,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone)
+                        action RightPut(agent-2,cellphone,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,creamybuns)
+            action RightPut(agent-2,creamybuns,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
+            sequence
+                fallback
+                    condition IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,creamybuns)
+                        action RightPut(agent-2,creamybuns,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cellphone)
+                        action RightPut(agent-2,cellphone,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                fallback
+                    condition IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                    fallback
+                        sequence
+                            condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                            action WalkToPutCerealOnSofa()
+                            action FinishTask()
+                        sequence
+                            condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-2)
+                            action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cereal)
+                        action RightPut(agent-2,cereal,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,creamybuns)
+                        action RightPut(agent-2,creamybuns,sofa)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+    fallback
+        condition IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cellphone,sofa)'}))
+                action WalkToPutCellphoneOnSofa()
+                action FinishTask()
+            sequence
+                condition IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2)
+                action SelfAcceptTask(frozenset({'IsOn(cellphone,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+    fallback
+        condition IsOn(toy,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1)
+        sequence
+            condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-1) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-3)
+        sequence
+            condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-0) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+    fallback
+        condition IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                action WalkToPutCreamyBunsOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(creamybuns,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,creamybuns)
+            action RightPut(agent-2,creamybuns,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(cereal,sofa)'}))
+                action WalkToPutCerealOnSofa()
+                action FinishTask()
+            sequence
+                condition IsOn(cellphone,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                action SelfAcceptTask(frozenset({'IsOn(cereal,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsOn(toy,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cellphone)
+            action RightPut(agent-2,cellphone,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cellphone,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+        fallback
+            sequence
+                condition IsSelfTask(frozenset({'IsOn(creamybuns,sofa)'}))
+                action WalkToPutCreamyBunsOnSofa()
+                action FinishTask()
+            sequence
+                fallback
+                    condition IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+                    sequence
+                        condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,toy)
+                        action RightPut(agent-2,toy,sofa)
+                action SelfAcceptTask(frozenset({'IsOn(creamybuns,sofa)'}))
+        sequence
+            condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,creamybuns)
+            action RightPut(agent-2,creamybuns,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(creamybuns,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)
+    fallback
+        condition IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-2) & IsRightHandEmpty(agent-3)
+        sequence
+            condition IsNear(agent-2,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,cereal)
+            action RightPut(agent-2,cereal,sofa)
+        sequence
+            condition IsNear(agent-2,sofa) & IsOn(cereal,sofa) & IsRightHandEmpty(agent-1) & IsRightHandEmpty(agent-3) & IsRightHolding(agent-2,toy)
+            action RightPut(agent-2,toy,sofa)

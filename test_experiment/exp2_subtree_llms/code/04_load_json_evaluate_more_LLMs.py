@@ -1,3 +1,10 @@
+import sys
+import os
+project_parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
+sys.path.append(project_parent_dir)
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), './'))
+sys.path.append(project_dir)
+
 import json
 import sys
 import time
@@ -6,7 +13,7 @@ import math
 import numpy as np
 import re
 import pandas as pd
-from mabtpg.algo.llm_client.llms.gpt3 import LLMGPT3
+from mabtpg.algo.llm_client.llms.gpt3_act import LLMGPT3
 # import gymnasium as gym
 # from mabtpg import MiniGridToMAGridEnv
 # from minigrid.core.world_object import Ball, Box,Door,Key
@@ -63,15 +70,17 @@ def record_data(data_id,with_comp_action, use_comp_subtask_chain, use_atom_subta
 # json_type = "hete_30"
 
 
-reflect_times = -1 #3
+reflect_times = 3 #3
 
 # json_type = "llm4_half_30_1"
 # json_type = "llm4_homo_30_reflect"
 # json_type = "llm4_hete_30_reflect"
 
-json_type = "gpt4o_homo_25_reflect"
+# json_type = "gpt4o_homo_25_reflect"
+json_type = "gpt3_homo_25_reflect"
 
-json_path = f"llm_data/vh_{json_type}.json"
+# json_path = f"llm_data/vh_{json_type}.json"
+json_path = os.path.join(root_path, "../test_experiment/exp2_subtree_llms/code/llm_data/vh_gpt3_homo_25_reflect.json")
 with open(json_path, 'r') as file:
     json_datasets = json.load(file)
 

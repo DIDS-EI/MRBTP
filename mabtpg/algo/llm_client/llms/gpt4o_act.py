@@ -1,7 +1,4 @@
 import os
-# os.environ["OPENAI_API_KEY"]="sk-4vD6bVtv67XcfoVS8802AdF75888473296D604D707FbC9Bf"
-# os.environ["OPENAI_BASE_URL"]= "https://gtapi.xiaoerchaoren.com:8932"
-
 from openai import OpenAI
 import openai
 from enum import Enum
@@ -30,19 +27,11 @@ class Query(BaseModel):
     multi_subtree_list: list[AgentSubtreeList]
 
 
-# class Query(BaseModel):
-#     table_name: Table
-#     columns: list[Column]
-#     conditions: list[Condition]
-#     order_by: OrderBy
-
 
 class LLMGPT4o():
     def __init__(self):
         self.client = OpenAI(
-            base_url="https://api.dwyu.top/v1", api_key="sk-CSHOawi329bdxl4nkaHWJDVfp8bj6pDFzM2vfjLFva0F7Msy"
-            # base_url="https://api.xty.app/v1", api_key="sk-0aT67hZ747Jy9XDR2cB6F051A11d41Dc8955633bF5008327"
-            # base_url="https://gtapi.xiaoerchaoren.com:8932/v1",            api_key="sk-OO5BXh9SUMrnWR6q6fC035142aC94352A59f78E8655fE62b"
+            base_url="YOUR_BASE_URL", api_key="YOUR_KEY"
         )
 
     def tool_request(self, messages, tools):

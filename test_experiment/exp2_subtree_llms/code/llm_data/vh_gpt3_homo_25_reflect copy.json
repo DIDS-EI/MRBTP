@@ -1,0 +1,5529 @@
+[
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsClose(fridge)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "milk",
+            "fridge",
+            "dishbowl",
+            "washingmachine",
+            "sponge",
+            "sink",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            },
+            {
+                "WalkToGrabMilk": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "IsInMilkFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)",
+                    "RightGrab(self,milk)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "total_time": 32.615983724594116,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            }
+        ],
+        "llm_time": 32.615983724594116,
+        "reflect_times": 3
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsOn(cupcake,kitchentable)",
+            "IsOn(wine,kitchentable)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "cupcake",
+            "wine",
+            "kitchentable",
+            "juice",
+            "kitchencabinet",
+            "washingsponge",
+            "tvstand",
+            "toy",
+            "bananas",
+            "radio",
+            "box"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(agent-0,cupcake)",
+                    "RightGrab(agent-0,cupcake)",
+                    "Walk(agent-0,kitchentable)",
+                    "RightPut(agent-0,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(agent-0,wine)",
+                    "RightGrab(agent-0,wine)",
+                    "Walk(agent-0,kitchentable)",
+                    "RightPut(agent-0,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(agent-1,cupcake)",
+                    "RightGrab(agent-1,cupcake)",
+                    "Walk(agent-1,kitchentable)",
+                    "RightPut(agent-1,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(agent-1,wine)",
+                    "RightGrab(agent-1,wine)",
+                    "Walk(agent-1,kitchentable)",
+                    "RightPut(agent-1,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "total_time": 33.51990365982056,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCupcakeOnKitchenTable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutWineOnKitchenTable": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,wine,kitchentable)"
+                ]
+            }
+        ],
+        "llm_time": 33.51890707015991,
+        "reflect_times": 3
+    },
+    {
+        "id": 3,
+        "goal": [
+            "IsSwitchedOn(microwave)",
+            "IsIn(cutlets,microwave)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsClose(microwave)",
+            "IsSwitchedOff(microwave)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave",
+            "apple",
+            "oven",
+            "towelrack",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn",
+                "SwitchOff",
+                "Open"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(agent-0,microwave)",
+                    "SwitchOn(agent-0,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(agent-0,cutlets)",
+                    "RightGrab(agent-0,cutlets)",
+                    "Walk(agent-0,microwave)",
+                    "RightPutIn(agent-0,cutlets,microwave)"
+                ]
+            },
+            {
+                "WalkToPutCutletsInMicrowaveAndSwitchOnMicrowave": [
+                    "Walk(agent-0,cutlets)",
+                    "RightGrab(agent-0,cutlets)",
+                    "Walk(agent-0,microwave)",
+                    "RightPutIn(agent-0,cutlets,microwave)",
+                    "SwitchOn(agent-0,microwave)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(agent-0,microwave)",
+                    "Open(agent-0,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(agent-0,microwave)",
+                    "SwitchOn(agent-0,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(agent-0,cutlets)",
+                    "RightGrab(agent-0,cutlets)",
+                    "Walk(agent-0,microwave)",
+                    "RightPutIn(agent-0,cutlets,microwave)"
+                ]
+            },
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(agent-1,microwave)",
+                    "Open(agent-1,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(agent-1,microwave)",
+                    "SwitchOn(agent-1,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(agent-1,cutlets)",
+                    "RightGrab(agent-1,cutlets)",
+                    "Walk(agent-1,microwave)",
+                    "RightPutIn(agent-1,cutlets,microwave)"
+                ]
+            }
+        ],
+        "total_time": 3.462970495223999,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(agent-0,microwave)",
+                    "Open(agent-0,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(agent-0,microwave)",
+                    "SwitchOn(agent-0,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(agent-0,cutlets)",
+                    "RightGrab(agent-0,cutlets)",
+                    "Walk(agent-0,microwave)",
+                    "RightPutIn(agent-0,cutlets,microwave)"
+                ]
+            },
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(agent-1,microwave)",
+                    "Open(agent-1,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(agent-1,microwave)",
+                    "SwitchOn(agent-1,microwave)"
+                ],
+                "WalkToPutCutletsInMicrowave": [
+                    "Walk(agent-1,cutlets)",
+                    "RightGrab(agent-1,cutlets)",
+                    "Walk(agent-1,microwave)",
+                    "RightPutIn(agent-1,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_time": 3.4618842601776123,
+        "reflect_times": 3
+    },
+    {
+        "id": 4,
+        "goal": [
+            "IsIn(box,closet)"
+        ],
+        "init_state": [
+            "IsClose(closet)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)"
+        ],
+        "objects": [
+            "box",
+            "closet",
+            "magazine",
+            "coffeetable",
+            "remotecontrol"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenCloset": [
+                    "Walk(agent-0,closet)",
+                    "Open(agent-0,closet)"
+                ]
+            },
+            {
+                "WalkToGrabBox": [
+                    "Walk(agent-0,box)",
+                    "RightGrab(agent-0,box)"
+                ]
+            },
+            {
+                "WalkToPutBoxInCloset": [
+                    "Walk(agent-0,box)",
+                    "RightGrab(agent-0,box)",
+                    "Walk(agent-0,closet)",
+                    "RightPutIn(agent-0,box,closet)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenCloset": [
+                    "Walk(agent-1,closet)",
+                    "Open(agent-1,closet)"
+                ],
+                "WalkToPutBoxInCloset": [
+                    "Walk(agent-1,box)",
+                    "RightGrab(agent-1,box)",
+                    "Walk(agent-1,closet)",
+                    "RightPutIn(agent-1,box,closet)"
+                ]
+            },
+            {
+                "WalkToOpenCloset": [
+                    "Walk(agent-0,closet)",
+                    "Open(agent-0,closet)"
+                ],
+                "WalkToPutBoxInCloset": [
+                    "Walk(agent-0,box)",
+                    "RightGrab(agent-0,box)",
+                    "Walk(agent-0,closet)",
+                    "RightPutIn(agent-0,box,closet)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "RightGrabBoxPutInCloset": [
+                    "Walk(agent-1,box)",
+                    "RightGrab(agent-1,box)",
+                    "Walk(agent-1,closet)",
+                    "RightPutIn(agent-1,box,closet)"
+                ]
+            },
+            {
+                "RightGrabMagazinePutInCloset": [
+                    "Walk(agent-0,magazine)",
+                    "RightGrab(agent-0,magazine)",
+                    "Walk(agent-0,closet)",
+                    "RightPutIn(agent-0,magazine,closet)"
+                ]
+            }
+        ],
+        "total_time": 2.875159740447998,
+        "multi_robot_subtree_ls": [
+            {
+                "RightGrabBoxPutInCloset": [
+                    "Walk(agent-1,box)",
+                    "RightGrab(agent-1,box)",
+                    "Walk(agent-1,closet)",
+                    "RightPutIn(agent-1,box,closet)"
+                ]
+            },
+            {
+                "RightGrabMagazinePutInCloset": [
+                    "Walk(agent-0,magazine)",
+                    "RightGrab(agent-0,magazine)",
+                    "Walk(agent-0,closet)",
+                    "RightPutIn(agent-0,magazine,closet)"
+                ]
+            }
+        ],
+        "llm_time": 2.874173641204834,
+        "reflect_times": 3
+    },
+    {
+        "id": 5,
+        "goal": [
+            "IsOn(book,bookshelf)",
+            "IsOn(toy,bookshelf)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-0)"
+        ],
+        "objects": [
+            "toy",
+            "book",
+            "bookshelf",
+            "kitchencabinet",
+            "crayons",
+            "clock",
+            "bench",
+            "toiletpaper",
+            "apple",
+            "hanger",
+            "cookingpot"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "RightGrab": {
+                    "RightGrab(self,book)": "RightGrab(self,book)"
+                }
+            },
+            {
+                "RightGrab": {
+                    "RightGrab(self,toy)": "RightGrab(self,toy)"
+                }
+            },
+            {
+                "RightGrab": {
+                    "RightGrab(self,book)": "RightGrab(self,book)"
+                }
+            },
+            {
+                "RightGrab": {
+                    "RightGrab(self,toy)": "RightGrab(self,toy)"
+                }
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,bookshelf)",
+                    "RightPut(self,toy,bookshelf)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            }
+        ],
+        "total_time": 5.866998910903931,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            },
+            {
+                "WalkToPutBookOnBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPut(agent-0,book,bookshelf)"
+                ],
+                "WalkToPutToyOnBookshelf": [
+                    "Walk(agent-1,toy)",
+                    "RightGrab(agent-1,toy)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPut(agent-1,toy,bookshelf)"
+                ]
+            }
+        ],
+        "llm_time": 5.864009380340576,
+        "reflect_times": 3
+    },
+    {
+        "id": 6,
+        "goal": [
+            "IsIn(crackers,box)",
+            "IsOn(book,nightstand)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsClose(box)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "crackers",
+            "box",
+            "book",
+            "nightstand"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCrackersInBox": [
+                    "Walk(agent-0,crackers)",
+                    "RightGrab(agent-0,crackers)",
+                    "Walk(agent-0,box)",
+                    "RightPutIn(agent-0,crackers,box)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPut(agent-0,book,nightstand)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPut(agent-0,book,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutCrackersInBox": [
+                    "Walk(agent-1,crackers)",
+                    "RightGrab(agent-1,crackers)",
+                    "Walk(agent-1,box)",
+                    "RightPutIn(agent-1,crackers,box)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "RightGrabCrackersPutInBox": [
+                    "Walk(agent-0,crackers)",
+                    "RightGrab(agent-0,crackers)",
+                    "Walk(agent-0,box)",
+                    "RightPutIn(agent-0,crackers,box)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-1,book)",
+                    "RightGrab(agent-1,book)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,book,nightstand)"
+                ]
+            }
+        ],
+        "total_time": 33.15217566490173,
+        "multi_robot_subtree_ls": [
+            {
+                "RightGrabCrackersPutInBox": [
+                    "Walk(agent-0,crackers)",
+                    "RightGrab(agent-0,crackers)",
+                    "Walk(agent-0,box)",
+                    "RightPutIn(agent-0,crackers,box)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-1,book)",
+                    "RightGrab(agent-1,book)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,book,nightstand)"
+                ]
+            }
+        ],
+        "llm_time": 33.15199518203735,
+        "reflect_times": 3
+    },
+    {
+        "id": 7,
+        "goal": [
+            "IsSwitchedOn(tv)",
+            "IsIn(remotecontrol,nightstand)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsClose(nightstand)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-1)",
+            "IsSwitchedOff(tv)"
+        ],
+        "objects": [
+            "tv",
+            "remotecontrol",
+            "nightstand"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ]
+            },
+            {
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOn(agent-0,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(agent-0,remotecontrol)",
+                    "RightGrab(agent-0,remotecontrol)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPutIn(agent-0,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(agent-1,tv)",
+                    "SwitchOn(agent-1,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(agent-1,remotecontrol)",
+                    "RightGrab(agent-1,remotecontrol)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPutIn(agent-1,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(agent-2,tv)",
+                    "SwitchOn(agent-2,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(agent-2,remotecontrol)",
+                    "RightGrab(agent-2,remotecontrol)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPutIn(agent-2,remotecontrol,nightstand)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            }
+        ],
+        "total_time": 35.22781157493591,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(self,tv)",
+                    "SwitchOn(self,tv)"
+                ],
+                "WalkToPutRemoteInNightstand": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,nightstand)",
+                    "RightPutIn(self,remotecontrol,nightstand)"
+                ]
+            }
+        ],
+        "llm_time": 35.22758102416992,
+        "reflect_times": 3
+    },
+    {
+        "id": 8,
+        "goal": [
+            "IsOn(chair,kitchencounter)",
+            "IsSwitchedOff(radio)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsSwitchedOn(radio)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsOn(radio,kitchencounter)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "chair",
+            "kitchencounter",
+            "radio"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-0,chair)",
+                    "RightGrab(agent-0,chair)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,chair,kitchencounter)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(agent-0,radio)",
+                    "SwitchOff(agent-0,radio)"
+                ]
+            },
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-1,chair)",
+                    "RightGrab(agent-1,chair)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,chair,kitchencounter)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(agent-1,radio)",
+                    "SwitchOff(agent-1,radio)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "chair": {
+                    "Walk(agent-0,kitchencounter)": "RightGrab(agent-0,chair)",
+                    "RightPut(agent-0,chair,kitchencounter)": {
+                        "SwitchOff(agent-0,radio)": "{}"
+                    }
+                }
+            },
+            {
+                "chair": {
+                    "Walk(agent-1,kitchencounter)": "RightGrab(agent-1,chair)",
+                    "RightPut(agent-1,chair,kitchencounter)": {
+                        "SwitchOff(agent-1,radio)": "{}"
+                    }
+                }
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            }
+        ],
+        "total_time": 32.48353385925293,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_time": 32.4820339679718,
+        "reflect_times": 3
+    },
+    {
+        "id": 9,
+        "goal": [
+            "IsOn(cuttingboard,kitchencounter)",
+            "IsIn(apple,fridge)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsClose(fridge)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "apple",
+            "fridge",
+            "cuttingboard",
+            "kitchencounter",
+            "kitchencabinet",
+            "crayons",
+            "clock"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(agent-0,apple)",
+                    "RightGrab(agent-0,apple)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,apple,fridge)"
+                ]
+            },
+            {
+                "WalkToPutCuttingBoardOnKitchenCounter": [
+                    "Walk(agent-0,cuttingboard)",
+                    "RightGrab(agent-0,cuttingboard)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,cuttingboard,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ]
+            },
+            {
+                "WalkToCloseFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Close(agent-0,fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(agent-0,apple)",
+                    "RightGrab(agent-0,apple)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,apple,fridge)"
+                ],
+                "WalkToPutAppleOnCuttingBoard": [
+                    "Walk(agent-0,apple)",
+                    "RightGrab(agent-0,apple)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,apple,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(agent-1,apple)",
+                    "RightGrab(agent-1,apple)",
+                    "Walk(agent-1,fridge)",
+                    "RightPutIn(agent-1,apple,fridge)"
+                ],
+                "WalkToPutAppleOnCuttingBoard": [
+                    "Walk(agent-1,apple)",
+                    "RightGrab(agent-1,apple)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,apple,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,apple,fridge)"
+                ],
+                "WalkToPutCuttingBoardOnKitchenCounter": [
+                    "Walk(self,cuttingboard)",
+                    "RightGrab(self,cuttingboard)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,cuttingboard,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,apple,fridge)"
+                ],
+                "WalkToPutCuttingBoardOnKitchenCounter": [
+                    "Walk(self,cuttingboard)",
+                    "RightGrab(self,cuttingboard)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,cuttingboard,kitchencounter)"
+                ]
+            }
+        ],
+        "total_time": 32.95426630973816,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,apple,fridge)"
+                ],
+                "WalkToPutCuttingBoardOnKitchenCounter": [
+                    "Walk(self,cuttingboard)",
+                    "RightGrab(self,cuttingboard)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,cuttingboard,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleInFridge": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,apple,fridge)"
+                ],
+                "WalkToPutCuttingBoardOnKitchenCounter": [
+                    "Walk(self,cuttingboard)",
+                    "RightGrab(self,cuttingboard)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,cuttingboard,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_time": 32.95389270782471,
+        "reflect_times": 3
+    },
+    {
+        "id": 10,
+        "goal": [
+            "IsSwitchedOn(tv)",
+            "IsSwitchedOff(toaster)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsSwitchedOff(tv)",
+            "IsSwitchedOn(toaster)"
+        ],
+        "objects": [
+            "tv",
+            "toaster"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "SwitchOn",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "SwitchOn",
+                "SwitchOff"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToSwitchOnTV": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOn(agent-0,tv)"
+                ]
+            },
+            {
+                "WalkToSwitchOffToaster": [
+                    "Walk(agent-0,toaster)",
+                    "SwitchOff(agent-0,toaster)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "IsNear_self_ALL": [
+                    "IsNear(self,tv)",
+                    "IsNear(self,toaster)"
+                ],
+                "RightGrabToaster": [
+                    "RightGrab(self,toaster)"
+                ],
+                "SwitchOnTV": [
+                    "SwitchOn(self,tv)"
+                ]
+            },
+            {
+                "IsNear_self_ALL": [
+                    "IsNear(self,tv)",
+                    "IsNear(self,toaster)"
+                ],
+                "RightGrabTV": [
+                    "RightGrab(self,tv)"
+                ],
+                "SwitchOffToaster": [
+                    "SwitchOff(self,toaster)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToSwitchOnTv": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOn(agent-0,tv)"
+                ],
+                "WalkToSwitchOffToaster": [
+                    "Walk(agent-0,toaster)",
+                    "SwitchOff(agent-0,toaster)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTv": [
+                    "Walk(agent-1,tv)",
+                    "SwitchOn(agent-1,tv)"
+                ],
+                "WalkToSwitchOffToaster": [
+                    "Walk(agent-1,toaster)",
+                    "SwitchOff(agent-1,toaster)"
+                ]
+            }
+        ],
+        "total_time": 1.4293909072875977,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnTv": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOn(agent-0,tv)"
+                ],
+                "WalkToSwitchOffToaster": [
+                    "Walk(agent-0,toaster)",
+                    "SwitchOff(agent-0,toaster)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTv": [
+                    "Walk(agent-1,tv)",
+                    "SwitchOn(agent-1,tv)"
+                ],
+                "WalkToSwitchOffToaster": [
+                    "Walk(agent-1,toaster)",
+                    "SwitchOff(agent-1,toaster)"
+                ]
+            }
+        ],
+        "llm_time": 1.4283983707427979,
+        "reflect_times": 3
+    },
+    {
+        "id": 11,
+        "goal": [
+            "IsOpen(milk)",
+            "IsSwitchedOff(tv)",
+            "IsOn(sundae,kitchentable)"
+        ],
+        "init_state": [
+            "IsSwitchedOn(tv)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsClose(milk)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-0)"
+        ],
+        "objects": [
+            "sundae",
+            "kitchentable",
+            "tv",
+            "milk"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff",
+                "Open"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOff",
+                "Open"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-0,milk)",
+                    "Open(agent-0,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOff(agent-0,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-0,sundae)",
+                    "RightGrab(agent-0,sundae)",
+                    "Walk(agent-0,kitchentable)",
+                    "RightPut(agent-0,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-1,milk)",
+                    "Open(agent-1,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-1,tv)",
+                    "SwitchOff(agent-1,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-1,sundae)",
+                    "RightGrab(agent-1,sundae)",
+                    "Walk(agent-1,kitchentable)",
+                    "RightPut(agent-1,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-2,milk)",
+                    "Open(agent-2,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-2,tv)",
+                    "SwitchOff(agent-2,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-2,sundae)",
+                    "RightGrab(agent-2,sundae)",
+                    "Walk(agent-2,kitchentable)",
+                    "RightPut(agent-2,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-3,milk)",
+                    "Open(agent-3,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-3,tv)",
+                    "SwitchOff(agent-3,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-3,sundae)",
+                    "RightGrab(agent-3,sundae)",
+                    "Walk(agent-3,kitchentable)",
+                    "RightPut(agent-3,sundae,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(self,tv)",
+                    "SwitchOff(self,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(self,sundae)",
+                    "RightGrab(self,sundae)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(self,tv)",
+                    "SwitchOff(self,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(self,sundae)",
+                    "RightGrab(self,sundae)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(self,tv)",
+                    "SwitchOff(self,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(self,sundae)",
+                    "RightGrab(self,sundae)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(self,tv)",
+                    "SwitchOff(self,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(self,sundae)",
+                    "RightGrab(self,sundae)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,sundae,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-0,milk)",
+                    "Open(agent-0,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOff(agent-0,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-0,sundae)",
+                    "RightGrab(agent-0,sundae)",
+                    "Walk(agent-0,kitchentable)",
+                    "RightPut(agent-0,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-1,milk)",
+                    "Open(agent-1,milk)"
+                ],
+                "WalkToSwitchOffTV": [],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-1,sundae)",
+                    "RightGrab(agent-1,sundae)",
+                    "Walk(agent-1,kitchentable)",
+                    "RightPut(agent-1,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-2,milk)",
+                    "Open(agent-2,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-2,tv)",
+                    "SwitchOff(agent-2,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-2,sundae)",
+                    "RightGrab(agent-2,sundae)",
+                    "Walk(agent-2,kitchentable)",
+                    "RightPut(agent-2,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-3,milk)",
+                    "Open(agent-3,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-3,tv)",
+                    "SwitchOff(agent-3,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-3,sundae)",
+                    "RightGrab(agent-3,sundae)",
+                    "Walk(agent-3,kitchentable)",
+                    "RightPut(agent-3,sundae,kitchentable)"
+                ]
+            }
+        ],
+        "total_time": 7.318910360336304,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-0,milk)",
+                    "Open(agent-0,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-0,tv)",
+                    "SwitchOff(agent-0,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-0,sundae)",
+                    "RightGrab(agent-0,sundae)",
+                    "Walk(agent-0,kitchentable)",
+                    "RightPut(agent-0,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-1,milk)",
+                    "Open(agent-1,milk)"
+                ],
+                "WalkToSwitchOffTV": [],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-1,sundae)",
+                    "RightGrab(agent-1,sundae)",
+                    "Walk(agent-1,kitchentable)",
+                    "RightPut(agent-1,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-2,milk)",
+                    "Open(agent-2,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-2,tv)",
+                    "SwitchOff(agent-2,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-2,sundae)",
+                    "RightGrab(agent-2,sundae)",
+                    "Walk(agent-2,kitchentable)",
+                    "RightPut(agent-2,sundae,kitchentable)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-3,milk)",
+                    "Open(agent-3,milk)"
+                ],
+                "WalkToSwitchOffTV": [
+                    "Walk(agent-3,tv)",
+                    "SwitchOff(agent-3,tv)"
+                ],
+                "WalkToPutSundaeOnKitchenTable": [
+                    "Walk(agent-3,sundae)",
+                    "RightGrab(agent-3,sundae)",
+                    "Walk(agent-3,kitchentable)",
+                    "RightPut(agent-3,sundae,kitchentable)"
+                ]
+            }
+        ],
+        "llm_time": 7.318910360336304,
+        "reflect_times": 3
+    },
+    {
+        "id": 12,
+        "goal": [
+            "IsOpen(book)",
+            "IsOn(mug,nightstand)",
+            "IsSwitchedOn(tablelamp)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsClose(book)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-3)",
+            "IsSwitchedOff(tablelamp)",
+            "IsClose(nightstand)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)"
+        ],
+        "objects": [
+            "mug",
+            "nightstand",
+            "tablelamp",
+            "book",
+            "remotecontrol",
+            "drawer"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOn",
+                "Open",
+                "Close",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOn",
+                "Open",
+                "Close",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOn",
+                "Open",
+                "Close",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "SwitchOn",
+                "Open",
+                "Close",
+                "RightPutIn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenBook": [
+                    "Walk(agent-0,book)",
+                    "Open(agent-0,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(agent-0,mug)",
+                    "RightGrab(agent-0,mug)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPut(agent-0,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(agent-0,tablelamp)",
+                    "SwitchOn(agent-0,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(agent-1,book)",
+                    "Open(agent-1,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(agent-1,mug)",
+                    "RightGrab(agent-1,mug)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(agent-1,tablelamp)",
+                    "SwitchOn(agent-1,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(agent-2,book)",
+                    "Open(agent-2,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPut(agent-2,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(agent-2,tablelamp)",
+                    "SwitchOn(agent-2,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(agent-3,book)",
+                    "Open(agent-3,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,nightstand)",
+                    "RightPut(agent-3,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(agent-3,tablelamp)",
+                    "SwitchOn(agent-3,tablelamp)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            }
+        ],
+        "total_time": 5.270390272140503,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            },
+            {
+                "WalkToOpenBook": [
+                    "Walk(self,book)",
+                    "Open(self,book)"
+                ],
+                "WalkToPutMugOnNightstand": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,mug,nightstand)"
+                ],
+                "WalkToSwitchOntablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            }
+        ],
+        "llm_time": 5.269394397735596,
+        "reflect_times": 3
+    },
+    {
+        "id": 13,
+        "goal": [
+            "IsIn(dishbowl,washingmachine)",
+            "IsSwitchedOn(washingmachine)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-2)",
+            "IsClose(washingmachine)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-1)",
+            "IsSwitchedOff(washingmachine)",
+            "IsRightHandEmpty(agent-3)"
+        ],
+        "objects": [
+            "dishbowl",
+            "washingmachine",
+            "sponge",
+            "sink"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(agent-0,washingmachine)",
+                    "Open(agent-0,washingmachine)"
+                ]
+            },
+            {
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(agent-1,washingmachine)",
+                    "SwitchOn(agent-1,washingmachine)"
+                ]
+            },
+            {
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(agent-2,dishbowl)",
+                    "RightGrab(agent-2,dishbowl)",
+                    "Walk(agent-2,washingmachine)",
+                    "RightPutIn(agent-2,dishbowl,washingmachine)"
+                ]
+            },
+            {
+                "WalkToPutDishbowlInWashingMachineAgain": [
+                    "Walk(agent-3,dishbowl)",
+                    "RightGrab(agent-3,dishbowl)",
+                    "Walk(agent-3,washingmachine)",
+                    "RightPutIn(agent-3,dishbowl,washingmachine)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            }
+        ],
+        "total_time": 4.233009338378906,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            },
+            {
+                "WalkToOpenWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "Open(self,washingmachine)"
+                ],
+                "WalkToPutDishbowlInWashingMachine": [
+                    "Walk(self,dishbowl)",
+                    "RightGrab(self,dishbowl)",
+                    "Walk(self,washingmachine)",
+                    "RightPutIn(self,dishbowl,washingmachine)"
+                ],
+                "WalkToSwitchOnWashingMachine": [
+                    "Walk(self,washingmachine)",
+                    "SwitchOn(self,washingmachine)"
+                ]
+            }
+        ],
+        "llm_time": 4.231010437011719,
+        "reflect_times": 3
+    },
+    {
+        "id": 14,
+        "goal": [
+            "IsOn(plate,kitchencounter)",
+            "IsOpen(milk)",
+            "IsSwitchedOff(radio)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsSwitchedOn(radio)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsClose(milk)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsClose(fridge)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "bananas",
+            "fridge",
+            "plate",
+            "kitchencounter",
+            "radio",
+            "milk",
+            "toothbrush",
+            "bathroomcabinet",
+            "cupcake",
+            "kitchencabinet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOff"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutPlateOnKitchenCounter": [
+                    "Walk(agent-1,plate)",
+                    "RightGrab(agent-1,plate)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToOpenMilk": [
+                    "Walk(agent-2,milk)",
+                    "Open(agent-2,milk)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(agent-3,radio)",
+                    "SwitchOff(agent-3,radio)"
+                ]
+            },
+            {
+                "WalkToPutPlateOnKitchenCounter": [
+                    "Walk(agent-0,plate)",
+                    "RightGrab(agent-0,plate)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,plate,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            },
+            {
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            },
+            {
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            },
+            {
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            }
+        ],
+        "total_time": 33.63944149017334,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToSwitchOffRadio": [
+                    "Walk(self,radio)",
+                    "SwitchOff(self,radio)"
+                ],
+                "WalkToOpenMilk": [
+                    "Walk(self,milk)",
+                    "Open(self,milk)"
+                ],
+                "WalkToPutPlateOnKitchencounter": [
+                    "Walk(self,plate)",
+                    "RightGrab(self,plate)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,plate,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_time": 33.63844418525696,
+        "reflect_times": 3
+    },
+    {
+        "id": 15,
+        "goal": [
+            "IsIn(toothpaste,bathroomcabinet)",
+            "IsClose(closet)",
+            "IsSwitchedOn(coffeemaker)"
+        ],
+        "init_state": [
+            "IsOpen(closet)",
+            "IsClose(bathroomcabinet)",
+            "IsSwitchedOff(coffeemaker)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "toothpaste",
+            "bathroomcabinet",
+            "cup",
+            "cabinet",
+            "coffeemaker",
+            "closet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "Open",
+                "Close",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenCloset": [
+                    "Walk(agent-0,closet)",
+                    "Open(agent-0,closet)"
+                ]
+            },
+            {
+                "WalkToCloseBathroomCabinet": [
+                    "Walk(agent-0,bathroomcabinet)",
+                    "Close(agent-0,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(agent-0,coffeemaker)",
+                    "SwitchOn(agent-0,coffeemaker)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToCloseCloset": [
+                    "Walk(self,closet)",
+                    "Close(self,closet)"
+                ],
+                "WalkToOpenBathroomCabinet": [
+                    "Walk(self,bathroomcabinet)",
+                    "Open(self,bathroomcabinet)"
+                ],
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToCloseCloset": [
+                    "Walk(self,closet)",
+                    "Close(self,closet)"
+                ],
+                "WalkToPutToothpasteInBathroomCabinet": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothpaste,bathroomcabinet)"
+                ],
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteInBathroomCabinet": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothpaste,bathroomcabinet)"
+                ],
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ],
+                "WalkToCloseCloset": [
+                    "Walk(self,closet)",
+                    "Close(self,closet)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteInBathroomCabinet": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothpaste,bathroomcabinet)"
+                ],
+                "WalkToOpenBathroomCabinet": [
+                    "Walk(self,bathroomcabinet)",
+                    "Open(self,bathroomcabinet)"
+                ],
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutToothpasteInBathroomCabinet": [
+                    "Walk(agent-0,toothpaste)",
+                    "RightGrab(agent-0,toothpaste)",
+                    "Walk(agent-0,bathroomcabinet)",
+                    "RightPutIn(agent-0,toothpaste,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(agent-1,coffeemaker)",
+                    "SwitchOn(agent-1,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToCloseCloset": [
+                    "Walk(agent-2,closet)",
+                    "Close(agent-2,closet)"
+                ]
+            },
+            {
+                "WalkToPutCupInCabinet": [
+                    "Walk(agent-3,cup)",
+                    "RightGrab(agent-3,cup)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,cup,cabinet)"
+                ]
+            }
+        ],
+        "total_time": 7.725951910018921,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutToothpasteInBathroomCabinet": [
+                    "Walk(agent-0,toothpaste)",
+                    "RightGrab(agent-0,toothpaste)",
+                    "Walk(agent-0,bathroomcabinet)",
+                    "RightPutIn(agent-0,toothpaste,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(agent-1,coffeemaker)",
+                    "SwitchOn(agent-1,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToCloseCloset": [
+                    "Walk(agent-2,closet)",
+                    "Close(agent-2,closet)"
+                ]
+            },
+            {
+                "WalkToPutCupInCabinet": [
+                    "Walk(agent-3,cup)",
+                    "RightGrab(agent-3,cup)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,cup,cabinet)"
+                ]
+            }
+        ],
+        "llm_time": 7.7249555587768555,
+        "reflect_times": 3
+    },
+    {
+        "id": 16,
+        "goal": [
+            "IsOn(clock,desk)",
+            "IsOn(magazine,desk)",
+            "IsOn(paper,desk)",
+            "IsOn(wine,desk)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "desk",
+            "clock",
+            "magazine",
+            "wine",
+            "paper"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutClockOnDesk": [
+                    "Walk(agent-1,clock)",
+                    "RightGrab(agent-1,clock)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,clock,desk)"
+                ]
+            },
+            {
+                "WalkToPutMagazineOnDesk": [
+                    "Walk(agent-2,magazine)",
+                    "RightGrab(agent-2,magazine)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,magazine,desk)"
+                ]
+            },
+            {
+                "WalkToPutPaperOnDesk": [
+                    "Walk(agent-3,paper)",
+                    "RightGrab(agent-3,paper)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,paper,desk)"
+                ]
+            },
+            {
+                "WalkToPutWineOnDesk": [
+                    "Walk(agent-0,wine)",
+                    "RightGrab(agent-0,wine)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,wine,desk)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutClockOnDesk": [
+                    "Walk(self,clock)",
+                    "RightGrab(self,clock)",
+                    "Walk(self,desk)",
+                    "RightPut(self,clock,desk)"
+                ]
+            },
+            {
+                "WalkToPutMagazineOnDesk": [
+                    "Walk(self,magazine)",
+                    "RightGrab(self,magazine)",
+                    "Walk(self,desk)",
+                    "RightPut(self,magazine,desk)"
+                ]
+            },
+            {
+                "WalkToPutPaperOnDesk": [
+                    "Walk(self,paper)",
+                    "RightGrab(self,paper)",
+                    "Walk(self,desk)",
+                    "RightPut(self,paper,desk)"
+                ]
+            },
+            {
+                "WalkToPutWineOnDesk": [
+                    "Walk(self,wine)",
+                    "RightGrab(self,wine)",
+                    "Walk(self,desk)",
+                    "RightPut(self,wine,desk)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "RightGrab(agent-1,clock)": "[Walk(agent-1,clock), RightGrab(agent-1,clock), Walk(agent-1,desk), RightPut(agent-1,clock,desk)]",
+                "RightGrab(agent-1,magazine)": "[Walk(agent-1,magazine), RightGrab(agent-1,magazine), Walk(agent-1,desk), RightPut(agent-1,magazine,desk)]",
+                "RightGrab(agent-1,paper)": "[Walk(agent-1,paper), RightGrab(agent-1,paper), Walk(agent-1,desk), RightPut(agent-1,paper,desk)]",
+                "RightGrab(agent-1,wine)": "[Walk(agent-1,wine), RightGrab(agent-1,wine), Walk(agent-1,desk), RightPut(agent-1,wine,desk)]"
+            }
+        ],
+        "total_time": 4.241954803466797,
+        "multi_robot_subtree_ls": [
+            {
+                "RightGrab(agent-1,clock)": "[Walk(agent-1,clock), RightGrab(agent-1,clock), Walk(agent-1,desk), RightPut(agent-1,clock,desk)]",
+                "RightGrab(agent-1,magazine)": "[Walk(agent-1,magazine), RightGrab(agent-1,magazine), Walk(agent-1,desk), RightPut(agent-1,magazine,desk)]",
+                "RightGrab(agent-1,paper)": "[Walk(agent-1,paper), RightGrab(agent-1,paper), Walk(agent-1,desk), RightPut(agent-1,paper,desk)]",
+                "RightGrab(agent-1,wine)": "[Walk(agent-1,wine), RightGrab(agent-1,wine), Walk(agent-1,desk), RightPut(agent-1,wine,desk)]"
+            }
+        ],
+        "llm_time": 4.240954399108887,
+        "reflect_times": 3
+    },
+    {
+        "id": 17,
+        "goal": [
+            "IsOn(chair,kitchencounter)",
+            "IsOn(toothpaste,kitchencounter)",
+            "IsOn(mug,kitchencounter)",
+            "IsOn(apple,kitchencounter)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "kitchencounter",
+            "toothpaste",
+            "mug",
+            "apple",
+            "chair"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-0,chair)",
+                    "RightGrab(agent-0,chair)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnKitchencounter": [
+                    "Walk(agent-1,toothpaste)",
+                    "RightGrab(agent-1,toothpaste)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,toothpaste,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutMugOnKitchencounter": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,kitchencounter)",
+                    "RightPut(agent-2,mug,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnKitchencounter": [
+                    "Walk(agent-3,apple)",
+                    "RightGrab(agent-3,apple)",
+                    "Walk(agent-3,kitchencounter)",
+                    "RightPut(agent-3,apple,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-1,kitchencounter)",
+                    "RightGrab(agent-1,chair)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnKitchencounter": [
+                    "Walk(agent-2,kitchencounter)",
+                    "RightGrab(agent-2,toothpaste)",
+                    "Walk(agent-2,kitchencounter)",
+                    "RightPut(agent-2,toothpaste,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutMugOnKitchencounter": [
+                    "Walk(agent-3,kitchencounter)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,kitchencounter)",
+                    "RightPut(agent-3,mug,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnKitchencounter": [
+                    "Walk(agent-0,kitchencounter)",
+                    "RightGrab(agent-0,apple)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,apple,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-0,chair)",
+                    "RightGrab(agent-0,chair)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnKitchencounter": [
+                    "Walk(agent-1,toothpaste)",
+                    "RightGrab(agent-1,toothpaste)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,toothpaste,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutMugOnKitchencounter": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,kitchencounter)",
+                    "RightPut(agent-2,mug,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnKitchencounter": [
+                    "Walk(agent-3,apple)",
+                    "RightGrab(agent-3,apple)",
+                    "Walk(agent-3,kitchencounter)",
+                    "RightPut(agent-3,apple,kitchencounter)"
+                ]
+            }
+        ],
+        "total_time": 2.947195529937744,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutChairOnKitchencounter": [
+                    "Walk(agent-0,chair)",
+                    "RightGrab(agent-0,chair)",
+                    "Walk(agent-0,kitchencounter)",
+                    "RightPut(agent-0,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnKitchencounter": [
+                    "Walk(agent-1,toothpaste)",
+                    "RightGrab(agent-1,toothpaste)",
+                    "Walk(agent-1,kitchencounter)",
+                    "RightPut(agent-1,toothpaste,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutMugOnKitchencounter": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,kitchencounter)",
+                    "RightPut(agent-2,mug,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnKitchencounter": [
+                    "Walk(agent-3,apple)",
+                    "RightGrab(agent-3,apple)",
+                    "Walk(agent-3,kitchencounter)",
+                    "RightPut(agent-3,apple,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_time": 2.946194887161255,
+        "reflect_times": 3
+    },
+    {
+        "id": 18,
+        "goal": [
+            "IsOn(clock,nightstand)",
+            "IsOn(pillow,bed)",
+            "IsOn(clothespants,nightstand)",
+            "IsOn(book,nightstand)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "bed",
+            "pillow",
+            "book",
+            "nightstand",
+            "clock",
+            "clothespants"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutClockOnNightstand": [
+                    "Walk(self,clock)",
+                    "RightGrab(self,clock)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,clock,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutClothespantsOnNightstand": [
+                    "Walk(self,clothespants)",
+                    "RightGrab(self,clothespants)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,clothespants,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,book,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPillowOnBed": [
+                    "Walk(self,pillow)",
+                    "RightGrab(self,pillow)",
+                    "Walk(self,bed)",
+                    "RightPut(self,pillow,bed)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutClockOnNightstand": [
+                    "Walk(self,clock)",
+                    "RightGrab(self,clock)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,clock,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,book,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutClothespantsOnNightstand": [
+                    "Walk(self,clothespants)",
+                    "RightGrab(self,clothespants)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,clothespants,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPillowOnBed": [
+                    "Walk(self,pillow)",
+                    "RightGrab(self,pillow)",
+                    "Walk(self,bed)",
+                    "RightPut(self,pillow,bed)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutClockOnNightstand": [
+                    "Walk(agent-3,clock)",
+                    "RightGrab(agent-3,clock)",
+                    "Walk(agent-3,nightstand)",
+                    "RightPut(agent-3,clock,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-2,book)",
+                    "RightGrab(agent-2,book)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPut(agent-2,book,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutClothespantsOnNightstand": [
+                    "Walk(agent-1,clothespants)",
+                    "RightGrab(agent-1,clothespants)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,clothespants,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPillowOnBed": [
+                    "Walk(agent-0,pillow)",
+                    "RightGrab(agent-0,pillow)",
+                    "Walk(agent-0,bed)",
+                    "RightPut(agent-0,pillow,bed)"
+                ]
+            }
+        ],
+        "total_time": 96.56114196777344,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutClockOnNightstand": [
+                    "Walk(agent-3,clock)",
+                    "RightGrab(agent-3,clock)",
+                    "Walk(agent-3,nightstand)",
+                    "RightPut(agent-3,clock,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBookOnNightstand": [
+                    "Walk(agent-2,book)",
+                    "RightGrab(agent-2,book)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPut(agent-2,book,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutClothespantsOnNightstand": [
+                    "Walk(agent-1,clothespants)",
+                    "RightGrab(agent-1,clothespants)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,clothespants,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPillowOnBed": [
+                    "Walk(agent-0,pillow)",
+                    "RightGrab(agent-0,pillow)",
+                    "Walk(agent-0,bed)",
+                    "RightPut(agent-0,pillow,bed)"
+                ]
+            }
+        ],
+        "llm_time": 96.56008410453796,
+        "reflect_times": 3
+    },
+    {
+        "id": 19,
+        "goal": [
+            "IsIn(cupcake,kitchencabinet)",
+            "IsIn(toothbrush,bathroomcabinet)",
+            "IsSwitchedOn(tablelamp)"
+        ],
+        "init_state": [
+            "IsClose(bathroomcabinet)",
+            "IsSwitchedOff(tablelamp)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsClose(kitchencabinet)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "toothbrush",
+            "bathroomcabinet",
+            "cupcake",
+            "kitchencabinet",
+            "tablelamp",
+            "desk",
+            "fridge"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "Close",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "Close",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "Close",
+                "RightGrab",
+                "RightPutIn",
+                "RightPut",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenBathroomCabinet": [
+                    "Walk(agent-1,bathroomcabinet)",
+                    "Open(agent-1,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTableLamp": [
+                    "Walk(agent-1,tablelamp)",
+                    "SwitchOn(agent-1,tablelamp)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenBathroomCabinet": [
+                    "Walk(agent-0,bathroomcabinet)",
+                    "Open(agent-0,bathroomcabinet)"
+                ],
+                "WalkToPutToothbrushInBathroomCabinet": [
+                    "Walk(agent-0,toothbrush)",
+                    "RightGrab(agent-0,toothbrush)",
+                    "Walk(agent-0,bathroomcabinet)",
+                    "RightPutIn(agent-0,toothbrush,bathroomcabinet)"
+                ],
+                "WalkToSwitchOnTableLamp": [
+                    "Walk(agent-0,tablelamp)",
+                    "SwitchOn(agent-0,tablelamp)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeInKitchenCabinet": [
+                    "Walk(agent-1,cupcake)",
+                    "RightGrab(agent-1,cupcake)",
+                    "Walk(agent-1,kitchencabinet)",
+                    "RightPutIn(agent-1,cupcake,kitchencabinet)"
+                ],
+                "WalkToSwitchOnTableLamp": [
+                    "Walk(agent-1,tablelamp)",
+                    "SwitchOn(agent-1,tablelamp)"
+                ],
+                "WalkToOpenKitchenCabinet": [
+                    "Walk(agent-1,kitchencabinet)",
+                    "Open(agent-1,kitchencabinet)"
+                ]
+            },
+            {
+                "WalkToOpenBathroomCabinet": [
+                    "Walk(agent-2,bathroomcabinet)",
+                    "Open(agent-2,bathroomcabinet)"
+                ],
+                "WalkToPutCupcakeInKitchenCabinet": [
+                    "Walk(agent-2,cupcake)",
+                    "RightGrab(agent-2,cupcake)",
+                    "Walk(agent-2,kitchencabinet)",
+                    "RightPutIn(agent-2,cupcake,kitchencabinet)"
+                ],
+                "WalkToSwitchOnTableLamp": [
+                    "Walk(agent-2,tablelamp)",
+                    "SwitchOn(agent-2,tablelamp)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCupcakeInKitchenCabinet": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchencabinet)",
+                    "RightPutIn(self,cupcake,kitchencabinet)"
+                ]
+            },
+            {
+                "WalkToPutToothbrushInBathroomCabinet": [
+                    "Walk(self,toothbrush)",
+                    "RightGrab(self,toothbrush)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothbrush,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            }
+        ],
+        "total_time": 9.306888580322266,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCupcakeInKitchenCabinet": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchencabinet)",
+                    "RightPutIn(self,cupcake,kitchencabinet)"
+                ]
+            },
+            {
+                "WalkToPutToothbrushInBathroomCabinet": [
+                    "Walk(self,toothbrush)",
+                    "RightGrab(self,toothbrush)",
+                    "Walk(self,bathroomcabinet)",
+                    "RightPutIn(self,toothbrush,bathroomcabinet)"
+                ]
+            },
+            {
+                "WalkToSwitchOnTablelamp": [
+                    "Walk(self,tablelamp)",
+                    "SwitchOn(self,tablelamp)"
+                ]
+            }
+        ],
+        "llm_time": 9.306444644927979,
+        "reflect_times": 3
+    },
+    {
+        "id": 20,
+        "goal": [
+            "IsIn(book,bookshelf)",
+            "IsIn(mug,cabinet)",
+            "IsIn(crayons,cabinet)"
+        ],
+        "init_state": [
+            "IsClose(cabinet)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsClose(kitchencabinet)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsClose(bookshelf)"
+        ],
+        "objects": [
+            "crayons",
+            "cabinet",
+            "mug",
+            "book",
+            "bookshelf",
+            "kitchencabinet"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "RightGrab",
+                "RightPutIn"
+            ],
+            [
+                "Walk",
+                "Open",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(self,cabinet)",
+                    "Open(self,cabinet)"
+                ]
+            },
+            {
+                "WalkToOpenBookshelf": [
+                    "Walk(self,bookshelf)",
+                    "Open(self,bookshelf)"
+                ]
+            },
+            {
+                "WalkToGrabCrayonsFromCabinet": [
+                    "Walk(self,crayons)",
+                    "RightGrab(self,crayons)",
+                    "Walk(self,cabinet)",
+                    "RightPutIn(self,crayons,cabinet)"
+                ]
+            },
+            {
+                "WalkToGrabMugFromCabinet": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,cabinet)",
+                    "RightPutIn(self,mug,cabinet)"
+                ]
+            },
+            {
+                "WalkToPutBookInBookshelf": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,bookshelf)",
+                    "RightPutIn(self,book,bookshelf)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "RightGrab(self,mug)": "RightGrab(agent-2,mug)",
+                "WalkToOpenCabinet": [
+                    "Walk(agent-1,cabinet)",
+                    "Open(agent-1,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-2,mug,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-0,bookshelf)",
+                    "Open(agent-0,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPutIn(agent-0,book,bookshelf)"
+                ]
+            },
+            {
+                "RightGrab(self,crayons)": "RightGrab(agent-1,crayons)",
+                "WalkToOpenCabinet": [
+                    "Walk(agent-1,cabinet)",
+                    "Open(agent-1,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-1,crayons)",
+                    "RightGrab(agent-1,crayons)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-1,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-1,bookshelf)",
+                    "Open(agent-1,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-1,book)",
+                    "RightGrab(agent-1,book)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPutIn(agent-1,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-3,cabinet)",
+                    "Open(agent-3,cabinet)"
+                ],
+                "RightGrab(self,mug)": "RightGrab(agent-3,mug)",
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,mug,cabinet)"
+                ],
+                "RightGrab(self,crayons)": "RightGrab(agent-3,crayons)",
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-3,bookshelf)",
+                    "Open(agent-3,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-3,book)",
+                    "RightGrab(agent-3,book)",
+                    "Walk(agent-3,bookshelf)",
+                    "RightPutIn(agent-3,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-3,cabinet)",
+                    "Open(agent-3,cabinet)"
+                ],
+                "RightGrab(self,mug)": "RightGrab(agent-3,mug)",
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,mug,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-2,bookshelf)",
+                    "Open(agent-2,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-2,book)",
+                    "RightGrab(agent-2,book)",
+                    "Walk(agent-2,bookshelf)",
+                    "RightPutIn(agent-2,book,bookshelf)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-0,cabinet)",
+                    "Open(agent-0,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-0,mug)",
+                    "RightGrab(agent-0,mug)",
+                    "Walk(agent-0,cabinet)",
+                    "RightPutIn(agent-0,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-0,crayons)",
+                    "RightGrab(agent-0,crayons)",
+                    "Walk(agent-0,cabinet)",
+                    "RightPutIn(agent-0,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-0,bookshelf)",
+                    "Open(agent-0,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPutIn(agent-0,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-1,cabinet)",
+                    "Open(agent-1,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-1,mug)",
+                    "RightGrab(agent-1,mug)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-1,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-1,crayons)",
+                    "RightGrab(agent-1,crayons)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-1,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-1,bookshelf)",
+                    "Open(agent-1,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-1,book)",
+                    "RightGrab(agent-1,book)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPutIn(agent-1,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-2,cabinet)",
+                    "Open(agent-2,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,cabinet)",
+                    "RightPutIn(agent-2,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-2,crayons)",
+                    "RightGrab(agent-2,crayons)",
+                    "Walk(agent-2,cabinet)",
+                    "RightPutIn(agent-2,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-2,bookshelf)",
+                    "Open(agent-2,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-2,book)",
+                    "RightGrab(agent-2,book)",
+                    "Walk(agent-2,bookshelf)",
+                    "RightPutIn(agent-2,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-3,cabinet)",
+                    "Open(agent-3,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-3,crayons)",
+                    "RightGrab(agent-3,crayons)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-3,bookshelf)",
+                    "Open(agent-3,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-3,book)",
+                    "RightGrab(agent-3,book)",
+                    "Walk(agent-3,bookshelf)",
+                    "RightPutIn(agent-3,book,bookshelf)"
+                ]
+            }
+        ],
+        "total_time": 8.32236123085022,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-0,cabinet)",
+                    "Open(agent-0,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-0,mug)",
+                    "RightGrab(agent-0,mug)",
+                    "Walk(agent-0,cabinet)",
+                    "RightPutIn(agent-0,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-0,crayons)",
+                    "RightGrab(agent-0,crayons)",
+                    "Walk(agent-0,cabinet)",
+                    "RightPutIn(agent-0,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-0,bookshelf)",
+                    "Open(agent-0,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,bookshelf)",
+                    "RightPutIn(agent-0,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-1,cabinet)",
+                    "Open(agent-1,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-1,mug)",
+                    "RightGrab(agent-1,mug)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-1,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-1,crayons)",
+                    "RightGrab(agent-1,crayons)",
+                    "Walk(agent-1,cabinet)",
+                    "RightPutIn(agent-1,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-1,bookshelf)",
+                    "Open(agent-1,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-1,book)",
+                    "RightGrab(agent-1,book)",
+                    "Walk(agent-1,bookshelf)",
+                    "RightPutIn(agent-1,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-2,cabinet)",
+                    "Open(agent-2,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,cabinet)",
+                    "RightPutIn(agent-2,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-2,crayons)",
+                    "RightGrab(agent-2,crayons)",
+                    "Walk(agent-2,cabinet)",
+                    "RightPutIn(agent-2,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-2,bookshelf)",
+                    "Open(agent-2,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-2,book)",
+                    "RightGrab(agent-2,book)",
+                    "Walk(agent-2,bookshelf)",
+                    "RightPutIn(agent-2,book,bookshelf)"
+                ]
+            },
+            {
+                "WalkToOpenCabinet": [
+                    "Walk(agent-3,cabinet)",
+                    "Open(agent-3,cabinet)"
+                ],
+                "WalkToPutMugInCabinet": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,mug,cabinet)"
+                ],
+                "WalkToPutCrayonsInCabinet": [
+                    "Walk(agent-3,crayons)",
+                    "RightGrab(agent-3,crayons)",
+                    "Walk(agent-3,cabinet)",
+                    "RightPutIn(agent-3,crayons,cabinet)"
+                ],
+                "WalkToOpenBookshelf": [
+                    "Walk(agent-3,bookshelf)",
+                    "Open(agent-3,bookshelf)"
+                ],
+                "WalkToPutBookInBookshelf": [
+                    "Walk(agent-3,book)",
+                    "RightGrab(agent-3,book)",
+                    "Walk(agent-3,bookshelf)",
+                    "RightPutIn(agent-3,book,bookshelf)"
+                ]
+            }
+        ],
+        "llm_time": 8.319367170333862,
+        "reflect_times": 3
+    },
+    {
+        "id": 21,
+        "goal": [
+            "IsOn(coffeepot,desk)",
+            "IsOn(lime,desk)",
+            "IsOn(toothpaste,desk)",
+            "IsOn(book,desk)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "desk",
+            "toothpaste",
+            "coffeepot",
+            "lime",
+            "book"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCoffeepotOnDesk": [
+                    "Walk(self,coffeepot)",
+                    "RightGrab(self,coffeepot)",
+                    "Walk(self,desk)",
+                    "RightPut(self,coffeepot,desk)"
+                ]
+            },
+            {
+                "WalkToPutLimeOnDesk": [
+                    "Walk(self,lime)",
+                    "RightGrab(self,lime)",
+                    "Walk(self,desk)",
+                    "RightPut(self,lime,desk)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnDesk": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,desk)",
+                    "RightPut(self,toothpaste,desk)"
+                ]
+            },
+            {
+                "WalkToPutBookOnDesk": [
+                    "Walk(self,book)",
+                    "RightGrab(self,book)",
+                    "Walk(self,desk)",
+                    "RightPut(self,book,desk)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "self": {
+                    "WalkToPutCoffeepotonDesk": [
+                        "Walk(self,coffeepot)",
+                        "RightGrab(self,coffeepot)",
+                        "Walk(self,desk)",
+                        "RightPut(self,coffeepot,desk)"
+                    ],
+                    "WalkToPutLimelonDesk": [
+                        "Walk(self,lime)",
+                        "RightGrab(self,lime)",
+                        "Walk(self,desk)",
+                        "RightPut(self,lime,desk)"
+                    ],
+                    "WalkToPutToothpasteonDesk": [
+                        "Walk(self,toothpaste)",
+                        "RightGrab(self,toothpaste)",
+                        "Walk(self,desk)",
+                        "RightPut(self,toothpaste,desk)"
+                    ],
+                    "WalkToPutBookonDesk": [
+                        "Walk(self,book)",
+                        "RightGrab(self,book)",
+                        "Walk(self,desk)",
+                        "RightPut(self,book,desk)"
+                    ]
+                }
+            },
+            {
+                "self": {
+                    "WalkToPutCoffeepotonDesk": [
+                        "Walk(self,coffeepot)",
+                        "RightGrab(self,coffeepot)",
+                        "Walk(self,desk)",
+                        "RightPut(self,coffeepot,desk)"
+                    ],
+                    "WalkToPutLimelonDesk": [
+                        "Walk(self,lime)",
+                        "RightGrab(self,lime)",
+                        "Walk(self,desk)",
+                        "RightPut(self,lime,desk)"
+                    ],
+                    "WalkToPutToothpasteonDesk": [
+                        "Walk(self,toothpaste)",
+                        "RightGrab(self,toothpaste)",
+                        "Walk(self,desk)",
+                        "RightPut(self,toothpaste,desk)"
+                    ],
+                    "WalkToPutBookonDesk": [
+                        "Walk(self,book)",
+                        "RightGrab(self,book)",
+                        "Walk(self,desk)",
+                        "RightPut(self,book,desk)"
+                    ]
+                }
+            },
+            {
+                "self": {
+                    "WalkToPutCoffeepotonDesk": [
+                        "Walk(self,coffeepot)",
+                        "RightGrab(self,coffeepot)",
+                        "Walk(self,desk)",
+                        "RightPut(self,coffeepot,desk)"
+                    ],
+                    "WalkToPutLimelonDesk": [
+                        "Walk(self,lime)",
+                        "RightGrab(self,lime)",
+                        "Walk(self,desk)",
+                        "RightPut(self,lime,desk)"
+                    ],
+                    "WalkToPutToothpasteonDesk": [
+                        "Walk(self,toothpaste)",
+                        "RightGrab(self,toothpaste)",
+                        "Walk(self,desk)",
+                        "RightPut(self,toothpaste,desk)"
+                    ],
+                    "WalkToPutBookonDesk": [
+                        "Walk(self,book)",
+                        "RightGrab(self,book)",
+                        "Walk(self,desk)",
+                        "RightPut(self,book,desk)"
+                    ]
+                }
+            },
+            {
+                "self": {
+                    "WalkToPutCoffeepotonDesk": [
+                        "Walk(self,coffeepot)",
+                        "RightGrab(self,coffeepot)",
+                        "Walk(self,desk)",
+                        "RightPut(self,coffeepot,desk)"
+                    ],
+                    "WalkToPutLimelonDesk": [
+                        "Walk(self,lime)",
+                        "RightGrab(self,lime)",
+                        "Walk(self,desk)",
+                        "RightPut(self,lime,desk)"
+                    ],
+                    "WalkToPutToothpasteonDesk": [
+                        "Walk(self,toothpaste)",
+                        "RightGrab(self,toothpaste)",
+                        "Walk(self,desk)",
+                        "RightPut(self,toothpaste,desk)"
+                    ],
+                    "WalkToPutBookonDesk": [
+                        "Walk(self,book)",
+                        "RightGrab(self,book)",
+                        "Walk(self,desk)",
+                        "RightPut(self,book,desk)"
+                    ]
+                }
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCoffeepotonDesk": [
+                    "Walk(agent-1,coffeepot)",
+                    "RightGrab(agent-1,coffeepot)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,coffeepot,desk)"
+                ]
+            },
+            {
+                "WalkToPutLimelonDesk": [
+                    "Walk(agent-2,lime)",
+                    "RightGrab(agent-2,lime)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,lime,desk)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteonDesk": [
+                    "Walk(agent-3,toothpaste)",
+                    "RightGrab(agent-3,toothpaste)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,toothpaste,desk)"
+                ]
+            },
+            {
+                "WalkToPutBookonDesk": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,book,desk)"
+                ]
+            }
+        ],
+        "total_time": 8.527634859085083,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCoffeepotonDesk": [
+                    "Walk(agent-1,coffeepot)",
+                    "RightGrab(agent-1,coffeepot)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,coffeepot,desk)"
+                ]
+            },
+            {
+                "WalkToPutLimelonDesk": [
+                    "Walk(agent-2,lime)",
+                    "RightGrab(agent-2,lime)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,lime,desk)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteonDesk": [
+                    "Walk(agent-3,toothpaste)",
+                    "RightGrab(agent-3,toothpaste)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,toothpaste,desk)"
+                ]
+            },
+            {
+                "WalkToPutBookonDesk": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,book,desk)"
+                ]
+            }
+        ],
+        "llm_time": 8.525634288787842,
+        "reflect_times": 3
+    },
+    {
+        "id": 22,
+        "goal": [
+            "IsOn(plum,nightstand)",
+            "IsOn(slippers,nightstand)",
+            "IsOn(bellpepper,nightstand)",
+            "IsOn(juice,nightstand)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "nightstand",
+            "slippers",
+            "plum",
+            "juice",
+            "bellpepper"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(agent-0,plum)",
+                    "RightGrab(agent-0,plum)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPut(agent-0,plum,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(agent-1,slippers)",
+                    "RightGrab(agent-1,slippers)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,slippers,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(agent-2,bellpepper)",
+                    "RightGrab(agent-2,bellpepper)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPut(agent-2,bellpepper,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(agent-3,juice)",
+                    "RightGrab(agent-3,juice)",
+                    "Walk(agent-3,nightstand)",
+                    "RightPut(agent-3,juice,nightstand)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(agent-0,plum)",
+                    "RightGrab(agent-0,plum)",
+                    "Walk(agent-0,nightstand)",
+                    "RightPut(agent-0,plum,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(agent-1,slippers)",
+                    "RightGrab(agent-1,slippers)",
+                    "Walk(agent-1,nightstand)",
+                    "RightPut(agent-1,slippers,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(agent-2,bellpepper)",
+                    "RightGrab(agent-2,bellpepper)",
+                    "Walk(agent-2,nightstand)",
+                    "RightPut(agent-2,bellpepper,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(agent-3,juice)",
+                    "RightGrab(agent-3,juice)",
+                    "Walk(agent-3,nightstand)",
+                    "RightPut(agent-3,juice,nightstand)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            }
+        ],
+        "total_time": 6.366396188735962,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            },
+            {
+                "WalkToPutPlumOnNightstand": [
+                    "Walk(self,plum)",
+                    "RightGrab(self,plum)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,plum,nightstand)"
+                ],
+                "WalkToPutSlippersOnNightstand": [
+                    "Walk(self,slippers)",
+                    "RightGrab(self,slippers)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,slippers,nightstand)"
+                ],
+                "WalkToPutBellpepperOnNightstand": [
+                    "Walk(self,belpeppper)",
+                    "RightGrab(self,bellpepper)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,bellpepper,nightstand)"
+                ],
+                "WalkToPutJuiceOnNightstand": [
+                    "Walk(self,juice)",
+                    "RightGrab(self,juice)",
+                    "Walk(self,nightstand)",
+                    "RightPut(self,juice,nightstand)"
+                ]
+            }
+        ],
+        "llm_time": 6.365399599075317,
+        "reflect_times": 3
+    },
+    {
+        "id": 23,
+        "goal": [
+            "IsOn(clock,desk)",
+            "IsOn(apple,desk)",
+            "IsOn(sundae,desk)",
+            "IsOn(wallphone,desk)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "desk",
+            "apple",
+            "wallphone",
+            "clock",
+            "sundae"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutClockOnDesk": [
+                    "Walk(agent-0,clock)",
+                    "RightGrab(agent-0,clock)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,clock,desk)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnDesk": [
+                    "Walk(agent-1,apple)",
+                    "RightGrab(agent-1,apple)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,apple,desk)"
+                ]
+            },
+            {
+                "WalkToPutSundaeOnDesk": [
+                    "Walk(agent-2,sundae)",
+                    "RightGrab(agent-2,sundae)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,sundae,desk)"
+                ]
+            },
+            {
+                "WalkToPutWallPhoneOnDesk": [
+                    "Walk(agent-3,wallphone)",
+                    "RightGrab(agent-3,wallphone)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,wallphone,desk)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "self": {
+                    "subtree_dict": {
+                        "WalkToGrabApple": [
+                            "Walk(self,apple)",
+                            "RightGrab(self,apple)",
+                            "Walk(self,desk)",
+                            "RightPut(self,apple,desk)"
+                        ]
+                    }
+                },
+                "self_left": {
+                    "subtree_dict": {
+                        "WalkToGrabClock": [
+                            "Walk(self,clock)",
+                            "RightGrab(self,clock)",
+                            "Walk(self,desk)",
+                            "RightPut(self,clock,desk)"
+                        ]
+                    }
+                },
+                "self_right": {
+                    "subtree_dict": {
+                        "WalkToGrabSundae": [
+                            "Walk(self,sundae)",
+                            "RightGrab(self,sundae)",
+                            "Walk(self,desk)",
+                            "RightPut(self,sundae,desk)"
+                        ]
+                    }
+                },
+                "self_multiple": {
+                    "subtree_dict": {
+                        "WalkToGrabWallphone": [
+                            "Walk(self,wallphone)",
+                            "RightGrab(self,wallphone)",
+                            "Walk(self,desk)",
+                            "RightPut(self,wallphone,desk)"
+                        ]
+                    }
+                }
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutClockOnDesk": [
+                    "Walk(agent-1,clock)",
+                    "RightGrab(agent-1,clock)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,clock,desk)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnDesk": [
+                    "Walk(agent-2,apple)",
+                    "RightGrab(agent-2,apple)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,apple,desk)"
+                ]
+            },
+            {
+                "WalkToPutSundaeOnDesk": [
+                    "Walk(agent-3,sundae)",
+                    "RightGrab(agent-3,sundae)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,sundae,desk)"
+                ]
+            },
+            {
+                "WalkToPutWallphoneOnDesk": [
+                    "Walk(agent-4,wallphone)",
+                    "RightGrab(agent-4,wallphone)",
+                    "Walk(agent-4,desk)",
+                    "RightPut(agent-4,wallphone,desk)"
+                ]
+            }
+        ],
+        "total_time": 2.7343316078186035,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutClockOnDesk": [
+                    "Walk(agent-1,clock)",
+                    "RightGrab(agent-1,clock)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,clock,desk)"
+                ]
+            },
+            {
+                "WalkToPutAppleOnDesk": [
+                    "Walk(agent-2,apple)",
+                    "RightGrab(agent-2,apple)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,apple,desk)"
+                ]
+            },
+            {
+                "WalkToPutSundaeOnDesk": [
+                    "Walk(agent-3,sundae)",
+                    "RightGrab(agent-3,sundae)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,sundae,desk)"
+                ]
+            },
+            {
+                "WalkToPutWallphoneOnDesk": [
+                    "Walk(agent-4,wallphone)",
+                    "RightGrab(agent-4,wallphone)",
+                    "Walk(agent-4,desk)",
+                    "RightPut(agent-4,wallphone,desk)"
+                ]
+            }
+        ],
+        "llm_time": 2.733365297317505,
+        "reflect_times": 3
+    },
+    {
+        "id": 24,
+        "goal": [
+            "IsOn(mug,desk)",
+            "IsOn(remotecontrol,desk)",
+            "IsOn(milkshake,desk)",
+            "IsOn(wineglass,desk)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "desk",
+            "milkshake",
+            "mug",
+            "remotecontrol",
+            "wineglass"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,desk)",
+                    "RightPut(self,mug,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(self,milkshake)",
+                    "RightGrab(self,milkshake)",
+                    "Walk(self,desk)",
+                    "RightPut(self,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(self,wineglass)",
+                    "RightGrab(self,wineglass)",
+                    "Walk(self,desk)",
+                    "RightPut(self,wineglass,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,desk)",
+                    "RightPut(self,remotecontrol,desk)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,desk)",
+                    "RightPut(self,mug,desk)"
+                ]
+            },
+            {
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(self,remotecontrol)",
+                    "RightGrab(self,remotecontrol)",
+                    "Walk(self,desk)",
+                    "RightPut(self,remotecontrol,desk)"
+                ]
+            },
+            {
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(self,milkshake)",
+                    "RightGrab(self,milkshake)",
+                    "Walk(self,desk)",
+                    "RightPut(self,milkshake,desk)"
+                ]
+            },
+            {
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(self,wineglass)",
+                    "RightGrab(self,wineglass)",
+                    "Walk(self,desk)",
+                    "RightPut(self,wineglass,desk)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-0,mug)",
+                    "RightGrab(agent-0,mug)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-0,remotecontrol)",
+                    "RightGrab(agent-0,remotecontrol)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-0,milkshake)",
+                    "RightGrab(agent-0,milkshake)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-0,wineglass)",
+                    "RightGrab(agent-0,wineglass)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-1,mug)",
+                    "RightGrab(agent-1,mug)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-1,remotecontrol)",
+                    "RightGrab(agent-1,remotecontrol)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-1,milkshake)",
+                    "RightGrab(agent-1,milkshake)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-1,wineglass)",
+                    "RightGrab(agent-1,wineglass)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-2,remotecontrol)",
+                    "RightGrab(agent-2,remotecontrol)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-2,milkshake)",
+                    "RightGrab(agent-2,milkshake)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-2,wineglass)",
+                    "RightGrab(agent-2,wineglass)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-3,remotecontrol)",
+                    "RightGrab(agent-3,remotecontrol)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-3,milkshake)",
+                    "RightGrab(agent-3,milkshake)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-3,wineglass)",
+                    "RightGrab(agent-3,wineglass)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,wineglass,desk)"
+                ]
+            }
+        ],
+        "total_time": 11.385449647903442,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-0,mug)",
+                    "RightGrab(agent-0,mug)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-0,remotecontrol)",
+                    "RightGrab(agent-0,remotecontrol)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-0,milkshake)",
+                    "RightGrab(agent-0,milkshake)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-0,wineglass)",
+                    "RightGrab(agent-0,wineglass)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-1,mug)",
+                    "RightGrab(agent-1,mug)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-1,remotecontrol)",
+                    "RightGrab(agent-1,remotecontrol)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-1,milkshake)",
+                    "RightGrab(agent-1,milkshake)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-1,wineglass)",
+                    "RightGrab(agent-1,wineglass)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-2,remotecontrol)",
+                    "RightGrab(agent-2,remotecontrol)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-2,milkshake)",
+                    "RightGrab(agent-2,milkshake)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-2,wineglass)",
+                    "RightGrab(agent-2,wineglass)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-3,mug)",
+                    "RightGrab(agent-3,mug)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,mug,desk)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-3,remotecontrol)",
+                    "RightGrab(agent-3,remotecontrol)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,remotecontrol,desk)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-3,milkshake)",
+                    "RightGrab(agent-3,milkshake)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,milkshake,desk)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-3,wineglass)",
+                    "RightGrab(agent-3,wineglass)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,wineglass,desk)"
+                ]
+            }
+        ],
+        "llm_time": 11.384429931640625,
+        "reflect_times": 3
+    },
+    {
+        "id": 25,
+        "goal": [
+            "IsOn(cereal,sofa)",
+            "IsOn(cellphone,sofa)",
+            "IsOn(creamybuns,sofa)",
+            "IsOn(toy,sofa)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "sofa",
+            "creamybuns",
+            "cellphone",
+            "toy",
+            "cereal"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ],
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ],
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ],
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ]
+            },
+            {
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            }
+        ],
+        "total_time": 2.245157241821289,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutCerealOnSofa": [
+                    "Walk(self,cereal)",
+                    "RightGrab(self,cereal)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cereal,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCellphoneOnSofa": [
+                    "Walk(self,cellphone)",
+                    "RightGrab(self,cellphone)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,cellphone,sofa)"
+                ]
+            },
+            {
+                "WalkToPutCreamyBunsOnSofa": [
+                    "Walk(self,creamybuns)",
+                    "RightGrab(self,creamybuns)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,creamybuns,sofa)"
+                ]
+            },
+            {
+                "WalkToPutToyOnSofa": [
+                    "Walk(self,toy)",
+                    "RightGrab(self,toy)",
+                    "Walk(self,sofa)",
+                    "RightPut(self,toy,sofa)"
+                ]
+            }
+        ],
+        "llm_time": 2.243849992752075,
+        "reflect_times": 3
+    }
+]
