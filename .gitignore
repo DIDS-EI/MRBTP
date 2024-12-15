@@ -27,7 +27,11 @@ simulators/virtualhome/windows/*
 simulators/RFUniverse/windows/*
 !simulators/RFUniverse/windows/.gitkeep
 
-
+mabtpg/algo/llm_client/llms/gpt3.py
+mabtpg/algo/llm_client/llms/gpt3_act.py
+mabtpg/algo/llm_client/llms/gpt4.py
+mabtpg/algo/llm_client/llms/gpt4_act.py
+mabtpg/algo/llm_client/llms/gpt4o_act.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -175,9 +179,5 @@ test_gridworld/VD_3_EXP/DATABASE/0_goal_vectors.index
 1.py
 2.py
 
-mabtpg/algo/llm_client/llms/gpt3.py
-mabtpg/algo/llm_client/llms/gpt3_act.py
-mabtpg/algo/llm_client/llms/gpt4.py
-mabtpg/algo/llm_client/llms/gpt4_act.py
-mabtpg/algo/llm_client/llms/gpt4o_act.py
+
 
