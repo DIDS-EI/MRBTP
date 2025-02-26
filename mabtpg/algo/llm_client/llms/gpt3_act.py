@@ -33,7 +33,7 @@ class Query(BaseModel):
 class LLMGPT3():
     def __init__(self):
         self.client = OpenAI(
-            base_url="YOUR_BASE_URL", api_key="YOUR_KEY"
+            base_url="https://api.dwyu.top/v1", api_key="sk-CSHOawi329bdxl4nkaHWJDVfp8bj6pDFzM2vfjLFva0F7Msy"
         )
 
     def tool_request(self, messages, tools):

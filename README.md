@@ -1,11 +1,19 @@
-# MRBTP
+# MRBTP: Efficient Multi-Robot Behavior Tree Planning and Collaboration.
 
-MRBTP: Efficient Multi-Robot Behavior Tree Planning and Collaboration.
+<div align="center">
+
+
+[[Website]](https://dids-ei.github.io/Project/MRBTP/)
+[[arXiv]](https://arxiv.org/abs/2502.18072)
+[[PDF]](https://arxiv.org/pdf/2502.18072)
 
 ![Python Version](images/python310.svg)
 ![GitHub license](images/license.svg)
-![](images/framework.png)
 
+
+
+![](images/framework.png)
+</div>
 
 ## 🛠️ Installation
 
