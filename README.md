@@ -1,4 +1,4 @@
-# MRBTP: Efficient Multi-Robot Behavior Tree Planning and Collaboration.
+# MRBTP: Efficient Multi-Robot Behavior Tree Planning and Collaboration (AAAI Oral)    
 
 <div align="center">
 
