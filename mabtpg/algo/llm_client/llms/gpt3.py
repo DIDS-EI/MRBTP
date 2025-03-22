@@ -7,7 +7,7 @@ from openai import OpenAI
 class LLMGPT3():
     def __init__(self):
         self.client = OpenAI(
-            base_url="Your_URL", api_key="Your_key"
+            base_url="YOUR_URL", api_key="YOUR_KEY"
         )
     def request(self,message): # question
         completion = self.client.chat.completions.create(
