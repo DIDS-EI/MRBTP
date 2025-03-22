@@ -7,7 +7,7 @@ from openai import OpenAI
 class LLMGPT3():
     def __init__(self):
         self.client = OpenAI(
-            base_url="https://api.dwyu.top/v1", api_key="sk-CSHOawi329bdxl4nkaHWJDVfp8bj6pDFzM2vfjLFva0F7Msy"
+            base_url="Your_URL", api_key="Your_key"
         )
     def request(self,message): # question
         completion = self.client.chat.completions.create(
