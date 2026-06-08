@@ -122,8 +122,17 @@ class PutNearInRoom(Action):
 
             turn_to_action = self.turn_to(direction)
             if turn_to_action == Actions.done:
+                # IMPORTANT: keep returning RUNNING here. If we returned
+                # SUCCESS in the same tick, the parent Sequence would
+                # advance to the next sibling immediately and that
+                # sibling's update() would overwrite ``self.agent.action``
+                # (set just below to ``drop``), so the ball would never
+                # actually be dropped. Returning RUNNING lets the
+                # simulator execute the drop action this tick; on the
+                # next tick ``IsHolding`` becomes False and the BT
+                # naturally moves on.
                 self.agent.action = Actions.drop
-                return Status.SUCCESS
+                return Status.RUNNING
             self.agent.action = turn_to_action
             return Status.RUNNING
 

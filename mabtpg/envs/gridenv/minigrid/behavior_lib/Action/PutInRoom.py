@@ -5,6 +5,7 @@ from minigrid.core.actions import Actions
 from mabtpg.envs.gridenv.minigrid.objects import CAN_PICKUP,CAN_GOTO
 from mabtpg.envs.gridenv.minigrid.planning_action import PlanningAction
 from mabtpg.envs.gridenv.minigrid.utils import get_direction_index
+from mabtpg.utils.astar import astar
 import random
 
 
@@ -69,65 +70,69 @@ class PutInRoom(Action):
         if self.room_index not in self.env.room_cells:
             raise ValueError(f"Room index {self.room_index} does not exist.")
 
-        x, y = self.agent.position
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        random.shuffle(directions)
+        # Pick any empty cell inside the target room as the drop position.
+        # We pick once and keep the choice across ticks (sticky), mirroring
+        # ``PutNearInRoom``. Other agents are NOT stored in the grid, so
+        # ``grid.get(x, y) is None`` is a true "empty cell" check; the path
+        # planner will route around them implicitly.
+        if self.target_position is None:
+            agent_pos = tuple(int(c) for c in self.agent.position)
+            room_cells = list(self.env.room_cells[self.room_index])
+            random.shuffle(room_cells)
+            for (cx, cy) in room_cells:
+                if (cx, cy) == agent_pos:
+                    # ``Actions.drop`` places the held object in front of
+                    # the agent, not on its own cell, so we must stop one
+                    # step short of the drop cell.
+                    continue
+                if self.env.minigrid_env.grid.get(cx, cy) is None:
+                    self.target_position = (cx, cy)
+                    self.path = None
+                    break
 
-        print("self.target_position:",self.target_position)
+        if self.target_position is None:
+            return Status.FAILURE
 
-        if self.target_position == None:
-            for (dx, dy) in directions:
-                nx, ny = x + dx, y + dy
-                if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
-                    cell = self.env.minigrid_env.grid.get(nx, ny)
-                    if (nx, ny) in self.env.cells_room and self.env.cells_room[(nx, ny)] == self.room_index:
-                        if cell is None:
-                            self.target_position = (nx, ny)
-                            break
-            # if there is no place, find go forward
-            if self.target_position == None:
-                self.agent.action = Actions.forward
+        # Re-plan every tick from the agent's current position. This is
+        # robust against the agent being nudged off the previously planned
+        # path by a sibling subtree and is cheap on a 8x8 grid.
+        self.path = astar(self.env.grid, start=self.agent.position, goal=self.target_position)
+        if self.path is None:
+            # Truly unreachable (e.g. closed door we can't open). Wait a
+            # tick; the world might change.
+            self.agent.action = Actions.done
+            return Status.RUNNING
 
-        else:
-            direction = (self.target_position[0] - self.agent.position[0], self.target_position[1] - self.agent.position[1])
-            turn_to_action = self.turn_to(direction)
+        # ``path == []`` -> agent is standing on the drop cell. Retarget on
+        # the next tick (we cannot drop on our own cell).
+        if len(self.path) == 0:
+            self.target_position = None
+            self.agent.action = Actions.done
+            return Status.RUNNING
+
+        # One step away from the drop cell: face it and drop. MiniGrid's
+        # ``drop`` action places the held object on the cell in front of
+        # the agent, so stopping one step short and facing the target puts
+        # the object exactly there.
+        if len(self.path) == 1:
+            turn_to_action = self.turn_to(self.path[0])
             if turn_to_action == Actions.done:
+                # Keep RUNNING so the parent Sequence does not advance and
+                # overwrite ``agent.action`` before the simulator executes
+                # the drop this tick.
                 self.agent.action = Actions.drop
-            else:
-                self.agent.action = turn_to_action
-        print("agent:", self.agent.id, " PutInRoom:",self.room_index)
-        return Status.RUNNING
+                return Status.RUNNING
+            self.agent.action = turn_to_action
+            return Status.RUNNING
 
-        # first go to another room
-        # if self.path is None:
-        #     room_points_ls = self.env.room_cells[self.room_index]
-        #     random.shuffle(room_points_ls)
-        #     self.goal = room_points_ls[0]
-        #     self.path = astar(self.env.grid, start=self.agent.position, goal=self.goal)
-        #
-        #     print(self.path)
-        #     assert self.path
-        #
-        # elif self.path==[]:
-        #     x, y = self.agent.position
-        #     directions = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
-        #     random.shuffle(directions)
-        #
-        #     for (nx, ny) in directions:
-        #         if 0 <= nx < self.env.width and 0 <= ny < self.env.height:
-        #             cell = self.env.minigrid_env.grid.get(nx, ny)
-        #             if cell is None:
-        #                 self.agent.action = Actions.drop
-        #
-        # else:
-        #     next_direction = self.path[0]
-        #     turn_to_action = self.turn_to(next_direction)
-        #     if turn_to_action == Actions.done:
-        #         self.agent.action = Actions.forward
-        #         self.path.pop(0)
-        #     else:
-        #         self.agent.action = turn_to_action
-        #     print(self.path)
+        # Walk along the planned path.
+        next_direction = self.path[0]
+        turn_to_action = self.turn_to(next_direction)
+        if turn_to_action == Actions.done:
+            self.agent.action = Actions.forward
+        else:
+            self.agent.action = turn_to_action
+        return Status.RUNNING
 
 
 
