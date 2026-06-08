@@ -1,0 +1,562 @@
+[
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsClose(fridge)"
+        ],
+        "objects": [
+            "milk",
+            "fridge"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0, fridge)",
+                    "Open(agent-0, fridge)"
+                ]
+            },
+            {
+                "WalkToGrabMilk": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0, fridge)",
+                    "Open(agent-0, fridge)"
+                ]
+            },
+            {
+                "WalkToGrabMilk": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            },
+            {
+                "WalkToGrabMilkAndPutInFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0, fridge)",
+                    "Open(agent-0, fridge)"
+                ],
+                "WalkToGrabMilk": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ],
+                "WalkToGrabMilkForFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            }
+        ],
+        "total_time": 3.9649786949157715,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0, fridge)",
+                    "Open(agent-0, fridge)"
+                ],
+                "WalkToGrabMilk": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ],
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ],
+                "WalkToGrabMilkForFridge": [
+                    "Walk(agent-0, milk)",
+                    "RightGrab(agent-0, milk)",
+                    "Walk(agent-0, fridge)",
+                    "RightPutIn(agent-0, milk, fridge)"
+                ]
+            }
+        ],
+        "llm_time": 3.9649786949157715,
+        "reflect_times": 3
+    },
+    {
+        "id": 2,
+        "goal": [
+            "IsSwitchedOn(coffeemaker)",
+            "IsOn(cupcake,kitchentable)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-1)",
+            "IsSwitchedOff(coffeemaker)"
+        ],
+        "objects": [
+            "cupcake",
+            "coffeemaker",
+            "kitchentable"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "SwitchOn",
+                "SwitchOff"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut",
+                "LeftGrab",
+                "LeftPut"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentableWithLeftHand": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToPutCupcakeOnKitchentableWithLeftHand": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ]
+            },
+            {
+                "WalkToSwitchOnCoffeemakerWithLeftHand": [
+                    "Walk(self,coffeemaker)",
+                    "LeftGrab(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ],
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutCupcakeOnKitchentableWithLeftHand": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToSwitchOnCoffeemakerWithLeftHand": [
+                    "Walk(self,coffeemaker)",
+                    "LeftGrab(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            }
+        ],
+        "total_time": 4.860599517822266,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToSwitchOnCoffeemaker": [
+                    "Walk(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ],
+                "WalkToPutCupcakeOnKitchentable": [
+                    "Walk(self,cupcake)",
+                    "RightGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "RightPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToPutCupcakeOnKitchentableWithLeftHand": [
+                    "Walk(self,cupcake)",
+                    "LeftGrab(self,cupcake)",
+                    "Walk(self,kitchentable)",
+                    "LeftPut(self,cupcake,kitchentable)"
+                ],
+                "WalkToSwitchOnCoffeemakerWithLeftHand": [
+                    "Walk(self,coffeemaker)",
+                    "LeftGrab(self,coffeemaker)",
+                    "SwitchOn(self,coffeemaker)"
+                ]
+            }
+        ],
+        "llm_time": 4.860599517822266,
+        "reflect_times": 3
+    },
+    {
+        "id": 3,
+        "goal": [
+            "IsSwitchedOn(microwave)",
+            "IsIn(cutlets,microwave)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsClose(microwave)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsSwitchedOff(microwave)"
+        ],
+        "objects": [
+            "cutlets",
+            "microwave"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open"
+            ],
+            [
+                "Walk",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ]
+            },
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "GrabCutletsFromMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ]
+            },
+            {
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ]
+            },
+            {
+                "GrabCutletsFromMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            },
+            {
+                "PutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "GrabCutletsFromMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ],
+                "PutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "total_time": 4.664155721664429,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenMicrowave": [
+                    "Walk(self,microwave)",
+                    "Open(self,microwave)"
+                ],
+                "WalkToSwitchOnMicrowave": [
+                    "Walk(self,microwave)",
+                    "SwitchOn(self,microwave)"
+                ],
+                "GrabCutletsFromMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ],
+                "PutCutletsInMicrowave": [
+                    "Walk(self,cutlets)",
+                    "RightGrab(self,cutlets)",
+                    "Walk(self,microwave)",
+                    "RightPutIn(self,cutlets,microwave)"
+                ]
+            }
+        ],
+        "llm_time": 4.664155721664429,
+        "reflect_times": 3
+    },
+    {
+        "id": 1,
+        "goal": [
+            "IsIn(milk,fridge)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsClose(fridge)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)"
+        ],
+        "objects": [
+            "milk",
+            "fridge"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "Open",
+                "SwitchOn"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPutIn",
+                "SwitchOn"
+            ]
+        ],
+        "llm_output0": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToSwitchOnFridgeLight": [
+                    "Walk(self,fridge)",
+                    "SwitchOn(self,fridge)"
+                ]
+            }
+        ],
+        "llm_output1": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(self,milk)",
+                    "RightGrab(self,milk)",
+                    "Walk(self,fridge)",
+                    "RightPutIn(self,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToSwitchOnFridgeLight": [
+                    "Walk(self,fridge)",
+                    "SwitchOn(self,fridge)"
+                ]
+            },
+            {
+                "WalkToCheckFridgeContents": [
+                    "Walk(self,fridge)",
+                    "Open(self,fridge)"
+                ]
+            }
+        ],
+        "llm_output2": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0,milk)",
+                    "RightGrab(agent-0,milk)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToSwitchOnFridgeLight": [
+                    "Walk(agent-0,fridge)",
+                    "SwitchOn(agent-0,fridge)"
+                ]
+            },
+            {
+                "WalkToCheckFridgeContents": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ]
+            }
+        ],
+        "total_time": 5.180410146713257,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToOpenFridge": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ]
+            },
+            {
+                "WalkToPutMilkInFridge": [
+                    "Walk(agent-0,milk)",
+                    "RightGrab(agent-0,milk)",
+                    "Walk(agent-0,fridge)",
+                    "RightPutIn(agent-0,milk,fridge)"
+                ]
+            },
+            {
+                "WalkToSwitchOnFridgeLight": [
+                    "Walk(agent-0,fridge)",
+                    "SwitchOn(agent-0,fridge)"
+                ]
+            },
+            {
+                "WalkToCheckFridgeContents": [
+                    "Walk(agent-0,fridge)",
+                    "Open(agent-0,fridge)"
+                ]
+            }
+        ],
+        "llm_time": 5.180410146713257,
+        "reflect_times": 3
+    }
+]

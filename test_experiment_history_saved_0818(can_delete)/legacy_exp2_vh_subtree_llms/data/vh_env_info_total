@@ -1,0 +1,36 @@
+[Condition]
+IsNear_self_<ALL>, IsOn_<GRABBABLE>_<SURFACES>, IsIn_<GRABBABLE>_<CONTAINERS>, IsOpen_<CAN_OPEN>, IsClose_<CAN_OPEN>,
+IsSwitchedOn_<HAS_SWITCH>, IsSwitchedOff_<HAS_SWITCH>
+
+
+[Action]
+Walk_<ALL>, RightGrab_<GRABBABLE>, LeftGrab_<GRABBABLE>, RightPut_<GRABBABLE>_<SURFACES>, LeftPut_<GRABBABLE>_<SURFACES>,
+RightPutIn_<GRABBABLE>_<CONTAINERS>, LeftPutIn_<GRABBABLE>_<CONTAINERS>, RightGrabFrom_<GRABBABLE>_<CONTAINERS>, LeftGrabFrom_<GRABBABLE>_<CONTAINERS>,
+Open_<CAN_OPEN>, Close_<CAN_OPEN>, SwitchOn_<HAS_SWITCH>, SwitchOff_<HAS_SWITCH>
+
+
+[Object]
+<GRABBABLE>=["sundae", "toothpaste", "clothesshirt", "crackers", "pudding", "alcohol", "boardgame", "wallphone","remotecontrol",
+                 "whippedcream", "hanger", "cutlets", "candybar", "wine", "toiletpaper", "slippers", "cereal", "apple","magazine",
+                 "wineglass", "milk", "cupcake", "folder", "wallpictureframe", "cellphone", "coffeepot", "crayons","box",
+                 "fryingpan", "radio", "chips", "cuttingboard", "lime", "mug", "rug", "carrot", "cutleryfork","clothespile",
+                 "notes", "plum", "cookingpot", "toy", "salmon", "peach", "condimentbottle", "hairproduct", "salad","mouse",
+                 "clock", "washingsponge", "bananas", "dishbowl", "oventray", "chocolatesyrup", "creamybuns", "pear","chair",
+                 "condimentshaker", "bellpepper", "paper", "plate", "facecream", "breadslice", "candle", "towelrack","pancake",
+                 "cutleryknife", "kitchenknife",""milkshake", "dishwashingliquid", "keyboard", "towel", "toothbrush", "book", "juice","waterglass",
+                 "barsoap", "mincedmeat", "clothespants", "chicken", "poundcake", "pillow", "pie",
+                 "rag","duster","papertowel","brush"]
+<SURFACES>=["kitchentable", "towelrack", "bench", "kitchencabinet", "mousemat", "boardgame", "coffeetable","fryingpan",
+                "radio", "cuttingboard", "floor", "tvstand", "bathroomcounter", "oventray", "chair", "kitchencounter","rug",
+                "bookshelf", "nightstand", "cabinet", "desk", "stove", "bed", "sofa", "plate", "bathroomcabinet"]
+<CONTAINERS>=["coffeemaker", "kitchencabinet", "washingmachine", "printer", "toaster", "closet", "box", "microwave",
+                  "dishwasher", "fryingpan", "fridge", "toilet", "garbagecan", "sink", "bookshelf", "nightstand","cabinet",
+                  "stove", "folder", "clothespile", "bathroomcabinet"]
+<HAS_SWITCH>=["coffeemaker", "cellphone", "candle", "faucet", "washingmachine", "printer", "wallphone","remotecontrol",
+                  "computer", "toaster", "microwave", "dishwasher", "clock", "radio", "lightswitch", "fridge",
+                  "tablelamp", "stove", "tv"]
+<CAN_OPEN>=["coffeemaker", "cookingpot", "toothpaste", "coffeepot", "kitchencabinet", "washingmachine", "window","printer",
+                "curtains", "closet", "box", "microwave", "hairproduct", "dishwasher", "radio", "fridge", "toilet","book",
+                "garbagecan", "magazine", "nightstand", "cabinet", "milk", "desk", "stove", "door", "folder",
+                "clothespile", "bathroomcabinet"]
+<ALL>=<GRABBABLE>+<SURFACES>+<CONTAINERS>+<HAS_SWITCH>+<CAN_OPEN>

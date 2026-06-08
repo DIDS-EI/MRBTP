@@ -1,0 +1,42 @@
+  {
+    "id": 32,
+    "goal": [
+      "IsIn(rag,cabinet)"
+    ],
+    "init_state": [
+      "IsClose(cabinet)"
+    ],
+    "objects": [
+      "rag",
+      "fridge",
+      "cabinet"
+    ],
+    "action_space": [
+      [
+        "Walk",
+        "Open"
+      ],
+      [
+        "Walk",
+        "RightGrab",
+        "RightPutIn",
+        "SwitchOn"
+      ]
+    ],
+    "multi_robot_subtree_ls": [
+      {
+        "WalkToOpenbox": [
+          "Walk(self,cabinet)",
+          "Open(self,cabinet)"
+        ]
+      },
+      {
+        "WalkToPutInMilkbox": [
+          "Walk(self,rag)",
+          "RightGrab(self,rag)",
+          "Walk(self,cabinet)",
+          "RightPutIn(self,rag,cabinet)"
+        ]
+      }
+    ]
+  }

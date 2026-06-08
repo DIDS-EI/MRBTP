@@ -1,0 +1,409 @@
+[
+    {
+        "id": 17,
+        "goal": [
+            "IsOn(apple,kitchencounter)",
+            "IsOn(toothpaste,kitchencounter)",
+            "IsOn(mug,kitchencounter)",
+            "IsOn(chair,kitchencounter)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-1)"
+        ],
+        "objects": [
+            "kitchencounter",
+            "toothpaste",
+            "mug",
+            "apple",
+            "chair"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "total_time": 35.20791482925415,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutAppleOnKitchenCounter": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,apple,kitchencounter)"
+                ],
+                "WalkToPutToothpasteOnKitchenCounter": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,toothpaste,kitchencounter)"
+                ],
+                "WalkToPutMugOnKitchenCounter": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,mug,kitchencounter)"
+                ],
+                "WalkToPutChairOnKitchenCounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutToothpasteOnKitchenCounter": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,toothpaste,kitchencounter)"
+                ],
+                "WalkToPutAppleOnKitchenCounter": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,apple,kitchencounter)"
+                ],
+                "WalkToPutMugOnKitchenCounter": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,mug,kitchencounter)"
+                ],
+                "WalkToPutChairOnKitchenCounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutMugOnKitchenCounter": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,mug,kitchencounter)"
+                ],
+                "WalkToPutAppleOnKitchenCounter": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,apple,kitchencounter)"
+                ],
+                "WalkToPutToothpasteOnKitchenCounter": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,toothpaste,kitchencounter)"
+                ],
+                "WalkToPutChairOnKitchenCounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ]
+            },
+            {
+                "WalkToPutChairOnKitchenCounter": [
+                    "Walk(self,chair)",
+                    "RightGrab(self,chair)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,chair,kitchencounter)"
+                ],
+                "WalkToPutMugOnKitchenCounter": [
+                    "Walk(self,mug)",
+                    "RightGrab(self,mug)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,mug,kitchencounter)"
+                ],
+                "WalkToPutAppleOnKitchenCounter": [
+                    "Walk(self,apple)",
+                    "RightGrab(self,apple)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,apple,kitchencounter)"
+                ],
+                "WalkToPutToothpasteOnKitchenCounter": [
+                    "Walk(self,toothpaste)",
+                    "RightGrab(self,toothpaste)",
+                    "Walk(self,kitchencounter)",
+                    "RightPut(self,toothpaste,kitchencounter)"
+                ]
+            }
+        ],
+        "llm_time": 35.20791482925415,
+        "reflect_times": 0
+    },
+    {
+        "id": 21,
+        "goal": [
+            "IsOn(lime,desk)",
+            "IsOn(coffeepot,desk)",
+            "IsOn(book,desk)",
+            "IsOn(toothpaste,desk)"
+        ],
+        "init_state": [
+            "IsRightHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsLeftHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)"
+        ],
+        "objects": [
+            "desk",
+            "toothpaste",
+            "coffeepot",
+            "lime",
+            "book"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "total_time": 6.896597146987915,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToPutLimeOnDesk": [
+                    "Walk(agent-0,lime)",
+                    "RightGrab(agent-0,lime)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,lime,desk)"
+                ],
+                "WalkToPutBookOnDesk": [
+                    "Walk(agent-0,book)",
+                    "RightGrab(agent-0,book)",
+                    "Walk(agent-0,desk)",
+                    "RightPut(agent-0,book,desk)"
+                ]
+            },
+            {
+                "WalkToPutCoffeepotOnDesk": [
+                    "Walk(agent-1,coffeepot)",
+                    "RightGrab(agent-1,coffeepot)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,coffeepot,desk)"
+                ],
+                "WalkToPutToothpasteOnDesk": [
+                    "Walk(agent-1,toothpaste)",
+                    "RightGrab(agent-1,toothpaste)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,toothpaste,desk)"
+                ]
+            },
+            {
+                "WalkToPutLimeOnDesk": [
+                    "Walk(agent-2,lime)",
+                    "RightGrab(agent-2,lime)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,lime,desk)"
+                ],
+                "WalkToPutCoffeepotOnDesk": [
+                    "Walk(agent-2,coffeepot)",
+                    "RightGrab(agent-2,coffeepot)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,coffeepot,desk)"
+                ]
+            },
+            {
+                "WalkToPutBookOnDesk": [
+                    "Walk(agent-3,book)",
+                    "RightGrab(agent-3,book)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,book,desk)"
+                ],
+                "WalkToPutToothpasteOnDesk": [
+                    "Walk(agent-3,toothpaste)",
+                    "RightGrab(agent-3,toothpaste)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,toothpaste,desk)"
+                ]
+            }
+        ],
+        "llm_time": 6.896597146987915,
+        "reflect_times": 2
+    },
+    {
+        "id": 24,
+        "goal": [
+            "IsOn(milkshake,desk)",
+            "IsOn(wineglass,desk)",
+            "IsOn(remotecontrol,desk)",
+            "IsOn(mug,desk)"
+        ],
+        "init_state": [
+            "IsLeftHandEmpty(agent-1)",
+            "IsRightHandEmpty(agent-2)",
+            "IsLeftHandEmpty(agent-3)",
+            "IsRightHandEmpty(agent-1)",
+            "IsLeftHandEmpty(agent-0)",
+            "IsRightHandEmpty(agent-0)",
+            "IsLeftHandEmpty(agent-2)",
+            "IsRightHandEmpty(agent-3)"
+        ],
+        "objects": [
+            "desk",
+            "milkshake",
+            "mug",
+            "remotecontrol",
+            "wineglass"
+        ],
+        "action_space": [
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ],
+            [
+                "Walk",
+                "RightGrab",
+                "RightPut"
+            ]
+        ],
+        "total_time": 14.30047345161438,
+        "multi_robot_subtree_ls": [
+            {
+                "WalkToGrabMilkshake": [
+                    "Walk(agent-1,milkshake)",
+                    "RightGrab(agent-1,milkshake)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-1,milkshake)",
+                    "RightGrab(agent-1,milkshake)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,milkshake,desk)"
+                ],
+                "WalkToGrabWineglass": [
+                    "Walk(agent-1,wineglass)",
+                    "RightGrab(agent-1,wineglass)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-1,wineglass)",
+                    "RightGrab(agent-1,wineglass)",
+                    "Walk(agent-1,desk)",
+                    "RightPut(agent-1,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToGrabRemoteControl": [
+                    "Walk(agent-2,remotecontrol)",
+                    "RightGrab(agent-2,remotecontrol)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-2,remotecontrol)",
+                    "RightGrab(agent-2,remotecontrol)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,remotecontrol,desk)"
+                ],
+                "WalkToGrabMug": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)"
+                ],
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-2,mug)",
+                    "RightGrab(agent-2,mug)",
+                    "Walk(agent-2,desk)",
+                    "RightPut(agent-2,mug,desk)"
+                ]
+            },
+            {
+                "WalkToGrabMilkshake": [
+                    "Walk(agent-3,milkshake)",
+                    "RightGrab(agent-3,milkshake)"
+                ],
+                "WalkToPutMilkshakeOnDesk": [
+                    "Walk(agent-3,milkshake)",
+                    "RightGrab(agent-3,milkshake)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,milkshake,desk)"
+                ],
+                "WalkToGrabWineglass": [
+                    "Walk(agent-3,wineglass)",
+                    "RightGrab(agent-3,wineglass)"
+                ],
+                "WalkToPutWineglassOnDesk": [
+                    "Walk(agent-3,wineglass)",
+                    "RightGrab(agent-3,wineglass)",
+                    "Walk(agent-3,desk)",
+                    "RightPut(agent-3,wineglass,desk)"
+                ]
+            },
+            {
+                "WalkToGrabMug": [
+                    "Walk(agent-4,mug)",
+                    "RightGrab(agent-4,mug)"
+                ],
+                "WalkToPutMugOnDesk": [
+                    "Walk(agent-4,mug)",
+                    "RightGrab(agent-4,mug)",
+                    "Walk(agent-4,desk)",
+                    "RightPut(agent-4,mug,desk)"
+                ],
+                "WalkToGrabRemoteControl": [
+                    "Walk(agent-4,remotecontrol)",
+                    "RightGrab(agent-4,remotecontrol)"
+                ],
+                "WalkToPutRemoteControlOnDesk": [
+                    "Walk(agent-4,remotecontrol)",
+                    "RightGrab(agent-4,remotecontrol)",
+                    "Walk(agent-4,desk)",
+                    "RightPut(agent-4,remotecontrol,desk)"
+                ]
+            }
+        ],
+        "llm_time": 14.299472093582153,
+        "reflect_times": 0
+    }
+]
