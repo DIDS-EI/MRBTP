@@ -7,7 +7,7 @@
 [[Website]](https://dids-ei.github.io/Project/MRBTP/)
 [[arXiv]](https://arxiv.org/abs/2502.18072)
 [[PDF]](https://arxiv.org/pdf/2502.18072)
-[[Demo & Tutorial]](https://github.com/Caiyishuai/MRBTP-demo)
+[[Demo & Tutorial]](https://github.com/DIDS-EI/MRBTP-demo)
 
 ![Python Version](images/python310.svg)
 ![GitHub license](images/license.svg)
@@ -18,7 +18,7 @@
 
 ## 📰 News
 
-- **[2026-06]** 🎉 **MRBTP-demo is now online!** A slim, well-documented tutorial version of MRBTP has been released at <https://github.com/Caiyishuai/MRBTP-demo>. It provides a minimal, runnable entry point for understanding the multi-robot behavior-tree planning algorithm and quickly adapting it to custom tasks.
+- **[2026-06]** 🎉 **MRBTP-demo is now online!** A slim, well-documented tutorial version of MRBTP has been released at <https://github.com/DIDS-EI/MRBTP-demo>. It provides a minimal, runnable entry point for understanding the multi-robot behavior-tree planning algorithm and quickly adapting it to custom tasks.
 - **[2025-02]** 📄 The arXiv preprint is available: <https://arxiv.org/abs/2502.18072>.
 - **[2024-12]** 🏆 MRBTP is accepted to **AAAI 2025** as an **Oral** presentation (Top 4.6%).
 
